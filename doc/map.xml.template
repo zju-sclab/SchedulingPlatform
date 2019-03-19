@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<region version="1.0" time="" name="" id="">
+  <!--Through locations and links , we know how to go from a to b, but we don't know how to drive yet. -->
+  <locations>
+    <location name="location_name1" x="mecator_x" y="mecator_y" id="1" type="station" zh=""/>
+    <location name="joint_point" x="mecator_x" y="mecator_y" id="2" type="joint point" zh=""/>
+    <location name="parking_point" x="mecator_x" y="mecator_y" id="2" type="parking point" zh=""/>
+    <!--other locations-->
+  </locations>
+
+  <links>
+    <!--defined the relation between locations-->
+    <link id="link_id" from="location_1" to="location_2" length="" time="" zh="" supported="" v=""/>
+  </links>
+  <!--To drive on link, we should define more details about link.
+  Generally this part is placed at another file such as shape.xml.
+  supported attribute defined autonomous-driving methods can be used.
+  trajectory: <path> sub-label is contained.
+  lane: lane-following is supported.
+  instruction: <instructions> sub-label is contained,which contains a sequence instruction.
+  -->
+  <link id="" from="" to="" supported="trajectory,lane,replay">
+    <!--waypoints designed for trajectory-following-->
+    <path>
+    </path>
+    <!--instructions used for replay.-->
+    <instructions frequency="100">
+      <instruction v="" wheelAngle=""/>
+      <instruction v="" wheelAngle=""/>
+    </instructions>
+  </link>
+
+</region>

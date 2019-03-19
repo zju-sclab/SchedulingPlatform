@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+    PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+  <settings>
+    <!--是否开启自动驼峰命名规则，默认false-->
+    <setting name="mapUnderscoreToCamelCase" value="true"/>
+  </settings>
+
+  <!--类型别名-->
+  <typeAliases>
+    <package name="com.skywilling.cn.livemap.model"/>
+    <package name="com.skywilling.cn.manager.car.model"/>
+  </typeAliases>
+
+  <!--插件-->
+
+  <!--默认引用哪个数据库环境-->
+
+  <mappers>
+    <!--<mapper resource="classpath:livemap/mybatis/*.xml"/>-->
+    <!--<mapper resource="classpath:manager/mybatis/*.xml"/>-->
+  </mappers>
+
+</configuration>

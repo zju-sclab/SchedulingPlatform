@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.skywilling.cn.livemap.db.mapper.ParkMapper">
+
+  <resultMap id="BaseResultMap" type="com.skywilling.cn.livemap.model.Park">
+    <id property="id" column="id" jdbcType="INTEGER"/>
+    <result property="name" column="name"/>
+    <result property="zh" column="zh"/>
+    <result property="imgUrl" column="img_url"/>
+    <result property="minx" column="minx"/>
+    <result property="miny" column="miny"/>
+    <result property="maxx" column="maxx"/>
+    <result property="maxy" column="maxy"/>
+    <result property="mapFileUrl" column="map_file_url"/>
+    <result property="shapeFileUrl" column="shape_file_url"/>
+    <result property="province" column="province"/>
+    <result property="city" column="city"/>
+    <result property="area" column="area"/>
+    <result property="gmtModify" column="gmt_modify"/>
+    <result property="gmtCreate" column="gmt_create"/>
+  </resultMap>
+
+  <sql id="BaseColumnList">
+    id, name, `zh`, img_url, minx, miny, maxx, maxy, map_file_url, shape_file_url,
+    province, city, area, gmt_modify, gmt_create
+  </sql>
+
+  <insert id="save" parameterType="park" useGeneratedKeys="true" keyProperty="id">
+    insert into park
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="name != null">
+        name,
+      </if>
+      <if test="zh != null">
+        `zh`,
+      </if>
+      <if test="imgUrl != null">
+        img_url,
+      </if>
+      <if test="minx != null">
+        minx,
+      </if>
+      <if test="miny != null">
+        miny,
+      </if>
+      <if test="maxx != null">
+        maxx,
+      </if>
+      <if test="maxy != null">
+        maxy,
+      </if>
+      <if test="mapFileUrl != null">
+        map_file_url,
+      </if>
+      <if test="shapeFileUrl != null">
+        shape_file_url,
+      </if>
+      <if test="province != null">
+        province,
+      </if>
+      <if test="city != null">
+        city,
+      </if>
+      <if test="area != null">
+        area,
+      </if>
+      <if test="gmtModify != null">
+        gmt_modify,
+      </if>
+      <if test="gmtCreate != null">
+        gmt_create
+      </if>
+    </trim>
+    value
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="name != null">
+        #{name},
+      </if>
+      <if test="zh != null">
+        #{zh},
+      </if>
+      <if test="imgUrl != null">
+        #{imgUrl},
+      </if>
+      <if test="minx != null">
+        #{minx},
+      </if>
+      <if test="miny != null">
+        #{miny},
+      </if>
+      <if test="maxx != null">
+        #{maxx},
+      </if>
+      <if test="maxy != null">
+        #{maxy},
+      </if>
+      <if test="mapFileUrl != null">
+        #{mapFileUrl},
+      </if>
+      <if test="shapeFileUrl != null">
+        #{shapeFileUrl},
+      </if>
+      <if test="province != null">
+        #{province},
+      </if>
+      <if test="city != null">
+        #{city},
+      </if>
+      <if test="area != null">
+        #{area},
+      </if>
+      <if test="gmtModify != null">
+        #{gmtModify},
+      </if>
+      <if test="gmtCreate != null">
+        #{gmtCreate}
+      </if>
+    </trim>
+  </insert>
+
+  <delete id="delete" parameterType="int">
+    delete from park where id = #{id}
+  </delete>
+
+  <delete id="deleteByCode" parameterType="string">
+    delete from park where code = #{code}
+  </delete>
+
+  <update id="update" parameterType="park">
+    update park
+    <set>
+      <if test="name != null">
+        name = #{name},
+      </if>
+      <if test="zh != null">
+        `zh` = #{zh},
+      </if>
+      <if test="imgUrl != null">
+        img_url = #{imgUrl},
+      </if>
+      <if test="minx != null">
+        minx = #{minx},
+      </if>
+      <if test="miny != null">
+        miny = #{miny},
+      </if>
+      <if test="maxx != null">
+        maxx = #{maxx},
+      </if>
+      <if test="maxy != null">
+        maxy = #{maxy},
+      </if>
+      <if test="mapFileUrl != null">
+        map_file_url = #{mapFileUrl},
+      </if>
+      <if test="shapeFileUrl != null">
+        shape_file_url = #{shapeFileUrl},
+      </if>
+      <if test="province != null">
+        province = #{province},
+      </if>
+      <if test="city != null">
+        city = #{city},
+      </if>
+      <if test="area != null">
+        area = #{area},
+      </if>
+      <if test="gmtModify != null">
+        gmt_modify = #{gmtModify},
+      </if>
+      <if test="gmtCreate != null">
+        gmt_create = #{gmtCreate}
+      </if>
+    </set>
+    where id = #{id}
+  </update>
+
+  <select id="queryById" parameterType="int" resultMap="BaseResultMap">
+    select <include refid="BaseColumnList"/>
+    from park
+    where id = #{id}
+    order by id asc
+  </select>
+
+  <select id="queryByName" parameterType="string" resultMap="BaseResultMap">
+    select <include refid="BaseColumnList"/>
+    from park
+    where name = #{name}
+    order by id asc
+  </select>
+
+  <select id="query" resultMap="BaseResultMap">
+    select <include refid="BaseColumnList"/>
+    from park
+    order by id asc
+  </select>
+
+</mapper>
