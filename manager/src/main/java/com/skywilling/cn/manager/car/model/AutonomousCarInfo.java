@@ -2,6 +2,7 @@ package com.skywilling.cn.manager.car.model;
 
 
 
+import com.skywilling.cn.manager.car.enumeration.CarState;
 import lombok.Data;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.geo.GeoJsonPoint;
@@ -70,5 +71,9 @@ public class AutonomousCarInfo implements Serializable {
 
   public void setLocation(Pose pose){
     this.location=new GeoJsonPoint(pose.getPoint().getX(),pose.getPoint().getY());
+  }
+
+  public boolean isConnected() {
+    return this.state != CarState.LOST.getState();
   }
 }

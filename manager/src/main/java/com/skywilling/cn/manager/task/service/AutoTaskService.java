@@ -14,7 +14,7 @@ public interface AutoTaskService {
 
     CompletableFuture<Boolean> resume(String taskId);
 
-    CompletableFuture<Boolean> stop(String taskId);
+    CompletableFuture<Boolean> stopCar(String vin);
 
     CompletableFuture<Boolean> intervening(String taskId);
 }

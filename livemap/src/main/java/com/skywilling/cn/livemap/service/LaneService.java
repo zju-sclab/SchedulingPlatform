@@ -3,7 +3,6 @@ package com.skywilling.cn.livemap.service;
 
 
 import com.skywilling.cn.livemap.model.LiveLane;
-import com.skywilling.cn.manager.car.model.AutonomousCarInfo;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -12,8 +11,8 @@ import java.util.List;
 public interface LaneService {
     LiveLane get(String parkName, String laneName);
     void addLane(String parkName, LiveLane liveLane);
-    void addVehicles(AutonomousCarInfo car);
-    void removeVehicles(AutonomousCarInfo car);
+    void addVehicles(LiveLane liveLane,String vin);
+    void removeVehicles(LiveLane liveLane,String vin);
     List<String> getVehicles(String parkName, String laneName);
     void setWeight(String parkName, String laneName, double weight);
 

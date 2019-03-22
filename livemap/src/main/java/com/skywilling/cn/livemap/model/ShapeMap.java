@@ -12,7 +12,7 @@ public class ShapeMap {
    private ConcurrentHashMap<String,LaneShape> laneshapeMap=new ConcurrentHashMap<>();
 
    public void addLaneShape(LaneShape laneShape){
-      laneshapeMap.putIfAbsent(laneShape.getLaneName(),laneShape);
+
    }
 
    public List<LaneShape> query(List<String> lanes){

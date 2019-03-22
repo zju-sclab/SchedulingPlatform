@@ -5,6 +5,7 @@ import com.skywilling.cn.common.config.redis.RedisDao;
 import com.skywilling.cn.livemap.core.StaticLaneShapFactory;
 import com.skywilling.cn.livemap.exception.ParkNameEmptyException;
 import com.skywilling.cn.livemap.model.LaneShape;
+import com.skywilling.cn.livemap.model.LiveLane;
 import com.skywilling.cn.livemap.model.Park;
 import com.skywilling.cn.livemap.model.ShapeMap;
 import com.skywilling.cn.livemap.service.ParkService;
@@ -18,7 +19,7 @@ import java.util.List;
 
 @Service
 public class ShapeServiceImpl implements ShapeMapService {
-    private static final String PREFIX="shapeMap_";
+    private static final String PREFIX = "shapeMap_";
     @Autowired
     RedisDao redisDao;
     @Autowired
@@ -27,20 +28,16 @@ public class ShapeServiceImpl implements ShapeMapService {
     StaticLaneShapFactory staticLaneShapFactory;
 
     @Override
-    public List<LaneShape> query(String parkName, List<String> lanes) {
+    public LaneShape query(String parkName, String laneName) {
 
-        List<LaneShape> shapes=new ArrayList<>();
 
-        for(String laneName:lanes){
-            Object read = redisDao.read(PREFIX + parkName+laneName);
-            if(read==null){
-                Park park = parkService.queryByName(parkName);
-                checkAndCreate(park);
-                read = redisDao.read(PREFIX + parkName+laneName);
-            }
-            shapes.add((LaneShape) read);
+        Object read = redisDao.read(PREFIX + parkName + laneName);
+        if (read == null) {
+            Park park = parkService.queryByName(parkName);
+            checkAndCreate(park);
+            read = redisDao.read(PREFIX + parkName + laneName);
         }
-        return shapes;
+        return (LaneShape) read;
     }
 
     @Override
@@ -52,15 +49,15 @@ public class ShapeServiceImpl implements ShapeMapService {
 
     @Override
     public void save(LaneShape laneShape) {
-        redisDao.save(PREFIX + laneShape.getParkName()+laneShape.getId(),laneShape);
+        redisDao.save(PREFIX + laneShape.getParkName() + laneShape.getId(), laneShape);
     }
 
 
-    private void checkAndCreate(Park park){
+    private void checkAndCreate(Park park) {
         if (park != null && park.getShapeFileUrl() != null) {
             staticLaneShapFactory.create(park.getShapeFileUrl());
 
-        }else {
+        } else {
             try {
                 throw new ParkNameEmptyException();
             } catch (ParkNameEmptyException e) {

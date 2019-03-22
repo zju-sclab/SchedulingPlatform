@@ -2,6 +2,7 @@ package com.skywilling.cn.livemap.service;
 
 
 import com.skywilling.cn.livemap.model.LaneShape;
+import com.skywilling.cn.livemap.model.LiveLane;
 import com.skywilling.cn.livemap.model.ShapeMap;
 
 import java.util.List;
@@ -10,7 +11,7 @@ import java.util.List;
 public interface ShapeMapService {
 
 
-    List<LaneShape> query(String parkName,List<String> lanes);
+    LaneShape query(String parkName, String laneName);
 
     void create(String parkName);
 

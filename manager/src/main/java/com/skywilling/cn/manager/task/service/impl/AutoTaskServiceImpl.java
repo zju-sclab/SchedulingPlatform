@@ -66,10 +66,15 @@ public class AutoTaskServiceImpl implements AutoTaskService {
     }
 
     @Override
-    public CompletableFuture<Boolean> stop(String taskId) {
-        AutoTask autoTask = taskService.getTaskById(taskId);
-        CompletableFuture<Boolean> future = autoServiceBiz.killAutonomous(autoTask.getVin());
-        checkResult(autoTask,future);
+    public CompletableFuture<Boolean> stopCar(String vin) {
+
+        CompletableFuture<Boolean> future = autoServiceBiz.killAutonomous(vin);
+        future.whenComplete((result, t) -> {
+            if (t != null||Boolean.FALSE.equals(result)) {
+                throw new RuntimeException("stop car error");
+
+            }
+        });
         return future;
     }
 

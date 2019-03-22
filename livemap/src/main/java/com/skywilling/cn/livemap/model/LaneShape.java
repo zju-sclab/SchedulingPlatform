@@ -1,8 +1,6 @@
 package com.skywilling.cn.livemap.model;
 
 import com.skywilling.cn.common.enums.DriveMethod;
-import com.skywilling.cn.common.model.Coordinate;
-import com.skywilling.cn.manager.car.model.Instruction;
 import lombok.Data;
 
 import java.util.List;
@@ -14,7 +12,6 @@ public class LaneShape {
     private String parkName;
     private List<Point> path;
     private int supportedMethods = 0;
-    private List<Instruction> instructions;
     private int priority;
 
     public void addSupport(DriveMethod type) {
