@@ -1,13 +1,13 @@
-package com.skywilling.cn.manager.task.service.impl;
+package com.skywilling.cn.command.service.impl;
 
 
+import com.skywilling.cn.command.biz.AutoServiceBiz;
+import com.skywilling.cn.command.service.AutoTaskService;
 import com.skywilling.cn.manager.car.enumeration.CarState;
 import com.skywilling.cn.manager.car.enumeration.TaskState;
 import com.skywilling.cn.manager.car.model.AutonomousCarInfo;
 import com.skywilling.cn.manager.car.service.AutoCarInfoService;
-import com.skywilling.cn.manager.task.biz.AutoServiceBiz;
 import com.skywilling.cn.manager.task.model.AutoTask;
-import com.skywilling.cn.manager.task.service.AutoTaskService;
 import com.skywilling.cn.manager.task.service.TaskService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

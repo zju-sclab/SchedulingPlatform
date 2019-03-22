@@ -1,4 +1,4 @@
-package com.skywilling.cn.manager.task.service;
+package com.skywilling.cn.command.service;
 
 import com.skywilling.cn.common.exception.IllegalTaskException;
 import com.skywilling.cn.manager.task.model.AutoTask;

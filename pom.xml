@@ -19,6 +19,7 @@
     <modules>
         <module>common</module>
         <module>connection</module>
+        <module>command</module>
         <module>livemap</module>
         <module>manager</module>
         <module>monitor</module>

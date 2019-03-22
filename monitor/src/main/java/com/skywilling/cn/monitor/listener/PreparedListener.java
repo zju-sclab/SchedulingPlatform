@@ -12,7 +12,6 @@ import com.skywilling.cn.manager.task.service.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.annotation.PostConstruct;
-import java.util.concurrent.CompletableFuture;
 
 public class PreparedListener extends BasicListener {
     @Autowired

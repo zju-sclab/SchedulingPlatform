@@ -1,11 +1,10 @@
-package com.skywilling.cn.manager.task.biz;
+package com.skywilling.cn.command.biz;
 
 import com.alibaba.fastjson.JSONObject;
 
 
 import com.skywilling.cn.common.enums.TypeField;
 import com.skywilling.cn.connection.service.RequestSender;
-import com.skywilling.cn.manager.car.enumeration.TaskState;
 import com.skywilling.cn.manager.task.biz.repository.TaskAccessor;
 import com.skywilling.cn.manager.task.model.AutoTask;
 import org.slf4j.Logger;
