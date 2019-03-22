@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <!--version: 版本, time: 更新时间-->
-<region version="0.2" time="2019/03/10">
+<region id="xuanzhou" version="0.2" time="2019/03/10">
   <nodes>
     <!--type: station, waiting point, parking point-->
     <node name="yunle_company" x="13218013.5968" y="3636349.31409" id="1" type="station" zh=""/>

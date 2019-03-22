@@ -16,8 +16,8 @@ import java.util.Iterator;
 
 @Service
 public class StaticMapFactory implements Factory<LiveMap> {
-    @Autowired
-    MapService mapService;
+
+
     private Document parse(String xmlUrl) throws DocumentException, MalformedURLException {
         URL url = new URL(xmlUrl);
         SAXReader reader = new SAXReader();
@@ -79,6 +79,7 @@ public class StaticMapFactory implements Factory<LiveMap> {
         LiveMap liveMap=new LiveMap();
         try {
             Document document = parse(url);
+            liveMap.setParkName(String.valueOf(document.getRootElement().attribute("parkName")));
             loadNode(document, liveMap);
             loadLanes(document, liveMap);
             return liveMap;

@@ -10,14 +10,11 @@ import java.util.List;
 @Data
 public class LaneShape {
     private static final long serialVersionUID = -4066975799803762308L;
-    private String LaneName;
-    private String from;
-    private String to;
     private String id;
-    private List<Coordinate> path;
+    private String parkName;
+    private List<Point> path;
     private int supportedMethods = 0;
     private List<Instruction> instructions;
-    private SiteDetail siteDetail;
     private int priority;
 
     public void addSupport(DriveMethod type) {

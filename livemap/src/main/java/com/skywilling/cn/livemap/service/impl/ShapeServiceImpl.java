@@ -4,6 +4,7 @@ package com.skywilling.cn.livemap.service.impl;
 import com.skywilling.cn.common.config.redis.RedisDao;
 import com.skywilling.cn.livemap.core.StaticLaneShapFactory;
 import com.skywilling.cn.livemap.exception.ParkNameEmptyException;
+import com.skywilling.cn.livemap.model.LaneShape;
 import com.skywilling.cn.livemap.model.Park;
 import com.skywilling.cn.livemap.model.ShapeMap;
 import com.skywilling.cn.livemap.service.ParkService;
@@ -11,40 +12,60 @@ import com.skywilling.cn.livemap.service.ShapeMapService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 
 @Service
 public class ShapeServiceImpl implements ShapeMapService {
-    private static final String PREFIX="shapeMap";
+    private static final String PREFIX="shapeMap_";
     @Autowired
     RedisDao redisDao;
     @Autowired
     ParkService parkService;
+    @Autowired
+    StaticLaneShapFactory staticLaneShapFactory;
 
     @Override
-    public ShapeMap query(String parkName)  {
-        Object read = redisDao.read(PREFIX + parkName);
-        if(read==null){
-            Park park = parkService.queryByName(parkName);
-            if (park != null && park.getShapeFileUrl() != null) {
-                StaticLaneShapFactory factory = new StaticLaneShapFactory();
-                ShapeMap shapeMap = factory.create(park.getShapeFileUrl());
-                shapeMap.setParkName(parkName);
-                save(shapeMap);
-                return shapeMap;
-            }else {
-                try {
-                    throw new ParkNameEmptyException();
-                } catch (ParkNameEmptyException e) {
-                    e.printStackTrace();
-                }
+    public List<LaneShape> query(String parkName, List<String> lanes) {
+
+        List<LaneShape> shapes=new ArrayList<>();
+
+        for(String laneName:lanes){
+            Object read = redisDao.read(PREFIX + parkName+laneName);
+            if(read==null){
+                Park park = parkService.queryByName(parkName);
+                checkAndCreate(park);
+                read = redisDao.read(PREFIX + parkName+laneName);
+            }
+            shapes.add((LaneShape) read);
+        }
+        return shapes;
+    }
+
+    @Override
+    public void create(String parkName) {
+        Park park = parkService.queryByName(parkName);
+        checkAndCreate(park);
+
+    }
+
+    @Override
+    public void save(LaneShape laneShape) {
+        redisDao.save(PREFIX + laneShape.getParkName()+laneShape.getId(),laneShape);
+    }
+
+
+    private void checkAndCreate(Park park){
+        if (park != null && park.getShapeFileUrl() != null) {
+            staticLaneShapFactory.create(park.getShapeFileUrl());
+
+        }else {
+            try {
+                throw new ParkNameEmptyException();
+            } catch (ParkNameEmptyException e) {
+                e.printStackTrace();
             }
         }
-        return (ShapeMap)  read;
     }
-
-    @Override
-    public void save(ShapeMap map) {
-        redisDao.save(PREFIX+map.getParkName(),map);
-    }
-
 }

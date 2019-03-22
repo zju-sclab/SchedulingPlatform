@@ -6,6 +6,7 @@ import com.skywilling.cn.livemap.core.StaticMapFactory;
 import com.skywilling.cn.livemap.model.*;
 import com.skywilling.cn.livemap.service.MapService;
 import com.skywilling.cn.livemap.service.ParkService;
+import com.skywilling.cn.livemap.service.ShapeMapService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
@@ -20,6 +21,10 @@ public class MapServiceImpl implements MapService {
     private RedisDao redisDao;
     @Autowired
     private ParkService parkService;
+    @Autowired
+    private ShapeMapService shapeMapService;
+    @Autowired
+    StaticMapFactory staticMapFactory;
 
     @Override
     public LiveMap getMap(String parkName) {
@@ -30,10 +35,10 @@ public class MapServiceImpl implements MapService {
             } else {
                 Park park = parkService.queryByName(parkName);
                 if (park != null && park.getMapFileUrl() != null) {
-                    StaticMapFactory staticMapFactory = new StaticMapFactory();
                     LiveMap liveMap = staticMapFactory.create(park.getMapFileUrl());
-                    liveMap.setParkName(parkName);
-                    save(liveMap);
+                    add(liveMap);
+                    shapeMapService.create(park.getShapeFileUrl());
+                    maps.putIfAbsent(liveMap.getParkName(),liveMap);
                 }
             }
 
@@ -42,7 +47,7 @@ public class MapServiceImpl implements MapService {
     }
 
     @Override
-    public void save(LiveMap map) {
+    public void add(LiveMap map) {
         maps.putIfAbsent(map.getParkName(), map);
     }
 
