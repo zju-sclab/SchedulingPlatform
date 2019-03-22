@@ -9,11 +9,13 @@ import org.springframework.data.mongodb.core.index.CompoundIndex;
 import org.springframework.data.mongodb.core.index.CompoundIndexes;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
+import org.springframework.stereotype.Repository;
 
 import java.io.Serializable;
 import java.util.List;
 
 @Data
+@Repository
 @Document(collection = "autonomousCarInfo")
 @CompoundIndexes({
         @CompoundIndex(name = "location_index", def = "{position': '2dsphere'}"),

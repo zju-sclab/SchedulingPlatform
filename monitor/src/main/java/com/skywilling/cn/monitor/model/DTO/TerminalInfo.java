@@ -1,8 +1,8 @@
 package com.skywilling.cn.monitor.model.DTO;
 
 
-import com.skywilling.cn.common.model.Pose;
 import com.skywilling.cn.manager.car.model.ModuleInfo;
+import com.skywilling.cn.manager.car.model.Pose;
 import lombok.Data;
 
 import java.io.Serializable;

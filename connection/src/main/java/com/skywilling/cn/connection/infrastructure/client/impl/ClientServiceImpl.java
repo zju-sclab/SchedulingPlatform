@@ -79,6 +79,11 @@ public class ClientServiceImpl implements ClientService, ClientPromise {
     }
   }
 
+  /**
+   * TODO:添加计时,未在规定时间内回复则认为是掉线
+   * @param vin
+   * @param requestId
+   */
   @Override
   public void onRequestTimeout(String vin, int requestId) {
     completeExceptionally(vin, requestId, new TimeoutException());

@@ -25,17 +25,15 @@ public class AutoServiceBiz {
   @Autowired
   TaskAccessor taskAccessor;
 
-  public CompletableFuture<Boolean> prepareAutonomous(String vin, AutoTask autoTask) {
+  public CompletableFuture<Boolean> prepareAutonomous(AutoTask autoTask) {
     LOG.info("prepareTask taskId {}", autoTask.getTaskId());
-    autoTask.setStatus(TaskState.PREPARING.getCode());
-    taskAccessor.save(autoTask);
-    return requestSender.sendRequest(vin, TypeField.PREPARE_FIRE, new JSONObject());
+    return requestSender.sendRequest(autoTask.getVin(), TypeField.PREPARE_FIRE, new JSONObject());
 
   }
 
 
   public CompletableFuture<Boolean> killAutonomous(String vin) {
-    CompletableFuture<Boolean> resultFuture = new CompletableFuture<>();
+
     return requestSender.sendRequest(vin, TypeField.STOP_AUTONOMOUS,new JSONObject());
 
   }

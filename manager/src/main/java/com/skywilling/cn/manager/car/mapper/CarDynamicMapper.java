@@ -6,6 +6,7 @@ import com.skywilling.cn.manager.car.model.CarDynamic;
 
 import java.util.List;
 
+@Mapper
 public interface CarDynamicMapper {
 
   void save(CarDynamic carDynamic);

@@ -4,11 +4,12 @@ import com.skywilling.cn.common.config.redis.RedisDao;
 import com.skywilling.cn.manager.task.biz.repository.TaskAccessor;
 import com.skywilling.cn.manager.task.model.AutoTask;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 import java.util.Calendar;
 import java.util.List;
 
-
+@Repository
 public class TaskAccessorImpl implements TaskAccessor {
 
   private static final String VIN_PREFIX = "TASK";

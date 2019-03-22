@@ -1,8 +1,8 @@
 package com.skywilling.cn.manager.car.service;
 
 
+import com.skywilling.cn.livemap.model.Point;
 import com.skywilling.cn.manager.car.model.AutonomousCarInfo;
-import com.skywilling.cn.common.model.Point;
 
 public interface CarGeoService {
 

@@ -1,6 +1,6 @@
 package com.skywilling.cn.manager.task.model;
 
-import com.skywilling.cn.common.model.Action;
+import com.skywilling.cn.manager.car.model.Action;
 import lombok.Data;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;

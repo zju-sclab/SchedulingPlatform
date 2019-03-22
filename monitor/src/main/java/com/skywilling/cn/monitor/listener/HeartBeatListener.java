@@ -2,18 +2,13 @@ package com.skywilling.cn.monitor.listener;
 
 import com.alibaba.fastjson.JSONObject;
 import com.skywilling.cn.common.enums.TypeField;
-import com.skywilling.cn.manager.car.enumeration.CarState;
-import com.skywilling.cn.manager.car.enumeration.ModuleState;
 import com.skywilling.cn.manager.car.model.AutonomousCarInfo;
-import com.skywilling.cn.manager.car.model.ModuleInfo;
 import com.skywilling.cn.manager.car.service.AutoCarInfoService;
-import com.skywilling.cn.monitor.model.DTO.RunInfo;
 import com.skywilling.cn.monitor.model.DTO.TerminalInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.annotation.PostConstruct;
-import java.util.ArrayList;
-import java.util.List;
+
 
 public class HeartBeatListener extends BasicListener {
 

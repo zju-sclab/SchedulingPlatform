@@ -2,17 +2,19 @@ package com.skywilling.cn.manager.task.service;
 
 import com.skywilling.cn.common.exception.IllegalTaskException;
 import com.skywilling.cn.manager.task.model.AutoTask;
+import com.sun.org.apache.xpath.internal.operations.Bool;
 
 import java.util.concurrent.CompletableFuture;
 
 public interface AutoTaskService {
 
-    String submit(AutoTask autoTask) throws IllegalTaskException, IllegalStateException;
+    CompletableFuture<Boolean> submit(AutoTask autoTask) ;
 
+    CompletableFuture<Boolean> start(AutoTask autoTask);
 
-    CompletableFuture<Integer> resume(String taskId);
+    CompletableFuture<Boolean> resume(String taskId);
 
     CompletableFuture<Boolean> stop(String taskId);
 
-    CompletableFuture<Integer> intervening(String taskId);
+    CompletableFuture<Boolean> intervening(String taskId);
 }

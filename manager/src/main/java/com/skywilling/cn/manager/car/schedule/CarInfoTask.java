@@ -7,7 +7,7 @@ import com.skywilling.cn.manager.car.enumeration.ConnectType;
 import com.skywilling.cn.manager.car.enumeration.ModuleType;
 import com.skywilling.cn.manager.car.model.AutonomousCarInfo;
 import com.skywilling.cn.manager.car.model.CarDynamic;
-import com.skywilling.cn.common.model.Pose;
+import com.skywilling.cn.manager.car.model.Pose;
 import com.skywilling.cn.manager.car.service.AutoCarInfoService;
 import com.skywilling.cn.manager.car.service.CarDynamicService;
 import org.slf4j.Logger;
@@ -48,8 +48,8 @@ public class CarInfoTask {
       CarDynamic carDynamic = new CarDynamic();
       carDynamic.setVin(vin);
       carDynamic.setConnect(carInfo.getState() == -1 ? 0: 1);
-      carDynamic.setBodyStatus(carInfo.getNodes().stream().anyMatch(moduleInfo -> moduleInfo.getType() == ModuleType.HARDWARE && moduleInfo.getType() != 0) ? 1 : 0);
-      carDynamic.setModuleStatus(carInfo.getNodes().stream().anyMatch(moduleInfo -> moduleInfo.getType() == ModuleType.SOFTWARE && moduleInfo.getType() != 0) ? 1 : 0);
+      carDynamic.setBodyStatus(carInfo.getNodes().stream().anyMatch(moduleInfo -> ModuleType.HARDWARE.getCode() ==moduleInfo.getType()  && moduleInfo.getType() != 0) ? 1 : 0);
+      carDynamic.setModuleStatus(carInfo.getNodes().stream().anyMatch(moduleInfo -> ModuleType.SOFTWARE.getCode() ==moduleInfo.getType()  && moduleInfo.getType() != 0) ? 1 : 0);
 
       Pose pose = carInfo.getPose();
       if (pose != null && pose.getPoint() != null) {

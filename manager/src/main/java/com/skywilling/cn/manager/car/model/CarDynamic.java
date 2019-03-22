@@ -1,10 +1,12 @@
 package com.skywilling.cn.manager.car.model;
 
 import lombok.Data;
+import org.springframework.stereotype.Repository;
 
 import java.io.Serializable;
 import java.util.Date;
 
+@Repository
 @Data
 public class CarDynamic implements Serializable {
 

@@ -32,7 +32,7 @@ public class PreparedListener extends BasicListener {
 
     @Override
     public boolean process(String vin, boolean result, String body) {
-        //判断是否准备好，是则开始正式发送任务，放弃
+        //判断是否准备好，是则开始正式发送任务，否则放弃
         AutoTask autoTask = null;
         try {
             autoTask = taskService.getCurrentTask(vin);
@@ -55,15 +55,7 @@ public class PreparedListener extends BasicListener {
                 autoCarInfoService.save(car);
             }
         } else if (success) {
-            autoTask.setStatus(TaskState.SUBMITTING.getCode());
-            taskService.update(autoTask);
-            CompletableFuture<Boolean> future = autoTaskService.submit(autoTask);
-            future.whenComplete((result, t) -> {
-                if (t != null) {
-                    autoTask.setStatus(TaskState.REJECTED.getCode());
-                    taskService.update(autoTask);
-                }
-            });
+            autoTaskService.submit(autoTask);
         }
     }
 
