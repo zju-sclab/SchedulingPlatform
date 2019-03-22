@@ -7,7 +7,6 @@ import com.skywilling.cn.manager.car.enumeration.TaskState;
 import com.skywilling.cn.manager.car.model.AutonomousCarInfo;
 import com.skywilling.cn.manager.car.service.AutoCarInfoService;
 import com.skywilling.cn.manager.task.model.AutoTask;
-import com.skywilling.cn.manager.task.service.AutoTaskService;
 import com.skywilling.cn.manager.task.service.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -20,8 +19,8 @@ public class PreparedListener extends BasicListener {
     AutoCarInfoService autoCarInfoService;
     @Autowired
     TaskService taskService;
-    @Autowired
-    AutoTaskService autoTaskService;
+//    @Autowired
+//    AutoTaskService autoTaskService;
 
     @Override
     @PostConstruct
@@ -54,7 +53,7 @@ public class PreparedListener extends BasicListener {
                 autoCarInfoService.save(car);
             }
         } else if (success) {
-            autoTaskService.submit(autoTask);
+//            autoTaskService.submit(autoTask);
         }
     }
 

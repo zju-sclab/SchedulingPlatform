@@ -1,6 +1,7 @@
 package com.skywilling.cn.scheduler.core;
 
 
+import com.skywilling.cn.command.service.AutoTaskService;
 import com.skywilling.cn.common.exception.IllegalTaskException;
 import com.skywilling.cn.common.exception.park.NoAvailableActionFoundException;
 import com.skywilling.cn.livemap.model.LiveLane;
@@ -8,7 +9,6 @@ import com.skywilling.cn.livemap.service.MapService;
 import com.skywilling.cn.manager.car.enumeration.TaskState;
 import com.skywilling.cn.manager.car.model.Action;
 import com.skywilling.cn.manager.task.model.AutoTask;
-import com.skywilling.cn.manager.task.service.AutoTaskService;
 import com.skywilling.cn.scheduler.common.TripStatus;
 import com.skywilling.cn.scheduler.model.Route;
 import com.skywilling.cn.scheduler.model.Trip;

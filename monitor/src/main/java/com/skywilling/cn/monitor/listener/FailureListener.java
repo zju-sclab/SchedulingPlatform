@@ -1,9 +1,10 @@
 package com.skywilling.cn.monitor.listener;
 
-import com.skywilling.cn.connection.model.ACK;
+
 import com.skywilling.cn.manager.car.enumeration.CarState;
 import com.skywilling.cn.manager.car.model.AutonomousCarInfo;
 import com.skywilling.cn.manager.car.service.AutoCarInfoService;
+import com.skywilling.cn.monitor.model.DTO.ACK;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.annotation.PostConstruct;
