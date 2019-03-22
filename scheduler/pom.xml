@@ -42,7 +42,7 @@
         </dependency>
 
         <dependency>
-            <groupId>>com.skywilling.cn</groupId>
+            <groupId>com.skywilling.cn</groupId>
             <artifactId>command</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
