@@ -14,6 +14,8 @@ import io.netty.handler.codec.string.StringEncoder;
 import io.netty.util.concurrent.Future;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 
 import javax.annotation.Resource;
 import java.util.Iterator;
@@ -22,6 +24,7 @@ import java.util.Map;
 public class NettyServer {
 
   private static final Logger LOG = LoggerFactory.getLogger(NettyServer.class);
+  @Value("${netty.port}")
   private int port;
   private ChannelFuture future;
   private Map<ChannelOption, Object> optionMap;
