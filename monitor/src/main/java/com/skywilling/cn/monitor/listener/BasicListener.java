@@ -1,13 +1,14 @@
 package com.skywilling.cn.monitor.listener;
 
+import com.skywilling.cn.common.model.BasicCarResponse;
 import org.springframework.stereotype.Component;
 
 @Component
-public class BasicListener {
+public class  BasicListener {
 
     public void init(){}
 
-    public boolean process(String vin, boolean result,String body){return true;}
+    public BasicCarResponse process(String vin, boolean result, String body){return null;}
 
-    public boolean process(String vin,String body){ return true;}
+    public BasicCarResponse process(String vin,String body){ return null;}
 }

@@ -2,6 +2,7 @@ package com.skywilling.cn.monitor.listener;
 
 import com.skywilling.cn.common.enums.TypeField;
 import com.skywilling.cn.common.exception.CarNotExistsException;
+import com.skywilling.cn.common.model.BasicCarResponse;
 import com.skywilling.cn.manager.car.enumeration.CarState;
 import com.skywilling.cn.manager.car.enumeration.TaskState;
 import com.skywilling.cn.manager.car.model.AutonomousCarInfo;
@@ -29,18 +30,18 @@ public class PreparedListener extends BasicListener {
     }
 
     @Override
-    public boolean process(String vin, boolean result, String body) {
+    public BasicCarResponse process(String vin, boolean result, String body) {
         //判断是否准备好，是则开始正式发送任务，否则放弃
         AutoTask autoTask = null;
         try {
             autoTask = taskService.getCurrentTask(vin);
             onPrepared(autoTask, result);
-            return true;
+            return null;
         } catch (CarNotExistsException e) {
             e.printStackTrace();
         }
 
-        return false;
+        return null;
     }
 
     private void onPrepared(AutoTask autoTask, boolean success) {

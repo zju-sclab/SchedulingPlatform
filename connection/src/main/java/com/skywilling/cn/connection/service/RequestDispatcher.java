@@ -1,5 +1,6 @@
 package com.skywilling.cn.connection.service;
 
+import com.skywilling.cn.common.model.BasicCarResponse;
 import com.skywilling.cn.connection.infrastructure.client.ClientPromise;
 import com.skywilling.cn.connection.infrastructure.client.ClientService;
 import com.skywilling.cn.connection.model.ACK;
@@ -13,6 +14,7 @@ import io.netty.util.AttributeKey;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.util.concurrent.ExecutorService;
@@ -21,7 +23,7 @@ import java.util.concurrent.Executors;
 /**
  * 请求分排器,通道中主要包含三种数据，一是请求，二是回复，三是链接断开
  */
-@Service
+@Component
 public class RequestDispatcher {
 
     @Value("${netty.dispatch.threads}")
@@ -70,8 +72,8 @@ public class RequestDispatcher {
     private void loginHandler(final ChannelHandlerContext ctx, Packet packet) {
         String vin = packet.getVin();
         ACK ack = ACK.SUCCESS;
-
-        if (listenerMap.getListener(TypeField.LOGIN.getDesc()).process(vin, packet.getData())) {
+        BasicCarResponse process = listenerMap.getListener(TypeField.LOGIN.getDesc()).process(vin, packet.getData());
+        if (ACK.SUCCESS.getCode()==process.getCode()) {
             //save channel
             AttributeKey<String> key = AttributeKey.valueOf(ProtocolField.VIN.getField());
             Attribute<String> vinAttr = ctx.channel().attr(key);

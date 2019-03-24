@@ -2,15 +2,18 @@ package com.skywilling.cn.connection.infrastructure.server.handler;
 
 import com.skywilling.cn.connection.model.Packet;
 import com.skywilling.cn.connection.service.RequestDispatcher;
+import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
 import io.netty.channel.socket.ChannelInputShutdownEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
 
-
+@Component
+@ChannelHandler.Sharable
 public class ServerChannelHandlerAdapter extends ChannelInboundHandlerAdapter {
     /**
      * 日志处理

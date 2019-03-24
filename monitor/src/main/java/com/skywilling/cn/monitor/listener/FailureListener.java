@@ -1,6 +1,7 @@
 package com.skywilling.cn.monitor.listener;
 
 
+import com.skywilling.cn.common.model.BasicCarResponse;
 import com.skywilling.cn.manager.car.enumeration.CarState;
 import com.skywilling.cn.manager.car.model.AutonomousCarInfo;
 import com.skywilling.cn.manager.car.service.AutoCarInfoService;
@@ -22,12 +23,12 @@ public class FailureListener extends BasicListener {
     }
 
     @Override
-    public boolean process(String vin, String body){
+    public BasicCarResponse process(String vin, String body){
         AutonomousCarInfo car = autoCarInfoService.getOrCreate(vin);
         car.setState(CarState.LOST.getState());
         car.setNodes(null);
         car.setTaskId(null);
         autoCarInfoService.save(car);
-        return true;
+        return null;
     }
 }

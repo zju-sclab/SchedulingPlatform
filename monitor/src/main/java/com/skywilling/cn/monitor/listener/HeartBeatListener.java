@@ -2,6 +2,7 @@ package com.skywilling.cn.monitor.listener;
 
 import com.alibaba.fastjson.JSONObject;
 import com.skywilling.cn.common.enums.TypeField;
+import com.skywilling.cn.common.model.BasicCarResponse;
 import com.skywilling.cn.manager.car.model.AutonomousCarInfo;
 import com.skywilling.cn.manager.car.service.AutoCarInfoService;
 import com.skywilling.cn.monitor.model.DTO.TerminalInfo;
@@ -24,10 +25,10 @@ public class HeartBeatListener extends BasicListener {
     }
 
     @Override
-    public boolean process(String vin, String body){
+    public BasicCarResponse process(String vin, String body){
         AutonomousCarInfo car = autoCarInfoService.getOrCreate(vin);
         if (car == null) {
-            return false;
+            return null;
         }
         TerminalInfo terminalInfo=JSONObject.parseObject(body,TerminalInfo.class);
         car.setVelocity(terminalInfo.getV());
@@ -40,6 +41,6 @@ public class HeartBeatListener extends BasicListener {
         car.setLane(terminalInfo.getLane());
         autoCarInfoService.save(car);
 
-        return true;
+        return null;
     }
 }

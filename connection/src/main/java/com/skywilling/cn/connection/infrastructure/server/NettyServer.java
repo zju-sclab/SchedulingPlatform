@@ -14,18 +14,22 @@ import io.netty.handler.codec.string.StringEncoder;
 import io.netty.util.concurrent.Future;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 
+import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 import java.util.Iterator;
 import java.util.Map;
 
+@Component
 public class NettyServer {
 
   private static final Logger LOG = LoggerFactory.getLogger(NettyServer.class);
   @Value("${netty.port}")
   private int port;
+  @Value("${netty.workNum}")
+  private int workerNum;
   private ChannelFuture future;
   private Map<ChannelOption, Object> optionMap;
   private ChannelInitializer<SocketChannel> initializer;
@@ -35,8 +39,9 @@ public class NettyServer {
   @Resource
   private ServerChannelHandlerAdapter channelHandlerAdapter;
 
-  public NettyServer(int port, int workerNum) {
-    this.port = port;
+
+  public NettyServer() {
+
     this.initializer = new ChannelInitializer<SocketChannel>() {
       @Override
       protected void initChannel(SocketChannel ch) throws Exception {
@@ -57,6 +62,7 @@ public class NettyServer {
     workerGroup = new NioEventLoopGroup(workerNum);
   }
 
+  @PostConstruct
   public void start() {
     try {
       ServerBootstrap bootstrap = new ServerBootstrap();

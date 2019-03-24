@@ -2,6 +2,7 @@ package com.skywilling.cn.monitor.listener;
 
 import com.alibaba.fastjson.JSONObject;
 import com.skywilling.cn.common.enums.TypeField;
+import com.skywilling.cn.common.model.BasicCarResponse;
 import com.skywilling.cn.manager.task.model.AutoTask;
 import com.skywilling.cn.manager.task.service.TaskService;
 import com.skywilling.cn.monitor.model.DTO.TaskInfo;
@@ -23,7 +24,7 @@ public class TaskStatusListener extends BasicListener {
     }
 
     @Override
-    public boolean process(String vin, boolean result, String body) {
+    public BasicCarResponse process(String vin, boolean result, String body) {
 
         TaskInfo taskInfo = JSONObject.parseObject(body, TaskInfo.class);
         AutoTask autoTask = taskService.getTaskById(taskInfo.getTaskId());
@@ -31,6 +32,6 @@ public class TaskStatusListener extends BasicListener {
         taskService.update(autoTask);
 
 
-        return true;
+        return null;
     }
 }

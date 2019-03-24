@@ -20,12 +20,13 @@ import java.util.Map;
 @Repository
 public class TripAccessorImpl implements TripAccessor {
 
-  @Autowired
-  private MongoTemplate mongoTemplate;
+//  @Autowired
+//  private MongoTemplate mongoTemplate;
 
   @Override
   public void save(Trip trip) {
-    mongoTemplate.save(trip);
+
+//    mongoTemplate.save(trip);
   }
 
 
@@ -33,12 +34,14 @@ public class TripAccessorImpl implements TripAccessor {
   public void update(String tripId, Map<String, Object> updates) {
     Update update = new Update();
     updates.forEach(update::pull);
-    mongoTemplate.updateFirst(Query.query(Criteria.where("generateTripId").is(tripId)), update, Trip.class);
+//    mongoTemplate.updateFirst(Query.query(Criteria.where("generateTripId").is(tripId)), update, Trip.class);
   }
 
   @Override
   public Trip find(String tripId) {
-    return mongoTemplate.findById(tripId, Trip.class);
+
+//    return mongoTemplate.findById(tripId, Trip.class);
+    return null;
   }
 
 
@@ -46,7 +49,8 @@ public class TripAccessorImpl implements TripAccessor {
   public List<Trip> query(int page, int size) {
     Query query = new Query();
     query.with(new Sort(new Order(Direction.DESC, "startTime"))).with(new PageRequest(page, size));
-    return mongoTemplate.find(query, Trip.class);
+//    return mongoTemplate.find(query, Trip.class);
+    return null;
   }
 
   @Override
@@ -54,7 +58,8 @@ public class TripAccessorImpl implements TripAccessor {
     Query query = new Query();
     query.addCriteria(Criteria.where("status").is(jobStatusType));
     query.with(new Sort(new Order(Direction.DESC, "startTime"))).with(new PageRequest(page, size));
-    return mongoTemplate.find(query, Trip.class);
+//    return mongoTemplate.find(query, Trip.class);
+    return null;
   }
 
   @Override
@@ -62,7 +67,8 @@ public class TripAccessorImpl implements TripAccessor {
     Query query = new Query();
     query.addCriteria(Criteria.where("vin").is(vin));
     query.with(new Sort(new Order(Direction.DESC, "startTime"))).with(new PageRequest(page, size));
-    return mongoTemplate.find(query, Trip.class);
+//    return mongoTemplate.find(query, Trip.class);
+    return null;
   }
 
   @Override
@@ -72,7 +78,8 @@ public class TripAccessorImpl implements TripAccessor {
         .addCriteria(Criteria.where("startTime").gte(start))
         .addCriteria(Criteria.where("startTime").lte(end));
     query.with(new Sort(new Order(Direction.DESC, "startTime"))).with(new PageRequest(page, size));
-    return mongoTemplate.find(query, Trip.class);
+//    return mongoTemplate.find(query, Trip.class);
+    return null;
   }
 
 

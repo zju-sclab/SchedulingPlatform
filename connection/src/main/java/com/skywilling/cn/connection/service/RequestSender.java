@@ -6,12 +6,13 @@ import com.skywilling.cn.common.enums.TypeField;
 import com.skywilling.cn.connection.infrastructure.client.ClientService;
 import com.skywilling.cn.connection.model.Packet;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.util.concurrent.CompletableFuture;
 import java.util.function.BiConsumer;
 
-@Service
+@Component
 public class RequestSender {
     @Autowired
     ClientService clientService;

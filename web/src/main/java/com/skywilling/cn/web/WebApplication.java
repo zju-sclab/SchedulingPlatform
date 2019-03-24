@@ -6,9 +6,10 @@ import org.mybatis.spring.boot.autoconfigure.MybatisAutoConfiguration;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
+import org.springframework.boot.autoconfigure.mongo.MongoAutoConfiguration;
 
 
-@SpringBootApplication(scanBasePackages = {"com.skywilling.cn"},exclude= {DataSourceAutoConfiguration.class})
+@SpringBootApplication(scanBasePackages = {"com.skywilling.cn"},exclude= {DataSourceAutoConfiguration.class, MongoAutoConfiguration.class})
 @MapperScan("com.skywilling.cn.*.*.mapper")
 public class WebApplication {
 
