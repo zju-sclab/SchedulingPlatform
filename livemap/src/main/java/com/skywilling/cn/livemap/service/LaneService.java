@@ -11,8 +11,8 @@ import java.util.List;
 public interface LaneService {
     LiveLane get(String parkName, String laneName);
     void addLane(String parkName, LiveLane liveLane);
-    void addVehicles(LiveLane liveLane,String vin);
-    void removeVehicles(LiveLane liveLane,String vin);
+    void addVehicles(LiveLane liveLane, String vin);
+    void removeVehicles(LiveLane liveLane, String vin);
     List<String> getVehicles(String parkName, String laneName);
     void setWeight(String parkName, String laneName, double weight);
 

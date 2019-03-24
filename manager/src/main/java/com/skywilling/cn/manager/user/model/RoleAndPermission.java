@@ -1,7 +1,9 @@
 package com.skywilling.cn.manager.user.model;
 
-import java.io.Serializable;
+import org.springframework.stereotype.Repository;
 
+import java.io.Serializable;
+@Repository
 public class RoleAndPermission implements Serializable {
   private static final long serialVersionUID = 7902577677899533426L;
   private Integer roleId;

@@ -7,9 +7,9 @@ import java.util.concurrent.ConcurrentHashMap;
 @Component
 public class ListenerMap {
 
-    private ConcurrentHashMap<String,BasicListener> listenerMap=new ConcurrentHashMap<>();
+    private ConcurrentHashMap<String, BasicListener> listenerMap=new ConcurrentHashMap<>();
 
-    public void addListener(String name,BasicListener listener){
+    public void addListener(String name, BasicListener listener){
         this.listenerMap.putIfAbsent(name,listener);
     }
 

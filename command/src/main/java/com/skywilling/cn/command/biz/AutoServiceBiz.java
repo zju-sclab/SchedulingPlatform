@@ -1,8 +1,6 @@
 package com.skywilling.cn.command.biz;
 
 import com.alibaba.fastjson.JSONObject;
-
-
 import com.skywilling.cn.common.enums.TypeField;
 import com.skywilling.cn.connection.service.RequestSender;
 import com.skywilling.cn.manager.task.biz.repository.TaskAccessor;

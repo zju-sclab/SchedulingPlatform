@@ -12,6 +12,9 @@
   <typeAliases>
     <package name="com.skywilling.cn.livemap.model"/>
     <package name="com.skywilling.cn.manager.car.model"/>
+    <package name="com.skywilling.cn.manager.user.model"/>
+    <package name="com.skywilling.cn.manager.trip.model"/>
+    <package name="com.skywilling.cn.manager.task.model"/>
   </typeAliases>
 
   <!--插件-->

@@ -1,12 +1,12 @@
 package com.skywilling.cn.connection.service;
 
+import com.skywilling.cn.common.enums.TypeField;
 import com.skywilling.cn.common.model.BasicCarResponse;
 import com.skywilling.cn.connection.infrastructure.client.ClientPromise;
 import com.skywilling.cn.connection.infrastructure.client.ClientService;
 import com.skywilling.cn.connection.model.ACK;
 import com.skywilling.cn.connection.model.Packet;
 import com.skywilling.cn.connection.model.ProtocolField;
-import com.skywilling.cn.common.enums.TypeField;
 import com.skywilling.cn.monitor.listener.ListenerMap;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.util.Attribute;
@@ -15,7 +15,6 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -28,8 +27,8 @@ public class RequestDispatcher {
 
     @Value("${netty.dispatch.threads}")
     private int threadNum;
+    private ExecutorService executorService ;
 
-    private ExecutorService executorService = Executors.newFixedThreadPool(threadNum);
     @Autowired
     ClientService clientService;
     @Autowired
@@ -37,6 +36,9 @@ public class RequestDispatcher {
     @Autowired
     ListenerMap listenerMap;
 
+    public RequestDispatcher(){
+        executorService=Executors.newFixedThreadPool(10);
+    }
     /**
      * 分发，需要分发的请求有请求和回复
      *

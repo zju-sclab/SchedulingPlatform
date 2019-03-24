@@ -1,7 +1,7 @@
 package com.skywilling.cn.connection.infrastructure.client.impl;
 
-import com.skywilling.cn.connection.infrastructure.client.ClientService;
 import com.skywilling.cn.connection.infrastructure.client.ClientPromise;
+import com.skywilling.cn.connection.infrastructure.client.ClientService;
 import com.skywilling.cn.connection.model.CarClient;
 import com.skywilling.cn.connection.model.Packet;
 import io.netty.channel.Channel;

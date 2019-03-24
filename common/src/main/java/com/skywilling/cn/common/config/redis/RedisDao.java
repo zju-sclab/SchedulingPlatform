@@ -8,7 +8,6 @@ import org.springframework.data.redis.core.ListOperations;
 import org.springframework.data.redis.core.RedisOperations;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
-import org.springframework.data.redis.support.atomic.RedisAtomicInteger;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;

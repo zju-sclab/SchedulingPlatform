@@ -1,8 +1,10 @@
 package com.skywilling.cn.manager.user.model;
 
+import org.springframework.stereotype.Repository;
+
 import java.io.Serializable;
 import java.util.Date;
-
+@Repository
 public class UserInfo implements Serializable {
 
   private static final long serialVersionUID = -5560835541244610765L;

@@ -1,40 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <modelVersion>4.0.0</modelVersion>
     <parent>
-        <groupId>com.skywilling.cn</groupId>
         <artifactId>schedulingplatform</artifactId>
+        <groupId>com.skywilling.cn</groupId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
-    <groupId>com.skywilling.cn</groupId>
+    <modelVersion>4.0.0</modelVersion>
+
     <artifactId>livemap</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
-    <name>livemap</name>
-    <description>Demo project for Spring Boot</description>
 
-    <properties>
-        <java.version>1.8</java.version>
-    </properties>
-
-    <dependencies>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-test</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.skywilling.cn</groupId>
-            <artifactId>common</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-            <scope>compile</scope>
-        </dependency>
-    </dependencies>
+<dependencies>
+    <dependency>
+        <groupId>com.skywilling.cn</groupId>
+        <artifactId>common</artifactId>
+        <version>0.0.1-SNAPSHOT</version>
+    </dependency>
+</dependencies>
 
     <build>
         <resources>
@@ -60,5 +43,4 @@
             </plugin>
         </plugins>
     </build>
-
 </project>

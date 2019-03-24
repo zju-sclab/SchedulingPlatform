@@ -1,6 +1,6 @@
 package com.skywilling.cn.common.model;
 
-public class Coordinate extends AbstractPoint{
+public class Coordinate extends AbstractPoint {
   private double x;
   private double y;
 

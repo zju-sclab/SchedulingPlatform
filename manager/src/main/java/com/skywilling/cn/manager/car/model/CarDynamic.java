@@ -33,6 +33,7 @@ public class CarDynamic implements Serializable {
   private Double velocity = 0.0;
   private Double wheelAngle = 0.0;
   private Double gear = 0.0;
+  private Double energy;
 
   private Integer isValid     ;
   private String lane;
