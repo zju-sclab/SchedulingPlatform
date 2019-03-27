@@ -1,5 +1,6 @@
 package com.skywilling.cn.monitor.listener;
 
+import com.rabbitmq.client.AMQP;
 import com.skywilling.cn.common.enums.TypeField;
 import com.skywilling.cn.common.exception.CarNotExistsException;
 import com.skywilling.cn.common.model.BasicCarResponse;
@@ -9,6 +10,7 @@ import com.skywilling.cn.manager.car.model.AutonomousCarInfo;
 import com.skywilling.cn.manager.car.service.AutoCarInfoService;
 import com.skywilling.cn.manager.task.model.AutoTask;
 import com.skywilling.cn.manager.task.service.TaskService;
+import com.skywilling.cn.monitor.model.DTO.ACK;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.annotation.PostConstruct;
@@ -20,8 +22,7 @@ public class PreparedListener extends BasicListener {
     AutoCarInfoService autoCarInfoService;
     @Autowired
     TaskService taskService;
-//    @Autowired
-//    AutoTaskService autoTaskService;
+
 
     @Override
     @PostConstruct
@@ -35,8 +36,8 @@ public class PreparedListener extends BasicListener {
         AutoTask autoTask = null;
         try {
             autoTask = taskService.getCurrentTask(vin);
-            onPrepared(autoTask, result);
-            return null;
+            return onPrepared(autoTask, result);
+
         } catch (CarNotExistsException e) {
             e.printStackTrace();
         }
@@ -44,7 +45,7 @@ public class PreparedListener extends BasicListener {
         return null;
     }
 
-    private void onPrepared(AutoTask autoTask, boolean success) {
+    private BasicCarResponse onPrepared(AutoTask autoTask, boolean success) {
         if (!success) {
             autoTask.setStatus(TaskState.REJECTED.getCode());
             taskService.update(autoTask);
@@ -53,8 +54,9 @@ public class PreparedListener extends BasicListener {
                 car.setState(CarState.FREE.getState());
                 autoCarInfoService.save(car);
             }
-        } else if (success) {
-//            autoTaskService.submit(autoTask);
+            return null;
+        } else {
+            return new BasicCarResponse(ACK.COMMAND.getCode(), autoTask);
         }
     }
 

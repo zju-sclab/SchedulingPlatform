@@ -2,6 +2,7 @@ package com.skywilling.cn.connection.model;
 
 import com.alibaba.fastjson.JSONObject;
 import com.skywilling.cn.common.enums.TypeField;
+import com.skywilling.cn.common.model.BasicCarResponse;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -66,6 +67,12 @@ public class Packet implements Serializable {
       packet.ack = ack.getCode();
       packet.requestId = requestId;
       packet.version = "0.1";
+      return this;
+    }
+
+    public Builder buildResponse(Packet packet, BasicCarResponse response){
+      packet.ack=response.getCode();
+      packet.data=response.getAttach().toString();
       return this;
     }
 

@@ -48,32 +48,39 @@ public class RequestDispatcher {
     public void dispatch(final ChannelHandlerContext ctx, Packet packet) {
 
         executorService.submit(() -> {
+            BasicCarResponse carResponse;
             if (ACK.COMMAND.getCode() == packet.getAck()) {
-                commandHandler(ctx, packet);
-                return;
+                carResponse=commandHandler(ctx, packet);
+
             }
-            responseHandler(packet);
+            else {
+                carResponse=responseHandler(packet);
+            }
+            if(carResponse!=null){
+                Packet.Builder builder = new Packet.Builder();
+                ctx.writeAndFlush(builder.buildResponse(packet,carResponse).build());
+
+            }
 
         });
     }
 
-    public void commandHandler(final ChannelHandlerContext ctx, Packet packet) {
+    public BasicCarResponse commandHandler(final ChannelHandlerContext ctx, Packet packet) {
         TypeField typeField = TypeField.valueOf(packet.getType());
         if (TypeField.LOGIN == typeField) {
-            loginHandler(ctx, packet);
-            return;
+            return loginHandler(ctx, packet);
         }
 
         if (typeField != null) {
-            listenerMap.getListener(typeField.getDesc()).
+             return listenerMap.getListener(typeField.getDesc()).
                     process(packet.getVin(), packet.getData());
         }
+        return null;
     }
 
 
-    private void loginHandler(final ChannelHandlerContext ctx, Packet packet) {
+    private BasicCarResponse loginHandler(final ChannelHandlerContext ctx, Packet packet) {
         String vin = packet.getVin();
-        ACK ack = ACK.SUCCESS;
         BasicCarResponse process = listenerMap.getListener(TypeField.LOGIN.getDesc()).process(vin, packet.getData());
         if (ACK.SUCCESS.getCode()==process.getCode()) {
             //save channel
@@ -81,23 +88,21 @@ public class RequestDispatcher {
             Attribute<String> vinAttr = ctx.channel().attr(key);
             vinAttr.setIfAbsent(vin);
             clientService.open(vin, ctx.channel());
-        } else {
-            ack = ACK.FAILURE;
         }
-        //build response
-        Packet.Builder builder = new Packet.Builder();
-        ctx.writeAndFlush(builder.buildResponse(vin, TypeField.LOGIN, ack, packet.getRequestId()).build());
-    }
+        return process;
+       }
 
-    public void responseHandler(Packet packet) {
+    public BasicCarResponse responseHandler(Packet packet) {
         boolean result = ACK.getResult(packet.getAck());
         TypeField typeField = TypeField.valueOf(packet.getType());
 
         if (typeField != null) {
-            listenerMap.getListener(typeField.getDesc()).
-                    process(packet.getVin(), result, packet.getData());
             clientPromise.receivedResponse(packet);
+            BasicCarResponse process = listenerMap.getListener(typeField.getDesc()).
+                    process(packet.getVin(), result, packet.getData());
+            return process;
         }
+        return null;
     }
 
 
