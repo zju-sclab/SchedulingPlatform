@@ -37,34 +37,29 @@ public class NettyServer {
   private EventLoopGroup bossGroup;
   private EventLoopGroup workerGroup;
   @Resource
-  private ServerChannelHandlerAdapter channelHandlerAdapter;
-
-
-  public NettyServer() {
-
-    this.initializer = new ChannelInitializer<SocketChannel>() {
-      @Override
-      protected void initChannel(SocketChannel ch) throws Exception {
-        ChannelPipeline pipeline = ch.pipeline();
-
-        pipeline.addLast("decoder", new LineBasedFrameDecoder(Integer.MAX_VALUE));
-        pipeline.addLast("stringDecoder", new StringDecoder());
-        pipeline.addLast("stringEncoder", new StringEncoder());
-
-        pipeline.addLast("jsonDecoder", new JSONDecoder());
-        pipeline.addLast("jsonEncoder", new JSONEncoder());
-
-        pipeline.addLast("serverHanler", channelHandlerAdapter);
-      }
-    };
-
-    bossGroup = new NioEventLoopGroup(1);
-    workerGroup = new NioEventLoopGroup(workerNum);
-  }
+  private ServerChannelHandlerAdapter serverHandler;
 
   @PostConstruct
   public void start() {
     try {
+      this.initializer = new ChannelInitializer<SocketChannel>() {
+        @Override
+        protected void initChannel(SocketChannel ch) throws Exception {
+          ChannelPipeline pipeline = ch.pipeline();
+
+          pipeline.addLast("decoder", new LineBasedFrameDecoder(Integer.MAX_VALUE));
+          pipeline.addLast("stringDecoder", new StringDecoder());
+          pipeline.addLast("stringEncoder", new StringEncoder());
+
+          pipeline.addLast("jsonDecoder", new JSONDecoder());
+          pipeline.addLast("jsonEncoder", new JSONEncoder());
+
+          pipeline.addLast("serverHanler", serverHandler);
+        }
+      };
+
+      bossGroup = new NioEventLoopGroup(1);
+      workerGroup = new NioEventLoopGroup(workerNum);
       ServerBootstrap bootstrap = new ServerBootstrap();
       bootstrap.group(bossGroup, workerGroup);
       bootstrap.channel(NioServerSocketChannel.class);

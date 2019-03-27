@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
 
-@Component
+@Component("serverHandler")
 @ChannelHandler.Sharable
 public class ServerChannelHandlerAdapter extends ChannelInboundHandlerAdapter {
     /**
