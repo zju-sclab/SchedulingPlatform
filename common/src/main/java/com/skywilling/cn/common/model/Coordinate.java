@@ -1,5 +1,9 @@
 package com.skywilling.cn.common.model;
 
+
+import lombok.Data;
+
+@Data
 public class Coordinate extends AbstractPoint {
   private double x;
   private double y;
@@ -12,19 +16,4 @@ public class Coordinate extends AbstractPoint {
     this.y = y;
   }
 
-  public double getX() {
-    return x;
-  }
-
-  public void setX(double x) {
-    this.x = x;
-  }
-
-  public double getY() {
-    return y;
-  }
-
-  public void setY(double y) {
-    this.y = y;
-  }
 }

@@ -1,6 +1,7 @@
 package com.skywilling.cn.manager.car.model;
 
 import com.skywilling.cn.common.enums.DriveMethod;
+import com.skywilling.cn.common.model.LidarPoint;
 import com.skywilling.cn.livemap.model.Point;
 import com.skywilling.cn.manager.car.model.Instruction;
 import lombok.Data;
@@ -17,7 +18,8 @@ public class Action implements Serializable {
     private String laneName;
     private double v;
     private DriveMethod type;
-    private List<Point> points;
+    private List<LidarPoint> points;
+
     private List<Instruction> instructions;
 
 }

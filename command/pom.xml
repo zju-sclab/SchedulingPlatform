@@ -17,6 +17,13 @@
             <artifactId>manager</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
+
+        <dependency>
+            <groupId>com.skywilling.cn</groupId>
+            <artifactId>connection</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+
     </dependencies>
 
 </project>

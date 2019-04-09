@@ -20,6 +20,14 @@ public class ActionScheduler {
     ShapeMapService shapeMapService;
     @Autowired
     MapService mapService;
+
+    /**
+     * 规划A--B的路径
+     * @param parkName
+     * @param route
+     * @return
+     * @throws NoAvailableActionFoundException
+     */
     public List<Action> convertToAction(String parkName, Route route) throws NoAvailableActionFoundException {
 
         LiveMap liveMap=mapService.getMap(parkName);
@@ -29,6 +37,7 @@ public class ActionScheduler {
         List<Action> actions = new ArrayList<>(liveLanes.size());
 
         for (LiveLane lane: liveLanes) {
+            //
             Action action = this.toAction(shapeMapService.query(parkName, lane.getName()));
             if (action == null) {
                 throw new NoAvailableActionFoundException();
@@ -44,7 +53,13 @@ public class ActionScheduler {
         return actions;
     }
 
+    /**
+     * LaneShapeMap查找LaneShape后，转化为Action
+     * @param laneShape
+     * @return
+     */
     private Action toAction(LaneShape laneShape) {
+
 
 
         return null;

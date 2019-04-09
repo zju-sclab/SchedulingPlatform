@@ -1,321 +1,48 @@
-13:12:41.176 spring-boot-logging [restartedMain] INFO  com.skywilling.cn.web.WebApplication - Starting WebApplication on DESKTOP-4TCMNJV with PID 12892 (C:\D\backup\softwares\Git\projects\dev\SchedulingPlatform\web\target\classes started by yy118 in C:\D\backup\softwares\Git\projects\dev\SchedulingPlatform)
-13:12:41.181 spring-boot-logging [restartedMain] INFO  com.skywilling.cn.web.WebApplication - The following profiles are active: dev
-13:12:41.315 spring-boot-logging [restartedMain] INFO  o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor - Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
-13:12:41.315 spring-boot-logging [restartedMain] INFO  o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor - For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
-13:12:41.899 spring-boot-logging [restartedMain] WARN  o.m.s.mapper.ClassPathMapperScanner - No MyBatis mapper was found in '[com.skywilling.cn.*.*.mapper]' package. Please check your configuration.
-13:12:42.021 spring-boot-logging [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode!
-13:12:42.021 spring-boot-logging [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data repositories in DEFAULT mode.
-13:12:42.034 spring-boot-logging [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 9ms. Found 0 repository interfaces.
-13:12:42.044 spring-boot-logging [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode!
-13:12:42.044 spring-boot-logging [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data repositories in DEFAULT mode.
-13:12:42.051 spring-boot-logging [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 1ms. Found 0 repository interfaces.
-13:12:42.772 spring-boot-logging [restartedMain] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port(s): 8080 (http)
-13:12:42.786 spring-boot-logging [restartedMain] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
-13:12:42.793 spring-boot-logging [restartedMain] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
-13:12:42.793 spring-boot-logging [restartedMain] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/9.0.16]
-13:12:42.798 spring-boot-logging [restartedMain] INFO  o.a.c.core.AprLifecycleListener - The APR based Apache Tomcat Native library which allows optimal performance in production environments was not found on the java.library.path: [C:\D\backup\softwares\javaSoft\jdk\bin;C:\WINDOWS\Sun\Java\bin;C:\WINDOWS\system32;C:\WINDOWS;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\Program Files\Intel\WiFi\bin\;C:\Program Files\Common Files\Intel\WirelessCommon\;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\D\backup\softwares\javaSoft\jdk\bin;C:\D\backup\softwares\Git\Git\bin;C:\Python27;C:\Program Files\Git LFS;C:\D\backup\softwares\commandSoft;C:\Users\yy118\AppData\Local\Microsoft\WindowsApps;;.]
-13:12:42.896 spring-boot-logging [restartedMain] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
-13:12:42.897 spring-boot-logging [restartedMain] INFO  o.s.web.context.ContextLoader - Root WebApplicationContext: initialization completed in 1581 ms
-13:12:43.351 spring-boot-logging [restartedMain] INFO  o.s.s.c.ThreadPoolTaskExecutor - Initializing ExecutorService 'applicationTaskExecutor'
-13:12:43.978 spring-boot-logging [restartedMain] INFO  org.mongodb.driver.cluster - Cluster created with settings {hosts=[118.31.23.133:27018], mode=MULTIPLE, requiredClusterType=UNKNOWN, serverSelectionTimeout='30000 ms', maxWaitQueueSize=500}
-13:12:43.978 spring-boot-logging [restartedMain] INFO  org.mongodb.driver.cluster - Adding discovered server 118.31.23.133:27018 to client view of cluster
-13:12:44.269 spring-boot-logging [restartedMain] INFO  o.s.b.d.a.OptionalLiveReloadServer - LiveReload server is running on port 35729
-13:12:44.293 spring-boot-logging [restartedMain] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
-13:12:44.340 spring-boot-logging [restartedMain] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port(s): 8080 (http) with context path ''
-13:12:44.346 spring-boot-logging [restartedMain] INFO  com.skywilling.cn.web.WebApplication - Started WebApplication in 3.875 seconds (JVM running for 6.4)
-13:12:45.080 spring-boot-logging [cluster-ClusterId{value='5c9711cb2851db325c9b15a6', description='null'}-118.31.23.133:27018] INFO  org.mongodb.driver.cluster - Exception in monitor thread while connecting to server 118.31.23.133:27018
-com.mongodb.MongoSocketOpenException: Exception opening socket
-	at com.mongodb.internal.connection.SocketStream.open(SocketStream.java:67)
-	at com.mongodb.internal.connection.InternalStreamConnection.open(InternalStreamConnection.java:126)
-	at com.mongodb.internal.connection.DefaultServerMonitor$ServerMonitorRunnable.run(DefaultServerMonitor.java:117)
-	at java.lang.Thread.run(Thread.java:748)
-Caused by: java.net.ConnectException: Connection refused: connect
-	at java.net.DualStackPlainSocketImpl.waitForConnect(Native Method)
-	at java.net.DualStackPlainSocketImpl.socketConnect(DualStackPlainSocketImpl.java:85)
-	at java.net.AbstractPlainSocketImpl.doConnect(AbstractPlainSocketImpl.java:350)
-	at java.net.AbstractPlainSocketImpl.connectToAddress(AbstractPlainSocketImpl.java:206)
-	at java.net.AbstractPlainSocketImpl.connect(AbstractPlainSocketImpl.java:188)
-	at java.net.PlainSocketImpl.connect(PlainSocketImpl.java:172)
-	at java.net.SocksSocketImpl.connect(SocksSocketImpl.java:392)
-	at java.net.Socket.connect(Socket.java:589)
-	at com.mongodb.internal.connection.SocketStreamHelper.initialize(SocketStreamHelper.java:64)
-	at com.mongodb.internal.connection.SocketStream.open(SocketStream.java:62)
-	... 3 common frames omitted
-13:19:09.283 spring-boot-logging [restartedMain] INFO  com.skywilling.cn.web.WebApplication - Starting WebApplication on DESKTOP-4TCMNJV with PID 8176 (C:\D\backup\softwares\Git\projects\dev\SchedulingPlatform\web\target\classes started by yy118 in C:\D\backup\softwares\Git\projects\dev\SchedulingPlatform)
-13:19:09.285 spring-boot-logging [restartedMain] INFO  com.skywilling.cn.web.WebApplication - The following profiles are active: dev
-13:19:09.420 spring-boot-logging [restartedMain] INFO  o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor - Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
-13:19:09.421 spring-boot-logging [restartedMain] INFO  o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor - For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
-13:19:10.038 spring-boot-logging [restartedMain] WARN  o.m.s.mapper.ClassPathMapperScanner - No MyBatis mapper was found in '[com.skywilling.cn.*.*.mapper]' package. Please check your configuration.
-13:19:10.195 spring-boot-logging [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode!
-13:19:10.197 spring-boot-logging [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data repositories in DEFAULT mode.
-13:19:10.220 spring-boot-logging [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 16ms. Found 0 repository interfaces.
-13:19:10.236 spring-boot-logging [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode!
-13:19:10.237 spring-boot-logging [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data repositories in DEFAULT mode.
-13:19:10.244 spring-boot-logging [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 1ms. Found 0 repository interfaces.
-13:19:10.886 spring-boot-logging [restartedMain] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port(s): 8080 (http)
-13:19:10.901 spring-boot-logging [restartedMain] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
-13:19:10.908 spring-boot-logging [restartedMain] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
-13:19:10.908 spring-boot-logging [restartedMain] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/9.0.16]
-13:19:10.913 spring-boot-logging [restartedMain] INFO  o.a.c.core.AprLifecycleListener - The APR based Apache Tomcat Native library which allows optimal performance in production environments was not found on the java.library.path: [C:\D\backup\softwares\javaSoft\jdk\bin;C:\WINDOWS\Sun\Java\bin;C:\WINDOWS\system32;C:\WINDOWS;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\Program Files\Intel\WiFi\bin\;C:\Program Files\Common Files\Intel\WirelessCommon\;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\D\backup\softwares\javaSoft\jdk\bin;C:\D\backup\softwares\Git\Git\bin;C:\Python27;C:\Program Files\Git LFS;C:\D\backup\softwares\commandSoft;C:\Users\yy118\AppData\Local\Microsoft\WindowsApps;;.]
-13:19:11.011 spring-boot-logging [restartedMain] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
-13:19:11.011 spring-boot-logging [restartedMain] INFO  o.s.web.context.ContextLoader - Root WebApplicationContext: initialization completed in 1590 ms
-13:19:11.376 spring-boot-logging [restartedMain] INFO  o.s.s.c.ThreadPoolTaskExecutor - Initializing ExecutorService 'applicationTaskExecutor'
-13:19:12.002 spring-boot-logging [restartedMain] INFO  org.mongodb.driver.cluster - Cluster created with settings {hosts=[118.31.23.133:27018], mode=MULTIPLE, requiredClusterType=UNKNOWN, serverSelectionTimeout='30000 ms', maxWaitQueueSize=500}
-13:19:12.002 spring-boot-logging [restartedMain] INFO  org.mongodb.driver.cluster - Adding discovered server 118.31.23.133:27018 to client view of cluster
-13:19:12.301 spring-boot-logging [restartedMain] INFO  o.s.b.d.a.OptionalLiveReloadServer - LiveReload server is running on port 35729
-13:19:12.326 spring-boot-logging [restartedMain] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
-13:19:12.371 spring-boot-logging [restartedMain] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port(s): 8080 (http) with context path ''
-13:19:12.375 spring-boot-logging [restartedMain] INFO  com.skywilling.cn.web.WebApplication - Started WebApplication in 3.754 seconds (JVM running for 5.889)
-13:19:13.073 spring-boot-logging [cluster-ClusterId{value='5c97134f2851db1ff0a0e010', description='null'}-118.31.23.133:27018] INFO  org.mongodb.driver.cluster - Exception in monitor thread while connecting to server 118.31.23.133:27018
-com.mongodb.MongoSocketOpenException: Exception opening socket
-	at com.mongodb.internal.connection.SocketStream.open(SocketStream.java:67)
-	at com.mongodb.internal.connection.InternalStreamConnection.open(InternalStreamConnection.java:126)
-	at com.mongodb.internal.connection.DefaultServerMonitor$ServerMonitorRunnable.run(DefaultServerMonitor.java:117)
-	at java.lang.Thread.run(Thread.java:748)
-Caused by: java.net.ConnectException: Connection refused: connect
-	at java.net.DualStackPlainSocketImpl.waitForConnect(Native Method)
-	at java.net.DualStackPlainSocketImpl.socketConnect(DualStackPlainSocketImpl.java:85)
-	at java.net.AbstractPlainSocketImpl.doConnect(AbstractPlainSocketImpl.java:350)
-	at java.net.AbstractPlainSocketImpl.connectToAddress(AbstractPlainSocketImpl.java:206)
-	at java.net.AbstractPlainSocketImpl.connect(AbstractPlainSocketImpl.java:188)
-	at java.net.PlainSocketImpl.connect(PlainSocketImpl.java:172)
-	at java.net.SocksSocketImpl.connect(SocksSocketImpl.java:392)
-	at java.net.Socket.connect(Socket.java:589)
-	at com.mongodb.internal.connection.SocketStreamHelper.initialize(SocketStreamHelper.java:64)
-	at com.mongodb.internal.connection.SocketStream.open(SocketStream.java:62)
-	... 3 common frames omitted
-13:27:01.057 spring-boot-logging [restartedMain] INFO  com.skywilling.cn.web.WebApplication - Starting WebApplication on DESKTOP-4TCMNJV with PID 2068 (C:\D\backup\softwares\Git\projects\dev\SchedulingPlatform\web\target\classes started by yy118 in C:\D\backup\softwares\Git\projects\dev\SchedulingPlatform)
-13:27:01.060 spring-boot-logging [restartedMain] INFO  com.skywilling.cn.web.WebApplication - The following profiles are active: dev
-13:27:01.214 spring-boot-logging [restartedMain] INFO  o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor - Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
-13:27:01.214 spring-boot-logging [restartedMain] INFO  o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor - For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
-13:27:01.794 spring-boot-logging [restartedMain] WARN  o.m.s.mapper.ClassPathMapperScanner - No MyBatis mapper was found in '[com.skywilling.cn.*.*.mapper]' package. Please check your configuration.
-13:27:01.919 spring-boot-logging [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode!
-13:27:01.919 spring-boot-logging [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data repositories in DEFAULT mode.
-13:27:01.934 spring-boot-logging [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 9ms. Found 0 repository interfaces.
-13:27:01.943 spring-boot-logging [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode!
-13:27:01.944 spring-boot-logging [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data repositories in DEFAULT mode.
-13:27:01.950 spring-boot-logging [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 0ms. Found 0 repository interfaces.
-13:27:02.511 spring-boot-logging [restartedMain] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port(s): 8080 (http)
-13:27:02.525 spring-boot-logging [restartedMain] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
-13:27:02.532 spring-boot-logging [restartedMain] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
-13:27:02.533 spring-boot-logging [restartedMain] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/9.0.16]
-13:27:02.538 spring-boot-logging [restartedMain] INFO  o.a.c.core.AprLifecycleListener - The APR based Apache Tomcat Native library which allows optimal performance in production environments was not found on the java.library.path: [C:\D\backup\softwares\javaSoft\jdk\bin;C:\WINDOWS\Sun\Java\bin;C:\WINDOWS\system32;C:\WINDOWS;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\Program Files\Intel\WiFi\bin\;C:\Program Files\Common Files\Intel\WirelessCommon\;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\D\backup\softwares\javaSoft\jdk\bin;C:\D\backup\softwares\Git\Git\bin;C:\Python27;C:\Program Files\Git LFS;C:\D\backup\softwares\commandSoft;C:\Users\yy118\AppData\Local\Microsoft\WindowsApps;;.]
-13:27:02.635 spring-boot-logging [restartedMain] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
-13:27:02.636 spring-boot-logging [restartedMain] INFO  o.s.web.context.ContextLoader - Root WebApplicationContext: initialization completed in 1421 ms
-13:27:02.995 spring-boot-logging [restartedMain] INFO  o.s.s.c.ThreadPoolTaskExecutor - Initializing ExecutorService 'applicationTaskExecutor'
-13:27:03.699 spring-boot-logging [restartedMain] INFO  org.mongodb.driver.cluster - Cluster created with settings {hosts=[118.31.23.133:27018], mode=MULTIPLE, requiredClusterType=UNKNOWN, serverSelectionTimeout='30000 ms', maxWaitQueueSize=500}
-13:27:03.699 spring-boot-logging [restartedMain] INFO  org.mongodb.driver.cluster - Adding discovered server 118.31.23.133:27018 to client view of cluster
-13:27:03.970 spring-boot-logging [restartedMain] INFO  o.s.b.d.a.OptionalLiveReloadServer - LiveReload server is running on port 35729
-13:27:03.992 spring-boot-logging [restartedMain] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
-13:27:04.010 spring-boot-logging [restartedMain] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port(s): 8080 (http) with context path ''
-13:27:04.013 spring-boot-logging [restartedMain] INFO  com.skywilling.cn.web.WebApplication - Started WebApplication in 3.715 seconds (JVM running for 5.953)
-13:27:04.786 spring-boot-logging [cluster-ClusterId{value='5c9715272851db0814f260d7', description='null'}-118.31.23.133:27018] INFO  org.mongodb.driver.cluster - Exception in monitor thread while connecting to server 118.31.23.133:27018
-com.mongodb.MongoSocketOpenException: Exception opening socket
-	at com.mongodb.internal.connection.SocketStream.open(SocketStream.java:67)
-	at com.mongodb.internal.connection.InternalStreamConnection.open(InternalStreamConnection.java:126)
-	at com.mongodb.internal.connection.DefaultServerMonitor$ServerMonitorRunnable.run(DefaultServerMonitor.java:117)
-	at java.lang.Thread.run(Thread.java:748)
-Caused by: java.net.ConnectException: Connection refused: connect
-	at java.net.DualStackPlainSocketImpl.waitForConnect(Native Method)
-	at java.net.DualStackPlainSocketImpl.socketConnect(DualStackPlainSocketImpl.java:85)
-	at java.net.AbstractPlainSocketImpl.doConnect(AbstractPlainSocketImpl.java:350)
-	at java.net.AbstractPlainSocketImpl.connectToAddress(AbstractPlainSocketImpl.java:206)
-	at java.net.AbstractPlainSocketImpl.connect(AbstractPlainSocketImpl.java:188)
-	at java.net.PlainSocketImpl.connect(PlainSocketImpl.java:172)
-	at java.net.SocksSocketImpl.connect(SocksSocketImpl.java:392)
-	at java.net.Socket.connect(Socket.java:589)
-	at com.mongodb.internal.connection.SocketStreamHelper.initialize(SocketStreamHelper.java:64)
-	at com.mongodb.internal.connection.SocketStream.open(SocketStream.java:62)
-	... 3 common frames omitted
-13:28:47.073 spring-boot-logging [restartedMain] INFO  com.skywilling.cn.web.WebApplication - Starting WebApplication on DESKTOP-4TCMNJV with PID 6972 (C:\D\backup\softwares\Git\projects\dev\SchedulingPlatform\web\target\classes started by yy118 in C:\D\backup\softwares\Git\projects\dev\SchedulingPlatform)
-13:28:47.075 spring-boot-logging [restartedMain] INFO  com.skywilling.cn.web.WebApplication - The following profiles are active: dev
-13:28:47.115 spring-boot-logging [restartedMain] INFO  o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor - Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
-13:28:47.116 spring-boot-logging [restartedMain] INFO  o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor - For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
-13:28:47.629 spring-boot-logging [restartedMain] WARN  o.m.s.mapper.ClassPathMapperScanner - No MyBatis mapper was found in '[com.skywilling.cn.*.*.mapper]' package. Please check your configuration.
-13:28:47.752 spring-boot-logging [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode!
-13:28:47.753 spring-boot-logging [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data repositories in DEFAULT mode.
-13:28:47.768 spring-boot-logging [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 10ms. Found 0 repository interfaces.
-13:28:47.777 spring-boot-logging [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode!
-13:28:47.778 spring-boot-logging [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data repositories in DEFAULT mode.
-13:28:47.785 spring-boot-logging [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 1ms. Found 0 repository interfaces.
-13:28:48.353 spring-boot-logging [restartedMain] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port(s): 8080 (http)
-13:28:48.368 spring-boot-logging [restartedMain] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
-13:28:48.375 spring-boot-logging [restartedMain] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
-13:28:48.375 spring-boot-logging [restartedMain] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/9.0.16]
-13:28:48.380 spring-boot-logging [restartedMain] INFO  o.a.c.core.AprLifecycleListener - The APR based Apache Tomcat Native library which allows optimal performance in production environments was not found on the java.library.path: [C:\D\backup\softwares\javaSoft\jdk\bin;C:\WINDOWS\Sun\Java\bin;C:\WINDOWS\system32;C:\WINDOWS;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\Program Files\Intel\WiFi\bin\;C:\Program Files\Common Files\Intel\WirelessCommon\;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\D\backup\softwares\javaSoft\jdk\bin;C:\D\backup\softwares\Git\Git\bin;C:\Python27;C:\Program Files\Git LFS;C:\D\backup\softwares\commandSoft;C:\Users\yy118\AppData\Local\Microsoft\WindowsApps;;.]
-13:28:48.476 spring-boot-logging [restartedMain] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
-13:28:48.477 spring-boot-logging [restartedMain] INFO  o.s.web.context.ContextLoader - Root WebApplicationContext: initialization completed in 1361 ms
-13:28:48.862 spring-boot-logging [restartedMain] INFO  o.s.s.c.ThreadPoolTaskExecutor - Initializing ExecutorService 'applicationTaskExecutor'
-13:28:49.450 spring-boot-logging [restartedMain] INFO  org.mongodb.driver.cluster - Cluster created with settings {hosts=[localhost:27017], mode=SINGLE, requiredClusterType=UNKNOWN, serverSelectionTimeout='30000 ms', maxWaitQueueSize=500}
-13:28:49.712 spring-boot-logging [restartedMain] INFO  o.s.b.d.a.OptionalLiveReloadServer - LiveReload server is running on port 35729
-13:28:49.734 spring-boot-logging [restartedMain] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
-13:28:49.771 spring-boot-logging [restartedMain] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port(s): 8080 (http) with context path ''
-13:28:49.775 spring-boot-logging [restartedMain] INFO  com.skywilling.cn.web.WebApplication - Started WebApplication in 3.299 seconds (JVM running for 5.116)
-13:28:50.507 spring-boot-logging [cluster-ClusterId{value='5c9715912851db1b3ce7f1b3', description='null'}-localhost:27017] INFO  org.mongodb.driver.cluster - Exception in monitor thread while connecting to server localhost:27017
-com.mongodb.MongoSocketOpenException: Exception opening socket
-	at com.mongodb.internal.connection.SocketStream.open(SocketStream.java:67)
-	at com.mongodb.internal.connection.InternalStreamConnection.open(InternalStreamConnection.java:126)
-	at com.mongodb.internal.connection.DefaultServerMonitor$ServerMonitorRunnable.run(DefaultServerMonitor.java:117)
-	at java.lang.Thread.run(Thread.java:748)
-Caused by: java.net.ConnectException: Connection refused: connect
-	at java.net.DualStackPlainSocketImpl.waitForConnect(Native Method)
-	at java.net.DualStackPlainSocketImpl.socketConnect(DualStackPlainSocketImpl.java:85)
-	at java.net.AbstractPlainSocketImpl.doConnect(AbstractPlainSocketImpl.java:350)
-	at java.net.AbstractPlainSocketImpl.connectToAddress(AbstractPlainSocketImpl.java:206)
-	at java.net.AbstractPlainSocketImpl.connect(AbstractPlainSocketImpl.java:188)
-	at java.net.PlainSocketImpl.connect(PlainSocketImpl.java:172)
-	at java.net.SocksSocketImpl.connect(SocksSocketImpl.java:392)
-	at java.net.Socket.connect(Socket.java:589)
-	at com.mongodb.internal.connection.SocketStreamHelper.initialize(SocketStreamHelper.java:64)
-	at com.mongodb.internal.connection.SocketStream.open(SocketStream.java:62)
-	... 3 common frames omitted
-13:30:51.421 spring-boot-logging [restartedMain] INFO  com.skywilling.cn.web.WebApplication - Starting WebApplication on DESKTOP-4TCMNJV with PID 2972 (C:\D\backup\softwares\Git\projects\dev\SchedulingPlatform\web\target\classes started by yy118 in C:\D\backup\softwares\Git\projects\dev\SchedulingPlatform)
-13:30:51.423 spring-boot-logging [restartedMain] INFO  com.skywilling.cn.web.WebApplication - The following profiles are active: dev
-13:30:51.542 spring-boot-logging [restartedMain] INFO  o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor - Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
-13:30:51.542 spring-boot-logging [restartedMain] INFO  o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor - For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
-13:30:52.134 spring-boot-logging [restartedMain] WARN  o.m.s.mapper.ClassPathMapperScanner - No MyBatis mapper was found in '[com.skywilling.cn.*.*.mapper]' package. Please check your configuration.
-13:30:52.297 spring-boot-logging [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode!
-13:30:52.297 spring-boot-logging [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data repositories in DEFAULT mode.
-13:30:52.314 spring-boot-logging [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 12ms. Found 0 repository interfaces.
-13:30:52.352 spring-boot-logging [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode!
-13:30:52.353 spring-boot-logging [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data repositories in DEFAULT mode.
-13:30:52.361 spring-boot-logging [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 1ms. Found 0 repository interfaces.
-13:30:52.876 spring-boot-logging [restartedMain] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port(s): 8080 (http)
-13:30:52.891 spring-boot-logging [restartedMain] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
-13:30:52.897 spring-boot-logging [restartedMain] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
-13:30:52.897 spring-boot-logging [restartedMain] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/9.0.16]
-13:30:52.903 spring-boot-logging [restartedMain] INFO  o.a.c.core.AprLifecycleListener - The APR based Apache Tomcat Native library which allows optimal performance in production environments was not found on the java.library.path: [C:\D\backup\softwares\javaSoft\jdk\bin;C:\WINDOWS\Sun\Java\bin;C:\WINDOWS\system32;C:\WINDOWS;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\Program Files\Intel\WiFi\bin\;C:\Program Files\Common Files\Intel\WirelessCommon\;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\D\backup\softwares\javaSoft\jdk\bin;C:\D\backup\softwares\Git\Git\bin;C:\Python27;C:\Program Files\Git LFS;C:\D\backup\softwares\commandSoft;C:\Users\yy118\AppData\Local\Microsoft\WindowsApps;;.]
-13:30:53.002 spring-boot-logging [restartedMain] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
-13:30:53.002 spring-boot-logging [restartedMain] INFO  o.s.web.context.ContextLoader - Root WebApplicationContext: initialization completed in 1459 ms
-13:30:53.354 spring-boot-logging [restartedMain] INFO  o.s.s.c.ThreadPoolTaskExecutor - Initializing ExecutorService 'applicationTaskExecutor'
-13:30:53.989 spring-boot-logging [restartedMain] INFO  org.mongodb.driver.cluster - Cluster created with settings {hosts=[localhost:27017], mode=SINGLE, requiredClusterType=UNKNOWN, serverSelectionTimeout='30000 ms', maxWaitQueueSize=500}
-13:30:54.282 spring-boot-logging [restartedMain] INFO  o.s.b.d.a.OptionalLiveReloadServer - LiveReload server is running on port 35729
-13:30:54.302 spring-boot-logging [restartedMain] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
-13:30:54.342 spring-boot-logging [restartedMain] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port(s): 8080 (http) with context path ''
-13:30:54.346 spring-boot-logging [restartedMain] INFO  com.skywilling.cn.web.WebApplication - Started WebApplication in 3.517 seconds (JVM running for 5.311)
-13:30:55.037 spring-boot-logging [cluster-ClusterId{value='5c97160d2851db0b9c31a87f', description='null'}-localhost:27017] INFO  org.mongodb.driver.cluster - Exception in monitor thread while connecting to server localhost:27017
-com.mongodb.MongoSocketOpenException: Exception opening socket
-	at com.mongodb.internal.connection.SocketStream.open(SocketStream.java:67)
-	at com.mongodb.internal.connection.InternalStreamConnection.open(InternalStreamConnection.java:126)
-	at com.mongodb.internal.connection.DefaultServerMonitor$ServerMonitorRunnable.run(DefaultServerMonitor.java:117)
-	at java.lang.Thread.run(Thread.java:748)
-Caused by: java.net.ConnectException: Connection refused: connect
-	at java.net.DualStackPlainSocketImpl.waitForConnect(Native Method)
-	at java.net.DualStackPlainSocketImpl.socketConnect(DualStackPlainSocketImpl.java:85)
-	at java.net.AbstractPlainSocketImpl.doConnect(AbstractPlainSocketImpl.java:350)
-	at java.net.AbstractPlainSocketImpl.connectToAddress(AbstractPlainSocketImpl.java:206)
-	at java.net.AbstractPlainSocketImpl.connect(AbstractPlainSocketImpl.java:188)
-	at java.net.PlainSocketImpl.connect(PlainSocketImpl.java:172)
-	at java.net.SocksSocketImpl.connect(SocksSocketImpl.java:392)
-	at java.net.Socket.connect(Socket.java:589)
-	at com.mongodb.internal.connection.SocketStreamHelper.initialize(SocketStreamHelper.java:64)
-	at com.mongodb.internal.connection.SocketStream.open(SocketStream.java:62)
-	... 3 common frames omitted
-13:32:55.463 spring-boot-logging [restartedMain] INFO  com.skywilling.cn.web.WebApplication - Starting WebApplication on DESKTOP-4TCMNJV with PID 2272 (C:\D\backup\softwares\Git\projects\dev\SchedulingPlatform\web\target\classes started by yy118 in C:\D\backup\softwares\Git\projects\dev\SchedulingPlatform)
-13:32:55.466 spring-boot-logging [restartedMain] INFO  com.skywilling.cn.web.WebApplication - The following profiles are active: dev
-13:32:55.595 spring-boot-logging [restartedMain] INFO  o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor - Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
-13:32:55.595 spring-boot-logging [restartedMain] INFO  o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor - For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
-13:32:56.083 spring-boot-logging [restartedMain] WARN  o.m.s.mapper.ClassPathMapperScanner - No MyBatis mapper was found in '[com.skywilling.cn.*.*.mapper]' package. Please check your configuration.
-13:32:56.203 spring-boot-logging [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode!
-13:32:56.204 spring-boot-logging [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data repositories in DEFAULT mode.
-13:32:56.219 spring-boot-logging [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 11ms. Found 0 repository interfaces.
-13:32:56.229 spring-boot-logging [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode!
-13:32:56.229 spring-boot-logging [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data repositories in DEFAULT mode.
-13:32:56.236 spring-boot-logging [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 1ms. Found 0 repository interfaces.
-13:32:56.797 spring-boot-logging [restartedMain] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port(s): 8080 (http)
-13:32:56.811 spring-boot-logging [restartedMain] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
-13:32:56.817 spring-boot-logging [restartedMain] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
-13:32:56.818 spring-boot-logging [restartedMain] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/9.0.16]
-13:32:56.837 spring-boot-logging [restartedMain] INFO  o.a.c.core.AprLifecycleListener - The APR based Apache Tomcat Native library which allows optimal performance in production environments was not found on the java.library.path: [C:\D\backup\softwares\javaSoft\jdk\bin;C:\WINDOWS\Sun\Java\bin;C:\WINDOWS\system32;C:\WINDOWS;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\Program Files\Intel\WiFi\bin\;C:\Program Files\Common Files\Intel\WirelessCommon\;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\D\backup\softwares\javaSoft\jdk\bin;C:\D\backup\softwares\Git\Git\bin;C:\Python27;C:\Program Files\Git LFS;C:\D\backup\softwares\commandSoft;C:\Users\yy118\AppData\Local\Microsoft\WindowsApps;;.]
-13:32:56.949 spring-boot-logging [restartedMain] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
-13:32:56.949 spring-boot-logging [restartedMain] INFO  o.s.web.context.ContextLoader - Root WebApplicationContext: initialization completed in 1354 ms
-13:32:57.329 spring-boot-logging [restartedMain] INFO  o.s.s.c.ThreadPoolTaskExecutor - Initializing ExecutorService 'applicationTaskExecutor'
-13:32:57.951 spring-boot-logging [restartedMain] INFO  org.mongodb.driver.cluster - Cluster created with settings {hosts=[localhost:27017], mode=SINGLE, requiredClusterType=UNKNOWN, serverSelectionTimeout='30000 ms', maxWaitQueueSize=500}
-13:32:58.212 spring-boot-logging [restartedMain] INFO  o.s.b.d.a.OptionalLiveReloadServer - LiveReload server is running on port 35729
-13:32:58.233 spring-boot-logging [restartedMain] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
-13:32:58.270 spring-boot-logging [restartedMain] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port(s): 8080 (http) with context path ''
-13:32:58.273 spring-boot-logging [restartedMain] INFO  com.skywilling.cn.web.WebApplication - Started WebApplication in 3.616 seconds (JVM running for 5.726)
-13:32:58.997 spring-boot-logging [cluster-ClusterId{value='5c9716892851db08e01eee7f', description='null'}-localhost:27017] INFO  org.mongodb.driver.cluster - Exception in monitor thread while connecting to server localhost:27017
-com.mongodb.MongoSocketOpenException: Exception opening socket
-	at com.mongodb.internal.connection.SocketStream.open(SocketStream.java:67)
-	at com.mongodb.internal.connection.InternalStreamConnection.open(InternalStreamConnection.java:126)
-	at com.mongodb.internal.connection.DefaultServerMonitor$ServerMonitorRunnable.run(DefaultServerMonitor.java:117)
-	at java.lang.Thread.run(Thread.java:748)
-Caused by: java.net.ConnectException: Connection refused: connect
-	at java.net.DualStackPlainSocketImpl.waitForConnect(Native Method)
-	at java.net.DualStackPlainSocketImpl.socketConnect(DualStackPlainSocketImpl.java:85)
-	at java.net.AbstractPlainSocketImpl.doConnect(AbstractPlainSocketImpl.java:350)
-	at java.net.AbstractPlainSocketImpl.connectToAddress(AbstractPlainSocketImpl.java:206)
-	at java.net.AbstractPlainSocketImpl.connect(AbstractPlainSocketImpl.java:188)
-	at java.net.PlainSocketImpl.connect(PlainSocketImpl.java:172)
-	at java.net.SocksSocketImpl.connect(SocksSocketImpl.java:392)
-	at java.net.Socket.connect(Socket.java:589)
-	at com.mongodb.internal.connection.SocketStreamHelper.initialize(SocketStreamHelper.java:64)
-	at com.mongodb.internal.connection.SocketStream.open(SocketStream.java:62)
-	... 3 common frames omitted
-13:35:37.305 spring-boot-logging [restartedMain] INFO  com.skywilling.cn.web.WebApplication - Starting WebApplication on DESKTOP-4TCMNJV with PID 12032 (C:\D\backup\softwares\Git\projects\dev\SchedulingPlatform\web\target\classes started by yy118 in C:\D\backup\softwares\Git\projects\dev\SchedulingPlatform)
-13:35:37.307 spring-boot-logging [restartedMain] INFO  com.skywilling.cn.web.WebApplication - The following profiles are active: dev
-13:35:37.406 spring-boot-logging [restartedMain] INFO  o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor - Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
-13:35:37.406 spring-boot-logging [restartedMain] INFO  o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor - For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
-13:35:38.036 spring-boot-logging [restartedMain] WARN  o.m.s.mapper.ClassPathMapperScanner - No MyBatis mapper was found in '[com.skywilling.cn.*.*.mapper]' package. Please check your configuration.
-13:35:38.163 spring-boot-logging [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode!
-13:35:38.163 spring-boot-logging [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data repositories in DEFAULT mode.
-13:35:38.196 spring-boot-logging [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 28ms. Found 0 repository interfaces.
-13:35:38.208 spring-boot-logging [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode!
-13:35:38.209 spring-boot-logging [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data repositories in DEFAULT mode.
-13:35:38.217 spring-boot-logging [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 1ms. Found 0 repository interfaces.
-13:35:38.808 spring-boot-logging [restartedMain] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port(s): 8080 (http)
-13:35:38.822 spring-boot-logging [restartedMain] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
-13:35:38.829 spring-boot-logging [restartedMain] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
-13:35:38.829 spring-boot-logging [restartedMain] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/9.0.16]
-13:35:38.834 spring-boot-logging [restartedMain] INFO  o.a.c.core.AprLifecycleListener - The APR based Apache Tomcat Native library which allows optimal performance in production environments was not found on the java.library.path: [C:\D\backup\softwares\javaSoft\jdk\bin;C:\WINDOWS\Sun\Java\bin;C:\WINDOWS\system32;C:\WINDOWS;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\Program Files\Intel\WiFi\bin\;C:\Program Files\Common Files\Intel\WirelessCommon\;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\D\backup\softwares\javaSoft\jdk\bin;C:\D\backup\softwares\Git\Git\bin;C:\Python27;C:\Program Files\Git LFS;C:\D\backup\softwares\commandSoft;C:\Users\yy118\AppData\Local\Microsoft\WindowsApps;;.]
-13:35:38.935 spring-boot-logging [restartedMain] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
-13:35:38.935 spring-boot-logging [restartedMain] INFO  o.s.web.context.ContextLoader - Root WebApplicationContext: initialization completed in 1529 ms
-13:35:39.309 spring-boot-logging [restartedMain] INFO  o.s.s.c.ThreadPoolTaskExecutor - Initializing ExecutorService 'applicationTaskExecutor'
-13:35:40.109 spring-boot-logging [restartedMain] INFO  org.mongodb.driver.cluster - Cluster created with settings {hosts=[localhost:27017], mode=SINGLE, requiredClusterType=UNKNOWN, serverSelectionTimeout='30000 ms', maxWaitQueueSize=500}
-13:35:40.448 spring-boot-logging [restartedMain] INFO  o.s.b.d.a.OptionalLiveReloadServer - LiveReload server is running on port 35729
-13:35:40.501 spring-boot-logging [restartedMain] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
-13:35:40.548 spring-boot-logging [restartedMain] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port(s): 8080 (http) with context path ''
-13:35:40.552 spring-boot-logging [restartedMain] INFO  com.skywilling.cn.web.WebApplication - Started WebApplication in 3.943 seconds (JVM running for 6.189)
-13:35:41.162 spring-boot-logging [cluster-ClusterId{value='5c97172c2851db2f00c8d596', description='null'}-localhost:27017] INFO  org.mongodb.driver.cluster - Exception in monitor thread while connecting to server localhost:27017
-com.mongodb.MongoSocketOpenException: Exception opening socket
-	at com.mongodb.internal.connection.SocketStream.open(SocketStream.java:67)
-	at com.mongodb.internal.connection.InternalStreamConnection.open(InternalStreamConnection.java:126)
-	at com.mongodb.internal.connection.DefaultServerMonitor$ServerMonitorRunnable.run(DefaultServerMonitor.java:117)
-	at java.lang.Thread.run(Thread.java:748)
-Caused by: java.net.ConnectException: Connection refused: connect
-	at java.net.DualStackPlainSocketImpl.waitForConnect(Native Method)
-	at java.net.DualStackPlainSocketImpl.socketConnect(DualStackPlainSocketImpl.java:85)
-	at java.net.AbstractPlainSocketImpl.doConnect(AbstractPlainSocketImpl.java:350)
-	at java.net.AbstractPlainSocketImpl.connectToAddress(AbstractPlainSocketImpl.java:206)
-	at java.net.AbstractPlainSocketImpl.connect(AbstractPlainSocketImpl.java:188)
-	at java.net.PlainSocketImpl.connect(PlainSocketImpl.java:172)
-	at java.net.SocksSocketImpl.connect(SocksSocketImpl.java:392)
-	at java.net.Socket.connect(Socket.java:589)
-	at com.mongodb.internal.connection.SocketStreamHelper.initialize(SocketStreamHelper.java:64)
-	at com.mongodb.internal.connection.SocketStream.open(SocketStream.java:62)
-	... 3 common frames omitted
-13:38:58.968 spring-boot-logging [background-preinit] DEBUG o.h.v.m.ResourceBundleMessageInterpolator - Loaded expression factory via original TCCL
-13:38:59.140 spring-boot-logging [restartedMain] INFO  com.skywilling.cn.web.WebApplication - Starting WebApplication on DESKTOP-4TCMNJV with PID 7460 (C:\D\backup\softwares\Git\projects\dev\SchedulingPlatform\web\target\classes started by yy118 in C:\D\backup\softwares\Git\projects\dev\SchedulingPlatform)
-13:38:59.141 spring-boot-logging [restartedMain] INFO  com.skywilling.cn.web.WebApplication - The following profiles are active: dev
-13:38:59.220 spring-boot-logging [restartedMain] INFO  o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor - Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
-13:38:59.220 spring-boot-logging [restartedMain] INFO  o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor - For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
-13:38:59.852 spring-boot-logging [restartedMain] WARN  o.m.s.mapper.ClassPathMapperScanner - No MyBatis mapper was found in '[com.skywilling.cn.*.*.mapper]' package. Please check your configuration.
-13:38:59.966 spring-boot-logging [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode!
-13:38:59.966 spring-boot-logging [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data repositories in DEFAULT mode.
-13:38:59.981 spring-boot-logging [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 11ms. Found 0 repository interfaces.
-13:38:59.991 spring-boot-logging [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode!
-13:38:59.992 spring-boot-logging [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data repositories in DEFAULT mode.
-13:38:59.999 spring-boot-logging [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 1ms. Found 0 repository interfaces.
-13:39:00.604 spring-boot-logging [restartedMain] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port(s): 8080 (http)
-13:39:00.619 spring-boot-logging [restartedMain] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
-13:39:00.626 spring-boot-logging [restartedMain] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
-13:39:00.626 spring-boot-logging [restartedMain] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/9.0.16]
-13:39:00.632 spring-boot-logging [restartedMain] INFO  o.a.c.core.AprLifecycleListener - The APR based Apache Tomcat Native library which allows optimal performance in production environments was not found on the java.library.path: [C:\D\backup\softwares\javaSoft\jdk\bin;C:\WINDOWS\Sun\Java\bin;C:\WINDOWS\system32;C:\WINDOWS;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\Program Files\Intel\WiFi\bin\;C:\Program Files\Common Files\Intel\WirelessCommon\;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\D\backup\softwares\javaSoft\jdk\bin;C:\D\backup\softwares\Git\Git\bin;C:\Python27;C:\Program Files\Git LFS;C:\D\backup\softwares\commandSoft;C:\Users\yy118\AppData\Local\Microsoft\WindowsApps;;.]
-13:39:00.734 spring-boot-logging [restartedMain] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
-13:39:00.734 spring-boot-logging [restartedMain] INFO  o.s.web.context.ContextLoader - Root WebApplicationContext: initialization completed in 1514 ms
-13:39:01.212 spring-boot-logging [restartedMain] INFO  o.s.s.c.ThreadPoolTaskExecutor - Initializing ExecutorService 'applicationTaskExecutor'
-13:39:01.608 spring-boot-logging [restartedMain] INFO  o.s.b.d.a.OptionalLiveReloadServer - LiveReload server is running on port 35729
-13:39:01.632 spring-boot-logging [restartedMain] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
-13:39:01.671 spring-boot-logging [restartedMain] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port(s): 8080 (http) with context path ''
-13:39:01.675 spring-boot-logging [restartedMain] INFO  com.skywilling.cn.web.WebApplication - Started WebApplication in 3.235 seconds (JVM running for 5.17)
+15:24:42.882 spring-boot-logging [restartedMain] INFO  com.skywilling.cn.web.WebApplication - Starting WebApplication on smartcar with PID 29040 (D:\work\Projects\linxxx\SchedulingPlatform\web\target\classes started by Lin in D:\work\Projects\linxxx\SchedulingPlatform)
+15:24:42.896 spring-boot-logging [restartedMain] INFO  com.skywilling.cn.web.WebApplication - The following profiles are active: dev
+15:24:43.080 spring-boot-logging [restartedMain] INFO  o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor - Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+15:24:43.081 spring-boot-logging [restartedMain] INFO  o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor - For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+15:24:46.325 spring-boot-logging [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode!
+15:24:46.326 spring-boot-logging [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data repositories in DEFAULT mode.
+15:24:46.366 spring-boot-logging [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 26ms. Found 0 repository interfaces.
+15:24:46.426 spring-boot-logging [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode!
+15:24:46.434 spring-boot-logging [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data repositories in DEFAULT mode.
+15:24:46.483 spring-boot-logging [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 5ms. Found 0 repository interfaces.
+15:24:47.082 spring-boot-logging [restartedMain] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration' of type [org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration$$EnhancerBySpringCGLIB$$81a15952] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+15:24:48.181 spring-boot-logging [restartedMain] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port(s): 8080 (http)
+15:24:48.298 spring-boot-logging [restartedMain] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+15:24:48.346 spring-boot-logging [restartedMain] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+15:24:48.347 spring-boot-logging [restartedMain] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/9.0.16]
+15:24:48.394 spring-boot-logging [restartedMain] INFO  o.a.c.core.AprLifecycleListener - The APR based Apache Tomcat Native library which allows optimal performance in production environments was not found on the java.library.path: [D:\applications\bin;C:\WINDOWS\Sun\Java\bin;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\Program Files\Git\cmd;D:\applications\apache-maven-3.5.4\bin;D:\applications\bin;;C:\Program Files\Microsoft VS Code\bin;C:\Users\Lin\AppData\Local\Microsoft\WindowsApps;;.]
+15:24:48.655 spring-boot-logging [restartedMain] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+15:24:48.656 spring-boot-logging [restartedMain] INFO  o.s.web.context.ContextLoader - Root WebApplicationContext: initialization completed in 5499 ms
+15:24:53.227 spring-boot-logging [restartedMain] INFO  c.s.c.c.i.server.NettyServer - listen on port: 9005
+15:24:57.825 spring-boot-logging [restartedMain] INFO  o.s.s.c.ThreadPoolTaskExecutor - Initializing ExecutorService 'applicationTaskExecutor'
+15:24:59.891 spring-boot-logging [restartedMain] INFO  o.s.b.d.a.OptionalLiveReloadServer - LiveReload server is running on port 35729
+15:25:00.213 spring-boot-logging [restartedMain] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+15:25:00.264 spring-boot-logging [restartedMain] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port(s): 8080 (http) with context path ''
+15:25:00.275 spring-boot-logging [restartedMain] INFO  com.skywilling.cn.web.WebApplication - Started WebApplication in 18.357 seconds (JVM running for 21.283)
+16:04:12.727 spring-boot-logging [restartedMain] INFO  com.skywilling.cn.web.WebApplication - Starting WebApplication on smartcar with PID 17352 (D:\work\Projects\linxxx\SchedulingPlatform\web\target\classes started by Lin in D:\work\Projects\linxxx\SchedulingPlatform)
+16:04:12.739 spring-boot-logging [restartedMain] INFO  com.skywilling.cn.web.WebApplication - The following profiles are active: dev
+16:04:12.829 spring-boot-logging [restartedMain] INFO  o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor - Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+16:04:12.829 spring-boot-logging [restartedMain] INFO  o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor - For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+16:04:15.395 spring-boot-logging [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode!
+16:04:15.396 spring-boot-logging [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data repositories in DEFAULT mode.
+16:04:15.419 spring-boot-logging [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 16ms. Found 0 repository interfaces.
+16:04:15.437 spring-boot-logging [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode!
+16:04:15.438 spring-boot-logging [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data repositories in DEFAULT mode.
+16:04:15.476 spring-boot-logging [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 1ms. Found 0 repository interfaces.
+16:04:16.003 spring-boot-logging [restartedMain] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration' of type [org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration$$EnhancerBySpringCGLIB$$293f36e1] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+16:04:17.025 spring-boot-logging [restartedMain] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port(s): 8080 (http)
+16:04:17.086 spring-boot-logging [restartedMain] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+16:04:17.100 spring-boot-logging [restartedMain] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+16:04:17.100 spring-boot-logging [restartedMain] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/9.0.16]
+16:04:17.108 spring-boot-logging [restartedMain] INFO  o.a.c.core.AprLifecycleListener - The APR based Apache Tomcat Native library which allows optimal performance in production environments was not found on the java.library.path: [D:\applications\bin;C:\WINDOWS\Sun\Java\bin;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\Program Files\Git\cmd;D:\applications\apache-maven-3.5.4\bin;D:\applications\bin;;C:\Program Files\Microsoft VS Code\bin;C:\Users\Lin\AppData\Local\Microsoft\WindowsApps;;.]
+16:04:17.266 spring-boot-logging [restartedMain] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+16:04:17.266 spring-boot-logging [restartedMain] INFO  o.s.web.context.ContextLoader - Root WebApplicationContext: initialization completed in 4436 ms
+16:04:19.018 spring-boot-logging [restartedMain] INFO  c.s.c.c.i.server.NettyServer - listen on port: 9005
+16:04:20.590 spring-boot-logging [restartedMain] INFO  o.s.s.c.ThreadPoolTaskExecutor - Initializing ExecutorService 'applicationTaskExecutor'
+16:04:21.304 spring-boot-logging [restartedMain] INFO  o.s.b.d.a.OptionalLiveReloadServer - LiveReload server is running on port 35729
+16:04:21.372 spring-boot-logging [restartedMain] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+16:04:21.428 spring-boot-logging [restartedMain] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port(s): 8080 (http) with context path ''
+16:04:21.434 spring-boot-logging [restartedMain] INFO  com.skywilling.cn.web.WebApplication - Started WebApplication in 10.028 seconds (JVM running for 16.207)

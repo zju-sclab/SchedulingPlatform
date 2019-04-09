@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.skywilling.cn.manager.user.mapper.PermissionMapper">
+  <resultMap id="BaseResultMap" type="com.skywilling.cn.manager.user.model.UserPermission">
+    <id property="id" column="id"/>
+    <result property="permission" column="permission"/>
+    <result property="desc" column="desc"/>
+    <result property="available" column="available"/>
+    <result property="gmtModify" column="gmt_modify"/>
+  </resultMap>
+
+  <sql id="BaseColumList">
+    id,permission,`desc`,available,gmt_modify
+  </sql>
+
+  <insert id="save" parameterType="userPermission" useGeneratedKeys="true" keyProperty="id">
+    insert into user_permissions
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="permission != null">
+        permission,
+      </if>
+      <if test="desc != null">
+        `desc`,
+      </if>
+      <if test="available != null">
+        available,
+      </if>
+      <if test="gmtModify != null">
+        gmt_modify
+      </if>
+    </trim>
+    value
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="permission != null">
+        #{permission},
+      </if>
+      <if test="desc != null">
+        #{desc},
+      </if>
+      <if test="available != null">
+        #{available},
+      </if>
+      <if test="gmtModify != null">
+        #{gmtModify}
+      </if>
+    </trim>
+  </insert>
+
+  <delete id="delete" parameterType="int">
+    delete from user_permissions
+    where id = #{id}
+  </delete>
+
+  <update id="update" parameterType="userPermission">
+    update user_permissions
+    <set>
+      <if test="permission != null">
+        permission = #{permission},
+      </if>
+      <if test="desc != null">
+        `desc` = #{desc},
+      </if>
+      <if test="available != null">
+        available = #{available},
+      </if>
+      <if test="gmtModify != null">
+        gmt_modify = #{gmtModify}
+      </if>
+    </set>
+    where id = #{id}
+  </update>
+
+  <select id="query" parameterType="int" resultMap="BaseResultMap">
+    select <include refid="BaseColumList"/>
+    from user_permissions
+    where id = #{id}
+    order by id asc
+  </select>
+
+  <select id="queryAll" resultMap="BaseResultMap">
+    select <include refid="BaseColumList"/>
+    from user_permissions
+    order by id asc
+  </select>
+
+  <select id="queryByRole" parameterType="int" resultMap="BaseResultMap">
+    select up.*
+    from user_permissions up, role_permission rp
+    where rp.role_id = #{roleId} and rp.permission_id = up.id
+    order by up.id asc
+  </select>
+
+  <select id="queryBy" parameterType="string" resultMap="BaseResultMap">
+    select <include refid="BaseColumList"/>
+    from user_permissions
+    where permission = #{name}
+  </select>
+</mapper>

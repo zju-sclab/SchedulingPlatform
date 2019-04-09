@@ -35,6 +35,11 @@ public class AutoServiceBiz {
 
   }
 
+  /**
+   * 启动自动驾驶
+   * @param autoTask
+   * @return
+   */
   public CompletableFuture<Boolean> fireAutonomous(AutoTask autoTask) {
     String vin = autoTask.getVin();
     JSONObject jsonObject = new JSONObject();

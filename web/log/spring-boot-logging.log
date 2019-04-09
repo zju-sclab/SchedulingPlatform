@@ -1,0 +1,44 @@
+14:43:52.845 spring-boot-logging [main] WARN  o.s.b.t.j.DuplicateJsonObjectContextCustomizerFactory$DuplicateJsonObjectContextCustomizer - 
+
+Found multiple occurrences of org.json.JSONObject on the class path:
+
+	jar:file:/C:/Users/Lin/.m2/repository/com/vaadin/external/google/android-json/0.0.20131108.vaadin1/android-json-0.0.20131108.vaadin1.jar!/org/json/JSONObject.class
+	jar:file:/C:/Users/Lin/.m2/repository/org/json/json/20170516/json-20170516.jar!/org/json/JSONObject.class
+
+You may wish to exclude one of them to ensure predictable runtime behavior
+
+14:43:52.911 spring-boot-logging [main] INFO  c.s.cn.web.WebApplicationTests - Starting WebApplicationTests on smartcar with PID 22736 (started by Lin in D:\work\Projects\linxxx\SchedulingPlatform\web)
+14:43:52.912 spring-boot-logging [main] INFO  c.s.cn.web.WebApplicationTests - The following profiles are active: dev
+14:43:56.419 spring-boot-logging [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode!
+14:43:56.421 spring-boot-logging [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data repositories in DEFAULT mode.
+14:43:56.463 spring-boot-logging [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 28ms. Found 0 repository interfaces.
+14:43:56.483 spring-boot-logging [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode!
+14:43:56.485 spring-boot-logging [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data repositories in DEFAULT mode.
+14:43:56.502 spring-boot-logging [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 2ms. Found 0 repository interfaces.
+14:43:57.220 spring-boot-logging [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration' of type [org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration$$EnhancerBySpringCGLIB$$163f92a5] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+14:43:58.311 spring-boot-logging [main] INFO  c.s.c.c.i.server.NettyServer - listen on port: 9005
+14:44:01.299 spring-boot-logging [main] INFO  o.s.s.c.ThreadPoolTaskExecutor - Initializing ExecutorService 'applicationTaskExecutor'
+14:44:02.329 spring-boot-logging [main] INFO  c.s.cn.web.WebApplicationTests - Started WebApplicationTests in 10.917 seconds (JVM running for 24.94)
+14:44:03.598 spring-boot-logging [Thread-3] INFO  o.s.s.c.ThreadPoolTaskExecutor - Shutting down ExecutorService 'applicationTaskExecutor'
+14:44:24.559 spring-boot-logging [main] WARN  o.s.b.t.j.DuplicateJsonObjectContextCustomizerFactory$DuplicateJsonObjectContextCustomizer - 
+
+Found multiple occurrences of org.json.JSONObject on the class path:
+
+	jar:file:/C:/Users/Lin/.m2/repository/com/vaadin/external/google/android-json/0.0.20131108.vaadin1/android-json-0.0.20131108.vaadin1.jar!/org/json/JSONObject.class
+	jar:file:/C:/Users/Lin/.m2/repository/org/json/json/20170516/json-20170516.jar!/org/json/JSONObject.class
+
+You may wish to exclude one of them to ensure predictable runtime behavior
+
+14:44:24.584 spring-boot-logging [main] INFO  c.s.cn.web.WebApplicationTests - Starting WebApplicationTests on smartcar with PID 12024 (started by Lin in D:\work\Projects\linxxx\SchedulingPlatform\web)
+14:44:24.584 spring-boot-logging [main] INFO  c.s.cn.web.WebApplicationTests - The following profiles are active: dev
+14:44:25.959 spring-boot-logging [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode!
+14:44:25.961 spring-boot-logging [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data repositories in DEFAULT mode.
+14:44:25.982 spring-boot-logging [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 14ms. Found 0 repository interfaces.
+14:44:25.999 spring-boot-logging [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode!
+14:44:26.001 spring-boot-logging [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data repositories in DEFAULT mode.
+14:44:26.016 spring-boot-logging [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 2ms. Found 0 repository interfaces.
+14:44:26.538 spring-boot-logging [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration' of type [org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration$$EnhancerBySpringCGLIB$$97c2fecb] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+14:44:27.303 spring-boot-logging [main] INFO  c.s.c.c.i.server.NettyServer - listen on port: 9005
+14:44:29.150 spring-boot-logging [main] INFO  o.s.s.c.ThreadPoolTaskExecutor - Initializing ExecutorService 'applicationTaskExecutor'
+14:44:29.966 spring-boot-logging [main] INFO  c.s.cn.web.WebApplicationTests - Started WebApplicationTests in 6.463 seconds (JVM running for 8.383)
+14:44:30.824 spring-boot-logging [Thread-3] INFO  o.s.s.c.ThreadPoolTaskExecutor - Shutting down ExecutorService 'applicationTaskExecutor'

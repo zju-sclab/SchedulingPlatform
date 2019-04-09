@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <region id="xuanzhou">
-  <lane from="yunle_company" to="yunle_restaurant" id="link_1">
+  <link from="yunle_company" to="yunle_restaurant" id="link_1">
     <path>
       <point x="13218013.5968" y="3636349.31409"/>
       <point x="13218013.601" y="3636349.31323"/>
@@ -1803,7 +1803,7 @@
       <point x="13217939.4265" y="3636562.17213"/>
       <point x="13217939.2758" y="3636562.09873"/>
     </path>
-  </lane>
+  </link>
   <link from="central_road" to="exit" id="link_4">
     <path>
       <point x="13217962.4286" y="3636364.64181"/>
@@ -2591,7 +2591,7 @@
       <point x="13217962.4286" y="3636364.64181"/>
     </path>
   </link>
-  <lane from="yunle_restaurant" to="xuanzhou_goverment" id="link_2">
+  <link from="yunle_restaurant" to="xuanzhou_goverment" id="link_2">
     <path>
       <point x="13217939.2758" y="3636562.09873"/>
       <point x="13217939.1255" y="3636562.03638"/>
@@ -3595,5 +3595,6 @@
       <point x="13217936.2397" y="3636427.53275"/>
       <point x="13217936.3143" y="3636427.37621"/>
     </path>
-  </lane>
+  </link>
+
 </region>

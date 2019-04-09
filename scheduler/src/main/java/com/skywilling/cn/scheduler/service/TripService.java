@@ -18,7 +18,7 @@ public interface TripService {
     boolean stopTrip(String tripId);
 
     /**
-     * 提交行程请求，进行路径规划后，发送给车端
+     * 提交行程请求，进行路径规划后，发送给Commond模块
      * @param vin
      * @param parkName
      * @param goal

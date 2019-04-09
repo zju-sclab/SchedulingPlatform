@@ -12,19 +12,5 @@ public class Pose implements Serializable {
   private Point point;
   private Orientation orientation;
 
-  public Point getPoint() {
-    return point;
-  }
 
-  public void setPoint(Point point) {
-    this.point = point;
-  }
-
-  public Orientation getOrientation() {
-    return orientation;
-  }
-
-  public void setOrientation(Orientation orientation) {
-    this.orientation = orientation;
-  }
 }

@@ -52,7 +52,7 @@ public class StaticMapFactory implements Factory<LiveMap> {
         node.setY(Double.valueOf(next.attributeValue("y", "0.0")));
     }
 
-    private void loadLanes(Document document, LiveMap liveMap) {
+    private void loadLanes(Document document,LiveMap liveMap) {
         Element root = document.getRootElement();
         Element lanes = root.element("lanes");
         Iterator<Element> iterator = lanes.elementIterator();
@@ -74,14 +74,19 @@ public class StaticMapFactory implements Factory<LiveMap> {
         }
     }
 
+    /**
+     * 根据Map.xml构建拓扑地图，拓扑地图仅仅路段和站点的基本信息
+     * @param mapUrl
+     * @return
+     */
     @Override
-    public LiveMap create(String url) {
-        LiveMap liveMap=new LiveMap();
+    public LiveMap create(String mapUrl,String shapeUrl) {
+        LiveMap liveMap = new LiveMap();
         try {
-            Document document = parse(url);
+            Document document = parse(mapUrl);
             liveMap.setParkName(String.valueOf(document.getRootElement().attribute("parkName")));
             loadNode(document, liveMap);
-            loadLanes(document, liveMap);
+            loadLanes(document,liveMap);
             return liveMap;
         } catch (DocumentException e) {
             e.printStackTrace();

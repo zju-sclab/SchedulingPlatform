@@ -21,53 +21,6 @@ public class TerminalInfo implements Serializable {
   private long timestamp;
   private String lane;
 
-  public double getV() {
-    return v;
-  }
-
-  public void setV(double v) {
-    this.v = v;
-  }
-
-  public double getWheelAngle() {
-    return wheelAngle;
-  }
-
-  public void setWheelAngle(double wheelAngle) {
-    this.wheelAngle = wheelAngle;
-  }
-
-  public double getGear() {
-    return gear;
-  }
-
-  public void setGear(double gear) {
-    this.gear = gear;
-  }
-
-  public Pose getPose() {
-    return pose;
-  }
-
-  public void setPose(Pose pose) {
-    this.pose = pose;
-  }
-
-  public List<ModuleInfo> getNodes() {
-    return nodes;
-  }
-
-  public void setNodes(List<ModuleInfo> nodes) {
-    this.nodes = nodes;
-  }
-
-  public long getTimestamp() {
-    return timestamp;
-  }
-
-  public void setTimestamp(long timestamp) {
-    this.timestamp = timestamp;
-  }
 
 
 }

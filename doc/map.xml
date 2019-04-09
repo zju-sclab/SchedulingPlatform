@@ -11,7 +11,7 @@
   </nodes>
   <lanes>
     <!--start and goal refer to location id-->
-    <link id="lane_1" from="yunle_company" to="yunle_restaurant" length="0.0" time="0" v="0.0" zh=""/>
+    <lane id="lane_1" from="yunle_company" to="yunle_restaurant" length="0.0" time="0" v="0.0" zh=""/>
     <lane id="lane_2" from="yunle_restaurant" to="xuanzhou_goverment" length="0.0" time="0" v="0.0" zh=""/>
     <lane id="lane_3" from="xuanzhou_goverment" to="central_road" length="0.0" time="0" v="0.0" zh=""/>
     <lane id="lane_4" from="central_road" to="exit" length="0.0" time="" v="0.0" zh=""/>
