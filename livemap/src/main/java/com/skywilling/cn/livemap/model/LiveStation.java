@@ -13,6 +13,7 @@ import java.util.concurrent.LinkedBlockingQueue;
 public class LiveStation extends Node implements Serializable {
 
     private String locationLane;
+    private String name;
     private LinkedBlockingQueue<String> vehicles;
 
 }

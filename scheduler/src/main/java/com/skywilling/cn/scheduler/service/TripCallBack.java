@@ -3,7 +3,7 @@ package com.skywilling.cn.scheduler.service;
 import com.skywilling.cn.scheduler.common.TripStatus;
 import com.skywilling.cn.scheduler.model.Trip;
 
-public interface RideCallBack {
+public interface TripCallBack {
 
   void onRideFinished(Trip trip);
 

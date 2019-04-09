@@ -152,17 +152,18 @@ public class StaticLaneShapFactory implements Factory<Boolean> {
 
     /**
      * 构建点云地图，加载点云数组到路段,丰富路段的语义信息
+     * @param url
      */
     @Override
-    public Boolean create(String mapUrl, String shapeDir) {
+    public Boolean create(String url) {
         try {
-            Document document = parse(mapUrl);
+            Document document = parse(url + "map.xml");
             String parkName = String.valueOf(document.getRootElement().attribute("id"));
-            loadLaneShapes(parkName,shapeDir);
+            loadLaneShapes(parkName,url);
         } catch (DocumentException e) {
-            LOG.warn(String.format("create ShapeContainer documentException error, file: {}", mapUrl));
+            LOG.warn(String.format("create ShapeContainer documentException error, file: {}", url));
         } catch (MalformedURLException e) {
-            LOG.warn(String.format("create ShapeContainer MalformedURLException error, url: %s", mapUrl));
+            LOG.warn(String.format("create ShapeContainer MalformedURLException error, url: %s", url));
         }
         return null;
     }

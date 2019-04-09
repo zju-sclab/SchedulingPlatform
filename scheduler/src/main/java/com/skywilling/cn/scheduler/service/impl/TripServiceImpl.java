@@ -20,6 +20,7 @@ import com.skywilling.cn.scheduler.service.RouteService;
 import com.skywilling.cn.scheduler.service.TripService;
 import com.skywilling.cn.scheduler.utils.FunctionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -37,6 +38,8 @@ public class TripServiceImpl implements TripService {
     RouteService routeService;
     @Autowired
     StationService stationService;
+    @Autowired
+    private MongoTemplate mongoTemplate;
 
 
     @Override
@@ -119,6 +122,10 @@ public class TripServiceImpl implements TripService {
 
     @Override
     public Trip getLiveTripBy(String vin) {
+        /*Trip lasted = tripAccessor.queryBy(vin);
+        if (lasted != null && lasted.getStatus() < RideStatus.FINISHED.getCode()) {
+            return lasted;
+        }*/
         return null;
     }
 

@@ -2,7 +2,6 @@ package com.skywilling.cn.livemap.db.mapper;
 
 
 import com.skywilling.cn.livemap.model.Park;
-import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
 

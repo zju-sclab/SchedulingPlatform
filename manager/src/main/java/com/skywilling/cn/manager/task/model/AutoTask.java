@@ -36,7 +36,7 @@ public class AutoTask implements Serializable{
   @Field
   private double acceleration;
   @Field
-  private List<LidarPoint> action;
+  private List<Action> action;
   @Field
   private int offset;
   @Field

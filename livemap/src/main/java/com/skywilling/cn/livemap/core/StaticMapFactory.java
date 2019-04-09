@@ -76,14 +76,14 @@ public class StaticMapFactory implements Factory<LiveMap> {
 
     /**
      * 根据Map.xml构建拓扑地图，拓扑地图仅仅路段和站点的基本信息
-     * @param mapUrl
+     * @param url
      * @return
      */
     @Override
-    public LiveMap create(String mapUrl,String shapeUrl) {
+    public LiveMap create(String url) {
         LiveMap liveMap = new LiveMap();
         try {
-            Document document = parse(mapUrl);
+            Document document = parse(url + "map.xml");
             liveMap.setParkName(String.valueOf(document.getRootElement().attribute("parkName")));
             loadNode(document, liveMap);
             loadLanes(document,liveMap);

@@ -1,6 +1,5 @@
 package com.skywilling.cn.scheduler.service.impl;
 
-
 import com.skywilling.cn.livemap.model.LiveJunction;
 import com.skywilling.cn.livemap.model.LiveMap;
 import com.skywilling.cn.livemap.model.LiveStation;

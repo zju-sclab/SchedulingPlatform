@@ -26,6 +26,7 @@ public class MapServiceImpl implements MapService {
     @Autowired
     StaticMapFactory staticMapFactory;
 
+
     @Override
     public LiveMap getMap(String parkName) {
         if (!maps.containsKey(parkName)) {
@@ -35,13 +36,14 @@ public class MapServiceImpl implements MapService {
             } else {
                 Park park = parkService.queryByName(parkName);
                 if (park != null && park.getMapFileUrl() != null) {
+
                     LiveMap liveMap = staticMapFactory.create(park.getMapFileUrl());
                     add(liveMap);
-                    shapeMapService.create(park.getShapeFileUrl());
+                    //这里改成本地文件夹park.getShapeFileUrl()
+                    shapeMapService.create("/doc/Map/shape");
                     maps.putIfAbsent(liveMap.getParkName(),liveMap);
                 }
             }
-
         }
         return maps.get(parkName);
     }

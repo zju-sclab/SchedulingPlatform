@@ -19,7 +19,6 @@ public class Action implements Serializable {
     private double v;
     private DriveMethod type;
     private List<LidarPoint> points;
-
     private List<Instruction> instructions;
 
 }
