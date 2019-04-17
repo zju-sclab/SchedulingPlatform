@@ -1,6 +1,8 @@
 package com.skywilling.cn.web.model.view;
 
-import com.skywilling.cn.user.model.UserInfo;
+
+
+import com.skywilling.cn.manager.user.model.UserInfo;
 
 import java.io.Serializable;
 

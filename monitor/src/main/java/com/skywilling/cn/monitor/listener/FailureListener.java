@@ -18,12 +18,12 @@ public class FailureListener extends BasicListener {
 
     @Override
     @PostConstruct
-    public void init(){
-        listenerMap.addListener(ACK.FAILURE.getDesc(),this);
+    public void init() {
+        listenerMap.addListener(ACK.FAILURE.getDesc(), this);
     }
 
     @Override
-    public BasicCarResponse process(String vin, String body){
+    public BasicCarResponse process(String vin, String body) {
         AutonomousCarInfo car = autoCarInfoService.getOrCreate(vin);
         car.setState(CarState.LOST.getState());
         car.setNodes(null);

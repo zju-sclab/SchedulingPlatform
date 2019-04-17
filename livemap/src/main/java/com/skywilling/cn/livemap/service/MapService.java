@@ -8,5 +8,5 @@ import com.skywilling.cn.livemap.model.LiveStation;
 
 public interface MapService {
     LiveMap getMap(String parkName);
-    void add(LiveMap map);
+    void addMap(LiveMap map);
 }

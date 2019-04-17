@@ -27,7 +27,9 @@ public class CarDynamic implements Serializable {
   private Integer connect     ;
 
   private Double  endurance   ;
-
+  /**
+   * 所在站点
+   */
   private String  station     ;
 
   private Double velocity = 0.0;
@@ -36,6 +38,9 @@ public class CarDynamic implements Serializable {
   private Double energy;
 
   private Integer isValid     ;
+  /**
+   * 所在lane
+   */
   private String lane;
   private Double  latitude    ;
   private Double  longitude   ;

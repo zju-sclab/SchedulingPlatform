@@ -46,7 +46,7 @@ public class CrossNodeListenImpl implements CrossNodeListen {
     @Override
     public void inComingJunction(AutonomousCarInfo carInfo, String junctionName) {
         //判断开关
-        if (!switchOn.equals(true)){
+        if (!switchOn.equals(true)) {
             return;
         }
 
@@ -67,16 +67,16 @@ public class CrossNodeListenImpl implements CrossNodeListen {
     @Override
     public void outGoingJunction(AutonomousCarInfo carInfo, String junctionName) {
 
-        if (!switchOn.equals(true)){
+        if (!switchOn.equals(true)) {
             return;
         }
 
         //重新开始车辆任务
-        String nextCar=nodeLockService.release(carInfo.getVin(),junctionName);
+        String nextCar = nodeLockService.release(carInfo.getVin(), junctionName);
         if (nextCar == null) return;
         AutonomousCarInfo car = autoCarInfoService.get(nextCar);
-        Route route = routeService.reRoute(carInfo);
-        Trip trip=tripService.updateRoute(carInfo, route);
+        Route route = routeService.reRoute(car);
+        Trip trip = tripService.updateRoute(car, route);
         try {
             tripCore.submitTrip(trip);
         } catch (IllegalTaskException e) {

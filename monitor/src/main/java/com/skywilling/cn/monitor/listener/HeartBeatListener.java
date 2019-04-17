@@ -20,17 +20,17 @@ public class HeartBeatListener extends BasicListener {
 
     @Override
     @PostConstruct
-    public void init(){
-        listenerMap.addListener(TypeField.HEARTBEAT.getDesc(),this);
+    public void init() {
+        listenerMap.addListener(TypeField.HEARTBEAT.getDesc(), this);
     }
 
     @Override
-    public BasicCarResponse process(String vin, String body){
+    public BasicCarResponse process(String vin, String body) {
         AutonomousCarInfo car = autoCarInfoService.getOrCreate(vin);
         if (car == null) {
             return null;
         }
-        TerminalInfo terminalInfo=JSONObject.parseObject(body,TerminalInfo.class);
+        TerminalInfo terminalInfo = JSONObject.parseObject(body, TerminalInfo.class);
         car.setVelocity(terminalInfo.getV());
         car.setWheelAngle(terminalInfo.getWheelAngle());
         car.setGear(terminalInfo.getGear());
@@ -38,7 +38,14 @@ public class HeartBeatListener extends BasicListener {
         car.setLocation(terminalInfo.getPose());
         car.setNodes(terminalInfo.getNodes());
         car.setTimestamp(terminalInfo.getTimestamp());
+        /**
+         * 车端上传定位后的路段名
+         */
         car.setLane(terminalInfo.getLane());
+        /**
+         * 车端上传定位后的站点名
+         */
+        car.setStation(terminalInfo.getStation());
         autoCarInfoService.save(car);
 
         return null;

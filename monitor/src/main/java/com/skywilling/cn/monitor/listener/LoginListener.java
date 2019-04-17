@@ -24,15 +24,15 @@ public class LoginListener extends BasicListener {
 
     @Override
     @PostConstruct
-    public void init(){
-      listenerMap.addListener(TypeField.LOGIN.getDesc(),this);
+    public void init() {
+        listenerMap.addListener(TypeField.LOGIN.getDesc(), this);
     }
 
     @Override
-    public BasicCarResponse process(String vin, String body){
+    public BasicCarResponse process(String vin, String body) {
         AutonomousCarInfo car = autoCarInfoService.getOrCreate(vin);
         car.setState(CarState.FREE.getState());
-        RunInfo runInfo=JSONObject.parseObject(body,RunInfo.class);
+        RunInfo runInfo = JSONObject.parseObject(body, RunInfo.class);
         car.setTripId(runInfo.getRunId());
         List<ModuleInfo> moduleInfos = new ArrayList<>(runInfo.getNodeList().size());
         for (String node : runInfo.getNodeList()) {

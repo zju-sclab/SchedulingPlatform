@@ -3,6 +3,7 @@ package com.skywilling.cn.livemap.model;
 import lombok.Data;
 
 import java.io.Serializable;
+import java.util.LinkedList;
 import java.util.concurrent.LinkedBlockingQueue;
 
 /**
@@ -12,7 +13,6 @@ import java.util.concurrent.LinkedBlockingQueue;
 public class LiveLane implements Serializable {
    private static final long serialVersionUID = -1231234234L;
    private String name;
-   private int id;
    private double length = 0.0;
    private int time = 0;
    private String zh;
@@ -23,8 +23,8 @@ public class LiveLane implements Serializable {
    /**
     * 动态
     */
-   private LinkedBlockingQueue<String> vehicles;
+   private LinkedList<String> vehicles;
    private double weight;
-   private double priority;
+   private int priority;
 
 }

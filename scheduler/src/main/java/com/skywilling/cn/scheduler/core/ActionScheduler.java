@@ -1,6 +1,5 @@
 package com.skywilling.cn.scheduler.core;
 
-import com.skywilling.cn.common.enums.DriveMethod;
 import com.skywilling.cn.common.exception.park.NoAvailableActionFoundException;
 import com.skywilling.cn.livemap.model.*;
 import com.skywilling.cn.livemap.service.MapService;
@@ -23,10 +22,6 @@ public class ActionScheduler {
 
     /**
      * 规划A--B的路径
-     * @param parkName
-     * @param route
-     * @return
-     * @throws NoAvailableActionFoundException
      */
     public List<Action> convertToAction(String parkName, Route route) throws NoAvailableActionFoundException {
 

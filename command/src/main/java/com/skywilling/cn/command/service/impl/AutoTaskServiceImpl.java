@@ -53,6 +53,7 @@ public class AutoTaskServiceImpl implements AutoTaskService {
         String taskId = taskService.save(autoTask);
         car.setTaskId(taskId);
         autoCarInfoService.save(car);
+        //准备启动
         CompletableFuture<Boolean> future =autoServiceBiz.prepareAutonomous(autoTask);
         checkResult(autoTask,future);
         return future;
@@ -61,7 +62,7 @@ public class AutoTaskServiceImpl implements AutoTaskService {
 
     @Override
     public CompletableFuture<Boolean> resume(String taskId) {
-        // todo: implement resume protocol.
+
         return null;
     }
 

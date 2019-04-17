@@ -40,6 +40,8 @@ public class AutonomousCarInfo implements Serializable {
   private double gear;
   @Field
   private Pose pose;
+
+  @Field String station;
   @Field
   private String lane;
   @Field

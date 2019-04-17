@@ -2,9 +2,12 @@ package com.skywilling.cn.livemap.core;
 
 import com.skywilling.cn.common.config.redis.RedisDao;
 import com.skywilling.cn.common.model.LidarPoint;
+import com.skywilling.cn.livemap.model.LiveLane;
+import com.skywilling.cn.livemap.model.LiveMap;
 import com.skywilling.cn.livemap.model.Point;
 import com.skywilling.cn.livemap.factory.Factory;
 import com.skywilling.cn.livemap.model.LaneShape;
+import com.skywilling.cn.livemap.service.MapService;
 import com.skywilling.cn.livemap.service.ShapeMapService;
 import org.dom4j.*;
 import org.dom4j.io.SAXReader;
@@ -29,6 +32,9 @@ public class StaticLaneShapFactory implements Factory<Boolean> {
     @Autowired
     ShapeMapService shapeMapService;
 
+    @Autowired
+    MapService mapService;
+
 
     private Document parse(String path) throws DocumentException, MalformedURLException {
         URL url = new URL(path);
@@ -42,7 +48,7 @@ public class StaticLaneShapFactory implements Factory<Boolean> {
      * @param path
      * @return
      */
-    public List<String> getAllFiles(String path) {
+    public List<String> getAllFiles(String path)  {
         ArrayList<String> files = new ArrayList<>();
         File file = new File(path);
         File[] tempList = file.listFiles();
@@ -101,6 +107,63 @@ public class StaticLaneShapFactory implements Factory<Boolean> {
     }
 
 
+    /**
+     * 读取所有的line和cross文件,返回路段数组
+     *
+     * @param files
+     */
+    public List<LaneShape> readCSVFiles(String parkName, List<String> files) {
+        List<LaneShape> laneShapes = new ArrayList<>();
+        BufferedReader br;
+        String line;
+
+        List<LidarPoint> allLidarPoint = new ArrayList<>();
+        for (String filename : files) {
+            LaneShape laneShape = new LaneShape();
+            /**
+             * 根据去除绝对路径后的文件名得到lane_id
+             */
+            String filename_no_pre = filename.substring(filename.lastIndexOf("\\")+1);
+            String lane_id = filename_no_pre.substring(0,1);
+            String prefix = "lane_";
+            LiveMap liveMap = mapService.getMap(parkName);
+
+            LiveLane liveLane = liveMap.getLaneMap().get(prefix+lane_id);
+            laneShape.setParkName(parkName);
+            laneShape.setId(prefix+lane_id);
+            laneShape.setPriority(liveLane.getPriority());
+            laneShape.setFromId(liveLane.getFrom().getName());
+            laneShape.setToId(liveLane.getTo().getName());
+            laneShape.setLength(liveLane.getLength());
+
+            try {
+                br = new BufferedReader(new FileReader(new File(filename)));
+
+                while ((line = br.readLine()) != null) {
+                    String[] lineSplit = line.trim().split(",");
+                    /**
+                     * 写入一行标准的点云数据
+                     */
+                    LidarPoint lidarPoint = new LidarPoint(lineSplit[0], lineSplit[1], lineSplit[2],
+                            lineSplit[3], lineSplit[4], lineSplit[5], lineSplit[6]);
+                    allLidarPoint.add(lidarPoint);
+                }
+                laneShape.setPath(allLidarPoint);
+                laneShapes.add(laneShape);
+                /**
+                 *  关闭流同时刷新缓冲区
+                 */
+                br.close();
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+        }
+        return laneShapes;
+    }
+
 
 /*
     private List<Point> loadTrj(Element pathRoot) {
@@ -126,22 +189,23 @@ public class StaticLaneShapFactory implements Factory<Boolean> {
      * @param parkName
      * @param dir
      */
-    private void loadLaneShapes(String parkName, String dir) {
+    private void loadLaneShapes(String parkName, String dir)  {
+//        List<Node> lanes = document.selectNodes("//region/lane");
+//        for (Node lane : lanes) {
+//            Element element = (Element) lane;
+//            LaneShape laneShape = new LaneShape();
+//            laneShape.setParkName(parkName);
+//            laneShape.setId(element.attributeValue("id", ""));
+//            List<Point> ways = loadTrj(element.element("path"));
+//            if (ways != null) {
+//                laneShape.setPath(ways);
+//            }
+//           shapeMapService.save(laneShape);
+//        }
 
-/*        List<Node> lanes = document.selectNodes("//region/lane");
-        for (Node lane : lanes) {
-            Element element = (Element) lane;
-            LaneShape laneShape = new LaneShape();
-            laneShape.setParkName(parkName);
-            laneShape.setId(element.attributeValue("id", ""));
-            List<Point> ways = loadTrj(element.element("path"));
-            if (ways != null) {
-                laneShape.setPath(ways);
-            }
-           shapeMapService.save(laneShape);
-        }*/
-        List<String> filesnames = getAllFiles(dir);
-        List<LaneShape> laneShapes = readALLFiles(filesnames);
+        List<String> filesnames = null;
+        filesnames = getAllFiles(dir);
+        List<LaneShape> laneShapes = readCSVFiles(parkName, filesnames);
         for (LaneShape laneShape : laneShapes) {
             laneShape.setParkName(parkName);
             if (laneShapes != null && laneShapes.size() != 0) {
@@ -151,20 +215,15 @@ public class StaticLaneShapFactory implements Factory<Boolean> {
     }
 
     /**
-     * 构建点云地图，加载点云数组到路段,丰富路段的语义信息
-     * @param url
+     * 构建路段的语义信息
      */
     @Override
-    public Boolean create(String url) {
-        try {
-            Document document = parse(url + "map.xml");
-            String parkName = String.valueOf(document.getRootElement().attribute("id"));
-            loadLaneShapes(parkName,url);
-        } catch (DocumentException e) {
-            LOG.warn(String.format("create ShapeContainer documentException error, file: {}", url));
-        } catch (MalformedURLException e) {
-            LOG.warn(String.format("create ShapeContainer MalformedURLException error, url: %s", url));
-        }
-        return null;
+    public Boolean create(String parkName, String shapeUrl) {
+
+            //Document document = parse(url);
+            //String parkName = String.valueOf(document.getRootElement().attribute("id"));
+            loadLaneShapes(parkName, shapeUrl);
+
+            return true;
     }
 }

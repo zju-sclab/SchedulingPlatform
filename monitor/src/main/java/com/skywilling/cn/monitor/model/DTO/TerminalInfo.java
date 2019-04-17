@@ -19,8 +19,13 @@ public class TerminalInfo implements Serializable {
   private Pose pose = new Pose();
   private List<ModuleInfo> nodes = null;
   private long timestamp;
+  /**
+   * 所在lane，包括Curve和Lane
+   */
   private String lane;
-
-
+  /**
+   * 所在停靠站
+   */
+  private String station;
 
 }

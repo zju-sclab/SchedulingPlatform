@@ -11,14 +11,10 @@ import java.io.Serializable;
 @Document(collection = "driving_task_info")
 public class DrivingTaskInfo implements Serializable {
   private static final long serialVersionUID = -3956419855731943291L;
-  /**
-   * task Id
-   */
+
   @Id
   private String taskId;
-  /**
-   * task status, refer to {@link com.skywilling.cn.autonomous.common.TaskState}
-   */
+
   @Field
   private int status;
 
@@ -35,43 +31,4 @@ public class DrivingTaskInfo implements Serializable {
   private long timestamp = System.currentTimeMillis();
 
 
-  public String getTaskId() {
-    return taskId;
-  }
-
-  public void setTaskId(String taskId) {
-    this.taskId = taskId;
-  }
-
-  public int getStatus() {
-    return status;
-  }
-
-  public void setStatus(int status) {
-    this.status = status;
-  }
-
-  public int getPercentage() {
-    return percentage;
-  }
-
-  public void setPercentage(int percentage) {
-    this.percentage = percentage;
-  }
-
-  public long getTimestamp() {
-    return timestamp;
-  }
-
-  public void setTimestamp(long timestamp) {
-    this.timestamp = timestamp;
-  }
-
-  public int getOffset() {
-    return offset;
-  }
-
-  public void setOffset(int offset) {
-    this.offset = offset;
-  }
 }

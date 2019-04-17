@@ -39,6 +39,9 @@ public class NettyServer {
   @Resource
   private ServerChannelHandlerAdapter serverHandler;
 
+  /**
+   * 该注解用于依赖注入以后，即bean在容器里初始化后必须运行的自定义方法上，这里是启动Netty服务端的异步监听
+   */
   @PostConstruct
   public void start() {
     try {

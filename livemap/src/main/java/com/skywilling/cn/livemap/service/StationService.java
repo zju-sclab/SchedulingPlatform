@@ -6,7 +6,10 @@ import java.util.List;
 
 public interface StationService {
 
-    void add(String parkName, LiveStation station);
-    LiveStation get(String parkName, String stationName);
-    List<String> QueryVehicles();
+    void addStation(String parkName, LiveStation station);
+    LiveStation getStation(String parkName, String stationName);
+    void addVehicle(LiveStation station, String vin);
+    void removeVehicle(LiveStation station, String vin);
+    List<String> getVehicles(String parkName, LiveStation station);
+
 }

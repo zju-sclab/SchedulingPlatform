@@ -20,16 +20,13 @@ import com.skywilling.cn.manager.task.model.AutoTask;
 import com.skywilling.cn.manager.task.service.TaskService;
 
 
-import com.skywilling.cn.scheduler.model.RideStatus;
 import com.skywilling.cn.scheduler.model.Trip;
 import com.skywilling.cn.scheduler.service.TripService;
 import com.skywilling.cn.web.model.RideParam;
 import com.skywilling.cn.web.model.view.TaskView;
-import com.skywilling.cn.web.utils.ViewBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -39,9 +36,9 @@ import java.util.concurrent.ExecutionException;
 @CrossOrigin
 @RequestMapping(value = "/api/v1/autonomous")
 @RestController
-public class ApiTestController {
+public class AutoController {
 
-    private static final Logger LOG = LoggerFactory.getLogger(ApiTestController.class);
+    private static final Logger LOG = LoggerFactory.getLogger(AutoController.class);
 
     @Autowired
     private AutoServiceBiz autoServiceBiz;

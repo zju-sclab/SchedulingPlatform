@@ -3,18 +3,18 @@
 <region id="xuanzhou" version="0.2" time="2019/03/10">
   <nodes>
     <!--type: station, waiting point, parking point-->
-    <node name="yunle_company" x="13218013.5968" y="3636349.31409" id="1" type="station" zh=""/>
-    <node name="yunle_restaurant" x="13217939.2758" y="3636562.09873" id="2" type="station" zh=""/>
-    <ndoe name="xuanzhou_goverment" x="13217936.3143" y="3636427.37621" id="3" type="station" zh=""/>
-    <node name="central_road" x="13217962.4286" y="3636364.64181" id="4" type="junction" zh=""/>
-    <node name="exit" x="13218008.7037" y="3636347.20202" id="5" type="junction" zh=""/>
+    <node name="zetong" x="13218013.5968" y="3636349.31409" id="1" type="station" zh=""/>
+    <node name="jiaojiu" x="13217939.2758" y="3636562.09873" id="2" type="junction" zh=""/>
+    <ndoe name="caolou" x="13217936.3143" y="3636427.37621" id="3" type="station" zh=""/>
+    <node name="shengyi" x="13217962.4286" y="3636364.64181" id="4" type="station" zh=""/>
+  
   </nodes>
   <lanes>
     <!--start and goal refer to location id-->
-    <lane id="lane_1" from="yunle_company" to="yunle_restaurant" length="0.0" time="0" v="0.0" zh=""/>
-    <lane id="lane_2" from="yunle_restaurant" to="xuanzhou_goverment" length="0.0" time="0" v="0.0" zh=""/>
-    <lane id="lane_3" from="xuanzhou_goverment" to="central_road" length="0.0" time="0" v="0.0" zh=""/>
-    <lane id="lane_4" from="central_road" to="exit" length="0.0" time="" v="0.0" zh=""/>
-    <lane id="lane_5" from="exit" to="yunle_company" length="0.0" time="" v="0.0" zh=""/>
+    <lane id="lane_1" from="zetong" to="jiaojiu" length="0.0" time="0" v="0.0" priority = "4" zh=""/>
+    <lane id="lane_2" from="jiaojiu" to="caolou" length="0.0" time="0" v="0.0" priority = "3" h=""/>
+    <lane id="lane_3" from="caolou" to="shengyi" length="0.0" time="0" v="0.0" priority = "1" zh=""/>
+    <lane id="lane_4" from="shengyi" to="jiaojiu" length="0.0" time="" v="0.0" priority = "2" zh=""/>
+    <lane id="lane_5" from="jiaojiu" to="zetong" length="0.0" time="" v="0.0" priority = "1" zh=""/>
   </lanes>
 </region>

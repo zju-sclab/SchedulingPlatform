@@ -38,8 +38,8 @@ public class TripServiceImpl implements TripService {
     RouteService routeService;
     @Autowired
     StationService stationService;
-    @Autowired
-    private MongoTemplate mongoTemplate;
+    //@Autowired
+    //private MongoTemplate mongoTemplate;
 
 
     @Override
@@ -58,7 +58,7 @@ public class TripServiceImpl implements TripService {
      */
     @Override
     public String submitTrip(String vin, String parkName, String goal, double velocity, double acceleration,
-                           boolean usingDefaultSpeed) throws CarNotExistsException, CarNotAliveException, IllegalRideException {
+                             boolean usingDefaultSpeed) throws CarNotExistsException, CarNotAliveException, IllegalRideException {
         AutonomousCarInfo car = carInfoService.getAutoCarInfo(vin);
         if (car == null) {
             throw new CarNotExistsException(vin);
@@ -67,13 +67,16 @@ public class TripServiceImpl implements TripService {
             throw new CarNotAliveException(vin);
         }
         //如果车辆已经到达station
-        LiveStation station = stationService.get(parkName, goal);
-        if (FunctionUtils.distance(station.getX(), station.getY(),
-                car.getLocation().getX(), car.getLocation().getY()) < 1) {
+        String curStation = car.getStation();
+        if (curStation == goal)
             throw new IllegalRideException();
-        }
+//        LiveStation goalStation = stationService.get(parkName, goal);
+//        if (FunctionUtils.distance(goalStation.getX(), goalStation.getY(),
+//                car.getLocation().getX(), car.getLocation().getY()) < 1) {
+//            throw new IllegalRideException();
+//        }
 
-        Route route = routeService.navigate(parkName, station.getName(), goal);
+        Route route = routeService.navigate(parkName, curStation, goal);
         if (!usingDefaultSpeed) {
             for (LiveLane lane : route.getLiveLanes()) {
                 lane.setV(velocity);
@@ -94,16 +97,15 @@ public class TripServiceImpl implements TripService {
 
     @Override
     public Trip updateRoute(AutonomousCarInfo carInfo, Route route) {
-        Trip trip=this.get(carInfo.getTripId());
-        List<LiveLane> old=trip.getRoute().getLiveLanes();
-        List<LiveLane> newLanes=new ArrayList<>();
-        int i=0;
-        for(LiveLane lane:old){
-            if(!StringUtils.equals(lane.getName(),carInfo.getLane())){
-               newLanes.add(lane);
-               i++;
-            }
-            else{
+        Trip trip = this.get(carInfo.getTripId());
+        List<LiveLane> old = trip.getRoute().getLiveLanes();
+        List<LiveLane> newLanes = new ArrayList<>();
+        int i = 0;
+        for (LiveLane lane : old) {
+            if (!StringUtils.equals(lane.getName(), carInfo.getLane())) {
+                newLanes.add(lane);
+                i++;
+            } else {
                 trip.setStart(i);
                 newLanes.addAll(route.getLiveLanes());
                 trip.getRoute().setLiveLanes(newLanes);
@@ -131,16 +133,16 @@ public class TripServiceImpl implements TripService {
 
     @Override
     public List<Trip> query(int page, int size) {
-        return tripAccessor.query(page,size);
+        return tripAccessor.query(page, size);
     }
 
     @Override
     public List<Trip> queryBy(String vin, int page, int size) {
-        return tripAccessor.queryBy(vin,page,size);
+        return tripAccessor.queryBy(vin, page, size);
     }
 
     @Override
     public List<Trip> queryBy(String vin, String start, String end, int page, int size) {
-        return tripAccessor.queryBy(vin,start,end,page,size);
+        return tripAccessor.queryBy(vin, start, end, page, size);
     }
 }

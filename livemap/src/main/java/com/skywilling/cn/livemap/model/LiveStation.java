@@ -4,6 +4,7 @@ package com.skywilling.cn.livemap.model;
 import lombok.Data;
 
 import java.io.Serializable;
+import java.util.LinkedList;
 import java.util.concurrent.LinkedBlockingQueue;
 
 /**
@@ -14,6 +15,9 @@ public class LiveStation extends Node implements Serializable {
 
     private String locationLane;
     private String name;
-    private LinkedBlockingQueue<String> vehicles;
+    private int    stationId;
+    private LinkedList<String> vehicles;
+    private double x;
+    private double y;
 
 }

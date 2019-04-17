@@ -32,15 +32,17 @@ public class MapServiceImpl implements MapService {
         if (!maps.containsKey(parkName)) {
             Object read = redisDao.read(PREFIX + parkName);
             if (read != null) {
-                maps.putIfAbsent(parkName, (LiveMap) read);
-            } else {
+               // maps.putIfAbsent(parkName, (LiveMap) read);
+                maps.put(parkName, (LiveMap) read);
+            }
+            else {
                 Park park = parkService.queryByName(parkName);
-                if (park != null && park.getMapFileUrl() != null) {
-
-                    LiveMap liveMap = staticMapFactory.create(park.getMapFileUrl());
-                    add(liveMap);
-                    //这里改成本地文件夹park.getShapeFileUrl()
-                    shapeMapService.create("/doc/Map/shape");
+                if (park != null&& park.getMapFileUrl() != null && park.getShapeFileUrl() != null) {
+                    //读取本地文件
+                    LiveMap liveMap = staticMapFactory.create(parkName, park.getMapFileUrl());
+                    addMap(liveMap);
+                    //读取本地文件夹
+                    shapeMapService.create(parkName);
                     maps.putIfAbsent(liveMap.getParkName(),liveMap);
                 }
             }
@@ -49,8 +51,9 @@ public class MapServiceImpl implements MapService {
     }
 
     @Override
-    public void add(LiveMap map) {
-        maps.putIfAbsent(map.getParkName(), map);
+    public void addMap(LiveMap map) {
+        //maps.putIfAbsent(map.getParkName(), map);
+        maps.put(map.getParkName(), map);
     }
 
 

@@ -34,7 +34,7 @@ public class ShapeServiceImpl implements ShapeMapService {
         Object read = redisDao.read(PREFIX + parkName + laneName);
         if (read == null) {
             Park park = parkService.queryByName(parkName);
-            checkAndCreate(park);
+            checkAndCreate(parkName, park);
             read = redisDao.read(PREFIX + parkName + laneName);
         }
         return (LaneShape) read;
@@ -43,8 +43,7 @@ public class ShapeServiceImpl implements ShapeMapService {
     @Override
     public void create(String parkName) {
         Park park = parkService.queryByName(parkName);
-        checkAndCreate(park);
-
+        checkAndCreate(parkName, park);
     }
 
     @Override
@@ -53,9 +52,9 @@ public class ShapeServiceImpl implements ShapeMapService {
     }
 
 
-    private void checkAndCreate(Park park) {
+    private void checkAndCreate(String parkName, Park park) {
         if (park != null && park.getShapeFileUrl() != null) {
-            staticLaneShapFactory.create(park.getShapeFileUrl());
+            staticLaneShapFactory.create(parkName, park.getShapeFileUrl());
 
         } else {
             try {
