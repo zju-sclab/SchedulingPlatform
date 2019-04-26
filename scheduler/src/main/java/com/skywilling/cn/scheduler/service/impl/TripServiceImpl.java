@@ -75,16 +75,23 @@ public class TripServiceImpl implements TripService {
 //                car.getLocation().getX(), car.getLocation().getY()) < 1) {
 //            throw new IllegalRideException();
 //        }
-
+        /**
+         * 规划全局路径Route
+         */
         Route route = routeService.navigate(parkName, curStation, goal);
         if (!usingDefaultSpeed) {
             for (LiveLane lane : route.getLiveLanes()) {
                 lane.setV(velocity);
             }
         }
-
+        /**
+         * 生成自动驾驶任务序列
+         */
         Trip trip = new Trip(vin, tripCore.generateTripId(vin), route);
         try {
+            /**
+             * 提交自动任务序列
+             */
             tripCore.submitTrip(trip);
             return trip.getId();
         } catch (IllegalTaskException e) {
@@ -95,6 +102,12 @@ public class TripServiceImpl implements TripService {
         return null;
     }
 
+    /**
+     * 根据全局路径重新规划自动驾驶任务序列
+     * @param carInfo 车辆信息
+     * @param route  全局路径
+     * @return
+     */
     @Override
     public Trip updateRoute(AutonomousCarInfo carInfo, Route route) {
         Trip trip = this.get(carInfo.getTripId());
@@ -106,6 +119,9 @@ public class TripServiceImpl implements TripService {
                 newLanes.add(lane);
                 i++;
             } else {
+                /**
+                 * 当前停止点的start序列号
+                 */
                 trip.setStart(i);
                 newLanes.addAll(route.getLiveLanes());
                 trip.getRoute().setLiveLanes(newLanes);

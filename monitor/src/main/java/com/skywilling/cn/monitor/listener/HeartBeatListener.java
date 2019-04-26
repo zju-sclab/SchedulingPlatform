@@ -39,13 +39,10 @@ public class HeartBeatListener extends BasicListener {
         car.setNodes(terminalInfo.getNodes());
         car.setTimestamp(terminalInfo.getTimestamp());
         /**
-         * 车端上传定位后的路段名
+         * 车端上传定位后的路段名，这里注意一下curve也是lane，但是是一段很小的lane
          */
         car.setLane(terminalInfo.getLane());
-        /**
-         * 车端上传定位后的站点名
-         */
-        car.setStation(terminalInfo.getStation());
+
         autoCarInfoService.save(car);
 
         return null;

@@ -9,6 +9,7 @@ import com.skywilling.cn.livemap.factory.Factory;
 import com.skywilling.cn.livemap.model.LaneShape;
 import com.skywilling.cn.livemap.service.MapService;
 import com.skywilling.cn.livemap.service.ShapeMapService;
+import io.swagger.models.auth.In;
 import org.dom4j.*;
 import org.dom4j.io.SAXReader;
 import org.slf4j.Logger;
@@ -82,7 +83,7 @@ public class StaticLaneShapFactory implements Factory<Boolean> {
             try {
                 br = new BufferedReader(new FileReader(new File(filename)));
 
-                laneShape.setId(laneShape.getType() + br.readLine()); //Id
+                //laneShape.setId(laneShape.getType() + br.readLine()); //Id
                 laneShape.setLength(Double.valueOf(br.readLine()));//长度
                 laneShape.setPriority(Integer.valueOf(br.readLine()));//权重
 
@@ -117,7 +118,7 @@ public class StaticLaneShapFactory implements Factory<Boolean> {
         BufferedReader br;
         String line;
 
-        List<LidarPoint> allLidarPoint = new ArrayList<>();
+
         for (String filename : files) {
             LaneShape laneShape = new LaneShape();
             /**
@@ -130,7 +131,8 @@ public class StaticLaneShapFactory implements Factory<Boolean> {
 
             LiveLane liveLane = liveMap.getLaneMap().get(prefix+lane_id);
             laneShape.setParkName(parkName);
-            laneShape.setId(prefix+lane_id);
+            laneShape.setId(Integer.valueOf(lane_id));
+            laneShape.setName(prefix+lane_id);
             laneShape.setPriority(liveLane.getPriority());
             laneShape.setFromId(liveLane.getFrom().getName());
             laneShape.setToId(liveLane.getTo().getName());
@@ -138,14 +140,16 @@ public class StaticLaneShapFactory implements Factory<Boolean> {
 
             try {
                 br = new BufferedReader(new FileReader(new File(filename)));
-
+                /**
+                 *  存储每一个文件的点云集合
+                 */
+                List<LidarPoint> allLidarPoint = new ArrayList<>();
                 while ((line = br.readLine()) != null) {
                     String[] lineSplit = line.trim().split(",");
                     /**
                      * 写入一行标准的点云数据
                      */
-                    LidarPoint lidarPoint = new LidarPoint(lineSplit[0], lineSplit[1], lineSplit[2],
-                            lineSplit[3], lineSplit[4], lineSplit[5], lineSplit[6]);
+                    LidarPoint lidarPoint = new LidarPoint(lineSplit[0], lineSplit[1], lineSplit[2], lineSplit[3], lineSplit[4], lineSplit[5], lineSplit[6]);
                     allLidarPoint.add(lidarPoint);
                 }
                 laneShape.setPath(allLidarPoint);
@@ -207,7 +211,7 @@ public class StaticLaneShapFactory implements Factory<Boolean> {
         filesnames = getAllFiles(dir);
         List<LaneShape> laneShapes = readCSVFiles(parkName, filesnames);
         for (LaneShape laneShape : laneShapes) {
-            laneShape.setParkName(parkName);
+           //laneShape.setParkName(parkName);
             if (laneShapes != null && laneShapes.size() != 0) {
                 shapeMapService.save(laneShape);
             }

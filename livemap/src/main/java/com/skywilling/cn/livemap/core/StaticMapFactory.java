@@ -36,11 +36,12 @@ public class StaticMapFactory implements Factory<LiveMap> {
 
                 station.setX(Double.valueOf(next.attributeValue("x")));
                 station.setY(Double.valueOf(next.attributeValue("y")));
-                station.setId(next.attributeValue("id"));
+                station.setId(Integer.valueOf(next.attributeValue("id")));
                 station.setName(next.attributeValue("name"));
 
                 //更新LiveMap的StationMap
                 liveMap.getStationMap().putIfAbsent(station.getName(), station);
+                liveMap.getNodeMap().putIfAbsent(station.getName(), station);
 
             }
             else if (next.attributeValue("type").equals("junction")) {
@@ -48,12 +49,14 @@ public class StaticMapFactory implements Factory<LiveMap> {
 
                 junction.setX(Double.valueOf(next.attributeValue("x")));
                 junction.setY(Double.valueOf(next.attributeValue("y")));
-                junction.setId(next.attributeValue("id"));
+                junction.setId(Integer.valueOf(next.attributeValue("id")));
                 junction.setName(next.attributeValue("name"));
 
                 //更新LiveMap的JunctionMap
                 liveMap.getJunctionMap().putIfAbsent(junction.getName(), junction);
+                liveMap.getNodeMap().putIfAbsent(junction.getName(), junction);
             }
+
         }
     }
 
@@ -76,8 +79,11 @@ public class StaticMapFactory implements Factory<LiveMap> {
             Element element = iterator.next();
             LiveLane lane = new LiveLane();
 
-            //LiveLane的ID
-            lane.setName(element.attributeValue("id"));
+            //设置唯一ID
+            lane.setId(Integer.valueOf(element.attributeValue("id")));
+
+            //设置唯一名字
+            lane.setName(element.attributeValue("name"));
 
             //LiveLane起点Junction
             String fromName = element.attributeValue("from");
@@ -88,7 +94,7 @@ public class StaticMapFactory implements Factory<LiveMap> {
             if(liveMap.getJunctionMap().get(fromName) != null){
                 LiveJunction liveJunction = liveMap.getJunctionMap().get(fromName);
                 Set<String> set = liveJunction.getLanesStart();
-                set.add(element.attributeValue("id"));
+                set.add(element.attributeValue("name"));
             }
 
 
@@ -100,7 +106,7 @@ public class StaticMapFactory implements Factory<LiveMap> {
             if(liveMap.getJunctionMap().get(toName) != null){
                 LiveJunction liveJunction = liveMap.getJunctionMap().get(toName);
                 Set<String> set = liveJunction.getLanesEnd();
-                set.add(element.attributeValue("id"));
+                set.add(element.attributeValue("name"));
             }
 
 

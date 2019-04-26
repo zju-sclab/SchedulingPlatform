@@ -14,7 +14,7 @@ import java.util.List;
 public class RouteLogic {
     HashMap<String, BaseRouteAlgorithm> routeAlgorithmHashMap=new HashMap<>();
 
-    @Value("route.algorithm")
+    @Value("${route.algorithm}")
     private String algorithm;
 
    public List<LiveLane> routePlanning(LiveMap map, LiveJunction from, LiveJunction to) {

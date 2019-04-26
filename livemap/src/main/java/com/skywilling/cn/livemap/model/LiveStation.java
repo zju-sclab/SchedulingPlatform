@@ -15,7 +15,7 @@ public class LiveStation extends Node implements Serializable {
 
     private String locationLane;
     private String name;
-    private int    stationId;
+    private int    id;
     private LinkedList<String> vehicles;
     private double x;
     private double y;

@@ -40,8 +40,8 @@ public class ActionScheduler {
             Node from = lane.getFrom();
             Node to = lane.getTo();
             action.setLaneName(lane.getName());
-            action.setFrom(from.getId());
-            action.setTo(to.getId());
+            action.setFrom(from.getName());
+            action.setTo(to.getName());
             action.setV(lane.getV());
             actions.add(action);
         }

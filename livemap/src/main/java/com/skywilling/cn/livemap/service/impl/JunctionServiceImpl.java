@@ -20,7 +20,7 @@ public class JunctionServiceImpl implements JunctionService {
     @Override
     public LiveJunction get(String parkName, String junctionName) {
         LiveMap map = mapService.getMap(parkName);
-        if(map!=null){
+        if (map != null) {
             return map.getJunctionMap().get(junctionName);
         }
         return null;
@@ -29,8 +29,8 @@ public class JunctionServiceImpl implements JunctionService {
     @Override
     public void addJunction(String parkName, LiveJunction junction) {
         LiveMap map = mapService.getMap(parkName);
-        if(map!=null){
-            map.getJunctionMap().putIfAbsent(junction.getName(),junction);
+        if (map != null) {
+            map.getJunctionMap().putIfAbsent(junction.getName(), junction);
         }
     }
 

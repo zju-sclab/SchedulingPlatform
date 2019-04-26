@@ -16,48 +16,48 @@ import java.util.concurrent.ConcurrentHashMap;
 @Service
 public class NodeLockServiceImpl implements NodeLockService {
 
-  @Autowired
-  CarDynamicService carDynamicService;
-  @Autowired
-  LaneService laneService;
+    @Autowired
+    CarDynamicService carDynamicService;
+    @Autowired
+    LaneService laneService;
 
-  ConcurrentHashMap<String, Scheduler.NodeLock> nodeLockMap = new ConcurrentHashMap<>();
+    ConcurrentHashMap<String, Scheduler.NodeLock> nodeLockMap = new ConcurrentHashMap<>();
 
-  @Override
-  public Scheduler.NodeLock find(String nodeName) {
-    return nodeLockMap.get(nodeName);
-  }
-
-  @Override
-  public CompletableFuture<Boolean> acquire(AutonomousCarInfo car, String nodeName) {
-    Scheduler.NodeLock nodeLock;
-    if (!nodeLockMap.containsKey(nodeName)) {
-      nodeLock = new Scheduler.NodeLock(nodeName);
-      nodeLockMap.putIfAbsent(nodeName, nodeLock);
+    @Override
+    public Scheduler.NodeLock find(String nodeName) {
+        return nodeLockMap.get(nodeName);
     }
-    nodeLock = nodeLockMap.get(nodeName);
-    CarDynamic carDynamic=carDynamicService.query(car.getVin());
-    double priority=laneService.getLane(carDynamic.getParkName(),car.getLane()).getPriority();
-    return nodeLock.acquire(car.getVin(),priority);
-  }
 
-  @Override
-  public String release(String vin, String nodeName) {
-    Scheduler.NodeLock nodeLock = nodeLockMap.get(nodeName);
-    String result = null;
-    if (nodeLock != null) {
-      result = nodeLock.release(vin);
+    @Override
+    public CompletableFuture<Boolean> acquire(AutonomousCarInfo car, String nodeName) {
+        Scheduler.NodeLock nodeLock;
+        if (!nodeLockMap.containsKey(nodeName)) {
+            nodeLock = new Scheduler.NodeLock(nodeName);
+            nodeLockMap.put(nodeName, nodeLock);
+        }
+        nodeLock = nodeLockMap.get(nodeName);
+        CarDynamic carDynamic = carDynamicService.query(car.getVin());
+        double priority = laneService.getLane(carDynamic.getParkName(), car.getLane()).getPriority();
+        return nodeLock.acquire(car.getVin(), priority);
     }
-    return result;
-  }
 
-
-  @Override
-  public boolean vehicleIsExist(String vin, String junctionName) {
-    Scheduler.NodeLock nodeLock=nodeLockMap.get(junctionName);
-    if(nodeLock!=null&&nodeLock.getInComingVehicles().contains(vin)){
-      return true;
+    @Override
+    public String release(String vin, String nodeName) {
+        Scheduler.NodeLock nodeLock = nodeLockMap.get(nodeName);
+        String result = null;
+        if (nodeLock != null) {
+            result = nodeLock.release(vin);
+        }
+        return result;
     }
-    return false;
-  }
+
+
+    @Override
+    public boolean vehicleIsExist(String vin, String junctionName) {
+        Scheduler.NodeLock nodeLock = nodeLockMap.get(junctionName);
+        if (nodeLock != null && nodeLock.getInComingVehicles().contains(vin)) {
+            return true;
+        }
+        return false;
+    }
 }

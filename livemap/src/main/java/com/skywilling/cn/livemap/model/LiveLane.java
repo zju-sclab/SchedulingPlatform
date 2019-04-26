@@ -13,6 +13,7 @@ import java.util.concurrent.LinkedBlockingQueue;
 public class LiveLane implements Serializable {
    private static final long serialVersionUID = -1231234234L;
    private String name;
+   private int id;
    private double length = 0.0;
    private int time = 0;
    private String zh;

@@ -13,7 +13,7 @@ public class ShapeMap implements Serializable {
     private ConcurrentHashMap<String, LaneShape> laneshapeMap = new ConcurrentHashMap<>();
 
     public void addLaneShape(LaneShape laneShape) {
-          laneshapeMap.putIfAbsent(laneShape.getId(), laneShape);
+          laneshapeMap.putIfAbsent(laneShape.getName(), laneShape);
     }
 
     public List<LaneShape> query(List<String> lanes) {

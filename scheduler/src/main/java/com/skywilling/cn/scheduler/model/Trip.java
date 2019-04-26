@@ -14,7 +14,7 @@ import java.util.List;
 @Data
 public class Trip implements Serializable {
 
-  private static final long serialVersionUID = 6650672244872735531L;
+    private static final long serialVersionUID = 6650672244872735531L;
     @Id
     private String id;
     private String vin;
@@ -39,8 +39,8 @@ public class Trip implements Serializable {
         this.vin = vin;
         this.id = tripId;
         this.route = route;
-        this.start=0;
-        this.end=route.getLiveLanes().size();
+        this.start = 0;
+        this.end = route.getLiveLanes().size();
     }
 
 }

@@ -15,7 +15,7 @@ public class Node implements Serializable{
   private String name;
   private double x;
   private double y;
-  private String id;
+  private int id;
   private String zh;
 
   public LiveStation toStation() {

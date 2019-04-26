@@ -39,14 +39,14 @@ public class CrossNodeListenImpl implements CrossNodeListen {
     @Autowired
     TripCore tripCore;
 
-    @Value("config.switch-on")
+    @Value("${config.switch-on}")
     private String switchOn;
 
 
     @Override
     public void inComingJunction(AutonomousCarInfo carInfo, String junctionName) {
         //判断开关
-        if (!switchOn.equals(true)) {
+        if (!switchOn.equals("true")) {
             return;
         }
 

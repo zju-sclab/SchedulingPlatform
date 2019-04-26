@@ -41,9 +41,12 @@ public class AutonomousCarInfo implements Serializable {
   @Field
   private Pose pose;
 
-  @Field String station;
+  @Field
+  String station;
+
   @Field
   private String lane;
+
   @Field
   private List<ModuleInfo> nodes;
   @Field

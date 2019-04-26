@@ -27,6 +27,7 @@ public class MapServiceImpl implements MapService {
     StaticMapFactory staticMapFactory;
 
 
+
     @Override
     public LiveMap getMap(String parkName) {
         if (!maps.containsKey(parkName)) {
@@ -43,7 +44,8 @@ public class MapServiceImpl implements MapService {
                     addMap(liveMap);
                     //读取本地文件夹
                     shapeMapService.create(parkName);
-                    maps.putIfAbsent(liveMap.getParkName(),liveMap);
+                    //maps.putIfAbsent(liveMap.getParkName(),liveMap);
+                    maps.put(liveMap.getParkName(),liveMap);
                 }
             }
         }

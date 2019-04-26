@@ -16,6 +16,14 @@ public class LiveJunction extends Node implements Serializable {
 
     private double priority;
     private double weight;
+
+    /**
+     * 对应XML文件里的id
+     */
+    private String name;
+
+    private int id;
+
     private LinkedBlockingQueue<String> inComingVehicles = new LinkedBlockingQueue<>();
 
     private Set<String> LanesStart = new HashSet<>();

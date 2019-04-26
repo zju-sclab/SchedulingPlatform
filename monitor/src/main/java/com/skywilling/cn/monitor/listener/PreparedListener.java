@@ -1,6 +1,5 @@
 package com.skywilling.cn.monitor.listener;
 
-import com.rabbitmq.client.AMQP;
 import com.skywilling.cn.common.enums.TypeField;
 import com.skywilling.cn.common.exception.CarNotExistsException;
 import com.skywilling.cn.common.model.BasicCarResponse;

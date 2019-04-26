@@ -44,14 +44,29 @@ public class RouteServiceImpl implements RouteService {
         if (map == null) {
             return null;
         }
-        LiveStation start = stationService.getStation(map.getParkName(), from);
-        LiveStation end = stationService.getStation(map.getParkName(), to);
+        LiveJunction start = map.getJunctionMap().get(from);
+        LiveJunction end = map.getJunctionMap().get(to);
         return route(map, start, end);
     }
 
     /**
+     *  输入输出都是合流点
+     */
+    private Route route(LiveMap map, LiveJunction from, LiveJunction to) {
+        if (from == null || to == null) {
+            return null;
+        }
+        Route route = new Route();
+        route.setParkName(map.getParkName());
+        route.setFrom(from);
+        route.setTo(to);
+        route.setLiveLanes(routeLogic.routePlanning(map, from, to));
+        return route;
+    }
+    /**
      * 查询起点到终点的路线Route
-     * 输入转化为了LiveStation
+     * 根据中间的LiveStation查询起点合流点，
+     * 相当于 做了一个近似的处理，A->B 变成 C->D
      */
     private Route route(LiveMap map, LiveStation from, LiveStation to) {
         if (from == null || to == null) {

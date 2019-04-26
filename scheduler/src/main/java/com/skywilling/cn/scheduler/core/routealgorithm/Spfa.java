@@ -18,23 +18,24 @@ public class Spfa extends BaseRouteAlgorithm {
     RouteLogic routeLogic;
 
     @PostConstruct
-    public void init(){
-      routeLogic.addAlgorithm("spfa",this);
+    public void init() {
+        routeLogic.addAlgorithm("Spfa", this);
     }
 
     public List<LiveLane> process(LiveMap map, LiveJunction from, LiveJunction to) {
         Queue<String> queue = new ArrayDeque<>();
         queue.add(from.getName());
-        Set<String> prev=new HashSet<>();
-        List<LiveLane> lanes=new ArrayList<>();
+        Set<String> prev = new HashSet<>();
+        List<LiveLane> lanes = new ArrayList<>();
+        ConcurrentHashMap<String, LiveJunction> junctionMap = map.getJunctionMap();
         while (!queue.isEmpty()) {
             String cur = queue.poll();
             if (StringUtils.equals(cur, to.getName())) {
                 break;
             }
-            ConcurrentHashMap<String, LiveJunction> junctionMap = map.getJunctionMap();
+
             if (junctionMap != null) {
-                for (String laneName: junctionMap.get(cur).getLanesStart()) {
+                for (String laneName : junctionMap.get(cur).getLanesStart()) {
                     if (!prev.contains(cur)) {
                         prev.add(cur);
                         lanes.add(map.getLaneMap().get(laneName));
