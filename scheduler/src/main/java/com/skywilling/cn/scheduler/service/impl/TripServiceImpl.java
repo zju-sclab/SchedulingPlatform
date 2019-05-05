@@ -9,6 +9,7 @@ import com.skywilling.cn.common.exception.park.NoAvailableActionFoundException;
 import com.skywilling.cn.livemap.model.LiveLane;
 import com.skywilling.cn.livemap.model.LiveStation;
 import com.skywilling.cn.livemap.service.StationService;
+import com.skywilling.cn.manager.car.enumeration.CarState;
 import com.skywilling.cn.manager.car.model.AutonomousCarInfo;
 import com.skywilling.cn.manager.car.service.CarInfoService;
 import com.skywilling.cn.scheduler.common.TripStatus;
@@ -63,7 +64,7 @@ public class TripServiceImpl implements TripService {
         if (car == null) {
             throw new CarNotExistsException(vin);
         }
-        if (!car.isConnected()) {
+        if (car.getState() == CarState.LOST.getState()) {
             throw new CarNotAliveException(vin);
         }
         //如果车辆已经到达station
@@ -104,9 +105,9 @@ public class TripServiceImpl implements TripService {
 
     /**
      * 根据全局路径重新规划自动驾驶任务序列
-     * @param carInfo 车辆信息
-     * @param route  全局路径
-     * @return
+     *
+     * start为当前停止点的start序列号
+     *
      */
     @Override
     public Trip updateRoute(AutonomousCarInfo carInfo, Route route) {
@@ -119,9 +120,7 @@ public class TripServiceImpl implements TripService {
                 newLanes.add(lane);
                 i++;
             } else {
-                /**
-                 * 当前停止点的start序列号
-                 */
+
                 trip.setStart(i);
                 newLanes.addAll(route.getLiveLanes());
                 trip.getRoute().setLiveLanes(newLanes);

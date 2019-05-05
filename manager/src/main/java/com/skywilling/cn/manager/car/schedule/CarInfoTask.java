@@ -48,7 +48,7 @@ public class CarInfoTask {
       CarDynamic carDynamic = new CarDynamic();
       carDynamic.setVin(vin);
       carDynamic.setConnect(carInfo.getState() == -1 ? 0: 1);
-      carDynamic.setBodyStatus(carInfo.getNodes()
+      /*carDynamic.setBodyStatus(carInfo.getNodes()
               .stream()
               .anyMatch(moduleInfo -> ModuleType.HARDWARE.getCode() ==moduleInfo.getType()
                       && moduleInfo.getType() != 0) ? 1 : 0);
@@ -56,7 +56,7 @@ public class CarInfoTask {
               .stream()
               .anyMatch(moduleInfo -> ModuleType.SOFTWARE.getCode() ==moduleInfo.getType()
                       && moduleInfo.getType() != 0) ? 1 : 0);
-
+*/
       Pose pose = carInfo.getPose();
       if (pose != null && pose.getPoint() != null) {
         carDynamic.setLatitude(pose.getPoint().getX());

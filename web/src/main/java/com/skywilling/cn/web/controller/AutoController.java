@@ -136,7 +136,7 @@ public class AutoController {
     /**
      * 查询车辆的健康状态信息
      */
-    @RequestMapping(value = "/car/{vin}/health", method = RequestMethod.GET)
+   /* @RequestMapping(value = "/car/{vin}/health", method = RequestMethod.GET)
     @ResponseBody
     public BasicResponse checkModuleHealth(@PathVariable(name = "vin") String vin) {
         try {
@@ -146,7 +146,7 @@ public class AutoController {
             LOG.error(e.getMessage());
         }
         return BasicResponse.buildResponse(ResultType.FAILED, null);
-    }
+    }*/
 
     @RequestMapping(value = "car/ride/{rideId}", method = RequestMethod.GET)
     public BasicResponse getRide(@PathVariable("rideId") String rideId) {

@@ -3,10 +3,10 @@
 <region id="xuanzhou" version="0.2" time="2019/03/10">
   <nodes>
     <!--type: station, waiting point, parking point-->
-    <node name="zetong" x="13218013.5968" y="3636349.31409" id="1" type="junction" zh=""/>
+    <node name="zetong" x="13218013.5968" y="3636349.31409" id="1" type="station" zh=""/>
     <node name="jiaojiu" x="13217939.2758" y="3636562.09873" id="2" type="junction" zh=""/>
-    <ndoe name="caolou" x="13217936.3143" y="3636427.37621" id="3" type="junction" zh=""/>
-    <node name="shengyi" x="13217962.4286" y="3636364.64181" id="4" type="junction" zh=""/>
+    <ndoe name="caolou" x="13217936.3143" y="3636427.37621" id="3" type="station" zh=""/>
+    <node name="shengyi" x="13217962.4286" y="3636364.64181" id="4" type="station" zh=""/>
   
   </nodes>
   <lanes>

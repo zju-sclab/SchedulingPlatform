@@ -14,9 +14,6 @@ public interface AutoCarInfoService {
 
   Point getPosition(String vin);
 
-  List<ModuleInfo> getAllNodesInfo(String vin);
-
-  List<ModuleInfo> getHardWaresInfo(String vin);
 
   boolean isConnected(String vin) throws CarNotExistsException;
 

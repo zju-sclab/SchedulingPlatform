@@ -13,11 +13,14 @@ import java.util.concurrent.LinkedBlockingQueue;
 @Data
 public class LiveStation extends Node implements Serializable {
 
-    private String locationLane;
+    //编号
+    private int id;
+    //对应xml文件的name
     private String name;
-    private int    id;
+    //所在车道
+    private String locationLane;
+    //已经通过当前节点的车辆的集合
     private LinkedList<String> vehicles;
-    private double x;
-    private double y;
+
 
 }

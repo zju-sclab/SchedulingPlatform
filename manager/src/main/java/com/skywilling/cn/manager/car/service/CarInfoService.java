@@ -21,7 +21,7 @@ public interface CarInfoService {
 
   AutonomousCarInfo getAutoCarInfo(String vin);
 
-  List<ModuleInfo> getAllNodesInfo(String vin);
+  //List<ModuleInfo> getAllNodesInfo(String vin);
 
   String getTaskId(String vin);
 

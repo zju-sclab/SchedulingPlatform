@@ -38,12 +38,15 @@ public class RequestSender {
         }
     }
 
+    /**
+     * 发送该数据到车端，指定vin所在的socket链接
+     */
     public CompletableFuture<Boolean> sendRequest(String vin, TypeField typeField, JSONObject body) {
 
         CompletableFuture<Boolean> resultFuture = new CompletableFuture<>();
         Packet.Builder builder = new Packet.Builder();
-        Packet packet = builder.buildRequest(vin, typeField).buildBody(body)
-                .build();
+        Packet packet = builder.buildRequest(vin, typeField).buildBody(body).build();
+        //调用车端链接的发送函数，指定vin对应的TCP链接
         CompletableFuture<Packet> respFuture = clientService.sendRequest(packet);
         if (respFuture == null) {
             throw new NullPointerException();

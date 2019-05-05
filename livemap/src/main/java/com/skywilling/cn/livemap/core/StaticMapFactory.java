@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Set;
 
 @Service
@@ -39,8 +40,9 @@ public class StaticMapFactory implements Factory<LiveMap> {
                 station.setId(Integer.valueOf(next.attributeValue("id")));
                 station.setName(next.attributeValue("name"));
 
-                //更新LiveMap的StationMap
+                //更新LiveMap的LiveStation集合
                 liveMap.getStationMap().putIfAbsent(station.getName(), station);
+                //更新LiveMap的Node集合
                 liveMap.getNodeMap().putIfAbsent(station.getName(), station);
 
             }
@@ -52,8 +54,9 @@ public class StaticMapFactory implements Factory<LiveMap> {
                 junction.setId(Integer.valueOf(next.attributeValue("id")));
                 junction.setName(next.attributeValue("name"));
 
-                //更新LiveMap的JunctionMap
+                //更新LiveMap的LiveJunction集合
                 liveMap.getJunctionMap().putIfAbsent(junction.getName(), junction);
+                //更新LiveMap的Node集合
                 liveMap.getNodeMap().putIfAbsent(junction.getName(), junction);
             }
 
@@ -84,44 +87,37 @@ public class StaticMapFactory implements Factory<LiveMap> {
 
             //设置唯一名字
             lane.setName(element.attributeValue("name"));
-
             //LiveLane起点Junction
             String fromName = element.attributeValue("from");
             //设置lane的起点
-            lane.setFrom(liveMap.getJunctionMap().get(fromName));
+            lane.setFrom(liveMap.getNodeMap().get(fromName));
 
-            //如果起点是个合流点，更新起点的JunctionMap的start
-            if(liveMap.getJunctionMap().get(fromName) != null){
-                LiveJunction liveJunction = liveMap.getJunctionMap().get(fromName);
-                Set<String> set = liveJunction.getLanesStart();
-                set.add(element.attributeValue("name"));
-            }
-
+            //更新起点的JunctionMap的start
+            Node node = liveMap.getNodeMap().get(fromName);
+            //获取start集合
+            List<String> set = node.getLanesStart();
+            //当前路段加入到start集合
+            set.add(element.attributeValue("name"));
 
             //更新LiveLane的终点
             String toName = element.attributeValue("to");
-            lane.setTo(liveMap.getJunctionMap().get(toName));
+            lane.setTo(liveMap.getNodeMap().get(toName));
 
-            //如果终点是个合流点，更新起点的JunctionMap的End
-            if(liveMap.getJunctionMap().get(toName) != null){
-                LiveJunction liveJunction = liveMap.getJunctionMap().get(toName);
-                Set<String> set = liveJunction.getLanesEnd();
-                set.add(element.attributeValue("name"));
-            }
-
+            //更新起点的JunctionMap的End
+            Node node2 = liveMap.getNodeMap().get(toName);
+            //获取end集合
+            List<String> set2 = node2.getLanesEnd();
+            //加入end集合
+            set2.add(element.attributeValue("name"));
 
             //更新路长
             lane.setLength(Double.valueOf(element.attributeValue("length", "0.0")));
-
             //设置中文名
             lane.setZh(element.attributeValue("zh"));
-
             //更新最大速度
             lane.setV(Double.valueOf(element.attributeValue("v", "0.0")));
-
             //更新调度行使权的权重
             lane.setPriority(Integer.valueOf(element.attributeValue("priority", "1")));
-
             //更新LiveMap的Lane
             liveMap.getLaneMap().putIfAbsent(lane.getName(), lane);
         }

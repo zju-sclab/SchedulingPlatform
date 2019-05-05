@@ -15,7 +15,9 @@ public enum TypeField {
   TERMINAL_INFO(0x15, "terminal info"),
   PREPARE_FIRE(0x20, "prepare fire"),
   FIRE_AUTONOMOUS(0x21, "fire task"),
-  FIRE_LANE_AUTONOMOUS(0x22, "fire lane task");
+  FIRE_LANE_AUTONOMOUS(0x22, "fire lane task"),
+  RESTART_AUTONOMOUS(0x23,"reStart task"),
+  PAUSE_AUTONOMOUS(0x24, "pause task");
 
   private final String desc;
   private final int type;

@@ -34,14 +34,14 @@ public class LoginListener extends BasicListener {
         car.setState(CarState.FREE.getState());
         RunInfo runInfo = JSONObject.parseObject(body, RunInfo.class);
         car.setTripId(runInfo.getRunId());
-        List<ModuleInfo> moduleInfos = new ArrayList<>(runInfo.getNodeList().size());
+      /*  List<ModuleInfo> moduleInfos = new ArrayList<>(runInfo.getNodeList().size());
         for (String node : runInfo.getNodeList()) {
             ModuleInfo moduleInfo = new ModuleInfo();
             moduleInfo.setName(node);
             moduleInfo.setStatus(ModuleState.NOT_STARTED.getState());
             moduleInfos.add(moduleInfo);
-        }
-        car.setNodes(moduleInfos);
+        }*/
+        //car.setNodes(moduleInfos);
         autoCarInfoService.save(car);
         return null;
     }

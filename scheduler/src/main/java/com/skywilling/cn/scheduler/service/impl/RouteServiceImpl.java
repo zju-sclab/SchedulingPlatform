@@ -44,15 +44,15 @@ public class RouteServiceImpl implements RouteService {
         if (map == null) {
             return null;
         }
-        LiveJunction start = map.getJunctionMap().get(from);
-        LiveJunction end = map.getJunctionMap().get(to);
+        Node start = map.getNodeMap().get(from);
+        Node end = map.getNodeMap().get(to);
         return route(map, start, end);
     }
 
     /**
      *  输入输出都是合流点
      */
-    private Route route(LiveMap map, LiveJunction from, LiveJunction to) {
+    private Route route(LiveMap map, Node from, Node to) {
         if (from == null || to == null) {
             return null;
         }
@@ -67,9 +67,10 @@ public class RouteServiceImpl implements RouteService {
      * 查询起点到终点的路线Route
      * 根据中间的LiveStation查询起点合流点，
      * 相当于 做了一个近似的处理，A->B 变成 C->D
+     * 现在所有的停车点都是站点，不考虑非站点停车...
      */
-    private Route route(LiveMap map, LiveStation from, LiveStation to) {
-        if (from == null || to == null) {
+    private Route route(LiveMap map, Node from, LiveStation to) {
+/*        if (from == null || to == null) {
             return null;
         }
         Route route = new Route();
@@ -79,44 +80,8 @@ public class RouteServiceImpl implements RouteService {
         LiveJunction startJunction = map.getLaneMap().get(from.getLocationLane()).getFrom();
         LiveJunction endJunction = map.getLaneMap().get(to.getLocationLane()).getTo();
         route.setLiveLanes(routeLogic.routePlanning(map, startJunction, endJunction));
-        return route;
-    }
-
-    /**
-     *  根据车辆vin查找所在站点位置
-     */
-
-    public LiveStation getStation(String parkName, String vin){
-        LiveMap map = mapService.getMap(parkName);
-        List<LiveStation> stationList = new ArrayList<>(map.getStationMap().values());
-        for(LiveStation liveStation : stationList){
-            if(liveStation.getVehicles().contains(vin))
-                return liveStation;
-        }
-        return null;
-    }
-    /**
-     *  根据车辆vin查找所在车道位置
-     */
-    public LiveLane getLane(String parkName, String vin){
-        List<LiveLane> lanes = new ArrayList<>(mapService.getMap(parkName).getLaneMap().values());
-        for(LiveLane liveLane : lanes){
-            if(liveLane.getVehicles().contains(vin)){
-                return liveLane;
-            }
-        }
-        return null;
-    }
-    /**
-     *  根据车辆vin查找所在路口位置
-     */
-    public LiveJunction getJunction(String parkName, String vin){
-        List<LiveJunction> junctions = new ArrayList<>(mapService.getMap(parkName).getJunctionMap().values());
-        for(LiveJunction liveJunction : junctions){
-            if(liveJunction.getInComingVehicles().contains(vin))
-                return liveJunction;
-    }
-        return null;
+        return route;*/
+        return  null;
     }
 
     /**

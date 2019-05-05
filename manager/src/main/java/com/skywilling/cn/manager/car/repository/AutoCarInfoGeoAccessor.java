@@ -28,4 +28,10 @@ public interface AutoCarInfoGeoAccessor {
      */
 
     AutonomousCarInfo nearVehicle(GeoJsonPoint point);
+
+    void remove(String field, String value);
+
+    List<AutonomousCarInfo>  getAll();
+
+    void insert(AutonomousCarInfo autonomousCarInfo);
 }

@@ -9,4 +9,6 @@ public interface CrossNodeListen {
 
   void outGoingJunction(AutonomousCarInfo carInfo, String junctionName);
 
+  void OnArrivingStation(AutonomousCarInfo carInfo, String statonName);
+
 }

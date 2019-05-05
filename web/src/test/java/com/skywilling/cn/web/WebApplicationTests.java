@@ -1,10 +1,12 @@
 package com.skywilling.cn.web;
 
-import com.github.pagehelper.PageInfo;
 import com.skywilling.cn.connection.service.RequestDispatcher;
 import com.skywilling.cn.connection.service.RequestSender;
 import com.skywilling.cn.livemap.core.StaticMapFactory;
-import com.skywilling.cn.livemap.model.*;
+import com.skywilling.cn.livemap.model.LiveLane;
+import com.skywilling.cn.livemap.model.LiveMap;
+import com.skywilling.cn.livemap.model.Park;
+import com.skywilling.cn.livemap.model.Point;
 import com.skywilling.cn.livemap.service.MapService;
 import com.skywilling.cn.livemap.service.ParkService;
 import com.skywilling.cn.livemap.service.impl.ShapeServiceImpl;
@@ -12,8 +14,8 @@ import com.skywilling.cn.manager.car.model.AutonomousCarInfo;
 import com.skywilling.cn.manager.car.model.CarDynamic;
 import com.skywilling.cn.manager.car.model.Orientation;
 import com.skywilling.cn.manager.car.model.Pose;
+import com.skywilling.cn.manager.car.repository.AutoCarInfoGeoAccessor;
 import com.skywilling.cn.manager.car.service.AutoCarInfoService;
-import com.skywilling.cn.manager.car.service.CarDynamicService;
 import com.skywilling.cn.manager.car.service.CarInfoService;
 import com.skywilling.cn.manager.car.service.impl.CarDynamicServiceImpl;
 import com.skywilling.cn.scheduler.model.Route;
@@ -25,10 +27,13 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.geo.GeoJsonPoint;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import java.util.ArrayList;
 import java.util.List;
+
+/* import org.springframework.data.geo.Point; */
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = {WebApplication.class})
@@ -71,6 +76,11 @@ public class WebApplicationTests {
     TripService tripService;
     @Autowired
     NodeLockService nodeLockService;
+
+    @Autowired
+    MongoTemplate mongoTemplate;
+    @Autowired
+    AutoCarInfoGeoAccessor autoCarInfoGeoAccessor;
 
 
     /**
@@ -134,7 +144,7 @@ public class WebApplicationTests {
             LiveMap m = mapService.getMap(parkName);
             //创建Live Map
             LiveMap liveMap = new StaticMapFactory().create(parkName, park.getMapFileUrl());
-            //创建topological map
+            //创建map
             mapService.addMap(liveMap);
             //创建shape Map
             shapeService.create(parkName);
@@ -143,26 +153,50 @@ public class WebApplicationTests {
     }
 
     @Test
-    public void ScheduleTest(){
+    public void mapPrintTest(){
+        String parkName = "yuquanxiaoqu";
+        LiveMap liveMap = mapService.getMap(parkName);
+        System.out.println(liveMap);
+    }
+
+    @Test
+    public void MongoInsertAndSaveTest(){
         AutonomousCarInfo autonomousCarInfo = new AutonomousCarInfo();
         autonomousCarInfo.setStation("zetong");
-        autonomousCarInfo.setVin("000123");
-        autonomousCarInfo.setVelocity(2);
+        autonomousCarInfo.setVin("00012345");
+        autonomousCarInfo.setVelocity(5);
         autonomousCarInfo.setLane("lane_1");
         autonomousCarInfo.setStation("zetong");
         Pose pose = new Pose();
         pose.setOrientation(new Orientation());
         pose.setPoint(new Point());
         autonomousCarInfo.setPose(pose);
-        autonomousCarInfo.setTripId("001123");
-        autonomousCarInfo.setTaskId("0x12235");
+        //autonomousCarInfo.setPosition(new GeoJsonPoint(new Point(pose.getPoint().getX(), pose.getPoint().getY())));
+        autonomousCarInfo.setTripId("00112345");
+        autonomousCarInfo.setTaskId("0x122356");
+        autonomousCarInfo.setGear(2);
+        autonomousCarInfo.setState(-1);
+        //测试redis、MongoDB的插入，一起插入
         autoCarInfoService.save(autonomousCarInfo);
     }
     @Test
-    public void ScheduleTest2(){
+    public void MongofindByLaneTest(){
 
-        AutonomousCarInfo a = autoCarInfoService.get("000123");
+        //测试redis的查找
+        AutonomousCarInfo a = autoCarInfoService.get("00012345");
         System.out.println(a);
+        //测试mongodb的查找
+        List<AutonomousCarInfo> mongocars = autoCarInfoGeoAccessor.getByLane("lane_1");
+        System.out.println(mongocars);
+        //List<AutonomousCarInfo> mongocars2 = autoCarInfoGeoAccessor.findByDist(new GeoJsonPoint(0,0),0.01);
+        //System.out.println(mongocars2);
+    }
+    @Test
+    public void MongoRemoveAndFindAllTest(){
+
+        autoCarInfoGeoAccessor.remove("lane", "lane_1");
+        List<AutonomousCarInfo> all = autoCarInfoGeoAccessor.getAll();
+        System.out.println(all);
     }
 
     /**
@@ -170,14 +204,15 @@ public class WebApplicationTests {
      */
     @Test
     public void routeServiceTest(){
-        String from = "zetong";
+        String from = "caolou";
         String to = "shengyi";
         String parkName = "yuquanxiaoqu";
         Route route = routeService.navigate(parkName, from, to);
         for(LiveLane liveLane: route.getLiveLanes()){
-            System.out.println(liveLane.getName() + " "+ liveLane.getId()+ " " + liveLane.getFrom().getName() + " " +
-            liveLane.getTo().getName() + " " + liveLane.getPriority() + " "+ liveLane.getFrom().getLanesStart() +
-                    " " + liveLane.getTo().getLanesEnd());
+            System.out.println(liveLane.getName() + " "+ liveLane.getId()+ " " + liveLane.getFrom().getName()
+                    + " " +
+                   liveLane.getTo().getName() + " " + liveLane.getPriority() + " "+ liveLane.getFrom().getLanesStart()
+                    + " " + liveLane.getTo().getLanesEnd());
         }
 
     }

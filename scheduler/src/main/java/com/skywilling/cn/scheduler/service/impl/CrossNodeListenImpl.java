@@ -1,9 +1,16 @@
 package com.skywilling.cn.scheduler.service.impl;
 
 
+import com.alibaba.fastjson.JSONObject;
+import com.github.pagehelper.Page;
+import com.skywilling.cn.common.enums.TypeField;
 import com.skywilling.cn.common.exception.IllegalTaskException;
 import com.skywilling.cn.common.exception.park.NoAvailableActionFoundException;
+import com.skywilling.cn.connection.model.Packet;
+import com.skywilling.cn.connection.service.RequestSender;
+import com.skywilling.cn.livemap.model.Park;
 import com.skywilling.cn.livemap.service.MapService;
+import com.skywilling.cn.livemap.service.ParkService;
 import com.skywilling.cn.manager.car.model.AutonomousCarInfo;
 import com.skywilling.cn.manager.car.service.AutoCarInfoService;
 import com.skywilling.cn.manager.car.service.CarDynamicService;
@@ -28,6 +35,9 @@ public class CrossNodeListenImpl implements CrossNodeListen {
     private AutoCarInfoService autoCarInfoService;
     @Autowired
     MapService mapService;
+
+    @Autowired
+    ParkService parkService;
     @Autowired
     NodeLockService nodeLockService;
     @Autowired
@@ -39,6 +49,9 @@ public class CrossNodeListenImpl implements CrossNodeListen {
     @Autowired
     TripCore tripCore;
 
+    @Autowired
+    RequestSender requestSender;
+
     @Value("${config.switch-on}")
     private String switchOn;
 
@@ -49,41 +62,41 @@ public class CrossNodeListenImpl implements CrossNodeListen {
         if (!switchOn.equals("true")) {
             return;
         }
-
         if (nodeLockService.vehicleIsExist(carInfo.getVin(), junctionName)) {
             return;
         }
-
         CompletableFuture<Boolean> acquire = nodeLockService.acquire(carInfo, junctionName);
         Boolean aBoolean = acquire.getNow(false);
+        //如果获取锁失败，暂停车端任务
         if (!aBoolean) {
 
-            Trip trip = tripService.get(carInfo.getTripId());
-            tripCore.kill(trip);
+//            Trip trip = tripService.get(carInfo.getTripId());
+//            tripCore.kill(trip);
+            /** 暂停当前任务 */
+            String vin = carInfo.getVin();
+            requestSender.sendRequest(vin, TypeField.PAUSE_AUTONOMOUS, new JSONObject());
         }
     }
 
-
+    /**队列中选择最前面的车唤醒，重启自动驾驶任务*/
     @Override
     public void outGoingJunction(AutonomousCarInfo carInfo, String junctionName) {
 
         if (!switchOn.equals(true)) {
             return;
         }
-
-        //重新开始车辆任务
         String nextCar = nodeLockService.release(carInfo.getVin(), junctionName);
         if (nextCar == null) return;
         AutonomousCarInfo car = autoCarInfoService.get(nextCar);
-        Route route = routeService.reRoute(car);
-        Trip trip = tripService.updateRoute(car, route);
-        try {
-            tripCore.submitTrip(trip);
-        } catch (IllegalTaskException e) {
-            e.printStackTrace();
-        } catch (NoAvailableActionFoundException e) {
-            e.printStackTrace();
-        }
+        String vin = car.getVin();
+        //给车端发送重新启动信号
+        requestSender.sendRequest(vin,TypeField.RESTART_AUTONOMOUS, new JSONObject());
+    }
+    //todo
+    @Override
+    public void OnArrivingStation(AutonomousCarInfo carInfo, String statonName) {
+
+        //20m
     }
 
 }

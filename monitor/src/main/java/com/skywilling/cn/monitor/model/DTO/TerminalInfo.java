@@ -1,12 +1,9 @@
 package com.skywilling.cn.monitor.model.DTO;
 
-
-import com.skywilling.cn.manager.car.model.ModuleInfo;
 import com.skywilling.cn.manager.car.model.Pose;
 import lombok.Data;
 
 import java.io.Serializable;
-import java.util.List;
 
 @Data
 public class TerminalInfo implements Serializable {
@@ -17,11 +14,9 @@ public class TerminalInfo implements Serializable {
   private double wheelAngle = 0.0;
   private double gear = 0;
   private Pose pose = new Pose();
-  private List<ModuleInfo> nodes = null;
-  private long timestamp;
-  /**
-   * 所在lane，包括Curve和Lane
-   */
+  //private List<ModuleInfo> nodes = null;
   private String lane;
+  private String station;
+  private long timestamp;
 
 }

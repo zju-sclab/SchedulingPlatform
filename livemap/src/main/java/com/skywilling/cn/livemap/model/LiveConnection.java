@@ -4,6 +4,7 @@ package com.skywilling.cn.livemap.model;
 import lombok.Data;
 
 import java.io.Serializable;
+import java.util.LinkedList;
 import java.util.concurrent.LinkedBlockingQueue;
 
 /**
@@ -17,5 +18,5 @@ public class LiveConnection implements Serializable {
     private String fromLane;
     private String toLane;
 
-    private LinkedBlockingQueue<String> vehicles;
+    private LinkedList<CarArrivalslnfo> vehicles;
 }

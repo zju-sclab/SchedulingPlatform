@@ -14,8 +14,6 @@ import com.skywilling.cn.manager.car.service.AutoCarInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class AutoCarInfoServiceImpl implements AutoCarInfoService {
@@ -44,24 +42,6 @@ public class AutoCarInfoServiceImpl implements AutoCarInfoService {
     return null;
   }
 
-  @Override
-  public List<ModuleInfo> getAllNodesInfo(String vin) {
-    AutonomousCarInfo car = autoCarInfoAccessor.get(vin);
-    if (car == null) {
-      return null;
-    }
-    return car.getNodes();
-  }
-
-  @Override
-  public List<ModuleInfo> getHardWaresInfo(String vin) {
-    AutonomousCarInfo car = autoCarInfoAccessor.get(vin);
-    if (car == null) {
-      return null;
-    }
-    return car.getNodes().stream().filter(moduleInfo ->
-            moduleInfo.getType() == ModuleType.HARDWARE.getCode()).collect(Collectors.toList());
-  }
 
   @Override
   public boolean isConnected(String vin) throws CarNotExistsException {

@@ -26,7 +26,7 @@ public class FailureListener extends BasicListener {
     public BasicCarResponse process(String vin, String body) {
         AutonomousCarInfo car = autoCarInfoService.getOrCreate(vin);
         car.setState(CarState.LOST.getState());
-        car.setNodes(null);
+        //car.setNodes(null);
         car.setTaskId(null);
         autoCarInfoService.save(car);
         return null;

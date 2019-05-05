@@ -28,18 +28,21 @@ public class ServerChannelHandlerAdapter extends ChannelInboundHandlerAdapter {
     @Override
     public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) {
         cause.printStackTrace();
+        //异常关闭事件
         ctx.close();
     }
 
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) {
         Packet packet = (Packet) msg;
+        //文件读写事件
         dispatcher.dispatch(ctx, packet);
     }
 
     @Override
     public void userEventTriggered(ChannelHandlerContext ctx, Object evt) throws Exception {
         if (evt instanceof ChannelInputShutdownEvent) {
+            //客户端断线事件
             dispatcher.onLostConnection(ctx);
         }
     }

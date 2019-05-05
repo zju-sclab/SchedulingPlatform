@@ -27,10 +27,11 @@ public class AStar extends BaseRouteAlgorithm {
      */
     @Data
     private class Element {
-        LiveJunction junction;
+        //路径规划原先用的LiveJuction现在改成基于Node
+        Node junction;
         double f = 0;
 
-        Element(LiveJunction junction) {
+        Element(Node junction) {
             this.junction = junction;
         }
     }
@@ -44,11 +45,11 @@ public class AStar extends BaseRouteAlgorithm {
     };
 
     @Override
-    public List<LiveLane> process(LiveMap map, LiveJunction from, LiveJunction to) {
+    public List<LiveLane> process(LiveMap map, Node from, Node to) {
         PriorityQueue<Element> frontier = new PriorityQueue<>(comparator);
         Set<Element> closeList = new HashSet<>();
         HashMap<Element, Double> costSoFar = new HashMap<>();
-        HashMap<LiveJunction, LiveJunction> comesFrom = new HashMap<>();
+        HashMap<Node, Node> comesFrom = new HashMap<>();
         frontier.add(new Element(from));
 
 
@@ -60,7 +61,7 @@ public class AStar extends BaseRouteAlgorithm {
             }
 
             for (String laneName : curElement.getJunction().getLanesStart()) {
-                LiveJunction next =(LiveJunction) map.getLaneMap().get(laneName).getTo();
+                Node next = map.getLaneMap().get(laneName).getTo();
                 Element nextElement = new Element(next);
                 //已经判断，则跳过
                 if (closeList.contains(nextElement)) {
@@ -83,12 +84,12 @@ public class AStar extends BaseRouteAlgorithm {
         return null;
     }
 
-    private List<LiveLane> findpath(LiveMap map, HashMap<LiveJunction, LiveJunction> comesFrom, LiveJunction to, LiveJunction from) {
+    private List<LiveLane> findpath(LiveMap map, HashMap<Node, Node> comesFrom, Node to, Node from) {
 
         List<LiveLane> lanes = new ArrayList<>();
 
         while (!to.getName().equals(from.getName())) {
-            LiveJunction parent = comesFrom.get(to);
+            Node parent = comesFrom.get(to);
             for (String laneName : parent.getLanesStart()) {
                 LiveLane lane = map.getLaneMap().get(laneName);
                 if (lane.getTo().equals(to)) {

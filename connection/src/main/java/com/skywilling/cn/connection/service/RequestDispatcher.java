@@ -27,7 +27,7 @@ public class RequestDispatcher {
 
     @Value("${netty.dispatch.threads}")
     private int threadNum;
-    private ExecutorService executorService ;
+    private ExecutorService executorService;
 
     @Autowired
     ClientService clientService;
@@ -36,29 +36,30 @@ public class RequestDispatcher {
     @Autowired
     ListenerMap listenerMap;
 
-    public RequestDispatcher(){
-        executorService=Executors.newFixedThreadPool(10);
+    public RequestDispatcher() {
+        //分配固定大小度的线程池多线程地处理请求的分派
+        executorService = Executors.newFixedThreadPool(10);
     }
+
     /**
      * 分发，需要分发的请求有请求和回复
-     *
-     * @param ctx
-     * @param packet
      */
     public void dispatch(final ChannelHandlerContext ctx, Packet packet) {
 
         executorService.submit(() -> {
             BasicCarResponse carResponse;
-            if (ACK.COMMAND.getCode() == packet.getAck()) {
-                carResponse=commandHandler(ctx, packet);
 
+            if (ACK.COMMAND.getCode() == packet.getAck()) {
+                //请求包
+                carResponse = commandHandler(ctx, packet);
+
+            } else {
+                //回复包
+                carResponse = responseHandler(packet);
             }
-            else {
-                carResponse=responseHandler(packet);
-            }
-            if(carResponse!=null){
+            if (carResponse != null) {
                 Packet.Builder builder = new Packet.Builder();
-                ctx.writeAndFlush(builder.buildResponse(packet,carResponse).build());
+                ctx.writeAndFlush(builder.buildResponse(packet, carResponse).build());
 
             }
 
@@ -72,8 +73,8 @@ public class RequestDispatcher {
         }
 
         if (typeField != null) {
-             return listenerMap.getListener(typeField.getDesc()).
-                    process(packet.getVin(), packet.getData());
+            //login, logout, heartbeat ,registration ..
+            return listenerMap.getListener(typeField.getDesc()).process(packet.getVin(), packet.getData());
         }
         return null;
     }
@@ -82,15 +83,15 @@ public class RequestDispatcher {
     private BasicCarResponse loginHandler(final ChannelHandlerContext ctx, Packet packet) {
         String vin = packet.getVin();
         BasicCarResponse process = listenerMap.getListener(TypeField.LOGIN.getDesc()).process(vin, packet.getData());
-        if (ACK.SUCCESS.getCode()==process.getCode()) {
-            //save channel
+        if (ACK.SUCCESS.getCode() == process.getCode()) {
+            //save channel and vin  for K/V
             AttributeKey<String> key = AttributeKey.valueOf(ProtocolField.VIN.getField());
             Attribute<String> vinAttr = ctx.channel().attr(key);
             vinAttr.setIfAbsent(vin);
             clientService.open(vin, ctx.channel());
         }
         return process;
-       }
+    }
 
     public BasicCarResponse responseHandler(Packet packet) {
         boolean result = ACK.getResult(packet.getAck());
@@ -98,8 +99,7 @@ public class RequestDispatcher {
 
         if (typeField != null) {
             clientPromise.receivedResponse(packet);
-            BasicCarResponse process = listenerMap.getListener(typeField.getDesc()).
-                    process(packet.getVin(), result, packet.getData());
+            BasicCarResponse process = listenerMap.getListener(typeField.getDesc()).process(packet.getVin(), result, packet.getData());
             return process;
         }
         return null;

@@ -39,8 +39,10 @@ public class ClientServiceImpl implements ClientService, ClientPromise {
 
   @Override
   public CompletableFuture<Packet> sendRequest(Packet packet) {
+
     CompletableFuture<Packet> response = new CompletableFuture<>();
     try {
+      //这里指定TCP的消息通道为vin对用的Socket链接
       CarClient carClient = carPool.getOrDefault(packet.getVin(), null);
       Channel channel = carClient.getChannel();
       if (carClient == null || channel == null || packet == null) {
@@ -62,21 +64,25 @@ public class ClientServiceImpl implements ClientService, ClientPromise {
   }
 
   private void complete(String vin, Packet response) {
+
     try {
       CarClient carClient = carPool.getOrDefault(vin, null);
       CompletableFuture<Packet> rspFuture = carClient.removeAsyncResult(response.getRequestId());
       rspFuture.complete(response);
     } catch (Exception e) {
     }
+
   }
 
   private void completeExceptionally(String vin, int requestId, Throwable throwable) {
+
     try {
       CarClient carClient = carPool.getOrDefault(vin, null);
       CompletableFuture<Packet> rspFuture = carClient.removeAsyncResult(requestId);
       rspFuture.completeExceptionally(throwable);
     } catch (Exception e) {
     }
+
   }
 
   /**

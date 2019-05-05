@@ -10,6 +10,6 @@ public class RunInfo implements Serializable {
 
   private static final long serialVersionUID = 6927688126995953819L;
   private String runId;
-  private List<String> nodeList;
+ // private List<String> nodeList;
 
 }

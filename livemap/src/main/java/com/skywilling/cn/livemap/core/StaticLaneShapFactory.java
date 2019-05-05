@@ -69,8 +69,9 @@ public class StaticLaneShapFactory implements Factory<Boolean> {
      * @param files
      */
     public List<LaneShape> readALLFiles(List<String> files) {
+
         List<LaneShape> laneShapes = new ArrayList<>();
-        BufferedReader br = null;
+        BufferedReader br ;
         String line;
 
         List<LidarPoint> allLidarPoint = new ArrayList<>();
@@ -114,10 +115,10 @@ public class StaticLaneShapFactory implements Factory<Boolean> {
      * @param files
      */
     public List<LaneShape> readCSVFiles(String parkName, List<String> files) {
+
         List<LaneShape> laneShapes = new ArrayList<>();
         BufferedReader br;
         String line;
-
 
         for (String filename : files) {
             LaneShape laneShape = new LaneShape();
@@ -194,24 +195,12 @@ public class StaticLaneShapFactory implements Factory<Boolean> {
      * @param dir
      */
     private void loadLaneShapes(String parkName, String dir)  {
-//        List<Node> lanes = document.selectNodes("//region/lane");
-//        for (Node lane : lanes) {
-//            Element element = (Element) lane;
-//            LaneShape laneShape = new LaneShape();
-//            laneShape.setParkName(parkName);
-//            laneShape.setId(element.attributeValue("id", ""));
-//            List<Point> ways = loadTrj(element.element("path"));
-//            if (ways != null) {
-//                laneShape.setPath(ways);
-//            }
-//           shapeMapService.save(laneShape);
-//        }
 
-        List<String> filesnames = null;
+        List<String> filesnames ;
         filesnames = getAllFiles(dir);
         List<LaneShape> laneShapes = readCSVFiles(parkName, filesnames);
         for (LaneShape laneShape : laneShapes) {
-           //laneShape.setParkName(parkName);
+            laneShape.setParkName(parkName);
             if (laneShapes != null && laneShapes.size() != 0) {
                 shapeMapService.save(laneShape);
             }

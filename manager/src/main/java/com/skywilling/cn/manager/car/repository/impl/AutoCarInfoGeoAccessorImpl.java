@@ -16,7 +16,7 @@ import java.util.List;
 @Repository
 public class AutoCarInfoGeoAccessorImpl implements AutoCarInfoGeoAccessor {
 
-    private static String COLLECTION_NAME="VEHICLE_GEO";
+    //private static String COLLECTION_NAME="VEHICLE_GEO";
 
     @Autowired
     private MongoTemplate mongoTemplate;
@@ -24,14 +24,13 @@ public class AutoCarInfoGeoAccessorImpl implements AutoCarInfoGeoAccessor {
     @Override
     public void save(AutonomousCarInfo autonomousCarInfo) {
 
-        mongoTemplate.insert(autonomousCarInfo,COLLECTION_NAME);
+        mongoTemplate.save(autonomousCarInfo);
     }
 
     @Override
     public List<AutonomousCarInfo> getByLane(String lane) {
         Query query=new Query(Criteria.where("lane").is(lane));
         return  mongoTemplate.find(query,AutonomousCarInfo.class);
-        //return null;
     }
 
     @Override
@@ -40,7 +39,6 @@ public class AutoCarInfoGeoAccessorImpl implements AutoCarInfoGeoAccessor {
         Criteria geoCriteria = Criteria.where("position").nearSphere(geoJsonPoint).maxDistance(dis);
         Query query = Query.query(geoCriteria);
         return  mongoTemplate.find(query,AutonomousCarInfo.class);
-        //return null;
     }
 
     @Override
@@ -49,6 +47,22 @@ public class AutoCarInfoGeoAccessorImpl implements AutoCarInfoGeoAccessor {
         Query query= Query.query(geoCriteria);
         query.with(new PageRequest(0,1));
         return mongoTemplate.find(query,AutonomousCarInfo.class).get(0);
-        //return null;
     }
+
+    @Override
+    public void remove(String field, String value) {
+        mongoTemplate.remove(new Query(Criteria.where(field).is(value)),AutonomousCarInfo.class);
+    }
+
+    @Override
+    public List<AutonomousCarInfo> getAll() {
+        return mongoTemplate.find(new Query(), AutonomousCarInfo.class);
+    }
+
+    @Override
+    public void insert(AutonomousCarInfo autonomousCarInfo) {
+        mongoTemplate.insert(autonomousCarInfo);
+    }
+
+
 }

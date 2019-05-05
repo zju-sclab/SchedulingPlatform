@@ -14,20 +14,11 @@ import java.util.concurrent.LinkedBlockingQueue;
 @Data
 public class LiveJunction extends Node implements Serializable {
 
+    private int id;
+    private String name;
     private double priority;
     private double weight;
-
-    /**
-     * 对应XML文件里的id
-     */
-    private String name;
-
-    private int id;
-
+    //排队通过路口的阻塞队列
     private LinkedBlockingQueue<String> inComingVehicles = new LinkedBlockingQueue<>();
-
-    private Set<String> LanesStart = new HashSet<>();
-
-    private Set<String> LanesEnd = new HashSet<>();
 
 }

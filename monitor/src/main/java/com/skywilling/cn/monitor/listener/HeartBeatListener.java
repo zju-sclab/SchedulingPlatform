@@ -7,7 +7,6 @@ import com.skywilling.cn.manager.car.model.AutonomousCarInfo;
 import com.skywilling.cn.manager.car.service.AutoCarInfoService;
 import com.skywilling.cn.monitor.model.DTO.TerminalInfo;
 import org.springframework.beans.factory.annotation.Autowired;
-
 import javax.annotation.PostConstruct;
 
 
@@ -30,21 +29,21 @@ public class HeartBeatListener extends BasicListener {
         if (car == null) {
             return null;
         }
+        //车端上传的终端信息，包括速度，转角，挡位，姿态（位置，方向），laneId和stationId，时间戳
         TerminalInfo terminalInfo = JSONObject.parseObject(body, TerminalInfo.class);
         car.setVelocity(terminalInfo.getV());
         car.setWheelAngle(terminalInfo.getWheelAngle());
         car.setGear(terminalInfo.getGear());
         car.setPose(terminalInfo.getPose());
-        car.setLocation(terminalInfo.getPose());
-        car.setNodes(terminalInfo.getNodes());
-        car.setTimestamp(terminalInfo.getTimestamp());
-        /**
-         * 车端上传定位后的路段名，这里注意一下curve也是lane，但是是一段很小的lane
-         */
         car.setLane(terminalInfo.getLane());
-
+        car.setLane(terminalInfo.getLane());
+        car.setStation(terminalInfo.getStation());
+        car.setTimestamp(terminalInfo.getTimestamp());
+        //异步存入redis
         autoCarInfoService.save(car);
-
-        return null;
+        //然后异步取redis数据判断，不然会变成同步操作，判断调度和处理心跳包同步阻塞
+        //if(terminalInfo.getLane())
+        //
+        return new BasicCarResponse(1, null);
     }
 }

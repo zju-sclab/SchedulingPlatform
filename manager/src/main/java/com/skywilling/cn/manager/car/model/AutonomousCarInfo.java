@@ -2,7 +2,6 @@ package com.skywilling.cn.manager.car.model;
 
 
 
-import com.skywilling.cn.manager.car.enumeration.CarState;
 import lombok.Data;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.geo.GeoJsonPoint;
@@ -13,14 +12,18 @@ import org.springframework.data.mongodb.core.mapping.Field;
 import org.springframework.stereotype.Repository;
 
 import java.io.Serializable;
-import java.util.List;
 
 @Data
 @Repository
 @Document(collection = "autonomousCarInfo")
+//复合索引，加复合索引后通过复合索引字段查询将大大提高速度,如@CompoundIndex(name = "age_idx", def = "{'lastName': 1, 'age': -1}")
+//lastName和age将作为复合索引age_idx，数字参数指定索引的方向，1为正序，-1为倒序。方向对单键索引和随机存不要紧，但如果你要执行分组和排序操作的时候，它就非常重要了
+//空间索引(判断一个点POINT是否在一个区域POLYGON内)
 @CompoundIndexes({
-        @CompoundIndex(name = "location_index", def = "{position': '2dsphere'}"),
+        @CompoundIndex(name = "location_index", def = "{'position':'2dsphere'}"),
+        @CompoundIndex(name = "lane_station_idx", def = "{'lane':1, 'station':1}"),
 })
+
 public class AutonomousCarInfo implements Serializable {
 
   private static final long serialVersionUID = 23412341209L;
@@ -40,45 +43,23 @@ public class AutonomousCarInfo implements Serializable {
   private double gear;
   @Field
   private Pose pose;
-
   @Field
   String station;
-
   @Field
   private String lane;
-
-  @Field
-  private List<ModuleInfo> nodes;
   @Field
   private long timestamp;
+  /**
+  * 便于直接使用geohash索引
+   * */
+/*  @Field
+  private GeoJsonPoint position;*/
 
-  /*
-  便于直接使用geohash索引
-   */
-  @Field
-  private GeoJsonPoint location;
-
-  public void setPose(Pose pose){
-    this.pose=pose;
-    this.location=new GeoJsonPoint(pose.getPoint().getX(),pose.getPoint().getY());
-  }
-
-
-  public AutonomousCarInfo() {
-
-  }
+  public AutonomousCarInfo() { }
 
   public AutonomousCarInfo(String vin) {
     this.vin = vin;
     this.tripId = null;
   }
 
-
-  public void setLocation(Pose pose){
-    this.location=new GeoJsonPoint(pose.getPoint().getX(),pose.getPoint().getY());
-  }
-
-  public boolean isConnected() {
-    return this.state != CarState.LOST.getState();
-  }
 }

@@ -3,6 +3,7 @@ package com.skywilling.cn.scheduler.core;
 import com.skywilling.cn.livemap.model.LiveJunction;
 import com.skywilling.cn.livemap.model.LiveLane;
 import com.skywilling.cn.livemap.model.LiveMap;
+import com.skywilling.cn.livemap.model.Node;
 import com.skywilling.cn.scheduler.core.routealgorithm.BaseRouteAlgorithm;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -17,7 +18,8 @@ public class RouteLogic {
     @Value("${route.algorithm}")
     private String algorithm;
 
-   public List<LiveLane> routePlanning(LiveMap map, LiveJunction from, LiveJunction to) {
+    //全部Node来做规划
+   public List<LiveLane> routePlanning(LiveMap map, Node from, Node to) {
 
        BaseRouteAlgorithm baseRouteAlgorithm = routeAlgorithmHashMap.get(algorithm);
        if(baseRouteAlgorithm !=null){

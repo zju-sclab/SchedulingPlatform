@@ -35,14 +35,14 @@ public class LaneServiceImpl implements LaneService {
 
     @Override
     public void addVehicles(LiveLane liveLane,String vin) {
-       LinkedList<String> vehicles = liveLane.getVehicles();
-       vehicles.add(vin);
+       //LinkedList<String> vehicles = liveLane.getVehicles();
+       //vehicles.add(vin);
     }
 
     @Override
     public void removeVehicles(LiveLane liveLane,String vin) {
-        LinkedList<String> vehicles = liveLane.getVehicles();
-        vehicles.remove(vin);
+        //LinkedList<String> vehicles = liveLane.getVehicles();
+        //vehicles.remove(vin);
     }
 
     @Override
@@ -55,8 +55,8 @@ public class LaneServiceImpl implements LaneService {
 
     @Override
     public void setWeight(String parkName, String laneName, double weight) {
-        LiveLane liveLane = this.getLane(parkName, parkName);
-        liveLane.setWeight(weight);
+        //LiveLane liveLane = this.getLane(parkName, parkName);
+        //liveLane.setWeight(weight);
     }
 
 
