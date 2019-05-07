@@ -14,6 +14,7 @@ import com.skywilling.cn.manager.car.model.AutonomousCarInfo;
 import com.skywilling.cn.manager.car.service.CarInfoService;
 import com.skywilling.cn.scheduler.common.TripStatus;
 import com.skywilling.cn.scheduler.core.TripCore;
+import com.skywilling.cn.scheduler.model.RideStatus;
 import com.skywilling.cn.scheduler.model.Route;
 import com.skywilling.cn.scheduler.model.Trip;
 import com.skywilling.cn.scheduler.repository.TripAccessor;
@@ -25,6 +26,7 @@ import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -39,8 +41,8 @@ public class TripServiceImpl implements TripService {
     RouteService routeService;
     @Autowired
     StationService stationService;
-    //@Autowired
-    //private MongoTemplate mongoTemplate;
+    @Autowired
+    private MongoTemplate mongoTemplate;
 
 
     @Override
@@ -67,32 +69,21 @@ public class TripServiceImpl implements TripService {
         if (car.getState() == CarState.LOST.getState()) {
             throw new CarNotAliveException(vin);
         }
-        //如果车辆已经到达station
+        /**如果车辆已经到达Goal */
         String curStation = car.getStation();
         if (curStation == goal)
             throw new IllegalRideException();
-//        LiveStation goalStation = stationService.get(parkName, goal);
-//        if (FunctionUtils.distance(goalStation.getX(), goalStation.getY(),
-//                car.getLocation().getX(), car.getLocation().getY()) < 1) {
-//            throw new IllegalRideException();
-//        }
-        /**
-         * 规划全局路径Route
-         */
+        /** 规划全局路径Route*/
         Route route = routeService.navigate(parkName, curStation, goal);
         if (!usingDefaultSpeed) {
             for (LiveLane lane : route.getLiveLanes()) {
                 lane.setV(velocity);
             }
         }
-        /**
-         * 生成自动驾驶任务序列
-         */
+        /** 生成自动驾驶任务序列*/
         Trip trip = new Trip(vin, tripCore.generateTripId(vin), route);
         try {
-            /**
-             * 提交自动任务序列
-             */
+            /**提交自动任务序列*/
             tripCore.submitTrip(trip);
             return trip.getId();
         } catch (IllegalTaskException e) {
@@ -105,10 +96,10 @@ public class TripServiceImpl implements TripService {
 
     /**
      * 根据全局路径重新规划自动驾驶任务序列
-     *
      * start为当前停止点的start序列号
-     *
+     * 废弃当前接口, 直接暂停任务即可
      */
+    @Deprecated
     @Override
     public Trip updateRoute(AutonomousCarInfo carInfo, Route route) {
         Trip trip = this.get(carInfo.getTripId());
@@ -132,32 +123,37 @@ public class TripServiceImpl implements TripService {
         return trip;
     }
 
+    /**根据TripId查询Trip的信息*/
     @Override
-    public Trip get(String id) {
-        return tripAccessor.find(id);
+    public Trip get(String rideId) {
+        return tripAccessor.find(rideId);
     }
 
+    /** 根据vin查询最后一个Trip信息*/
     @Override
     public Trip getLiveTripBy(String vin) {
-        /*Trip lasted = tripAccessor.queryBy(vin);
+        Trip lasted = tripAccessor.findLastedBy(vin);
         if (lasted != null && lasted.getStatus() < RideStatus.FINISHED.getCode()) {
             return lasted;
-        }*/
+        }
         return null;
     }
 
+    /** 查询最后所有Trip信息*/
     @Override
     public List<Trip> query(int page, int size) {
         return tripAccessor.query(page, size);
     }
 
+    /** 根据vin所有的Trip信息*/
     @Override
     public List<Trip> queryBy(String vin, int page, int size) {
         return tripAccessor.queryBy(vin, page, size);
     }
 
+    /** 根据vin和开始时间,结束时间查询所有的Trip信息*/
     @Override
-    public List<Trip> queryBy(String vin, String start, String end, int page, int size) {
+    public List<Trip> queryBy(String vin, Date start, Date end, int page, int size) {
         return tripAccessor.queryBy(vin, start, end, page, size);
     }
 }

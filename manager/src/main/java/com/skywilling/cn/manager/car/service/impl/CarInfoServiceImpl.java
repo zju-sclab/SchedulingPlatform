@@ -65,10 +65,10 @@ public class CarInfoServiceImpl implements CarInfoService {
     return autoCarInfoService.get(vin);
   }
 
-/*  @Override
+  @Override
   public List<ModuleInfo> getAllNodesInfo(String vin) {
     return autoCarInfoService.getAllNodesInfo(vin);
-  }*/
+  }
 
   @Override
   public String getTaskId(String vin) {

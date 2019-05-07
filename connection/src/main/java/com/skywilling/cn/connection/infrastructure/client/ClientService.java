@@ -4,6 +4,7 @@ package com.skywilling.cn.connection.infrastructure.client;
 import com.skywilling.cn.connection.model.Packet;
 import io.netty.channel.Channel;
 
+import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
 public interface ClientService {
@@ -15,4 +16,6 @@ public interface ClientService {
   void close(String vin);
 
   CompletableFuture<Packet> sendRequest(Packet packet);
+
+  List<String> getAllClients();
 }

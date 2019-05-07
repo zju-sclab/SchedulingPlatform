@@ -21,6 +21,7 @@ import com.skywilling.cn.scheduler.service.CrossNodeListen;
 import com.skywilling.cn.scheduler.service.NodeLockService;
 import com.skywilling.cn.scheduler.service.RouteService;
 import com.skywilling.cn.scheduler.service.TripService;
+import org.omg.Messaging.SYNC_WITH_TRANSPORT;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -65,6 +66,7 @@ public class CrossNodeListenImpl implements CrossNodeListen {
         if (nodeLockService.vehicleIsExist(carInfo.getVin(), junctionName)) {
             return;
         }
+        long start =  System.currentTimeMillis();
         CompletableFuture<Boolean> acquire = nodeLockService.acquire(carInfo, junctionName);
         Boolean aBoolean = acquire.getNow(false);
         //如果获取锁失败，暂停车端任务
@@ -76,6 +78,8 @@ public class CrossNodeListenImpl implements CrossNodeListen {
             String vin = carInfo.getVin();
             requestSender.sendRequest(vin, TypeField.PAUSE_AUTONOMOUS, new JSONObject());
         }
+
+
     }
 
     /**队列中选择最前面的车唤醒，重启自动驾驶任务*/

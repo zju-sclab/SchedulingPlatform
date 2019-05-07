@@ -5,6 +5,7 @@ import com.skywilling.cn.common.exception.CarNotExistsException;
 import com.skywilling.cn.livemap.model.Point;
 import com.skywilling.cn.manager.car.model.AutonomousCarInfo;
 import com.skywilling.cn.manager.car.model.ModuleInfo;
+import org.springframework.data.mongodb.core.aggregation.ArithmeticOperators;
 
 import java.util.List;
 
@@ -22,4 +23,6 @@ public interface AutoCarInfoService {
   AutonomousCarInfo get(String vin);
 
   AutonomousCarInfo getOrCreate(String vin);
+
+  List<ModuleInfo> getAllNodesInfo(String vin);
 }

@@ -7,6 +7,7 @@ import com.skywilling.cn.manager.car.model.AutonomousCarInfo;
 import com.skywilling.cn.scheduler.model.Route;
 import com.skywilling.cn.scheduler.model.Trip;
 
+import java.util.Date;
 import java.util.List;
 
 public interface TripService {
@@ -40,7 +41,7 @@ public interface TripService {
 
     public List<Trip> queryBy(String vin, int page, int size);
 
-    public List<Trip> queryBy(String vin, String start, String end, int page, int size);
+    public List<Trip> queryBy(String vin, Date start, Date end, int page, int size);
 
 
 

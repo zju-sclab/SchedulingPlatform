@@ -1,6 +1,5 @@
 package com.skywilling.cn.web;
 
-
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -17,7 +16,7 @@ public class WebApplication implements CommandLineRunner {
     }
 
     @Override
-    public void run(String... args) throws Exception {
-
+    public void run(String... args) {
+        System.out.println(System.currentTimeMillis());
     }
 }

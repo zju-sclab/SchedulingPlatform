@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @CrossOrigin(origins = "*")
-@RequestMapping(value = "/api/v1/autonomous/task")
+@RequestMapping(value = "/api/v2/task")
 @RestController
 public class TaskController {
 
@@ -43,7 +43,7 @@ public class TaskController {
         }
     }
 
-    public void setTaskService(TaskService taskService) {
+/*    public void setTaskService(TaskService taskService) {
         this.taskService = taskService;
-    }
+    }*/
 }

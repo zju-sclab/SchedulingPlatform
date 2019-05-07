@@ -1,5 +1,8 @@
 package com.skywilling.cn.web;
 
+import com.skywilling.cn.common.enums.TypeField;
+import com.skywilling.cn.connection.infrastructure.client.ClientService;
+import com.skywilling.cn.connection.model.Packet;
 import com.skywilling.cn.connection.service.RequestDispatcher;
 import com.skywilling.cn.connection.service.RequestSender;
 import com.skywilling.cn.livemap.core.StaticMapFactory;
@@ -26,12 +29,14 @@ import com.skywilling.cn.scheduler.service.TripService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.configurationprocessor.json.JSONObject;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.geo.GeoJsonPoint;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
 /* import org.springframework.data.geo.Point; */
 
@@ -81,6 +86,9 @@ public class WebApplicationTests {
     MongoTemplate mongoTemplate;
     @Autowired
     AutoCarInfoGeoAccessor autoCarInfoGeoAccessor;
+
+    @Autowired
+    ClientService clientService;
 
 
     /**
@@ -215,6 +223,21 @@ public class WebApplicationTests {
                     + " " + liveLane.getTo().getLanesEnd());
         }
 
+    }
+
+    @Test
+    public void NettyTest(){
+        CompletableFuture<Boolean> resultFuture = new CompletableFuture<>();
+        Packet.Builder builder = new Packet.Builder();
+        JSONObject s = new JSONObject();
+        //18位Id
+        Packet packet = builder.buildRequest("S000000000000000095", TypeField.valueOf(0x21)).buildBody(s)
+                .build();
+        CompletableFuture<Packet> respFuture = clientService.sendRequest(packet);
+        if (respFuture == null) {
+            throw new NullPointerException();
+        }
+        respFuture.whenComplete(new RequestSender.PacketConsumer(resultFuture));
     }
 
 }

@@ -14,6 +14,8 @@ import com.skywilling.cn.manager.car.service.AutoCarInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 
 @Service
 public class AutoCarInfoServiceImpl implements AutoCarInfoService {
@@ -72,6 +74,13 @@ public class AutoCarInfoServiceImpl implements AutoCarInfoService {
   @Override
   public AutonomousCarInfo getOrCreate(String vin) {
     return autoCarInfoAccessor.getOrCreate(vin);
+  }
+
+  @Override
+  public List<ModuleInfo> getAllNodesInfo(String vin) {
+    AutonomousCarInfo carInfo = autoCarInfoAccessor.get(vin);
+    if(carInfo == null) return null;
+    return carInfo.getRosNodes();
   }
 
 }

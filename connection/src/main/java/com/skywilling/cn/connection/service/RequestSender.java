@@ -16,11 +16,11 @@ public class RequestSender {
     @Autowired
     ClientService clientService;
 
-    static class PacketConsumer implements BiConsumer<Packet, Throwable> {
+    public static class PacketConsumer implements BiConsumer<Packet, Throwable> {
 
         CompletableFuture<Boolean> thenFuture;
 
-        PacketConsumer(CompletableFuture<Boolean> thenFuture) {
+        public PacketConsumer(CompletableFuture<Boolean> thenFuture) {
             this.thenFuture = thenFuture;
         }
 

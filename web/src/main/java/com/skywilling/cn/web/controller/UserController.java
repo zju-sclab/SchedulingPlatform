@@ -37,7 +37,7 @@ import java.util.stream.Collectors;
 
 @CrossOrigin(origins = "*")
 @RestController
-@RequestMapping("api/v1")
+@RequestMapping("api/v2")
 public class UserController {
 
   private static Logger LOG = LoggerFactory.getLogger(UserController.class);
@@ -74,7 +74,7 @@ public class UserController {
     }
 
     String code = StringUtil.getVerificationCode();
-    boolean b = false;
+    boolean b;
     switch (type) {
       case VerifyCodeType.REGISTER: {
         b = SmsHelper.sendRegisterVerifyCode(phoneNumber, code);

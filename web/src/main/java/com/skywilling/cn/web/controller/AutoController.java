@@ -34,7 +34,7 @@ import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 
 @CrossOrigin
-@RequestMapping(value = "/api/v1/autonomous")
+@RequestMapping(value = "/api/v2/auto")
 @RestController
 public class AutoController {
 
@@ -88,15 +88,21 @@ public class AutoController {
     }
 
     /**
-     * 车端开启自动驾驶任务，提交的参数是车辆vin
+     *   车端开启自动驾驶任务，提交的参数是
+     *   private String vin;
+     *   private String source;
+     *   private String goal;
+     *   private boolean usingMapSpeed = false;
+     *   private double velocity = DEFAULT_VELOCITY;
+     *   private double acceleartion = DEFAULT_ACCELEARTION;
      */
-    @RequestMapping(value = "/car/{vin}/start", method = RequestMethod.POST)
+    @RequestMapping(value = "/car/start", method = RequestMethod.POST)
     @ResponseBody
-    public BasicResponse doAutonomous(@PathVariable(name = "vin") String vin, RideParam rideParam) {
+    public BasicResponse doAutonomous(RideParam rideParam) {
         try {
             CarDynamic carDynamic = carDynamicService.query(rideParam.getVin());
             Park park = parkService.query(carDynamic.getParkId());
-            String rideId = tripService.submitTrip(vin, park.getName(), rideParam.getGoal(), rideParam.getVelocity(),
+            String rideId = tripService.submitTrip(rideParam.getVin(), park.getName(), rideParam.getGoal(), rideParam.getVelocity(),
                     rideParam.getAcceleartion(), rideParam.isUsingMapSpeed());
             if (rideId != null) {
                 return BasicResponse.buildResponse(ResultType.SUCCESS, rideId);

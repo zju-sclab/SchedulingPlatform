@@ -11,5 +11,5 @@ import lombok.Data;
 @Data
 public class CarArrivalslnfo {
     private String vin;
-    private String timestamp;
+    private long timestamp;
 }

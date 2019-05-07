@@ -31,6 +31,10 @@ public class CarDynamic implements Serializable {
    * 所在站点
    */
   private String  station     ;
+  /**
+   * 所在lane
+   */
+  private String lane;
 
   private Double velocity = 0.0;
   private Double wheelAngle = 0.0;
@@ -38,10 +42,8 @@ public class CarDynamic implements Serializable {
   private Double energy;
 
   private Integer isValid     ;
-  /**
-   * 所在lane
-   */
-  private String lane;
+  private Integer status = -1;
+
   private Double  latitude    ;
   private Double  longitude   ;
   private Double  altitude = 0.0;
@@ -49,8 +51,6 @@ public class CarDynamic implements Serializable {
   private Double roll = 0.0;
   private Double pitch = 0.0;
   private Double yaw = 0.0;
-  private Integer status = -1;
-
 
   private Date    gmtModify   ;
   private Date    gmtCreate   ;

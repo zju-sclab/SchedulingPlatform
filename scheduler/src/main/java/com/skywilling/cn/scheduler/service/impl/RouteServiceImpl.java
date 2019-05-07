@@ -114,7 +114,7 @@ public class RouteServiceImpl implements RouteService {
     @Override
     public Route reRoute(AutonomousCarInfo carInfo) {
 
-        String vin = carInfo.getVin();
+        //String vin = carInfo.getVin();
         String from = carInfo.getStation();
         Trip oldTrip = tripService.get(carInfo.getTripId());
         Route oldRoute = oldTrip.getRoute();

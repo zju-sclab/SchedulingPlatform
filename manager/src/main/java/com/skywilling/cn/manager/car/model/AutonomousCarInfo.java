@@ -12,6 +12,7 @@ import org.springframework.data.mongodb.core.mapping.Field;
 import org.springframework.stereotype.Repository;
 
 import java.io.Serializable;
+import java.util.List;
 
 @Data
 @Repository
@@ -45,10 +46,16 @@ public class AutonomousCarInfo implements Serializable {
   private Pose pose;
   @Field
   String station;
+
+  @Field
+  private String fromLane;
+  /** 预瞄的lane*/
   @Field
   private String lane;
   @Field
   private long timestamp;
+
+  private List<ModuleInfo> RosNodes;
   /**
   * 便于直接使用geohash索引
    * */

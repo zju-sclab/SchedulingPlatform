@@ -60,6 +60,7 @@ public class Scheduler {
       private String name;
       private String owner;
       private ReentrantLock lock = new ReentrantLock();
+      private long startTime;
       private PriorityBlockingQueue<Element> inComingVehicles = new PriorityBlockingQueue<>();
 
       public NodeLock(String name) {
