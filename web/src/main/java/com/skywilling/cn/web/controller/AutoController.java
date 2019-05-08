@@ -98,12 +98,15 @@ public class AutoController {
      */
     @RequestMapping(value = "/car/start", method = RequestMethod.POST)
     @ResponseBody
-    public BasicResponse doAutonomous(RideParam rideParam) {
+    public BasicResponse startAutonomous(RideParam rideParam) {
         try {
             CarDynamic carDynamic = carDynamicService.query(rideParam.getVin());
+//            if (carDynamic == null) {
+//                return BasicResponse.buildResponse(ResultType.FAILED, "the car is not exist");
+//            }
             Park park = parkService.query(carDynamic.getParkId());
-            String rideId = tripService.submitTrip(rideParam.getVin(), park.getName(), rideParam.getGoal(), rideParam.getVelocity(),
-                    rideParam.getAcceleartion(), rideParam.isUsingMapSpeed());
+            String rideId = tripService.submitTrip(rideParam.getVin(), park.getName(), rideParam.getFrom(),
+                    rideParam.getGoal(), rideParam.getVelocity(), rideParam.getAcc());
             if (rideId != null) {
                 return BasicResponse.buildResponse(ResultType.SUCCESS, rideId);
             }
@@ -122,7 +125,7 @@ public class AutoController {
      */
     @RequestMapping(value = "/car/{vin}/stop", method = RequestMethod.GET)
     @ResponseBody
-    public BasicResponse stop(@PathVariable(name = "vin") String vin) {
+    public BasicResponse stopAutonomous(@PathVariable(name = "vin") String vin) {
         CompletableFuture<Boolean> asyncResult = autoServiceBiz.killAutonomous(vin);
         List<Trip> trips = tripService.queryBy(vin,1,12);
         try {
@@ -163,19 +166,18 @@ public class AutoController {
         return BasicResponse.buildResponse(ResultType.SUCCESS, ride);
     }
 
-    @RequestMapping(value = "/ride", method = RequestMethod.POST)
+    @RequestMapping(value = "/car/rent", method = RequestMethod.POST)
     @ResponseBody
     public BasicResponse fireRide(RideParam rideParam) {
         try {
-            // todo check the parameters passed.
             CarDynamic carDynamic = carDynamicService.query(rideParam.getVin());
             if (carDynamic == null) {
-                return BasicResponse.buildResponse(ResultType.FAILED, "the car can't exist");
+                return BasicResponse.buildResponse(ResultType.FAILED, "the car isn't exist");
             }
             Park park = parkService.query(carDynamic.getParkId());
-            String rideId = tripService.submitTrip(rideParam.getVin(), park.getName(), rideParam.getGoal(),
+            String rideId = tripService.submitTrip(rideParam.getVin(), park.getName(), rideParam.getFrom(),rideParam.getGoal(),
                     rideParam.getVelocity(),
-                    rideParam.getAcceleartion(), rideParam.isUsingMapSpeed());
+                    rideParam.getAcc());
             if (rideId != null) {
                 carDynamicService.markRentedCar(rideParam.getVin(), DriveType.AUTONOMOUS);
                 return BasicResponse.buildResponse(ResultType.SUCCESS, rideId);
