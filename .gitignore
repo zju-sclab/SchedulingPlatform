@@ -16,6 +16,11 @@ HELP.md
 *.iws
 *.iml
 *.ipr
+*.iml
+.gitignore
+/log
+/target
+/web/log
 
 ### NetBeans ###
 /nbproject/private/
