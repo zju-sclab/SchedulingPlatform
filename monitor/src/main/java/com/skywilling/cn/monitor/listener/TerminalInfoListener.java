@@ -33,6 +33,7 @@ public class TerminalInfoListener extends BasicListener {
     @Override
     public BasicCarResponse process(String vin, String body) {
         AutonomousCarInfo car = autoCarInfoService.getOrCreate(vin);
+        //判断是否登陆的依据是redis是否存有该车信息,登陆逻辑会添加车辆vin到redis
         if (car == null) {
             return null;
         }
@@ -49,7 +50,6 @@ public class TerminalInfoListener extends BasicListener {
         //异步存入redis
         autoCarInfoService.save(car);
         //然后异步取redis数据判断，不然会变成同步操作，判断调度和处理心跳包同步阻塞
-
         return new BasicCarResponse(0, new Object());
     }
 }
