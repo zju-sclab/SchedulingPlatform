@@ -32,6 +32,7 @@ public class AutoTaskServiceImpl implements AutoTaskService {
     @Autowired
     TaskService taskService;
 
+    /** 正式提交并启动自动驾驶任务 */
     @Override
     public CompletableFuture<Boolean> submit(AutoTask autoTask){
         autoTask.setStatus(TaskState.SUBMITTING.getCode());
@@ -39,9 +40,10 @@ public class AutoTaskServiceImpl implements AutoTaskService {
         CompletableFuture<Boolean> future = autoServiceBiz.fireAutonomous(autoTask);
         checkResult(autoTask,future);
         return future;
-
     }
 
+    /** 开始预热任务 */
+    @Deprecated
     @Override
     public CompletableFuture<Boolean> start(AutoTask autoTask) {
 
@@ -53,7 +55,6 @@ public class AutoTaskServiceImpl implements AutoTaskService {
         String taskId = taskService.save(autoTask);
         car.setTaskId(taskId);
         autoCarInfoService.save(car);
-        //准备启动
         CompletableFuture<Boolean> future =autoServiceBiz.prepareAutonomous(autoTask);
         checkResult(autoTask,future);
         return future;
@@ -66,6 +67,7 @@ public class AutoTaskServiceImpl implements AutoTaskService {
         return null;
     }
 
+    /** 停止任务 */
     @Override
     public CompletableFuture<Boolean> stopCar(String vin) {
 
@@ -73,25 +75,24 @@ public class AutoTaskServiceImpl implements AutoTaskService {
         future.whenComplete((result, t) -> {
             if (t != null||Boolean.FALSE.equals(result)) {
                 throw new RuntimeException("stop car error");
-
             }
         });
         return future;
     }
+
 
     @Override
     public CompletableFuture<Boolean> intervening(String taskId) {
         return null;
     }
 
-    //判断是否成功发送到车端
+    /** 判断是否成功发送到车端 */
     private void checkResult(AutoTask task,CompletableFuture<Boolean> future){
         future.whenComplete((result, t) -> {
             if (t != null||Boolean.FALSE.equals(result)) {
                 logger.error("send task failed,vin={},taskId={}",task.getVin(),task.getTaskId());
                 task.setStatus(TaskState.REJECTED.getCode());
                 taskService.update(task);
-
             }
         });
     }

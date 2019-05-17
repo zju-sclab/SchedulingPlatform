@@ -48,9 +48,11 @@ public class RequestSender {
         Packet packet = builder.buildRequest(vin, typeField).buildBody(body).build();
         //调用车端链接的发送函数，指定vin对应的TCP链接
         CompletableFuture<Packet> respFuture = clientService.sendRequest(packet);
+        //异步检测发送任务是否完成
         if (respFuture == null) {
             throw new NullPointerException();
         }
+        //完成后返回一个结果
         respFuture.whenComplete(new PacketConsumer(resultFuture));
         return resultFuture;
     }

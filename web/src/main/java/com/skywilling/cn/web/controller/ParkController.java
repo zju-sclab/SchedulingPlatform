@@ -137,7 +137,7 @@ public class ParkController {
     /**
      * 根据Id查询园区信息
      */
-    @RequestMapping(value = "/park/getParkById/{parkId}", method = RequestMethod.GET)
+    @RequestMapping(value = "/park/{parkId}", method = RequestMethod.GET)
     public BasicResponse getPark(@PathVariable("parkId") int parkId) {
 
         try {
@@ -150,7 +150,7 @@ public class ParkController {
     /**
      * 根据Name查询园区信息
      */
-    @RequestMapping(value = "/park/getParkByName/{parkName}", method = RequestMethod.GET)
+    @RequestMapping(value = "/park/{parkName}", method = RequestMethod.GET)
     public BasicResponse getPark(@PathVariable("parkName") String parkName) {
 
         try {

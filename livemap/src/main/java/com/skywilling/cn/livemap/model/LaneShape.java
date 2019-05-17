@@ -15,11 +15,11 @@ public class LaneShape implements Serializable {
     private String            name;
     private String            parkName;
     private Double            length;
-    //Line或者Cross
-    private String            type;
+    private String            type;    //Line或者Cross
     private int               priority;
     private List<LidarPoint>  path;
     private String            fromId;
     private String            toId;
+    private double             v;
 
 }

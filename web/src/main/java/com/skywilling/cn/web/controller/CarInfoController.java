@@ -56,15 +56,13 @@ public class CarInfoController {
   LockService lockService;
 
 
-
   @Autowired
   CarInfoService carInfoService;
 
   @Autowired
   CarDynamicService carDynamicService;
 
-   @Autowired
-  NotifyService notifyService;
+
 
   @Autowired
   private ParkService parkService;
@@ -146,14 +144,25 @@ public class CarInfoController {
         }
   }
   /** add a  car*/
-  @RequestMapping(value = "/car/add", method = RequestMethod.POST, consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
-  public BasicResponse addCar(CarDynamic carDynamic) {
+  @RequestMapping(value = "/car/add", method = RequestMethod.POST, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+  public BasicResponse addCar(@RequestParam(value = "vin", required = false )String vin,
+                              @RequestParam(value = "parkId", required = false) Integer parkId,
+                              @RequestParam(value = "type", required = false) Integer type,
+                              @RequestParam(value = "simulation", required = false) Integer simulation,
+                              @RequestParam(value = "definitionId", required = false) Integer definitionId,
+                              @RequestParam(value = "connect", required = false) Integer connect,
+                              @RequestParam(value = "useStatus", required = false) Integer useStatus,
+                              HttpServletRequest request) {
+      CarDynamic carDynamic = new CarDynamic();
+      carDynamic.setVin(vin);
+      carDynamic.setParkId(parkId);
+      carDynamic.setType(type);
+      carDynamic.setSimulation(simulation);
+      carDynamic.setDefinitionId(definitionId);
+      carDynamic.setConnect(connect);
+      carDynamic.setUseStatus(useStatus);
     try {
       carDynamic.setDriveMode(DriveType.AUTONOMOUS.getCode());
-      carDynamic.setBodyStatus(BodyStatus.FINE.getCode());
-      carDynamic.setModuleStatus(ModuleStatus.FINE.getCode());
-      carDynamic.setConnect(ConnectType.DISCONNECT.getCode());
-      carDynamic.setUseStatus(UseStatus.FREE.getCode());
       carDynamicService.save(carDynamic);
       return BasicResponse.buildResponse(ResultType.SUCCESS, carDynamic);
     } catch (CarNotVinException e) {
@@ -329,7 +338,8 @@ public class CarInfoController {
       }
       if (type == 1) {
           if (lockService.unlockByVerifyCode(vin, data)) {
-              notifyService.rentCar(vin);
+              //Todo rent car
+              //notifyService.rentCar(vin);
               return BasicResponse.buildResponse(ResultType.SUCCESS, null);
           }
       }
@@ -358,7 +368,8 @@ public class CarInfoController {
         lockService.lock(vin);
         if (StringUtils.equals(source, "app")) {
               lockService.updateKey(vin, data);
-              notifyService.returnCar(vin);
+              //Todo return car
+              //notifyService.returnCar(vin);
         }
         return BasicResponse.buildResponse(ResultType.SUCCESS, null);
   }

@@ -38,7 +38,7 @@ public class RequestDispatcher {
 
     public RequestDispatcher() {
         //分配固定大小度的线程池多线程地处理请求的分派
-        executorService = Executors.newFixedThreadPool(10);
+        executorService = Executors.newFixedThreadPool(30);
     }
 
     /**
@@ -48,21 +48,15 @@ public class RequestDispatcher {
 
         executorService.submit(() -> {
             BasicCarResponse carResponse;
-
             if (ACK.COMMAND.getCode() == packet.getAck()) {
-                //请求包
-                carResponse = commandHandler(ctx, packet);
-
+                carResponse = commandHandler(ctx, packet); //请求包
             } else {
-                //回复包
-                carResponse = responseHandler(packet);
+                carResponse = responseHandler(packet); //回复包
             }
             if (carResponse != null) {
                 Packet.Builder builder = new Packet.Builder();
                 ctx.writeAndFlush(builder.buildResponse(packet, carResponse).build());
-
             }
-
         });
     }
 
@@ -71,9 +65,9 @@ public class RequestDispatcher {
         if (TypeField.LOGIN == typeField) {
             return loginHandler(ctx, packet);
         }
-
-        if (typeField != null) {
-            //login, logout, heartbeat ,registration ..
+        //Type 21 == Ox15
+        else if (typeField != null) {
+            //login, logout, heartbeat ,registration,terminalInfo..
             return listenerMap.getListener(typeField.getDesc()).process(packet.getVin(), packet.getData());
         }
         return null;
@@ -84,7 +78,7 @@ public class RequestDispatcher {
         String vin = packet.getVin();
         BasicCarResponse process = listenerMap.getListener(TypeField.LOGIN.getDesc()).process(vin, packet.getData());
         if (ACK.SUCCESS.getCode() == process.getCode()) {
-            //save channel and vin  for K/V
+            //save channel and vin
             AttributeKey<String> key = AttributeKey.valueOf(ProtocolField.VIN.getField());
             Attribute<String> vinAttr = ctx.channel().attr(key);
             vinAttr.setIfAbsent(vin);
@@ -96,7 +90,6 @@ public class RequestDispatcher {
     public BasicCarResponse responseHandler(Packet packet) {
         boolean result = ACK.getResult(packet.getAck());
         TypeField typeField = TypeField.valueOf(packet.getType());
-
         if (typeField != null) {
             clientPromise.receivedResponse(packet);
             BasicCarResponse process = listenerMap.getListener(typeField.getDesc()).process(packet.getVin(), result, packet.getData());

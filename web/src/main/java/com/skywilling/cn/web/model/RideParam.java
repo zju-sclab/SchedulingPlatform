@@ -13,26 +13,27 @@ public class RideParam implements Serializable {
   private static final long serialVersionUID = 2498279891299047820L;
 
   private String vin;
+  private String from;
   private String source;
   private String goal;
-  private boolean usingMapSpeed = false;
+
   private double velocity = DEFAULT_VELOCITY;
-  private double acceleartion = DEFAULT_ACCELEARTION;
+  private double acc = DEFAULT_ACCELEARTION;
 
   public RideParam() {
   }
 
-  public RideParam(String vin, String goal, boolean usingMapSpeed, double velocity,
-      double acceleartion) {
+  public RideParam(String vin, String from, String goal, double velocity, double acc) {
     this.vin = vin;
     this.goal = goal;
+    this.from = from;
     this.velocity = velocity;
-    this.usingMapSpeed = usingMapSpeed;
-    this.acceleartion = acceleartion;
+    this.acc = acc;
   }
 
-  public RideParam(String vin, String goal) {
+  public RideParam(String vin, String from, String goal) {
     this.vin = vin;
+    this.from = from;
     this.goal = goal;
   }
 

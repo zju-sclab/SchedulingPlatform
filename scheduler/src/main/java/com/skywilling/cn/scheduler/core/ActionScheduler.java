@@ -1,6 +1,7 @@
 package com.skywilling.cn.scheduler.core;
 
 import com.skywilling.cn.common.exception.park.NoAvailableActionFoundException;
+import com.skywilling.cn.common.model.LidarPoint;
 import com.skywilling.cn.livemap.model.*;
 import com.skywilling.cn.livemap.service.MapService;
 import com.skywilling.cn.livemap.service.ShapeMapService;
@@ -21,7 +22,7 @@ public class ActionScheduler {
     MapService mapService;
 
     /**
-     * 规划A--B的路径
+     * 规划A--》B的路径
      */
     public List<Action> convertToAction(String parkName, Route route) throws NoAvailableActionFoundException {
 
@@ -32,7 +33,6 @@ public class ActionScheduler {
         List<Action> actions = new ArrayList<>(liveLanes.size());
 
         for (LiveLane lane: liveLanes) {
-            //
             Action action = this.toAction(shapeMapService.query(parkName, lane.getName()));
             if (action == null) {
                 throw new NoAvailableActionFoundException();
@@ -54,9 +54,13 @@ public class ActionScheduler {
      * @return
      */
     private Action toAction(LaneShape laneShape) {
-
-
-
-        return null;
+        List<LidarPoint> lidarPoints = laneShape.getPath();
+        Action action = new Action();
+        action.setPoints(lidarPoints);
+        action.setLaneName(laneShape.getName());
+        action.setFrom(laneShape.getFromId());
+        action.setTo(laneShape.getToId());
+        action.setV(laneShape.getV());
+        return action;
     }
 }

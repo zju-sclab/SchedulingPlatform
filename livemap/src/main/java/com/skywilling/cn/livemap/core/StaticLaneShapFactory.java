@@ -129,7 +129,6 @@ public class StaticLaneShapFactory implements Factory<Boolean> {
             String lane_id = filename_no_pre.substring(0,1);
             String prefix = "lane_";
             LiveMap liveMap = mapService.getMap(parkName);
-
             LiveLane liveLane = liveMap.getLaneMap().get(prefix+lane_id);
             laneShape.setParkName(parkName);
             laneShape.setId(Integer.valueOf(lane_id));
@@ -138,6 +137,7 @@ public class StaticLaneShapFactory implements Factory<Boolean> {
             laneShape.setFromId(liveLane.getFrom().getName());
             laneShape.setToId(liveLane.getTo().getName());
             laneShape.setLength(liveLane.getLength());
+            laneShape.setV(liveLane.getV());
 
             try {
                 br = new BufferedReader(new FileReader(new File(filename)));
@@ -201,9 +201,7 @@ public class StaticLaneShapFactory implements Factory<Boolean> {
         List<LaneShape> laneShapes = readCSVFiles(parkName, filesnames);
         for (LaneShape laneShape : laneShapes) {
             laneShape.setParkName(parkName);
-            if (laneShapes != null && laneShapes.size() != 0) {
-                shapeMapService.save(laneShape);
-            }
+            shapeMapService.save(laneShape);
         }
     }
 
@@ -216,7 +214,6 @@ public class StaticLaneShapFactory implements Factory<Boolean> {
             //Document document = parse(url);
             //String parkName = String.valueOf(document.getRootElement().attribute("id"));
             loadLaneShapes(parkName, shapeUrl);
-
             return true;
     }
 }

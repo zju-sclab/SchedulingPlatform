@@ -1,6 +1,5 @@
 package com.skywilling.cn.web.service.impl;
 
-
 import com.skywilling.cn.common.config.redis.RedisDao;
 import com.skywilling.cn.common.exception.CarNotExistsException;
 import com.skywilling.cn.web.model.CarKey;
@@ -16,6 +15,7 @@ import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
+
 
 @Component
 public class LockServiceRedisImpl implements LockService {

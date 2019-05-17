@@ -60,25 +60,27 @@ public class TripServiceImpl implements TripService {
      * 2.规划路径
      */
     @Override
-    public String submitTrip(String vin, String parkName, String goal, double velocity, double acceleration,
-                             boolean usingDefaultSpeed) throws CarNotExistsException, CarNotAliveException, IllegalRideException {
-        AutonomousCarInfo car = carInfoService.getAutoCarInfo(vin);
+    public String submitTrip(String vin, String parkName, String from, String goal, double velocity, double acceleration)
+            throws CarNotExistsException, CarNotAliveException, IllegalRideException {
+
+       AutonomousCarInfo car = carInfoService.getAutoCarInfo(vin);
         if (car == null) {
             throw new CarNotExistsException(vin);
         }
+        /**判断是否链接丢失 */
         if (car.getState() == CarState.LOST.getState()) {
             throw new CarNotAliveException(vin);
         }
-        /**如果车辆已经到达Goal */
-        String curStation = car.getStation();
-        if (curStation == goal)
+        /**如果车辆已经到达Goal则是不合理订单 */
+        if (from == goal)
             throw new IllegalRideException();
+
         /** 规划全局路径Route*/
-        Route route = routeService.navigate(parkName, curStation, goal);
-        if (!usingDefaultSpeed) {
-            for (LiveLane lane : route.getLiveLanes()) {
+        Route route = routeService.navigate(parkName, from, goal);
+
+        for (LiveLane lane : route.getLiveLanes()) {
                 lane.setV(velocity);
-            }
+                //lane.setAcc(acc);
         }
         /** 生成自动驾驶任务序列*/
         Trip trip = new Trip(vin, tripCore.generateTripId(vin), route);

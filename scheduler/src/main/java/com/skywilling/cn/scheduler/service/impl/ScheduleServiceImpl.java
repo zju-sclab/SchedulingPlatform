@@ -103,6 +103,7 @@ public class ScheduleServiceImpl implements ScheduleService {
          else{
              //stop
 
+
          }
     }
     /** 一直检测某个路口上的路口锁的获取和释放是否完成 */

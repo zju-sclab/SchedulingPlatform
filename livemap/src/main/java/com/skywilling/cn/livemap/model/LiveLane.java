@@ -15,20 +15,16 @@ public class LiveLane implements Serializable {
    private String name;
    private int id;
    private double length = 0.0;
-
    private double v;
    private Node from;
    private Node to;
-
-   //表示lane\curve
-   private String type;
-   //中文名
-   private String zh;
+   private int priority;
+   private String type;   //表示lane,curve
+   private String zh;   //中文名
    /**
     * 动态添加车辆的出入信息，记录进入这个路的起点时间和离开这条路终点的时间信息
     */
    private LinkedList<CarArrivalslnfo> vehicles;
-   //private double weight;
-   private int priority;
+
 
 }

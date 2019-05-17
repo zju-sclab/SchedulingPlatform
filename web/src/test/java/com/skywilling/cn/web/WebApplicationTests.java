@@ -118,7 +118,7 @@ public class WebApplicationTests {
         park.setMapFileUrl("D:\\work\\Projects\\linxxx\\SchedulingPlatform\\doc\\Map\\map.xml");
         park.setShapeFileUrl("D:\\work\\Projects\\linxxx\\SchedulingPlatform\\doc\\Map\\shape\\");
         park.setImgUrl("D:\\work\\Projects\\linxxx\\SchedulingPlatform\\doc\\Map");
-        park.setName("yuquanxiaoqu");
+        park.setName("yuquanxiaoqu2");
         parkService.save(park);
     }
 

@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 public class NotifyServiceKafkaImpl implements NotifyService {
 
   private static final Logger LOG = LoggerFactory.getLogger(NotifyServiceKafkaImpl.class);
-  @Autowired
+
   private LockProducer lockProducer;
 
   public void setLockProducer(LockProducer lockProducer) {
