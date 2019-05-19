@@ -2,12 +2,14 @@ package com.skywilling.cn.web.model.view;
 
 import com.skywilling.cn.manager.car.model.Action;
 import com.skywilling.cn.manager.task.model.AutoTask;
+import lombok.Data;
 
 import java.io.Serializable;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 
+@Data
 public class TaskView implements Serializable {
 
   private static final long serialVersionUID = -123412341234L;
@@ -127,9 +129,9 @@ public class TaskView implements Serializable {
     int size = task.getAction().size();
     List<String> stations = new ArrayList<>();
     for (Action action : task.getAction()) {
-      stations.add(action.getTo());
+      stations.add(action.getGoal().getName());
     }
-    stations.add(task.getAction().get(size - 1).getTo());
+    stations.add(task.getAction().get(size - 1).getGoal().getName());
     taskView.setStations(stations);
     return taskView;
   }

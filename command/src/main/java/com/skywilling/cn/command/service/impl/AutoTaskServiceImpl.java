@@ -35,18 +35,20 @@ public class AutoTaskServiceImpl implements AutoTaskService {
     /** 正式提交并启动自动驾驶任务 */
     @Override
     public CompletableFuture<Boolean> submit(AutoTask autoTask){
+        AutonomousCarInfo car = autoCarInfoService.get(autoTask.getVin());
+        if (car.getState() != CarState.FREE.getState()) {
+            return null;
+        }
         autoTask.setStatus(TaskState.SUBMITTING.getCode());
         taskService.update(autoTask);
-        CompletableFuture<Boolean> future = autoServiceBiz.fireAutonomous(autoTask);
+        CompletableFuture<Boolean> future = autoServiceBiz.fireLidarAutonomous(autoTask);
         checkResult(autoTask,future);
         return future;
     }
 
-    /** 开始预热任务 */
-    @Deprecated
+    /** 开始预热任务,目前直接跳过预热开启任务 */
     @Override
     public CompletableFuture<Boolean> start(AutoTask autoTask) {
-
         AutonomousCarInfo car = autoCarInfoService.get(autoTask.getVin());
         if (car.getState() != CarState.FREE.getState()) {
             return null;
@@ -63,14 +65,12 @@ public class AutoTaskServiceImpl implements AutoTaskService {
 
     @Override
     public CompletableFuture<Boolean> resume(String taskId) {
-
         return null;
     }
 
     /** 停止任务 */
     @Override
     public CompletableFuture<Boolean> stopCar(String vin) {
-
         CompletableFuture<Boolean> future = autoServiceBiz.killAutonomous(vin);
         future.whenComplete((result, t) -> {
             if (t != null||Boolean.FALSE.equals(result)) {
@@ -85,7 +85,6 @@ public class AutoTaskServiceImpl implements AutoTaskService {
     public CompletableFuture<Boolean> intervening(String taskId) {
         return null;
     }
-
     /** 判断是否成功发送到车端 */
     private void checkResult(AutoTask task,CompletableFuture<Boolean> future){
         future.whenComplete((result, t) -> {

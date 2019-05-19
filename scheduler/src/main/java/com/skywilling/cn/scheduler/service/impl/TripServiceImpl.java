@@ -56,37 +56,42 @@ public class TripServiceImpl implements TripService {
     }
 
     /**
-     * 1.直接获得车辆在哪个车道上
+     * 自动驾驶订单接口的核心模块
+     * 1.产生任务并设置任务参数
      * 2.规划路径
      */
     @Override
-    public String submitTrip(String vin, String parkName, String from, String goal, double velocity, double acceleration)
-            throws CarNotExistsException, CarNotAliveException, IllegalRideException {
+    public String submitTrip(String vin, String parkName, String from, String goal,
+                             double velocity, double acceleration) throws CarNotExistsException,
+                                                                          CarNotAliveException, IllegalRideException {
 
        AutonomousCarInfo car = carInfoService.getAutoCarInfo(vin);
+        /**判断该车是否链接上云平台 */
         if (car == null) {
             throw new CarNotExistsException(vin);
         }
-        /**判断是否链接丢失 */
+        /**判断该车是否链接丢失 */
         if (car.getState() == CarState.LOST.getState()) {
             throw new CarNotAliveException(vin);
         }
-        /**如果车辆已经到达Goal则是不合理订单 */
+        /**判断该是否发起不合理订单 */
         if (from == goal)
             throw new IllegalRideException();
 
-        /** 规划全局路径Route*/
+        /** 查找全局路径返回Route*/
         Route route = routeService.navigate(parkName, from, goal);
-
+        /** 设置速度和加速度*/
         for (LiveLane lane : route.getLiveLanes()) {
                 lane.setV(velocity);
                 //lane.setAcc(acc);
         }
         /** 生成自动驾驶任务序列*/
-        Trip trip = new Trip(vin, tripCore.generateTripId(vin), route);
+        String tripId = tripCore.generateTripId(vin);
+        Trip trip = new Trip(vin, tripId, route);
         try {
             /**提交自动任务序列*/
             tripCore.submitTrip(trip);
+            /**成功则返回TripId*/
             return trip.getId();
         } catch (IllegalTaskException e) {
             e.printStackTrace();
@@ -101,7 +106,6 @@ public class TripServiceImpl implements TripService {
      * start为当前停止点的start序列号
      * 废弃当前接口, 直接暂停任务即可
      */
-    @Deprecated
     @Override
     public Trip updateRoute(AutonomousCarInfo carInfo, Route route) {
         Trip trip = this.get(carInfo.getTripId());

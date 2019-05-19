@@ -7,9 +7,11 @@ import com.skywilling.cn.manager.car.model.AutonomousCarInfo;
 import com.skywilling.cn.manager.car.service.AutoCarInfoService;
 import com.skywilling.cn.monitor.model.DTO.ACK;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 
+@Component
 public class FailureListener extends BasicListener {
     @Autowired
     ListenerMap listenerMap;
@@ -26,7 +28,7 @@ public class FailureListener extends BasicListener {
     public BasicCarResponse process(String vin, String body) {
         AutonomousCarInfo car = autoCarInfoService.getOrCreate(vin);
         car.setState(CarState.LOST.getState());
-        //car.setNodes(null);
+        car.setRosNodes(null);
         car.setTaskId(null);
         autoCarInfoService.save(car);
         return null;

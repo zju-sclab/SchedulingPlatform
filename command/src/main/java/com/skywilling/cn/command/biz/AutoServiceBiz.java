@@ -23,7 +23,6 @@ public class AutoServiceBiz {
   TaskAccessor taskAccessor;
 
   /** 预热自动驾驶*/
-  @Deprecated
   public CompletableFuture<Boolean> prepareAutonomous(AutoTask autoTask) {
     LOG.info("prepareTask taskId {}", autoTask.getTaskId());
     return requestSender.sendRequest(autoTask.getVin(), TypeField.PREPARE_FIRE, new JSONObject());
@@ -43,13 +42,23 @@ public class AutoServiceBiz {
     return requestSender.sendRequest(vin, TypeField.FIRE_AUTONOMOUS,jsonObject);
   }
 
+  /** 启动自动驾驶*/
+  public CompletableFuture<Boolean> fireLidarAutonomous(AutoTask autoTask) {
+    String vin = autoTask.getVin();
+    JSONObject jsonObject = new JSONObject();
+    jsonObject.put("taskId", autoTask.getTaskId());
+    jsonObject.put("speed",autoTask.getVelocity());
+    jsonObject.put("route", autoTask.getAction());
+    return requestSender.sendRequest(vin, TypeField.FIRE_LANE_AUTONOMOUS,jsonObject);
+  }
+
   /** 暂停当前任务 */
   public CompletableFuture<Boolean> pauseAutonomous(String vin){
     return requestSender.sendRequest(vin, TypeField.PAUSE_AUTONOMOUS, new JSONObject());
   }
 
   /** 重启当前任务 */
-  public CompletableFuture<Boolean> reStartAutonomous(String vin){
-    return requestSender.sendRequest(vin, TypeField.RESTART_AUTONOMOUS, new JSONObject());
+  public CompletableFuture<Boolean> continueAutonomous(String vin){
+    return requestSender.sendRequest(vin, TypeField.CONTINUE_AUTONOMOUS, new JSONObject());
   }
 }

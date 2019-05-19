@@ -1,6 +1,5 @@
 package com.skywilling.cn.manager.task.model;
 
-import com.skywilling.cn.common.model.LidarPoint;
 import com.skywilling.cn.manager.car.model.Action;
 import lombok.Data;
 import org.springframework.data.annotation.Id;

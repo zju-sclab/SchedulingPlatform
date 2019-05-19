@@ -12,12 +12,16 @@ public enum TypeField {
   GPS_INFO(0x12, "GPS Info"),
   STOP_AUTONOMOUS(0x13, "stop task"),
   OBSTACLE_INFO(0x14, "obstacle info"),
-  TERMINAL_INFO(0x15, "terminalInfo"),
+  TERMINAL_INFO(0x15, "terminal info"),
   PREPARE_FIRE(0x20, "prepare fire"),
   FIRE_AUTONOMOUS(0x21, "fire task"),
   FIRE_LANE_AUTONOMOUS(0x22, "fire lane task"),
-  RESTART_AUTONOMOUS(0x31,"reStart task"),
-  PAUSE_AUTONOMOUS(0x41, "pause task");
+  PAUSE_AUTONOMOUS(0x31,"pause task"),
+  CONTINUE_AUTONOMOUS(0x32, "continue task"),
+  FIRE_LIDAR_AUTONOMOUS(0x33, "fire lidar task"),
+  REQUEST_LOCK(0x41,"request lock"),
+  RESPONSE_LOCK( 0x42,"respone lock"),
+  RELEASE_LOCK(0x43, "release lock");
 
   private final String desc;
   private final int type;

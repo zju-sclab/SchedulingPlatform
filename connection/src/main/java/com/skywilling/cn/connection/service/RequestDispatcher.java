@@ -61,24 +61,26 @@ public class RequestDispatcher {
     }
 
     public BasicCarResponse commandHandler(final ChannelHandlerContext ctx, Packet packet) {
+        System.out.println(packet.getRequestId());
         TypeField typeField = TypeField.valueOf(packet.getType());
         if (TypeField.LOGIN == typeField) {
             return loginHandler(ctx, packet);
         }
-        //Type 21 == Ox15
+        /**Type 21 == Ox15 为车端发送过来的终端消息,包括位置和方向,速度和转角等等 */
+
         else if (typeField != null) {
-            //login, logout, heartbeat ,registration,terminalInfo..
+            /**login, logout, heartbeat ,registration,terminalInfo..*/
             return listenerMap.getListener(typeField.getDesc()).process(packet.getVin(), packet.getData());
         }
         return null;
     }
 
-
+    /**车端回复的消息,用于调度指令的回复和路径规划任务下发的回复,type分为prepared_auto和fire_auto,tele_atuo,pause_auto等等*/
     private BasicCarResponse loginHandler(final ChannelHandlerContext ctx, Packet packet) {
         String vin = packet.getVin();
         BasicCarResponse process = listenerMap.getListener(TypeField.LOGIN.getDesc()).process(vin, packet.getData());
         if (ACK.SUCCESS.getCode() == process.getCode()) {
-            //save channel and vin
+            /**保存vin到ctx上下文并打开一个vin标识的TCP通道注册到ctx*/
             AttributeKey<String> key = AttributeKey.valueOf(ProtocolField.VIN.getField());
             Attribute<String> vinAttr = ctx.channel().attr(key);
             vinAttr.setIfAbsent(vin);
@@ -86,7 +88,7 @@ public class RequestDispatcher {
         }
         return process;
     }
-
+   /**车端回复的消息,用于调度指令的回复和路径规划任务下发的回复,type分为prepared_auto和fire_auto,tele_atuo,pause_auto等等*/
     public BasicCarResponse responseHandler(Packet packet) {
         boolean result = ACK.getResult(packet.getAck());
         TypeField typeField = TypeField.valueOf(packet.getType());
@@ -98,7 +100,7 @@ public class RequestDispatcher {
         return null;
     }
 
-
+    /**检测是否断线,断线的话关闭通道并且调用断线的handler通知客户端重连*/
     public void onLostConnection(final ChannelHandlerContext ctx) {
         AttributeKey<String> key = AttributeKey.valueOf(ProtocolField.VIN.getField());
         Attribute<String> vin = ctx.channel().attr(key);

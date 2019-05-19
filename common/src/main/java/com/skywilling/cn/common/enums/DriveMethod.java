@@ -6,7 +6,8 @@ public enum DriveMethod {
   TRJ(1, "trajectory"),
   LANE(2, "lane"),
   REPLAY(3, "replay"),
-  SITE(4, "site")
+  SITE(4, "site"),
+  LIDAR(5,"lidar")
   ;
   private String type;
   private int code;

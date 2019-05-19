@@ -11,9 +11,12 @@ import com.skywilling.cn.manager.task.model.AutoTask;
 import com.skywilling.cn.manager.task.service.TaskService;
 import com.skywilling.cn.monitor.model.DTO.ACK;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 
+
+@Component
 public class PreparedListener extends BasicListener {
     @Autowired
     ListenerMap listenerMap;
@@ -21,7 +24,6 @@ public class PreparedListener extends BasicListener {
     AutoCarInfoService autoCarInfoService;
     @Autowired
     TaskService taskService;
-
 
     @Override
     @PostConstruct
@@ -31,19 +33,17 @@ public class PreparedListener extends BasicListener {
 
     @Override
     public BasicCarResponse process(String vin, boolean result, String body) {
-        //判断是否准备好，是则开始正式发送任务，否则放弃
-        AutoTask autoTask = null;
+        /**判断是否准备好，是则开始正式发送任务，否则放弃*/
+        AutoTask autoTask ;
         try {
             autoTask = taskService.getCurrentTask(vin);
             return onPrepared(autoTask, result);
-
         } catch (CarNotExistsException e) {
             e.printStackTrace();
         }
-
         return null;
     }
-
+    /** prepare listener */
     private BasicCarResponse onPrepared(AutoTask autoTask, boolean success) {
         if (!success) {
             autoTask.setStatus(TaskState.REJECTED.getCode());

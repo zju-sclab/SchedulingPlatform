@@ -19,8 +19,8 @@ HELP.md
 *.iml
 .gitignore
 /log
-/target
-/web/log
+*./target
+*./log
 
 ### NetBeans ###
 /nbproject/private/

@@ -24,43 +24,33 @@ public class ActionScheduler {
     /**
      * 规划A--》B的路径
      */
-    public List<Action> convertToAction(String parkName, Route route) throws NoAvailableActionFoundException {
+    public List<Action> convertToAction(String parkName, Route route)throws NoAvailableActionFoundException  {
 
-        LiveMap liveMap=mapService.getMap(parkName);
-        if (liveMap == null) return null;
+        LiveMap liveMap =  mapService.getMap(parkName);
+        if (liveMap == null) return new ArrayList<>();
 
-        List<LiveLane> liveLanes = route.getLiveLanes();
+        List<LiveLane> liveLanes = new ArrayList<>(route.getLiveLanes());
         List<Action> actions = new ArrayList<>(liveLanes.size());
 
         for (LiveLane lane: liveLanes) {
-            Action action = this.toAction(shapeMapService.query(parkName, lane.getName()));
-            if (action == null) {
+            LaneShape laneShape = shapeMapService.query(parkName,lane.getName());
+            List<LidarPoint> lidarPoints = laneShape.getPath();
+            Action action = new Action();
+            if (lidarPoints == null|| lidarPoints.size() == 0) {
                 throw new NoAvailableActionFoundException();
             }
             Node from = lane.getFrom();
             Node to = lane.getTo();
             action.setLaneName(lane.getName());
-            action.setFrom(from.getName());
-            action.setTo(to.getName());
+            action.setOutset(liveMap.getNodeMap().get(from.getName()));
+            action.setGoal(liveMap.getNodeMap().get(to.getName()));
+            action.setPoints(laneShape.getPath());
             action.setV(lane.getV());
+            /** request type LIDAR */
+            action.setType("LIDAR");
             actions.add(action);
         }
         return actions;
     }
 
-    /**
-     * LaneShapeMap查找LaneShape后，转化为Action
-     * @param laneShape
-     * @return
-     */
-    private Action toAction(LaneShape laneShape) {
-        List<LidarPoint> lidarPoints = laneShape.getPath();
-        Action action = new Action();
-        action.setPoints(lidarPoints);
-        action.setLaneName(laneShape.getName());
-        action.setFrom(laneShape.getFromId());
-        action.setTo(laneShape.getToId());
-        action.setV(laneShape.getV());
-        return action;
-    }
 }

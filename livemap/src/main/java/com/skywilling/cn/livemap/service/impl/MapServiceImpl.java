@@ -11,6 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 
 @Service
@@ -26,8 +28,15 @@ public class MapServiceImpl implements MapService {
     @Autowired
     StaticMapFactory staticMapFactory;
 
-
-
+   /** 获取所有动态地图 */
+   @Override
+   public  List<LiveMap> getAllMaps(){
+       List<LiveMap> res = new ArrayList<>();
+       for(String key : maps.keySet()){
+           res.add(maps.get(key));
+       }
+       return res;
+   }
     @Override
     public LiveMap getMap(String parkName) {
         if (!maps.containsKey(parkName)) {

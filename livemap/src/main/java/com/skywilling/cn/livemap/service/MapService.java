@@ -5,8 +5,11 @@ import com.skywilling.cn.livemap.model.LiveLane;
 import com.skywilling.cn.livemap.model.LiveMap;
 import com.skywilling.cn.livemap.model.LiveStation;
 
+import java.util.List;
+
 
 public interface MapService {
     LiveMap getMap(String parkName);
     void addMap(LiveMap map);
+    public List<LiveMap> getAllMaps();
 }

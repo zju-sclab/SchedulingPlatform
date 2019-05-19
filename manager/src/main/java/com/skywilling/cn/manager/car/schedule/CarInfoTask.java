@@ -4,10 +4,9 @@ import com.alibaba.fastjson.JSONObject;
 import com.skywilling.cn.common.config.redis.RedisDao;
 import com.skywilling.cn.common.exception.CarNotVinException;
 import com.skywilling.cn.manager.car.enumeration.ConnectType;
-import com.skywilling.cn.manager.car.enumeration.ModuleType;
 import com.skywilling.cn.manager.car.model.AutonomousCarInfo;
 import com.skywilling.cn.manager.car.model.CarDynamic;
-import com.skywilling.cn.manager.car.model.Pose;
+import com.skywilling.cn.common.model.Pose;
 import com.skywilling.cn.manager.car.service.AutoCarInfoService;
 import com.skywilling.cn.manager.car.service.CarDynamicService;
 import org.slf4j.Logger;
@@ -93,9 +92,7 @@ public class CarInfoTask {
         Long recordTime = attach.getLong("time");
         long l = System.currentTimeMillis() - recordTime;
         dynamic.setConnect(l > 5000 ? ConnectType.DISCONNECT.getCode() : ConnectType.CONNECT.getCode());
-
         dynamic.setBodyStatus(attach.getInteger("carStatus"));
-
         dynamic.setIsValid(attach.getBoolean("validPosition") ? 1 : 0);
         dynamic.setLatitude(attach.getDouble("latitude"));
         dynamic.setLongitude(attach.getDouble("longitude"));

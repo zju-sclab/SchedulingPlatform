@@ -8,20 +8,23 @@ import com.skywilling.cn.connection.service.RequestSender;
 import com.skywilling.cn.livemap.core.StaticMapFactory;
 import com.skywilling.cn.livemap.model.LiveLane;
 import com.skywilling.cn.livemap.model.LiveMap;
+import com.skywilling.cn.livemap.model.LiveStation;
 import com.skywilling.cn.livemap.model.Park;
-import com.skywilling.cn.livemap.model.Point;
+import com.skywilling.cn.common.model.Point;
 import com.skywilling.cn.livemap.service.MapService;
 import com.skywilling.cn.livemap.service.ParkService;
 import com.skywilling.cn.livemap.service.impl.ShapeServiceImpl;
 import com.skywilling.cn.manager.car.model.AutonomousCarInfo;
 import com.skywilling.cn.manager.car.model.CarDynamic;
-import com.skywilling.cn.manager.car.model.Orientation;
-import com.skywilling.cn.manager.car.model.Pose;
+import com.skywilling.cn.common.model.Orientation;
+import com.skywilling.cn.common.model.Pose;
 import com.skywilling.cn.manager.car.repository.AutoCarInfoGeoAccessor;
 import com.skywilling.cn.manager.car.service.AutoCarInfoService;
 import com.skywilling.cn.manager.car.service.CarInfoService;
 import com.skywilling.cn.manager.car.service.impl.CarDynamicServiceImpl;
 import com.skywilling.cn.scheduler.model.Route;
+import com.skywilling.cn.scheduler.model.Trip;
+import com.skywilling.cn.scheduler.repository.impl.TripAccessorImpl;
 import com.skywilling.cn.scheduler.service.CrossNodeListen;
 import com.skywilling.cn.scheduler.service.NodeLockService;
 import com.skywilling.cn.scheduler.service.RouteService;
@@ -32,7 +35,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.configurationprocessor.json.JSONObject;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.mongodb.core.MongoTemplate;
-import org.springframework.data.mongodb.core.geo.GeoJsonPoint;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.List;
@@ -90,6 +92,8 @@ public class WebApplicationTests {
     @Autowired
     ClientService clientService;
 
+    @Autowired
+    TripAccessorImpl tripAccessor;
 
     /**
      * 数据库测试
@@ -127,7 +131,7 @@ public class WebApplicationTests {
      */
     @Test
     public void updatepark(){
-        Park park = parkService.queryByName("yuquanxiaoqu");
+        Park park = parkService.queryByName("yuquanxiaoq2");
         park.setMapFileUrl("D:\\work\\Projects\\linxxx\\SchedulingPlatform\\doc\\Map\\map.xml");
         park.setShapeFileUrl("D:\\work\\Projects\\linxxx\\SchedulingPlatform\\doc\\Map\\shape\\");
         park.setImgUrl("D:\\work\\Projects\\linxxx\\SchedulingPlatform\\doc\\Map");
@@ -146,7 +150,7 @@ public class WebApplicationTests {
      */
     @Test
     public void mapTest(){
-        String parkName = "yuquanxiaoqu";
+        String parkName = "yuquanxiaoqu2";
         Park park = parkService.queryByName(parkName);
         if (park != null&& park.getMapFileUrl() != null && park.getShapeFileUrl() != null) {
             LiveMap m = mapService.getMap(parkName);
@@ -176,8 +180,8 @@ public class WebApplicationTests {
         autonomousCarInfo.setLane("lane_1");
         autonomousCarInfo.setStation("zetong");
         Pose pose = new Pose();
-        pose.setOrientation(new Orientation());
-        pose.setPoint(new Point());
+        //pose.setOrientation(new Orientation());
+        //pose.setPoint(new Point());
         autonomousCarInfo.setPose(pose);
         //autonomousCarInfo.setPosition(new GeoJsonPoint(new Point(pose.getPoint().getX(), pose.getPoint().getY())));
         autonomousCarInfo.setTripId("00112345");
@@ -206,6 +210,13 @@ public class WebApplicationTests {
         List<AutonomousCarInfo> all = autoCarInfoGeoAccessor.getAll();
         System.out.println(all);
     }
+    @Test
+    public void TripSaveTest(){
+        Trip trip = new Trip();
+        trip.setStartStation(new LiveStation());
+        trip.setEndStation(new LiveStation());
+        tripAccessor.save(trip);
+    }
 
     /**
      * 全局规划测试
@@ -214,7 +225,9 @@ public class WebApplicationTests {
     public void routeServiceTest(){
         String from = "caolou";
         String to = "shengyi";
-        String parkName = "yuquanxiaoqu";
+        String parkName = "yuquanxiaoqu2";
+        /** input : yuquanxiaoqu 2
+         * output: lane_3 3 caolou shengyi 1 [lane_3] [lane_3] */
         Route route = routeService.navigate(parkName, from, to);
         for(LiveLane liveLane: route.getLiveLanes()){
             System.out.println(liveLane.getName() + " "+ liveLane.getId()+ " " + liveLane.getFrom().getName()

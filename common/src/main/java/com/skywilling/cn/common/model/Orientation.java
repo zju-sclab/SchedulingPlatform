@@ -1,4 +1,4 @@
-package com.skywilling.cn.manager.car.model;
+package com.skywilling.cn.common.model;
 
 import lombok.Data;
 
@@ -14,5 +14,8 @@ public class Orientation implements Serializable {
   private double z = 0;
   private double w = 0;
   private int status = -1;
-
+  public Orientation(){}
+  public Orientation(double x, double y, double z, double w){
+    this.x = x; this.y = y; this.z = z; this.w = w;
+  }
 }

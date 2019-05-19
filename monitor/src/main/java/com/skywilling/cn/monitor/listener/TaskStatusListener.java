@@ -7,9 +7,12 @@ import com.skywilling.cn.manager.task.model.AutoTask;
 import com.skywilling.cn.manager.task.service.TaskService;
 import com.skywilling.cn.monitor.model.DTO.TaskInfo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 
+
+@Component
 public class TaskStatusListener extends BasicListener {
     @Autowired
     ListenerMap listenerMap;
@@ -30,8 +33,6 @@ public class TaskStatusListener extends BasicListener {
         AutoTask autoTask = taskService.getTaskById(taskInfo.getTaskId());
         autoTask.setStatus(taskInfo.getStatus());
         taskService.update(autoTask);
-
-
         return null;
     }
 }

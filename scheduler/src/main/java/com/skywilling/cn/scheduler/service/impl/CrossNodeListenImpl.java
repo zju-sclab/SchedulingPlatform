@@ -3,6 +3,7 @@ package com.skywilling.cn.scheduler.service.impl;
 
 import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.Page;
+import com.skywilling.cn.command.biz.AutoServiceBiz;
 import com.skywilling.cn.common.enums.TypeField;
 import com.skywilling.cn.common.exception.IllegalTaskException;
 import com.skywilling.cn.common.exception.park.NoAvailableActionFoundException;
@@ -51,6 +52,8 @@ public class CrossNodeListenImpl implements CrossNodeListen {
     TripCore tripCore;
 
     @Autowired
+    AutoServiceBiz autoServiceBiz;
+    @Autowired
     RequestSender requestSender;
 
     @Value("${config.switch-on}")
@@ -66,17 +69,17 @@ public class CrossNodeListenImpl implements CrossNodeListen {
         if (nodeLockService.vehicleIsExist(carInfo.getVin(), junctionName)) {
             return;
         }
-        long start =  System.currentTimeMillis();
+        //long start =  System.currentTimeMillis();
         CompletableFuture<Boolean> acquire = nodeLockService.acquire(carInfo, junctionName);
         Boolean aBoolean = acquire.getNow(false);
         //如果获取锁失败，暂停车端任务
         if (!aBoolean) {
-
 //            Trip trip = tripService.get(carInfo.getTripId());
 //            tripCore.kill(trip);
-            /** 暂停当前任务 */
+            /** 暂停车辆的当前任务 */
             String vin = carInfo.getVin();
-            requestSender.sendRequest(vin, TypeField.PAUSE_AUTONOMOUS, new JSONObject());
+            autoServiceBiz.pauseAutonomous(vin);
+
         }
 
 
@@ -93,14 +96,9 @@ public class CrossNodeListenImpl implements CrossNodeListen {
         if (nextCar == null) return;
         AutonomousCarInfo car = autoCarInfoService.get(nextCar);
         String vin = car.getVin();
-        //给车端发送重新启动信号
-        requestSender.sendRequest(vin,TypeField.RESTART_AUTONOMOUS, new JSONObject());
-    }
-    //todo
-    @Override
-    public void OnArrivingStation(AutonomousCarInfo carInfo, String statonName) {
+        /**给车端发送重新启动信号*/
+        autoServiceBiz.continueAutonomous(vin);
 
-        //20m
     }
 
 }

@@ -5,13 +5,16 @@ import com.github.pagehelper.PageInfo;
 import com.skywilling.cn.common.enums.ResultType;
 import com.skywilling.cn.common.model.BasicResponse;
 import com.skywilling.cn.common.model.Coordinate;
+import com.skywilling.cn.livemap.core.StaticMapFactory;
 import com.skywilling.cn.livemap.model.LiveMap;
 import com.skywilling.cn.livemap.model.LiveStation;
 import com.skywilling.cn.livemap.model.Node;
 import com.skywilling.cn.livemap.model.Park;
 import com.skywilling.cn.livemap.service.MapService;
 import com.skywilling.cn.livemap.service.ParkService;
+import com.skywilling.cn.livemap.service.ShapeMapService;
 import com.skywilling.cn.livemap.service.StationService;
+import com.skywilling.cn.livemap.service.impl.ShapeServiceImpl;
 import com.skywilling.cn.manager.car.enumeration.UseStatus;
 import com.skywilling.cn.manager.car.model.CarDynamic;
 import com.skywilling.cn.manager.car.service.CarDynamicService;
@@ -45,7 +48,7 @@ public class ParkController {
     private CarDynamicService carDynamicService;
 
     @Autowired
-    private RouteService routeService;
+    private ShapeMapService shapeService;
 
     @Autowired
     private StationService stationService;
@@ -76,8 +79,13 @@ public class ParkController {
             File shapeFile = new File(shapeUrl);
             if (mapFile.exists() && mapFile.isFile() && shapeFile.exists() && shapeFile.isDirectory()) {
                 parkService.updateRegion(parkId, mapUrl, shapeUrl);
-                //清理cache里的旧缓存值
-                //regionService.clearCache(park.getName());
+                String parkName = park.getName();
+                //创建Live Map
+                LiveMap liveMap = new StaticMapFactory().create(parkName, park.getMapFileUrl());
+                //创建map
+                mapService.addMap(liveMap);
+                //创建shape Map
+                shapeService.create(parkName);
                 return BasicResponse.buildResponse(ResultType.SUCCESS, null);
             } else {
                 return BasicResponse.buildResponse(ResultType.SUCCESS, "Map或者Shape文件不存在!");

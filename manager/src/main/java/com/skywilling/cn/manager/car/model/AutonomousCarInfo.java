@@ -2,9 +2,9 @@ package com.skywilling.cn.manager.car.model;
 
 
 
+import com.skywilling.cn.common.model.Pose;
 import lombok.Data;
 import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.geo.GeoJsonPoint;
 import org.springframework.data.mongodb.core.index.CompoundIndex;
 import org.springframework.data.mongodb.core.index.CompoundIndexes;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -45,8 +45,8 @@ public class AutonomousCarInfo implements Serializable {
   @Field
   private Pose pose;
   @Field
-  String station;
-
+  private String station;
+  /** 当前的lane*/
   @Field
   private String fromLane;
   /** 预瞄的lane*/

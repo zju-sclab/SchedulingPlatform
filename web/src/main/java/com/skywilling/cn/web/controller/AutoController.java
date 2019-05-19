@@ -101,12 +101,14 @@ public class AutoController {
     public BasicResponse startAutonomous(RideParam rideParam) {
         try {
             CarDynamic carDynamic = carDynamicService.query(rideParam.getVin());
-//            if (carDynamic == null) {
-//                return BasicResponse.buildResponse(ResultType.FAILED, "the car is not exist");
-//            }
+            /**检查数据库中是否存在车辆   */
+            if (carDynamic == null) {
+                return BasicResponse.buildResponse(ResultType.FAILED, "the car has not been added to a park");
+            }
             Park park = parkService.query(carDynamic.getParkId());
-            String rideId = tripService.submitTrip(rideParam.getVin(), park.getName(), rideParam.getFrom(),
-                    rideParam.getGoal(), rideParam.getVelocity(), rideParam.getAcc());
+            String rideId = tripService.submitTrip(rideParam.getVin(), park.getName(),
+                                                   rideParam.getFrom(), rideParam.getGoal(),
+                                                   rideParam.getVelocity(), rideParam.getAcc());
             if (rideId != null) {
                 return BasicResponse.buildResponse(ResultType.SUCCESS, rideId);
             }

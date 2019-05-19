@@ -9,7 +9,7 @@ import com.skywilling.cn.common.model.BasicResponse;
 import com.skywilling.cn.connection.infrastructure.client.ClientService;
 import com.skywilling.cn.livemap.model.Node;
 import com.skywilling.cn.livemap.model.Park;
-import com.skywilling.cn.livemap.model.Point;
+import com.skywilling.cn.common.model.Point;
 import com.skywilling.cn.livemap.service.ParkService;
 import com.skywilling.cn.manager.car.enumeration.*;
 import com.skywilling.cn.manager.car.model.CarDynamic;
@@ -24,7 +24,6 @@ import com.skywilling.cn.web.model.ParkAndCar;
 import com.skywilling.cn.web.model.view.CarView;
 import com.skywilling.cn.web.model.view.PageView;
 import com.skywilling.cn.web.service.LockService;
-import com.skywilling.cn.web.service.NotifyService;
 import com.skywilling.cn.web.utils.ViewBuilder;
 
 import org.apache.commons.lang3.StringUtils;

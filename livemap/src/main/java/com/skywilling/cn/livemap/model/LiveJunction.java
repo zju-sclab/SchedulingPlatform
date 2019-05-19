@@ -3,9 +3,6 @@ package com.skywilling.cn.livemap.model;
 import lombok.Data;
 
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
 import java.util.concurrent.LinkedBlockingQueue;
 
 /**
@@ -14,8 +11,6 @@ import java.util.concurrent.LinkedBlockingQueue;
 @Data
 public class LiveJunction extends Node implements Serializable {
 
-    private int id;
-    private String name;
     private double priority;
     private double weight;
     //排队通过路口的阻塞队列

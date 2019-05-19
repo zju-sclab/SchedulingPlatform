@@ -3,7 +3,10 @@ package com.skywilling.cn.livemap.service.impl;
 import com.skywilling.cn.livemap.model.LiveMap;
 import com.skywilling.cn.livemap.service.CarPositionService;
 import com.skywilling.cn.livemap.service.MapService;
+import com.skywilling.cn.manager.car.service.AutoCarInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
@@ -13,9 +16,13 @@ import java.util.List;
  * Date 2019/5/5 18:22
  **/
 
+@Service
 public class CarPositionServiceImpl implements CarPositionService {
     @Autowired
     MapService mapService;
+
+    @Autowired
+    AutoCarInfoService autoCarInfoService;
 
     /**
      * 查找lane上的所有车
@@ -35,5 +42,12 @@ public class CarPositionServiceImpl implements CarPositionService {
         LiveMap liveMap = mapService.getMap(parkName);
         String lane = liveMap.getCarMap().get(vin);
         return lane;
+    }
+    /**
+     * 每1s钟向redis刷新数据
+     */
+    @Scheduled(fixedRate = 1000)
+    public void updateLiveMapByCarInfo(){
+
     }
 }

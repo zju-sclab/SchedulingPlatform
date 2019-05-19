@@ -6,9 +6,7 @@ import lombok.Data;
 public class TaskInfo  {
 
     private String taskId;
-
     private int status;
-
     private int percentage;
 
 }

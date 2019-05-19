@@ -48,7 +48,7 @@ public class ShapeServiceImpl implements ShapeMapService {
 
     @Override
     public void save(LaneShape laneShape) {
-        redisDao.save(PREFIX + laneShape.getParkName() + laneShape.getId(), laneShape);
+        redisDao.save(PREFIX + laneShape.getParkName() + laneShape.getName(), laneShape);
     }
 
 

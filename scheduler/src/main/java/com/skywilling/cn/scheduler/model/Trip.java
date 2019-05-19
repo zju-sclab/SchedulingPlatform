@@ -35,10 +35,14 @@ public class Trip implements Serializable {
      */
     private int status;
 
+    public Trip(){}
+
     public Trip(String vin, String tripId, Route route) {
         this.vin = vin;
         this.id = tripId;
         this.route = route;
+        this.parkName = route.getParkName();
+        this.startTime = System.currentTimeMillis();
         this.start = 0;
         this.end = route.getLiveLanes().size();
     }

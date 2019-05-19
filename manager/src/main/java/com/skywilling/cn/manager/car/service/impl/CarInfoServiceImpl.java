@@ -2,7 +2,7 @@ package com.skywilling.cn.manager.car.service.impl;
 
 
 import com.skywilling.cn.common.exception.CarNotExistsException;
-import com.skywilling.cn.livemap.model.Point;
+import com.skywilling.cn.common.model.Point;
 import com.skywilling.cn.manager.car.model.AutonomousCarInfo;
 import com.skywilling.cn.manager.car.model.CarDynamic;
 import com.skywilling.cn.manager.car.model.ModuleInfo;
