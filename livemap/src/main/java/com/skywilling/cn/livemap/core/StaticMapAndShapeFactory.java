@@ -228,13 +228,9 @@ public class StaticMapAndShapeFactory {
         while (iterator.hasNext()) {
             Element element = iterator.next();
             LiveLane lane = new LiveLane();
-
-            //设置唯一ID
             lane.setId(Integer.valueOf(element.attributeValue("id")));
-
-            //设置唯一名字
             lane.setName(element.attributeValue("name"));
-            //LiveLane起点Junction
+
             String fromName = element.attributeValue("from");
             //设置lane的起点
             lane.setFrom(liveMap.getNodeMap().get(fromName));
@@ -273,7 +269,6 @@ public class StaticMapAndShapeFactory {
     /**
      * 根据Map.xml构建拓扑地图，拓扑地图仅仅路段和站点的基本信息
      */
-
     public LiveMap create(String parkName, String mapUrl, String shapeUrl) {
         LiveMap liveMap = new LiveMap();
         try {
