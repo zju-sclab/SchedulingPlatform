@@ -1,6 +1,5 @@
 package com.skywilling.cn.manager.car.model;
 
-import com.skywilling.cn.common.enums.DriveMethod;
 import com.skywilling.cn.common.model.LidarPoint;
 import com.skywilling.cn.livemap.model.Node;
 import lombok.Data;
