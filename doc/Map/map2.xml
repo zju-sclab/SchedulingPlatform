@@ -1,20 +1,16 @@
 <?xml version="1.0"?>
-
 <!--version: 版本, time: 更新时间-->
 <region id="ZJU" version="0.3" time="2019/05/15">
-
   <nodes>
     <!-- do mapping some point to fixed station -->
-    <node id="0" name="zetong"    x="13218013.5968"    y="3636349.31409"    type="station" zh=""/>
-    <node id="1" name="jiaojiu"   x="13217939.2758"    y="3636562.09873"    type="station" zh=""/>
-    <ndoe id="2" name="caolou"    x="13217936.3143"    y="3636427.37621"    type="station" zh=""/>
-    <node id="3" name="shengyi"   x="13217962.4286"    y="3636364.64181"    type="station" zh=""/>
-    <node id="4" name="zetong2"   x="13218013.5968"    y="3636349.31409"    type="station" zh=""/>
-    <node id="5" name="jiaojiu2"  x="13217939.2758"    y="3636562.09873"    type="station" zh=""/>
-    <ndoe id="6" name="caolou2"   x="13217936.3143"    y="3636427.37621"    type="station" zh=""/>
-    <node id="7" name="cailiao"   x="13217962.4286"    y="3636364.64181"    type="station" zh=""/>
+    <node id="0" name="zetong"    x="0"      y="0"     type="station" zh=""/>
+    <node id="4" name="jiaojiu"   x="-37"    y="101"    type="station" zh=""/>
+    <ndoe id="6" name="caolou"    x="-82"    y="125"    type="station" zh=""/>
+    <node id="5" name="shengyi"   x="-52"    y="145"    type="station" zh=""/>
+    <node id="1" name="zetong2"   x="-31"    y="0"       type="station" zh=""/>
+    <node id="3" name="jiaojiu2"  x="25.8"   y="48.7"    type="station" zh=""/>
+    <ndoe id="2" name="zetong3"   x="-45"    y="1.6"    type="station" zh=""/>
   </nodes>
-
   <lanes>
     <!-- do mapping some lane csv to livelane  -->
     <lane id="0" name = "lane_0"  from="8"    to="0"      type="lane"    length="0.0" time="" v="0.0" priority = "4" zh=""/>
@@ -24,20 +20,17 @@
     <lane id="5" name = "lane_4"  from="3,9"  to="5,7"    type="lane"    length="0.0" time="" v="0.0" priority = "1" zh=""/>
     <lane id="6" name = "lane_5"  from="4"    to="5,6"    type="lane"    length="0.0" time="" v="0.0" priority = "1" zh=""/>
   </lanes>
-
   <curves>
     <!-- do mapping some lane csv to livelane and livejuction  -->
-    <cross id="0" name = "lane_0"  from="0"  to="1"  type="cross"     length="0.0" time="" v="0.0"  priority = "4" zh=""/>
-    <cross id="1" name = "lane_1"  from="1"  to="2"  type="cross"     length="0.0" time="" v="0.0"  priority = "3" zh=""/>
-    <!-- 暂时未用,加入双向行驶支持则可以启用,根据from和to当作两条cross和lane  -->
-    <cross id="2" name = "lane_2"  from="3"  to="2"  type="cross"     length="0.0" time="" v="0.0"  priority = "1" zh=""/>
-    <cross id="3" name = "lane_3"  from="3"  to="5"  type="cross"     length="0.0" time="" v="0.0"  priority = "2" zh=""/>
-    <cross id="4" name = "lane_4"  from="5"  to="3"  type="cross"     length="0.0" time="" v="0.0"  priority = "1" zh=""/>
-    <cross id="5" name = "lane_5"  from="4"  to="5"  type="cross"     length="0.0" time="" v="0.0"  priority = "4" zh=""/>
-    <!-- 暂时未用,加入双向行驶支持则可以启用,根据from和to当作两条cross和lane  -->
-    <cross id="6" name = "lane_6"  from="5"  to="6"  type="cross"     length="0.0" time="" v="0.0"  priority = "3" zh=""/>
-    <cross id="7" name = "lane_7"  from="4"  to="6"  type="cross"     length="0.0" time="" v="0.0"  priority = "1" zh=""/>
-    <cross id="8" name = "lane_8"  from="6"  to="0"  type="cross"     length="0.0" time="" v="0.0"  priority = "2" zh=""/>
+      <cross id="0" name = "lane_0"  from="0"  to="1"  type="cross"     length="0.0" time="" v="0.0"  priority = "4" zh=""/>
+      <cross id="1" name = "lane_1"  from="1"  to="2"  type="cross"     length="0.0" time="" v="0.0"  priority = "3" zh=""/>
+      <cross id="2" name = "lane_2"  from="3"  to="2"  type="cross"     length="0.0" time="" v="0.0"  priority = "1" zh=""/>
+      <cross id="3" name = "lane_3"  from="3"  to="5"  type="cross"     length="0.0" time="" v="0.0"  priority = "2" zh=""/>
+      <cross id="4" name = "lane_4"  from="5"  to="3"  type="cross"     length="0.0" time="" v="0.0"  priority = "1" zh=""/>
+      <cross id="5" name = "lane_5"  from="4"  to="5"  type="cross"     length="0.0" time="" v="0.0"  priority = "4" zh=""/>
+      <cross id="6" name = "lane_6"  from="5"  to="6"  type="cross"     length="0.0" time="" v="0.0"  priority = "3" zh=""/>
+      <cross id="7" name = "lane_7"  from="4"  to="6"  type="cross"     length="0.0" time="" v="0.0"  priority = "1" zh=""/>
+      <cross id="8" name = "lane_8"  from="6"  to="0"  type="cross"     length="0.0" time="" v="0.0"  priority = "2" zh=""/>
+      <cross id="9" name = "lane_9"  from="3"  to="4"  type="cross"     length="0.0" time="" v="0.0"  priority = "2" zh=""/>
   </curves>
-
 </region>

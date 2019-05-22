@@ -4,7 +4,7 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.skywilling.cn.livemap.db.mapper.ParkMapper;
 import com.skywilling.cn.livemap.model.Park;
-import com.skywilling.cn.livemap.service.ParkService;;
+import com.skywilling.cn.livemap.service.ParkService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

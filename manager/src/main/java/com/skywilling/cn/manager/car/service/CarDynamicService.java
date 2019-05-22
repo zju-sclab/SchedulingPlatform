@@ -3,7 +3,7 @@ package com.skywilling.cn.manager.car.service;
 
 import com.github.pagehelper.PageInfo;
 import com.skywilling.cn.common.exception.CarNotVinException;
-import com.skywilling.cn.common.model.Point;
+import com.skywilling.cn.common.model.Position;
 import com.skywilling.cn.manager.car.enumeration.DriveType;
 import com.skywilling.cn.manager.car.model.CarDynamic;
 import com.skywilling.cn.manager.car.model.ModuleInfo;
@@ -21,7 +21,7 @@ public interface CarDynamicService {
 
   void update(CarDynamic carDynamic) throws CarNotVinException;
 
-  void updateLocation(String vin, Point point);
+  void updateLocation(String vin, Position point);
 
   void updateModuleStatus(String vin, List<ModuleInfo> moduleInfos);
 

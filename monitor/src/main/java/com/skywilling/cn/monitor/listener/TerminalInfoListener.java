@@ -3,14 +3,11 @@ package com.skywilling.cn.monitor.listener;
 import com.alibaba.fastjson.JSONObject;
 import com.skywilling.cn.common.enums.TypeField;
 import com.skywilling.cn.common.model.BasicCarResponse;
-import com.skywilling.cn.livemap.model.LiveMap;
-import com.skywilling.cn.livemap.service.MapService;
 import com.skywilling.cn.manager.car.model.AutonomousCarInfo;
-import com.skywilling.cn.manager.car.model.CarDynamic;
+
 import com.skywilling.cn.manager.car.service.AutoCarInfoService;
 import com.skywilling.cn.manager.car.service.CarDynamicService;
 import com.skywilling.cn.monitor.model.DTO.TerminalInfo;
-import org.mapstruct.Mapping;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -28,8 +25,6 @@ public class TerminalInfoListener extends BasicListener {
     ListenerMap listenerMap;
     @Autowired
     AutoCarInfoService autoCarInfoService;
-    @Autowired
-    MapService mapService;
     @Autowired
     CarDynamicService carDynamicService;
 
@@ -56,12 +51,7 @@ public class TerminalInfoListener extends BasicListener {
         car.setRosNodes(terminalInfo.getNodes());
         //异步存入redis
         autoCarInfoService.save(car);
-        CarDynamic carDynamic = carDynamicService.query(vin);
-        String parkName = carDynamic.getParkName();
-        LiveMap liveMap = mapService.getMap(parkName);
-        liveMap.getCarsSet().add(vin);
-        liveMap.getCarMap().put(vin,"");
-        //然后异步取redis数据判断，不然会变成同步操作，判断调度和处理心跳包同步阻塞
+        //然后异步取redis数据判断，不然会变成同步操作，判断reids数据再做调度
         return new BasicCarResponse(0, new Object());
     }
 }

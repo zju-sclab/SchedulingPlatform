@@ -1,5 +1,6 @@
 package com.skywilling.cn.scheduler.core.trajectoryalgorithm;
 
+import com.skywilling.cn.common.model.RoutePoint;
 import com.skywilling.cn.scheduler.model.*;
 import com.skywilling.cn.scheduler.service.TrjPlanService;
 import java.util.List;

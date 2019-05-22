@@ -1,8 +1,7 @@
 package com.skywilling.cn.scheduler.model;
 
+import com.skywilling.cn.common.model.Pose;
 import lombok.Data;
-
-import java.util.HashMap;
 
 @Data
 public class StaticStation {

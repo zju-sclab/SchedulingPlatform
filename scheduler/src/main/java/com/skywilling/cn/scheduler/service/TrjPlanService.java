@@ -1,7 +1,6 @@
 package com.skywilling.cn.scheduler.service;
 
-import com.alibaba.fastjson.JSONObject;
-import com.skywilling.cn.scheduler.model.RoutePoint;
+import com.skywilling.cn.common.model.RoutePoint;
 import com.skywilling.cn.scheduler.model.StaticStation;
 
 import java.util.List;

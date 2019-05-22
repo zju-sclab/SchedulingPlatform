@@ -1,14 +1,11 @@
 package com.skywilling.cn.scheduler.model;
 
-import com.skywilling.cn.common.model.LidarPoint;
+import com.skywilling.cn.common.model.Pose;
 import com.skywilling.cn.scheduler.common.utils;
 import lombok.Data;
-import lombok.Value;
-import org.springframework.util.CollectionUtils;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 @Data

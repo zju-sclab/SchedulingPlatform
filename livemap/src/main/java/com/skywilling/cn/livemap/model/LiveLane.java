@@ -1,10 +1,10 @@
 package com.skywilling.cn.livemap.model;
 
+import com.skywilling.cn.common.model.Node;
 import lombok.Data;
 
 import java.io.Serializable;
 import java.util.LinkedList;
-import java.util.concurrent.LinkedBlockingQueue;
 
 /**
  * 车道
@@ -18,13 +18,12 @@ public class LiveLane implements Serializable {
    private double v;
    private Node from;
    private Node to;
-   private int priority;
-   private String type;   //表示lane,curve
-   private String zh;   //中文名
+   private double priority;
+   private String type;
+   private String zh;
    /**
     * 动态添加车辆的出入信息，记录进入这个路的起点时间和离开这条路终点的时间信息
     */
    private LinkedList<CarArrivalslnfo> vehicles;
-
 
 }

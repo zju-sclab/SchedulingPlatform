@@ -1,8 +1,9 @@
 package com.skywilling.cn.manager.car.service;
 
 
-import com.skywilling.cn.common.model.Point;
+import com.skywilling.cn.common.model.Position;
 import com.skywilling.cn.manager.car.model.AutonomousCarInfo;
+import javafx.geometry.Pos;
 
 public interface CarGeoService {
 
@@ -15,7 +16,7 @@ public interface CarGeoService {
     /**
      * 获得离站点最近的车辆
      */
-    AutonomousCarInfo getNearestCar(Point point);
+    AutonomousCarInfo getNearestCar(Position point);
 
     /**
      * 获得同一车道的车辆

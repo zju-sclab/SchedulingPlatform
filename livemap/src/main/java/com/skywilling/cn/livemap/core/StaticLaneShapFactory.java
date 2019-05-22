@@ -1,6 +1,8 @@
 package com.skywilling.cn.livemap.core;
-
 import com.skywilling.cn.common.model.LidarPoint;
+import com.skywilling.cn.common.model.Orientation;
+import com.skywilling.cn.common.model.Position;
+import com.skywilling.cn.common.model.RoutePoint;
 import com.skywilling.cn.livemap.model.LiveLane;
 import com.skywilling.cn.livemap.model.LiveMap;
 import com.skywilling.cn.livemap.factory.Factory;
@@ -26,31 +28,23 @@ import java.util.List;
 @Service
 public class StaticLaneShapFactory implements Factory<Boolean> {
     private static final Logger LOG = LoggerFactory.getLogger(StaticLaneShapFactory.class);
-
     @Autowired
     ShapeMapService shapeMapService;
-
     @Autowired
     MapService mapService;
-
 
     private Document parse(String path) throws DocumentException, MalformedURLException {
         URL url = new URL(path);
         SAXReader saxReader = new SAXReader();
         return saxReader.read(url);
     }
-
     /**
      * 获取path目录下的所有文件
-     *
-     * @param path
-     * @return
      */
     public List<String> getAllFiles(String path)  {
         ArrayList<String> files = new ArrayList<>();
         File file = new File(path);
         File[] tempList = file.listFiles();
-
         for (int i = 0; i < tempList.length; i++) {
             if (tempList[i].isFile())
                 files.add(tempList[i].toString());
@@ -62,66 +56,15 @@ public class StaticLaneShapFactory implements Factory<Boolean> {
 
     /**
      * 读取所有的line和cross文件,返回路段数组
-     *
-     * @param files
-     */
-    public List<LaneShape> readALLFiles(List<String> files) {
-
-        List<LaneShape> laneShapes = new ArrayList<>();
-        BufferedReader br ;
-        String line;
-
-        List<LidarPoint> allLidarPoint = new ArrayList<>();
-        for (String filename : files) {
-            LaneShape laneShape = new LaneShape();
-
-            if (filename.startsWith("lane")) laneShape.setType("Lane");
-            else laneShape.setType("Curve");
-
-            try {
-                br = new BufferedReader(new FileReader(new File(filename)));
-
-                //laneShape.setId(laneShape.getType() + br.readLine()); //Id
-                laneShape.setLength(Double.valueOf(br.readLine()));//长度
-                laneShape.setPriority(Integer.valueOf(br.readLine()));//权重
-
-                while ((line = br.readLine()) != null) {
-                    String[] lineSplit = line.trim().split(",");
-                    LidarPoint lidarPoint = new LidarPoint(
-                            lineSplit[0], lineSplit[1], lineSplit[2],
-                            lineSplit[3], lineSplit[4], lineSplit[5], lineSplit[6]);
-                    allLidarPoint.add(lidarPoint);
-                }
-                laneShape.setPath(allLidarPoint);
-                laneShapes.add(laneShape);
-                br.close();
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
-        }
-        return laneShapes;
-    }
-
-
-    /**
-     * 读取所有的line和cross文件,返回路段数组
-     *
-     * @param files
      */
     public List<LaneShape> readCSVFiles(String parkName, List<String> files) {
 
         List<LaneShape> laneShapes = new ArrayList<>();
         BufferedReader br;
         String line;
-
         for (String filename : files) {
             LaneShape laneShape = new LaneShape();
-            /**
-             * 根据去除绝对路径后的文件名得到lane_id
-             */
+            //根据去除绝对路径后的文件名得到lane_id
             String filename_no_pre = filename.substring(filename.lastIndexOf("\\")+1);
             String lane_id = filename_no_pre.substring(0,1);
             String prefix = "lane_";
@@ -138,61 +81,30 @@ public class StaticLaneShapFactory implements Factory<Boolean> {
 
             try {
                 br = new BufferedReader(new FileReader(new File(filename)));
-                /**
-                 *  存储每一个文件的点云集合
-                 */
-                List<LidarPoint> allLidarPoint = new ArrayList<>();
+                List<RoutePoint> allLidarPoint = new ArrayList<>();
                 while ((line = br.readLine()) != null) {
                     String[] lineSplit = line.trim().split(",");
-                    /**
-                     * 写入一行标准的点云数据
-                     */
-                    LidarPoint lidarPoint = new LidarPoint(lineSplit[0], lineSplit[1], lineSplit[2], lineSplit[3], lineSplit[4], lineSplit[5], lineSplit[6]);
+                    Position position = new Position(lineSplit[0], lineSplit[1], lineSplit[2]);
+                    Orientation orientation = new Orientation(lineSplit[3], lineSplit[4], lineSplit[5], lineSplit[6]);
+                    RoutePoint lidarPoint = new RoutePoint();
+                    lidarPoint.setPosition(position);
+                    lidarPoint.setOrientation(orientation);
                     allLidarPoint.add(lidarPoint);
                 }
                 laneShape.setPath(allLidarPoint);
                 laneShapes.add(laneShape);
-                /**
-                 *  关闭流同时刷新缓冲区
-                 */
+                //关闭流同时刷新缓冲区
                 br.close();
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
             } catch (IOException e) {
-                e.printStackTrace();
+                LOG.warn(e.getMessage());
             }
-
         }
         return laneShapes;
     }
-
-
-/*
-    private List<Point> loadTrj(Element pathRoot) {
-        if (pathRoot == null) {
-            return null;
-        }
-        List<Element> points = pathRoot.elements();
-        ArrayList<Point> coordinates = new ArrayList<>(points.size());
-        for (Element e : points) {
-            Point p = new Point();
-            p.setX(Double.valueOf(e.attributeValue("x")));
-            p.setY(Double.valueOf(e.attributeValue("y")));
-            p.setZ(Double.valueOf(e.attributeValue("z")));
-            coordinates.add(p);
-        }
-        return coordinates;
-
-    }*/
-
     /**
-     * 根据Laneshape文件存放的文件夹目录加载Lane信息
-     * 不再使用xml构建语义地图，现在直接加载csv文件
-     * @param parkName
-     * @param dir
+     * 根据dir文件夹下存放的csv文件加载Lane信息
      */
     private void loadLaneShapes(String parkName, String dir)  {
-
         List<String> filesnames ;
         filesnames = getAllFiles(dir);
         List<LaneShape> laneShapes = readCSVFiles(parkName, filesnames);
@@ -201,15 +113,13 @@ public class StaticLaneShapFactory implements Factory<Boolean> {
             shapeMapService.save(laneShape);
         }
     }
-
     /**
      * 构建路段的语义信息
      */
     @Override
     public Boolean create(String parkName, String shapeUrl) {
-
-            //Document document = parse(url);
-            //String parkName = String.valueOf(document.getRootElement().attribute("id"));
+            //Document document = parse(Shapeurl);
+            //String parkName2 = String.valueOf(document.getRootElement().attribute("name"));
             loadLaneShapes(parkName, shapeUrl);
             return true;
     }

@@ -1,9 +1,8 @@
 package com.skywilling.cn.scheduler.core.routealgorithm;
 
-import com.skywilling.cn.livemap.model.LiveJunction;
 import com.skywilling.cn.livemap.model.LiveLane;
 import com.skywilling.cn.livemap.model.LiveMap;
-import com.skywilling.cn.livemap.model.Node;
+import com.skywilling.cn.common.model.Node;
 import com.skywilling.cn.scheduler.core.RouteLogic;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;

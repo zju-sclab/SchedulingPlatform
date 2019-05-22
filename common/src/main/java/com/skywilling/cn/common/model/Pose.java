@@ -5,11 +5,40 @@ import lombok.Data;
 import java.io.Serializable;
 
 @Data
-public class Pose implements Serializable {
+public class Pose implements Serializable,Cloneable {
 
-  private static final long serialVersionUID = -5769357827644001273L;
-  private Point point;
+  private Integer id;
+  private Position position;
   private Orientation orientation;
-  public Pose(){}
-  public Pose(Point point, Orientation orientation){ this.point = point; this.orientation = orientation;}
+
+  public Pose(){};
+  public void setPosition(Double x, Double y, Double z){
+    this.position = new Position(x,y,z);
+  }
+
+  public void setPosition(String x, String y, String z){
+    this.position = new Position(x,y,z);
+  }
+
+  public void setOrientation(Double x, Double y, Double z, Double w){
+    this.orientation = new Orientation(x,y,z,w);
+  }
+
+  public void setOrientation(String x, String y, String z, String w){
+    this.orientation = new Orientation(x,y,z,w);
+  }
+
+  @Override
+  public Object clone(){
+    Pose pc = null;
+    try{
+      pc = (Pose)super.clone();
+      pc.position = (Position)position.clone();
+      pc.orientation = (Orientation)orientation.clone();
+    } catch (CloneNotSupportedException e) {
+      e.printStackTrace();
+    }
+    return pc;
+  }
+
 }

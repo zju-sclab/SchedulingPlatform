@@ -1,23 +1,20 @@
 package com.skywilling.cn.web;
 
 import com.skywilling.cn.common.enums.TypeField;
+import com.skywilling.cn.common.model.Pose;
 import com.skywilling.cn.connection.infrastructure.client.ClientService;
 import com.skywilling.cn.connection.model.Packet;
 import com.skywilling.cn.connection.service.RequestDispatcher;
 import com.skywilling.cn.connection.service.RequestSender;
-import com.skywilling.cn.livemap.core.StaticMapFactory;
 import com.skywilling.cn.livemap.model.LiveLane;
 import com.skywilling.cn.livemap.model.LiveMap;
 import com.skywilling.cn.livemap.model.LiveStation;
 import com.skywilling.cn.livemap.model.Park;
-import com.skywilling.cn.common.model.Point;
 import com.skywilling.cn.livemap.service.MapService;
 import com.skywilling.cn.livemap.service.ParkService;
 import com.skywilling.cn.livemap.service.impl.ShapeServiceImpl;
 import com.skywilling.cn.manager.car.model.AutonomousCarInfo;
 import com.skywilling.cn.manager.car.model.CarDynamic;
-import com.skywilling.cn.common.model.Orientation;
-import com.skywilling.cn.common.model.Pose;
 import com.skywilling.cn.manager.car.repository.AutoCarInfoGeoAccessor;
 import com.skywilling.cn.manager.car.service.AutoCarInfoService;
 import com.skywilling.cn.manager.car.service.CarInfoService;
@@ -102,7 +99,7 @@ public class WebApplicationTests {
     public void mysqlTest() {
         String vin="00000000112417008";
         CarDynamic query = carDynamicService.query(vin);
-        System.out.println();
+        System.out.println(query);
     }
 
     /**
@@ -110,7 +107,9 @@ public class WebApplicationTests {
      */
     @Test
     public void parkQuerytest(){
-        parkService.queryByName("sss");
+        Park park1 = parkService.queryByName("sss");
+        Park park2 = parkService.query(14);
+        System.out.println(park2);
     }
 
     /**
@@ -119,10 +118,10 @@ public class WebApplicationTests {
     @Test
     public void parkAdd(){
         Park park = new Park();
-        park.setMapFileUrl("D:\\work\\Projects\\linxxx\\SchedulingPlatform\\doc\\Map\\map.xml");
+        park.setMapFileUrl("D:\\work\\Projects\\linxxx\\SchedulingPlatform\\doc\\Map\\map2.xml");
         park.setShapeFileUrl("D:\\work\\Projects\\linxxx\\SchedulingPlatform\\doc\\Map\\shape\\");
         park.setImgUrl("D:\\work\\Projects\\linxxx\\SchedulingPlatform\\doc\\Map");
-        park.setName("yuquanxiaoqu2");
+        park.setName("yuquanxiaoqu3");
         parkService.save(park);
     }
 
@@ -131,18 +130,17 @@ public class WebApplicationTests {
      */
     @Test
     public void updatepark(){
-        Park park = parkService.queryByName("yuquanxiaoq2");
-        park.setMapFileUrl("D:\\work\\Projects\\linxxx\\SchedulingPlatform\\doc\\Map\\map.xml");
+        Park park = parkService.queryByName("yuquanxiaoqu3");
+        park.setMapFileUrl("file:\\"+ "D:\\work\\Projects\\linxxx\\SchedulingPlatform\\doc\\Map\\map2.xml");
         park.setShapeFileUrl("D:\\work\\Projects\\linxxx\\SchedulingPlatform\\doc\\Map\\shape\\");
         park.setImgUrl("D:\\work\\Projects\\linxxx\\SchedulingPlatform\\doc\\Map");
+        System.out.println(park.getId());
         parkService.update(park);
     }
 
     @Test
     public void mapAddTest(){
-       /* LiveMap liveMap = new LiveMap();
-        liveMap.setParkName("xuanzhou");
-        mapService.addMap(liveMap);*/
+        List<LiveMap> liveMap = mapService.getAllMaps();
     }
 
     /**
@@ -150,18 +148,10 @@ public class WebApplicationTests {
      */
     @Test
     public void mapTest(){
-        String parkName = "yuquanxiaoqu2";
+        String parkName = "yuquanxiaoqu3";
         Park park = parkService.queryByName(parkName);
-        if (park != null&& park.getMapFileUrl() != null && park.getShapeFileUrl() != null) {
-            LiveMap m = mapService.getMap(parkName);
-            //创建Live Map
-            LiveMap liveMap = new StaticMapFactory().create(parkName, park.getMapFileUrl());
-            //创建map
-            mapService.addMap(liveMap);
-            //创建shape Map
-            shapeService.create(parkName);
-        }
-
+        LiveMap map = mapService.getMap(parkName);
+        System.out.println(map);
     }
 
     @Test

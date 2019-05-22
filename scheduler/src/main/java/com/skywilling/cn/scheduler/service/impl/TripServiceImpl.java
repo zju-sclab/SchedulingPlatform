@@ -6,8 +6,10 @@ import com.skywilling.cn.common.exception.CarNotExistsException;
 import com.skywilling.cn.common.exception.IllegalRideException;
 import com.skywilling.cn.common.exception.IllegalTaskException;
 import com.skywilling.cn.common.exception.park.NoAvailableActionFoundException;
+import com.skywilling.cn.common.model.Node;
+import com.skywilling.cn.common.model.RoutePoint;
 import com.skywilling.cn.livemap.model.LiveLane;
-import com.skywilling.cn.livemap.model.LiveStation;
+import com.skywilling.cn.livemap.service.MapService;
 import com.skywilling.cn.livemap.service.StationService;
 import com.skywilling.cn.manager.car.enumeration.CarState;
 import com.skywilling.cn.manager.car.model.AutonomousCarInfo;
@@ -16,13 +18,13 @@ import com.skywilling.cn.scheduler.common.TripStatus;
 import com.skywilling.cn.scheduler.core.TripCore;
 import com.skywilling.cn.scheduler.model.RideStatus;
 import com.skywilling.cn.scheduler.model.Route;
+import com.skywilling.cn.scheduler.model.StaticStation;
 import com.skywilling.cn.scheduler.model.Trip;
 import com.skywilling.cn.scheduler.repository.TripAccessor;
 import com.skywilling.cn.scheduler.service.RouteService;
 import com.skywilling.cn.scheduler.service.TripService;
-import com.skywilling.cn.scheduler.utils.FunctionUtils;
+import com.skywilling.cn.scheduler.service.TrjPlanService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -42,8 +44,10 @@ public class TripServiceImpl implements TripService {
     @Autowired
     StationService stationService;
     @Autowired
-    private MongoTemplate mongoTemplate;
+    MapService mapService;
 
+    @Autowired
+    TrjPlanService trjPlanService;
 
     @Override
     public boolean stopTrip(String tripId) {
@@ -83,7 +87,6 @@ public class TripServiceImpl implements TripService {
         /** 设置速度和加速度*/
         for (LiveLane lane : route.getLiveLanes()) {
                 lane.setV(velocity);
-                //lane.setAcc(acc);
         }
         /** 生成自动驾驶任务序列*/
         String tripId = tripCore.generateTripId(vin);
@@ -93,13 +96,62 @@ public class TripServiceImpl implements TripService {
             tripCore.submitTrip(trip);
             /**成功则返回TripId*/
             return trip.getId();
-        } catch (IllegalTaskException e) {
-            e.printStackTrace();
-        } catch (NoAvailableActionFoundException e) {
+        } catch (IllegalTaskException | NoAvailableActionFoundException e) {
             e.printStackTrace();
         }
         return null;
     }
+    /**
+     * 自动驾驶订单接口的核心模块
+     * 1.产生任务并设置任务参数
+     * 2.规划路径
+     */
+    @Override
+    public String submitTrjTrip(String vin,String parkName, String from, String goal) throws CarNotExistsException,
+            CarNotAliveException, IllegalRideException {
+
+        AutonomousCarInfo car = carInfoService.getAutoCarInfo(vin);
+        /**判断该车是否链接上云平台 */
+        if (car == null) {
+            throw new CarNotExistsException(vin);
+        }
+        /**判断该车是否链接丢失 */
+        if (car.getState() == CarState.LOST.getState()) {
+            throw new CarNotAliveException(vin);
+        }
+        /**判断该是否发起不合理订单 */
+        if (from == goal)
+            throw new IllegalRideException();
+        StaticStation outset = new StaticStation();
+        outset.setPoint(car.getPose());
+        StaticStation destination = new StaticStation();
+        Node des_node = mapService.getMap(parkName).getNameToNodeMap().get(goal);
+        destination.setPoint(des_node.getX(),des_node.getY(),0,0,0,0,0);
+        /** 生成自动驾驶任务序列*/
+        List<RoutePoint> routePoints = trjPlanService.createTrajectory(outset,destination);
+        //todo:接口
+        List<String> lanes = new ArrayList<>();
+                //trjPlanService.createTrjSection(outset,destination);
+        Route route = createRouteByGlobalPlan(lanes,from,goal,parkName);
+        String tripId = tripCore.generateTripId(vin);
+        Trip trip = new Trip(vin, tripId, route);
+        try {
+            /**提交自动任务序列*/
+            tripCore.submitTrjTrip(trip,routePoints);
+            /**成功则返回TripId*/
+            return trip.getId();
+        } catch (IllegalTaskException | NoAvailableActionFoundException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public Route createRouteByGlobalPlan(List<String> lanes, String from,String to,String parkName){
+        Route route = new Route();
+
+        return route;
+    }
+
 
     /**
      * 根据全局路径重新规划自动驾驶任务序列

@@ -2,7 +2,7 @@ package com.skywilling.cn.scheduler.core;
 
 import com.alibaba.druid.util.StringUtils;
 import com.skywilling.cn.livemap.model.LiveLane;
-import com.skywilling.cn.livemap.model.Node;
+import com.skywilling.cn.common.model.Node;
 import com.skywilling.cn.scheduler.model.Route;
 import lombok.Data;
 import org.slf4j.Logger;

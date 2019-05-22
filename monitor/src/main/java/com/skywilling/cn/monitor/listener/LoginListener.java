@@ -3,8 +3,6 @@ package com.skywilling.cn.monitor.listener;
 import com.alibaba.fastjson.JSONObject;
 import com.skywilling.cn.common.enums.TypeField;
 import com.skywilling.cn.common.model.BasicCarResponse;
-import com.skywilling.cn.livemap.model.LiveMap;
-import com.skywilling.cn.livemap.service.MapService;
 import com.skywilling.cn.manager.car.enumeration.CarState;
 import com.skywilling.cn.manager.car.model.AutonomousCarInfo;
 import com.skywilling.cn.manager.car.model.CarDynamic;
@@ -25,8 +23,6 @@ public class LoginListener extends BasicListener {
     @Autowired
     AutoCarInfoService autoCarInfoService;
     @Autowired
-    MapService mapService;
-    @Autowired
     CarDynamicService carDynamicService;
 
     @Override
@@ -42,12 +38,12 @@ public class LoginListener extends BasicListener {
         RunInfo runInfo = JSONObject.parseObject(body, RunInfo.class);
         car.setTripId(runInfo.getRunId());
         autoCarInfoService.save(car);
-        CarDynamic carDynamic = carDynamicService.query(vin);
+/*        CarDynamic carDynamic = carDynamicService.query(vin);
         String parkName = carDynamic.getParkName();
         LiveMap liveMap = mapService.getMap(parkName);
         liveMap.getCarsSet().add(vin);
-        /**车辆刚登陆时的位置存储为空值 */
-        liveMap.getCarMap().put(vin,"");
+        *//**车辆刚登陆时的位置存储为空值 *//*
+        liveMap.getCarMap().put(vin,"");*/
         BasicCarResponse basicCarResponse = new BasicCarResponse(0, new Object());
         return basicCarResponse;
     }

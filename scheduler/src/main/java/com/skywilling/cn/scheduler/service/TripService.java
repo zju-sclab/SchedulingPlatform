@@ -31,6 +31,9 @@ public interface TripService {
     String submitTrip(String vin, String parkName, String from, String goal, double velocity, double acceleration)
             throws CarNotExistsException, CarNotAliveException, IllegalRideException;
 
+    String submitTrjTrip(String vin, String parkName, String from, String goal) throws CarNotExistsException,
+            CarNotAliveException, IllegalRideException;
+
     Trip updateRoute(AutonomousCarInfo carInfo, Route route);
 
     Trip get(String id);

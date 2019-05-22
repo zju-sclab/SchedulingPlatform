@@ -2,7 +2,7 @@ package com.skywilling.cn.manager.car.service;
 
 
 
-import com.skywilling.cn.common.model.Point;
+import com.skywilling.cn.common.model.Position;
 import com.skywilling.cn.manager.car.model.AutonomousCarInfo;
 import com.skywilling.cn.manager.car.model.CarDynamic;
 import com.skywilling.cn.manager.car.model.ModuleInfo;
@@ -11,7 +11,7 @@ import java.util.List;
 
 public interface CarInfoService {
 
-  Point getPosition(String vin);
+  Position getPosition(String vin);
 
   boolean isConnected(String vin);
 

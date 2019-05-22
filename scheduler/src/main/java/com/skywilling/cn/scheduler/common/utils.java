@@ -1,11 +1,10 @@
 package com.skywilling.cn.scheduler.common;
 
-import com.skywilling.cn.scheduler.model.Orientation;
-import com.skywilling.cn.scheduler.model.Position;
+import com.skywilling.cn.common.model.Orientation;
+import com.skywilling.cn.common.model.Position;
 
 import java.io.*;
 import java.util.List;
-import java.util.Queue;
 
 
 public class utils {

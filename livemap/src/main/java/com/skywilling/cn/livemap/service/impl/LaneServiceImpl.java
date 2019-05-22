@@ -22,14 +22,14 @@ public class LaneServiceImpl implements LaneService {
 
 
     @Override
-    public LiveLane getLane(String parkName, String laneName) {
-        return mapService.getMap(parkName).getLaneMap().get(laneName);
+    public LiveLane getLane(String parkName, String laneId) {
+        return mapService.getMap(parkName).getLaneMap().get(laneId);
     }
 
     @Override
     public void addLane(String parkName, LiveLane liveLane) {
         if (mapService.getMap(parkName) != null) {
-            mapService.getMap(parkName).getLaneMap().putIfAbsent(liveLane.getName(), liveLane);
+            mapService.getMap(parkName).getLaneMap().put(String.valueOf(liveLane.getId()), liveLane);
         }
     }
 
@@ -55,8 +55,8 @@ public class LaneServiceImpl implements LaneService {
 
     @Override
     public void setWeight(String parkName, String laneName, double weight) {
-        //LiveLane liveLane = this.getLane(parkName, parkName);
-        //liveLane.setWeight(weight);
+        LiveLane liveLane = this.getLane(parkName, parkName);
+        liveLane.setPriority(weight);
     }
 
 

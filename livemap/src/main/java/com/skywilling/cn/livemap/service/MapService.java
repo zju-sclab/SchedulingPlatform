@@ -11,5 +11,7 @@ import java.util.List;
 public interface MapService {
     LiveMap getMap(String parkName);
     void addMap(LiveMap map);
-    public List<LiveMap> getAllMaps();
+    List<LiveMap> getAllMaps();
+    LiveMap createMapByLidarMap(String parkName);
+    LiveMap createMapByCycleBus(String parkName);
 }

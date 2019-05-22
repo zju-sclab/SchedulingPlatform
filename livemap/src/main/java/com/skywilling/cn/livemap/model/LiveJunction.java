@@ -1,5 +1,6 @@
 package com.skywilling.cn.livemap.model;
 
+import com.skywilling.cn.common.model.Node;
 import lombok.Data;
 
 import java.io.Serializable;

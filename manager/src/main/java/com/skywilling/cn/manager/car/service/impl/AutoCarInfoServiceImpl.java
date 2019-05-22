@@ -2,11 +2,11 @@ package com.skywilling.cn.manager.car.service.impl;
 
 
 import com.skywilling.cn.common.exception.CarNotExistsException;
-import com.skywilling.cn.common.model.Point;
+import com.skywilling.cn.common.model.Pose;
+import com.skywilling.cn.common.model.Position;
 import com.skywilling.cn.manager.car.enumeration.CarState;
 import com.skywilling.cn.manager.car.model.AutonomousCarInfo;
 import com.skywilling.cn.manager.car.model.ModuleInfo;
-import com.skywilling.cn.common.model.Pose;
 import com.skywilling.cn.manager.car.repository.AutoCarInfoAccessor;
 import com.skywilling.cn.manager.car.repository.AutoCarInfoGeoAccessor;
 import com.skywilling.cn.manager.car.service.AutoCarInfoService;
@@ -31,14 +31,14 @@ public class AutoCarInfoServiceImpl implements AutoCarInfoService {
   }
 
   @Override
-  public Point getPosition(String vin) {
+  public Position getPosition(String vin) {
     AutonomousCarInfo car = autoCarInfoAccessor.get(vin);
     if (car == null) {
       return null;
     }
     Pose pose = car.getPose();
     if (pose != null) {
-      return pose.getPoint();
+      return pose.getPosition();
     }
     return null;
   }

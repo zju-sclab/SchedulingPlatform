@@ -1,9 +1,7 @@
 package com.skywilling.cn.livemap.model;
 
-import com.skywilling.cn.common.enums.DriveMethod;
-import com.skywilling.cn.common.model.LidarPoint;
+import com.skywilling.cn.common.model.RoutePoint;
 import lombok.Data;
-
 import java.io.Serializable;
 import java.util.List;
 
@@ -15,9 +13,9 @@ public class LaneShape implements Serializable {
     private String            name;
     private String            parkName;
     private Double            length;
-    private String            type;    //Line或者Cross
-    private int               priority;
-    private List<LidarPoint>  path;
+    private String            type;
+    private double            priority;
+    private List<RoutePoint>  path;
     private String            fromId;
     private String            toId;
     private double             v;

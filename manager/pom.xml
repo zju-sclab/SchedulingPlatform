@@ -8,21 +8,17 @@
         <version>0.0.1-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
-
     <artifactId>manager</artifactId>
 
     <dependencies>
+        <!--数据管理模块只负责存储数据，因此只依赖公共组件模块 -->
         <dependency>
             <groupId>com.skywilling.cn</groupId>
             <artifactId>common</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
-        <dependency>
-            <groupId>com.skywilling.cn</groupId>
-            <artifactId>livemap</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-        </dependency>
     </dependencies>
+    <!--配置build -->
     <build>
         <resources>
             <resource>

@@ -48,6 +48,6 @@ public class CarPositionServiceImpl implements CarPositionService {
      */
     @Scheduled(fixedRate = 1000)
     public void updateLiveMapByCarInfo(){
-
+         //Todo:刷新车辆在liveMap中记录的位置
     }
 }

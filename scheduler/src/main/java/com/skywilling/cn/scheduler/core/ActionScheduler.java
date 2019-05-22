@@ -2,11 +2,13 @@ package com.skywilling.cn.scheduler.core;
 
 import com.skywilling.cn.common.exception.park.NoAvailableActionFoundException;
 import com.skywilling.cn.common.model.LidarPoint;
+import com.skywilling.cn.common.model.Node;
 import com.skywilling.cn.livemap.model.*;
 import com.skywilling.cn.livemap.service.MapService;
 import com.skywilling.cn.livemap.service.ShapeMapService;
 import com.skywilling.cn.manager.car.model.Action;
 import com.skywilling.cn.scheduler.model.Route;
+import com.skywilling.cn.common.model.RoutePoint;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,7 +24,7 @@ public class ActionScheduler {
     MapService mapService;
 
     /**
-     * 规划A--》B的路径
+     * 组装A-->B的路径的轨迹点
      */
     public List<Action> convertToAction(String parkName, Route route)throws NoAvailableActionFoundException  {
 
@@ -34,7 +36,7 @@ public class ActionScheduler {
 
         for (LiveLane lane: liveLanes) {
             LaneShape laneShape = shapeMapService.query(parkName,lane.getName());
-            List<LidarPoint> lidarPoints = laneShape.getPath();
+            List<RoutePoint> lidarPoints = laneShape.getPath();
             Action action = new Action();
             if (lidarPoints == null|| lidarPoints.size() == 0) {
                 throw new NoAvailableActionFoundException();
@@ -51,6 +53,27 @@ public class ActionScheduler {
             actions.add(action);
         }
         return actions;
+    }
+    /**
+     * 组装A-->B的路径的轨迹点
+     */
+    public Action convertToActionByLidarPoints(String parkName, Route route, List<RoutePoint>routePoints)
+                        throws NoAvailableActionFoundException  {
+
+        LiveMap liveMap =  mapService.getMap(parkName);
+        if (liveMap == null) return null;
+
+        Action action = new Action();
+        if (routePoints == null|| routePoints.size() == 0) {
+            throw new NoAvailableActionFoundException();
+        }
+        Node from = route.getFrom();
+        Node to = route.getTo();
+        action.setOutset(from);
+        action.setGoal(to);
+        action.setPoints(routePoints);
+        action.setType("LIDAR");
+        return action;
     }
 
 }

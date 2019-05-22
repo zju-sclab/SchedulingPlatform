@@ -4,7 +4,8 @@ import com.github.pagehelper.PageHelper;
 
 import com.github.pagehelper.PageInfo;
 import com.skywilling.cn.common.exception.CarNotVinException;
-import com.skywilling.cn.common.model.Point;
+
+import com.skywilling.cn.common.model.Position;
 import com.skywilling.cn.manager.car.enumeration.DriveType;
 import com.skywilling.cn.manager.car.mapper.CarDynamicMapper;
 import com.skywilling.cn.manager.car.model.CarDynamic;
@@ -53,7 +54,7 @@ public class CarDynamicServiceImpl implements CarDynamicService {
   }
 
   @Override
-  public void updateLocation(String vin, Point point) {
+  public void updateLocation(String vin, Position point) {
     CarDynamic carDynamic = new CarDynamic();
     carDynamic.setVin(vin);
     carDynamic.setLongitude(point.getX());

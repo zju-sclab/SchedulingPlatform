@@ -1,5 +1,6 @@
 package com.skywilling.cn.livemap.core;
 
+import com.skywilling.cn.common.model.Node;
 import com.skywilling.cn.livemap.factory.Factory;
 import com.skywilling.cn.livemap.model.*;
 
@@ -11,10 +12,8 @@ import org.dom4j.io.SAXReader;
 import org.springframework.stereotype.Service;
 
 import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Set;
 
 @Service
 public class StaticMapFactory implements Factory<LiveMap> {

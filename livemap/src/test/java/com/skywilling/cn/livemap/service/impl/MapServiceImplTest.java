@@ -36,6 +36,5 @@ public class MapServiceImplTest {
         String name = "xuanzhou";
         LiveMap liveMap = new LiveMap();
         liveMap.setParkName("xuanzhou");
-
     }
 }

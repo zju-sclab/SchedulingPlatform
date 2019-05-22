@@ -1,12 +1,10 @@
 package com.skywilling.cn.scheduler.service.impl;
 
 import com.skywilling.cn.common.model.Coordinate;
-import com.skywilling.cn.common.utils.GPSUtils;
-import com.skywilling.cn.livemap.db.mapper.ParkMapper;
+import com.skywilling.cn.common.model.Node;
 import com.skywilling.cn.livemap.model.*;
 import com.skywilling.cn.livemap.service.MapService;
 import com.skywilling.cn.livemap.service.StationService;
-import com.skywilling.cn.livemap.service.impl.ParkServiceImpl;
 import com.skywilling.cn.manager.car.model.AutonomousCarInfo;
 import com.skywilling.cn.scheduler.core.RouteLogic;
 import com.skywilling.cn.scheduler.model.Route;
@@ -15,13 +13,10 @@ import com.skywilling.cn.scheduler.service.RouteService;
 import com.skywilling.cn.scheduler.service.TripService;
 import com.skywilling.cn.scheduler.utils.FunctionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.mongodb.core.geo.GeoJsonPoint;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 
 @Service
 public class RouteServiceImpl implements RouteService {
@@ -89,7 +84,6 @@ public class RouteServiceImpl implements RouteService {
      *  找到距离车辆的最近的站点位置
      */
     public LiveStation positioningStation(Route route, Coordinate coordinate) {
-        //ShapeContainer shapeContainer = shapeContainerService.query(route.getParkName());
         LiveMap liveMap = mapService.getMap(route.getParkName());
         if (liveMap == null) return null;
 
@@ -118,7 +112,7 @@ public class RouteServiceImpl implements RouteService {
         String from = carInfo.getStation();
         Trip oldTrip = tripService.get(carInfo.getTripId());
         Route oldRoute = oldTrip.getRoute();
-        String to = oldRoute.getTo().toStation().getName();
+        String to = oldRoute.getTo().getName();
         String parkName = oldTrip.getParkName();
         if(from != to)
             return this.navigate(parkName, from, to);

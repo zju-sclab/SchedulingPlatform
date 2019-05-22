@@ -6,10 +6,10 @@ import com.skywilling.cn.common.enums.ResultType;
 import com.skywilling.cn.common.exception.CarNotVinException;
 import com.skywilling.cn.common.model.BasicResponse;
 
+import com.skywilling.cn.common.model.Position;
 import com.skywilling.cn.connection.infrastructure.client.ClientService;
-import com.skywilling.cn.livemap.model.Node;
+import com.skywilling.cn.common.model.Node;
 import com.skywilling.cn.livemap.model.Park;
-import com.skywilling.cn.common.model.Point;
 import com.skywilling.cn.livemap.service.ParkService;
 import com.skywilling.cn.manager.car.enumeration.*;
 import com.skywilling.cn.manager.car.model.CarDynamic;
@@ -225,8 +225,8 @@ public class CarInfoController {
               if (park == null) {
                 return BasicResponse.buildResponse(ResultType.FAILED, "the car is not bind to park");
               }
-              Point p = carInfoService.getPosition(vin);
-              return BasicResponse.buildResponse(ResultType.SUCCESS, p);
+              Position pos = carInfoService.getPosition(vin);
+              return BasicResponse.buildResponse(ResultType.SUCCESS, pos);
            } catch (NullPointerException e) {
              return BasicResponse.buildResponse(ResultType.FAILED, null);
         }
@@ -244,7 +244,7 @@ public class CarInfoController {
             carView.setVin(vin);
             carView.setParkName(park.getName());
             carView.setState(carInfoService.getState(vin));
-            Point point = carInfoService.getPosition(vin);
+            Position point = carInfoService.getPosition(vin);
             Node node = new Node();
             node.setX(point.getX());
             node.setY(point.getY());

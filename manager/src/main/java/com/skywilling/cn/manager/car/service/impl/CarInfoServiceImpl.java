@@ -2,7 +2,7 @@ package com.skywilling.cn.manager.car.service.impl;
 
 
 import com.skywilling.cn.common.exception.CarNotExistsException;
-import com.skywilling.cn.common.model.Point;
+import com.skywilling.cn.common.model.Position;
 import com.skywilling.cn.manager.car.model.AutonomousCarInfo;
 import com.skywilling.cn.manager.car.model.CarDynamic;
 import com.skywilling.cn.manager.car.model.ModuleInfo;
@@ -25,8 +25,8 @@ public class CarInfoServiceImpl implements CarInfoService {
 
 
   @Override
-  public Point getPosition(String vin) {
-    Point point = autoCarInfoService.getPosition(vin);
+  public Position getPosition(String vin) {
+    Position point = autoCarInfoService.getPosition(vin);
     if (point == null) {
       CarDynamic carDynamic = carDynamicService.query(vin);
       point.setStatus(carDynamic.getIsValid());

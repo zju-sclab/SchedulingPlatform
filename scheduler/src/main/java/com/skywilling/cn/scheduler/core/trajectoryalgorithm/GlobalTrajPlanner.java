@@ -1,19 +1,18 @@
 package com.skywilling.cn.scheduler.core.trajectoryalgorithm;
 
-import com.skywilling.cn.livemap.service.StationService;
+import com.skywilling.cn.common.model.Pose;
+import com.skywilling.cn.common.model.Position;
+import com.skywilling.cn.common.model.RoutePoint;
 import com.skywilling.cn.scheduler.common.EulerAngle;
 import com.skywilling.cn.scheduler.common.utils;
 import com.skywilling.cn.scheduler.core.trajectoryalgorithm.config.GlobalTrajPlannerConfig;
 import com.skywilling.cn.scheduler.model.*;
 import com.skywilling.cn.scheduler.service.TrjPlanService;
 import lombok.Data;
-import org.springframework.core.io.ClassPathResource;
-import org.springframework.jdbc.support.incrementer.SybaseAnywhereMaxValueIncrementer;
+import org.springframework.stereotype.Service;
 
-import java.awt.*;
 import java.io.*;
 import java.util.*;
-import java.util.List;
 
 @Data
 class NearestPose{
@@ -28,10 +27,10 @@ class NearestPose{
     }
 }
 
-
 @Data
+@Service
 public class GlobalTrajPlanner implements TrjPlanService {
-    private String trajFilePath;
+    private String trajFilePath = "yuquanxiaoqu3";
     private double weight_data;
     private double weight_smooth;
     private double tolerance;
@@ -44,8 +43,10 @@ public class GlobalTrajPlanner implements TrjPlanService {
     private double thresh_start_length;  // thresh长距离,用于截取lane_front
     private double thresh_end_length;
 
+    private void setTrjPathFile(String parkName){
+        GlobalTrajPlannerConfig.setTrajFilePath(parkName);
+    }
     private void parseConfig(){
-        GlobalTrajPlannerConfig.setTrajFilePath("path_file_Yunlecar");
         trajFilePath = GlobalTrajPlannerConfig.trajFilePath;
         weight_data = GlobalTrajPlannerConfig.weight_data;
         weight_smooth = GlobalTrajPlannerConfig.weight_smooth;
