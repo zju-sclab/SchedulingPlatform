@@ -935,17 +935,18 @@ public class GlobalTrajPlanner implements TrjPlanService {
   private List<Double> calcTime(
       List<Integer> result, List<Lane> temp_Lane_vec, List<Cross> temp_Cross_vec) {
     List<Double> res = new ArrayList<>();
-    res.add(start_length / lane_speed_limit);
+    res.add(thresh_start_length / cross_speed_limit);
     for (int i = 1; i < result.size() - 1; i++) {
       int index = result.get(i);
       if (i % 2 == 1) {
         // lane
         res.add(temp_Lane_vec.get(index).getLength() / lane_speed_limit);
       } else {
+        // cross
         res.add(temp_Cross_vec.get(index).getLength() / cross_speed_limit);
       }
     }
-    res.add(end_length / cross_speed_limit);
+    res.add(thresh_end_length / cross_speed_limit);
     return res;
   }
 
