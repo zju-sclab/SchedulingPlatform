@@ -662,6 +662,7 @@ public class GlobalTrajPlanner implements TrjPlanService {
             for(int i=0;i<=front_index;i++){ // 起步直线处理
                 RoutePoint temp = new RoutePoint();
                 temp.setIs_lane(0);
+                temp.setCross_id(8888);
                 temp.setSpeed_limit(0.5);
                 temp.setPosition(new Position(lane_front.get(i).getPosition().getX()+diff_x,lane_front.get(i).getPosition().getY()+diff_y,0));
                 in_front.add(temp);
@@ -676,6 +677,7 @@ public class GlobalTrajPlanner implements TrjPlanService {
             for(int i=0;i<cnt_front;i++){ // 起步弯道处理
                 RoutePoint temp = new RoutePoint();
                 temp.setIs_lane(0);
+                temp.setCross_id(8888);  // 8888代表起步阶段,出站
                 temp.setSpeed_limit(0.5);
                 temp.setPosition(new Position(s.getPosition().getX()+i*dx,s.getPosition().getY()+i*dy,0));
                 in_front.add(temp);
@@ -713,6 +715,7 @@ public class GlobalTrajPlanner implements TrjPlanService {
             for(int i=lane_end.size() - 1;i>end_index;i--){
                 RoutePoint temp = new RoutePoint();
                 temp.setIs_lane(0);
+                temp.setCross_id(9999); // 9999代表结束阶段,入站
                 temp.setSpeed_limit(0.5);
                 temp.setPosition(new Position(lane_end.get(i).getPosition().getX()+diff_x, lane_end.get(i).getPosition().getY()+diff_y,0));
                 in_end.add(temp);
@@ -727,6 +730,7 @@ public class GlobalTrajPlanner implements TrjPlanService {
             for(int i=cnt_end;i>0;i--){
                 RoutePoint temp = new RoutePoint();
                 temp.setIs_lane(0);
+                temp.setCross_id(9999);
                 temp.setSpeed_limit(0.5);
                 temp.setPosition(new Position(e.getPosition().getX() - (cnt_end-i)*dx,e.getPosition().getY()-(cnt_end-i)*dy,0));
                 in_end.add(temp);
