@@ -14,6 +14,7 @@ import com.skywilling.cn.manager.car.service.CarDynamicService;
 import com.skywilling.cn.scheduler.service.CrossNodeListen;
 import com.skywilling.cn.scheduler.service.ScheduleService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
@@ -46,7 +47,7 @@ public class ScheduleServiceImpl implements ScheduleService {
     CrossNodeListen crossNodeListen;
 
     /** 调度bean注入完成后在后台持续检测所有车端上传信息通道，检测所有车辆的实时位置，根据规则进行调度规划 */
-    @PostConstruct
+    @Scheduled(fixedRate = )
     @Override
     public void checkAllClient() {
         List<LiveMap> maps = mapService.getAllMaps();
