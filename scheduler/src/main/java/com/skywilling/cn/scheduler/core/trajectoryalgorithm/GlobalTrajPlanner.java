@@ -978,6 +978,7 @@ public class GlobalTrajPlanner implements TrjPlanService {
     List<RoutePoint> result_path = convert_result_to_path(result, temp_Lane_vec, temp_Cross_vec);
 
     List<String> path = calcPath(result);
+
     List<Double> path_time = calcTime(result, temp_Lane_vec, temp_Cross_vec);
 
     List<RoutePoint> traj = smooth_path(result_path, start, target);
