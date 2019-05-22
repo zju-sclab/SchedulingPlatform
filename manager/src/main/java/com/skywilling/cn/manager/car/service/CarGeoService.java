@@ -3,7 +3,6 @@ package com.skywilling.cn.manager.car.service;
 
 import com.skywilling.cn.common.model.Position;
 import com.skywilling.cn.manager.car.model.AutonomousCarInfo;
-import javafx.geometry.Pos;
 
 public interface CarGeoService {
 

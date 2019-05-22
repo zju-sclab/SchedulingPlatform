@@ -8,6 +8,8 @@ import com.skywilling.cn.common.exception.IllegalTaskException;
 import com.skywilling.cn.common.exception.park.NoAvailableActionFoundException;
 import com.skywilling.cn.common.model.Node;
 import com.skywilling.cn.common.model.RoutePoint;
+import com.skywilling.cn.common.model.Triple;
+import com.skywilling.cn.common.model.Tuple;
 import com.skywilling.cn.livemap.model.LiveLane;
 import com.skywilling.cn.livemap.service.MapService;
 import com.skywilling.cn.livemap.service.StationService;
@@ -128,7 +130,8 @@ public class TripServiceImpl implements TripService {
         Node des_node = mapService.getMap(parkName).getNameToNodeMap().get(goal);
         destination.setPoint(des_node.getX(),des_node.getY(),0,0,0,0,0);
         /** 生成自动驾驶任务序列*/
-        List<RoutePoint> routePoints = trjPlanService.createTrajectory(outset,destination);
+        Triple<List<String>, List<Double>, List<RoutePoint>> res = trjPlanService.createTrajectory(outset,destination);
+        List<RoutePoint> routePoints = res.third;
         //todo:接口
         List<String> lanes = new ArrayList<>();
                 //trjPlanService.createTrjSection(outset,destination);

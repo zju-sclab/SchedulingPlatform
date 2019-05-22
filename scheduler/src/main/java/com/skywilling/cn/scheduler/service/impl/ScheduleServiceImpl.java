@@ -47,7 +47,7 @@ public class ScheduleServiceImpl implements ScheduleService {
     CrossNodeListen crossNodeListen;
 
     /** 调度bean注入完成后在后台持续检测所有车端上传信息通道，检测所有车辆的实时位置，根据规则进行调度规划 */
-    @Scheduled(fixedRate = )
+    @Scheduled(fixedRate = 100)
     @Override
     public void checkAllClient() {
         List<LiveMap> maps = mapService.getAllMaps();

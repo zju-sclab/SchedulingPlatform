@@ -1,7 +1,7 @@
 package com.skywilling.cn.scheduler.core.trajectoryalgorithm.config;
 
 public class GlobalTrajPlannerConfig {
-    public static String trajFilePath = "D:\\work\\Projects\\linxxx\\SchedulingPlatform\\doc\\Map\\lanes\\";
+    public static String trajFilePath = "/home/sin/catkin_ws/rc_car/src/smartcar/planning/global_planning/";
     public static double weight_data = 0.47;
     public static double weight_smooth = 0.14;
     public static double tolerance = 0.17;
