@@ -953,7 +953,13 @@ public class GlobalTrajPlanner implements TrjPlanService {
   public GlobalTrajPlanner() {
     Lane_vec = new ArrayList<>();
     Cross_vec = new ArrayList<>();
-    setTrjPathFile("yuquanxiaoqu3");//path_file_Yunlecar
+    String os = System.getProperty("os.name");
+    String file_dir;
+    if(os.toLowerCase().startsWith("win"))
+       file_dir = "yuquanxiaoqu3";
+    else
+       file_dir = "path_file_Yunlecar";
+    setTrajFilePath(file_dir);
     parseConfig();
     constract_Lane_Cross_vec();
     Collections.sort(Lane_vec);
