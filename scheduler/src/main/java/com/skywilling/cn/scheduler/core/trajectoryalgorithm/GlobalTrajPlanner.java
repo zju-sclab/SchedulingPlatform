@@ -31,7 +31,7 @@ class NearestPose {
 @Data
 @Service
 public class GlobalTrajPlanner implements TrjPlanService {
-  private String trajFilePath = "yuquanxiaoqu3";
+  private String trajFilePath = "";
   private double weight_data;
   private double weight_smooth;
   private double tolerance;
@@ -89,10 +89,10 @@ public class GlobalTrajPlanner implements TrjPlanService {
       }
     }
   }
-
+  //Todo:linux or windows  file.split()  \\\\ windows  / linux
   private void readFile(String file)
       throws IOException { // throws使得在以下都不用写try catch IO错误相关的处理//注意必须在上一级catch掉
-    String[] splist = file.split("/"); // String[] 定长,不可变   List<String> 不定长
+    String[] splist = file.split("[\\\\,/]"); // String[] 定长,不可变   List<String> 不定长
     String filename = splist[splist.length - 1].split("\\.")[0]; // split["."]得不到结果,需要使用转义
     File csv = new File(file);
     csv.setReadable(true);
@@ -953,7 +953,7 @@ public class GlobalTrajPlanner implements TrjPlanService {
   public GlobalTrajPlanner() {
     Lane_vec = new ArrayList<>();
     Cross_vec = new ArrayList<>();
-    setTrjPathFile("path_file_Yunlecar");
+    setTrjPathFile("yuquanxiaoqu3");//path_file_Yunlecar
     parseConfig();
     constract_Lane_Cross_vec();
     Collections.sort(Lane_vec);

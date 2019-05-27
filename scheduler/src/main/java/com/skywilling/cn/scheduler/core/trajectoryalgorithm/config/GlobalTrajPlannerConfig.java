@@ -1,7 +1,17 @@
 package com.skywilling.cn.scheduler.core.trajectoryalgorithm.config;
 
 public class GlobalTrajPlannerConfig {
-    public static String trajFilePath = "/home/sin/catkin_ws/rc_car/src/smartcar/planning/global_planning/";
+    public static String linux_traj_file_path = "/home/sin/catkin_ws/rc_car/src/smartcar/planning/global_planning/";
+    public static String windows_traj_file_path = "D:\\work\\Projects\\linxxx\\SchedulingPlatform\\doc\\Map\\lanes\\";
+    public static String trajFilePath = "";
+    static{
+        String os = System.getProperty("os.name");
+        if(os.toLowerCase().startsWith("win")){
+           trajFilePath = windows_traj_file_path;
+        }else{
+            trajFilePath = linux_traj_file_path;
+        }
+    }
     public static double weight_data = 0.47;
     public static double weight_smooth = 0.14;
     public static double tolerance = 0.17;
@@ -13,6 +23,6 @@ public class GlobalTrajPlannerConfig {
     public static double thresh_end_length = 8.0;
 
     public static void setTrajFilePath(String parkName){
-        trajFilePath = trajFilePath + parkName + '/';
+        trajFilePath = trajFilePath + parkName +"\\";
     }
 }
