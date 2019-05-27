@@ -45,10 +45,10 @@ public class AutoCarInfoServiceImpl implements AutoCarInfoService {
 
 
   @Override
-  public boolean isConnected(String vin) throws CarNotExistsException {
+  public boolean isConnected(String vin)  {
     AutonomousCarInfo car = autoCarInfoAccessor.get(vin);
     if (car == null) {
-      throw new CarNotExistsException(vin);
+      return false;
     }
     if (car.getState() != CarState.LOST.getState()) {
       return true;

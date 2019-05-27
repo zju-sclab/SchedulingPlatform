@@ -113,7 +113,7 @@ public class StaticMapAndShapeFactory {
             loadCurves(document, liveMap);
             return liveMap;
         } catch (DocumentException | MalformedURLException e) {
-           e.printStackTrace();
+           LOG.warn(e.getMessage());
         }
         return null;
     }

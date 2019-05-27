@@ -2,6 +2,7 @@ package com.skywilling.cn.livemap.service.impl;
 
 
 import com.skywilling.cn.common.config.redis.RedisDao;
+import com.skywilling.cn.common.exception.CarNotExistsException;
 import com.skywilling.cn.livemap.core.StaticMapAndShapeFactory;
 import com.skywilling.cn.livemap.core.StaticMapFactory;
 import com.skywilling.cn.livemap.model.*;
@@ -9,6 +10,7 @@ import com.skywilling.cn.livemap.service.MapService;
 import com.skywilling.cn.livemap.service.ParkService;
 import com.skywilling.cn.livemap.service.ShapeMapService;
 import com.skywilling.cn.manager.car.model.AutonomousCarInfo;
+import com.skywilling.cn.manager.car.repository.impl.AutoCarInfoGeoAccessorImpl;
 import com.skywilling.cn.manager.car.service.AutoCarInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -35,6 +37,8 @@ public class MapServiceImpl implements MapService {
     StaticMapAndShapeFactory staticMapAndShapeFactory;
     @Autowired
     AutoCarInfoService autoCarInfoService;
+    @Autowired
+    AutoCarInfoGeoAccessorImpl autoCarInfoGeoAccessor;
 
    /** 获取所有动态地图 */
    @Override
@@ -108,18 +112,26 @@ public class MapServiceImpl implements MapService {
     private void upDateReqLockMap(){
         for(String mapName: maps.keySet() ){
             LiveMap map = getMap(mapName);
-            Set<String> vins = map.getCarsSet();
-            for(String vin : vins){
-                AutonomousCarInfo carInfo = autoCarInfoService.get(vin);
-                if(carInfo.getFromLane() != null && carInfo.getLane() != null
-                        &&carInfo.getFromLane().startsWith("lane") && carInfo.getLane().startsWith("curve"))
+            List<AutonomousCarInfo> autonomousCarInfoList = autoCarInfoGeoAccessor.getAll();
+            System.out.println("map service get all car: " + autonomousCarInfoList.size());
+            for(AutonomousCarInfo carInfo : autonomousCarInfoList){
+                String vin = carInfo.getVin();
+                System.out.println("map service get car: " + vin);
+                /**未连接上系统*/
+                if(!autoCarInfoService.isConnected(vin)) {
+                    /**释放一下锁*/
+                    map.getCarReqLockMap().put(String.valueOf(vin),"release");
+                    continue;
+                }
+                /**有心跳信息上传*/
+                if(carInfo.getFromLane() != null && carInfo.getLane() != null && Integer.valueOf(carInfo.getLane())<=1000)
                 {
                     //request Lock
-                    map.getCarReqLockMap().put(vin,carInfo.getLane());
+                    map.getCarReqLockMap().put(vin,"request");
                     map.getCarMap().put(vin,carInfo.getFromLane());
-                }else if(carInfo.getLane() != null && carInfo.getLane().startsWith("curve")){
+                }else if(carInfo.getFromLane() != null && carInfo.getLane() == null){
                     //release lock
-                    map.getCarReqLockMap().put(vin,"");
+                    map.getCarReqLockMap().put(vin,"release");
                     map.getCarMap().put(vin,carInfo.getLane());
                 }
             }

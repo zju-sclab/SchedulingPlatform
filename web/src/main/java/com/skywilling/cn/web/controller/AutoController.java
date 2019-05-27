@@ -123,7 +123,6 @@ public class AutoController {
     /**
      *   车端开启定点到达A->B的自动驾驶任务，提交的参数:
      *   vin;
-     *   source;
      *   goal;
      */
     @RequestMapping(value = "/trj/start", method = RequestMethod.POST)
@@ -136,8 +135,7 @@ public class AutoController {
                 return BasicResponse.buildResponse(ResultType.FAILED, "the car has not been added to a park");
             }
             Park park = parkService.query(carDynamic.getParkId());
-            String rideId = tripService.submitTrjTrip(rideParam.getVin(), park.getName(),
-                    rideParam.getFrom(), rideParam.getGoal());
+            String rideId = tripService.submitTrjTrip(rideParam.getVin(), park.getName(), rideParam.getGoal());
             if (rideId != null) {
                 return BasicResponse.buildResponse(ResultType.SUCCESS, rideId);
             }

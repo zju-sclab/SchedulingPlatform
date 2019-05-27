@@ -31,9 +31,14 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.configurationprocessor.json.JSONObject;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.util.ResourceUtils;
 
+import javax.annotation.Resource;
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
@@ -241,6 +246,23 @@ public class WebApplicationTests {
             throw new NullPointerException();
         }
         respFuture.whenComplete(new RequestSender.PacketConsumer(resultFuture));
+    }
+
+    @Test
+    public void FileIOTestinDoc(){
+        //String file_dir = "doc/Map/map.xml";
+        try {
+            File path = new File(ResourceUtils.getURL("classpath:").getPath());
+            if(!path.exists()) path = new File("");
+            System.out.println("class path:"+path.getAbsolutePath());
+
+            File upload = new File(path.getAbsoluteFile(),"doc/Map/lanes");
+            if(!upload.exists()) upload.mkdirs();
+            System.out.println("upload ur:"+upload.getAbsolutePath());
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+
     }
 
 }

@@ -15,7 +15,7 @@ public interface AutoCarInfoService {
   Position getPosition(String vin);
 
 
-  boolean isConnected(String vin) throws CarNotExistsException;
+  boolean isConnected(String vin);
 
   String getTaskId(String vin);
 

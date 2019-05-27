@@ -38,13 +38,7 @@ public class CarInfoServiceImpl implements CarInfoService {
 
   @Override
   public boolean isConnected(String vin) {
-    try {
-      return autoCarInfoService.isConnected(vin);
-    } catch (CarNotExistsException e) {
-      CarDynamic carDynamic = carDynamicService.query(vin);
-      if (carDynamic == null) return false;
-      return carDynamic.getConnect() != 0;
-    }
+    return autoCarInfoService.isConnected(vin);
   }
 
   @Override

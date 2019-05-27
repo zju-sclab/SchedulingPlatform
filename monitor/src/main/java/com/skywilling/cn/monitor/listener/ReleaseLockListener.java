@@ -46,7 +46,8 @@ public class ReleaseLockListener extends BasicListener {
         /**需要lane_id ---> lane name 映射*/
         int cur_id = releaseLockInfo.getCurrent_lane_id();
 
-        car.setLane(String.valueOf(cur_id));
+        car.setFromLane(String.valueOf(cur_id));
+        car.setLane("-1");
 
         /**异步存入redis*/
         autoCarInfoService.save(car);

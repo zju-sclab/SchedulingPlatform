@@ -1,28 +1,18 @@
 package com.skywilling.cn.scheduler.service.impl;
 
 
-import com.alibaba.fastjson.JSONObject;
-import com.github.pagehelper.Page;
 import com.skywilling.cn.command.biz.AutoServiceBiz;
-import com.skywilling.cn.common.enums.TypeField;
-import com.skywilling.cn.common.exception.IllegalTaskException;
-import com.skywilling.cn.common.exception.park.NoAvailableActionFoundException;
-import com.skywilling.cn.connection.model.Packet;
 import com.skywilling.cn.connection.service.RequestSender;
-import com.skywilling.cn.livemap.model.Park;
 import com.skywilling.cn.livemap.service.MapService;
 import com.skywilling.cn.livemap.service.ParkService;
 import com.skywilling.cn.manager.car.model.AutonomousCarInfo;
 import com.skywilling.cn.manager.car.service.AutoCarInfoService;
 import com.skywilling.cn.manager.car.service.CarDynamicService;
 import com.skywilling.cn.scheduler.core.TripCore;
-import com.skywilling.cn.scheduler.model.Route;
-import com.skywilling.cn.scheduler.model.Trip;
 import com.skywilling.cn.scheduler.service.CrossNodeListen;
 import com.skywilling.cn.scheduler.service.NodeLockService;
 import com.skywilling.cn.scheduler.service.RouteService;
 import com.skywilling.cn.scheduler.service.TripService;
-import org.omg.Messaging.SYNC_WITH_TRANSPORT;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -73,15 +63,16 @@ public class CrossNodeListenImpl implements CrossNodeListen {
         CompletableFuture<Boolean> acquire = nodeLockService.acquire(carInfo, junctionName);
         Boolean aBoolean = acquire.getNow(false);
         //如果获取锁失败，暂停车端任务
+        String vin = carInfo.getVin();
         if (!aBoolean) {
 //            Trip trip = tripService.get(carInfo.getTripId());
 //            tripCore.kill(trip);
             /** 暂停车辆的当前任务 */
-            String vin = carInfo.getVin();
             autoServiceBiz.pauseAutonomous(vin);
-
         }
-
+        else{
+            autoServiceBiz.continueAutonomous(vin);
+        }
 
     }
 

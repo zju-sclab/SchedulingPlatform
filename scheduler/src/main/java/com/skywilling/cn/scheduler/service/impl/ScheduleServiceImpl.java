@@ -18,7 +18,9 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
+import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
@@ -51,32 +53,30 @@ public class ScheduleServiceImpl implements ScheduleService {
     @Override
     public void checkAllClient() {
         List<LiveMap> maps = mapService.getAllMaps();
+        SimpleDateFormat sdf=new SimpleDateFormat("MM/dd/yyyy HH:mm:ss.SSS");
         for(LiveMap livemap : maps) {
-            ConcurrentHashMap<String, String> carsMap = livemap.getCarMap();
-            for (String vin : carsMap.keySet()) {
-                /**车辆动态信息*/
+            System.out.println("schedule time at : "+sdf.format(System.currentTimeMillis()));
+            System.out.println("schedule map name: "+livemap.getParkName());
+            ConcurrentHashMap<String,String> car_req_lock = livemap.getCarReqLockMap();
+            System.out.println("schedule car-req_lock: "+car_req_lock.keySet().size()+"req");
+            for (String vin : car_req_lock.keySet()) {
+
                 AutonomousCarInfo carInfo = autoCarInfoService.get(vin);
-                String cur_lane = carInfo.getLane();
-                /**车辆静态信息*/
-                String parkName = carDynamicService.query(vin).getParkName();
-                String live_from = carInfo.getFromLane();
-                LiveLane liveLane_from = null;
-                if (live_from != null)
-                    liveLane_from = laneService.getLane(parkName, live_from);
-                LiveLane liveLane = laneService.getLane(parkName, cur_lane);
-                //普通站点或者出弯道进入直线
-                if (live_from == null && liveLane_from == null || liveLane_from.getType() == " curve" && liveLane.getType() == "lane") {
-                    checkLaneTimeWindow(vin, liveLane);
-                } else {
-                    //获取路口所处的节点
-                    LiveJunction liveJunction = livemap.getJunctionMap().get(liveLane.getTo());
-                    if (liveLane_from.getType() == "lane" && liveLane.getType() == "curve")
-                        //lane --> curve 表示进入弯道
-                        checkJunctionLock(vin, liveJunction, false);
-                    else
-                        //curve --> lane 表示出弯道
-                        checkJunctionLock(vin, liveJunction, true);
+                String cross_lane = carInfo.getLane();
+                String from_lane = carInfo.getFromLane();
+
+                if(car_req_lock.get(vin).equals("release")){
+                    LiveJunction liveJunction = livemap.getJunctionMap().get(from_lane);
+                    checkJunctionLock(vin, liveJunction, true);
                 }
+                //起始点的crossId为8888，9999
+                else if(car_req_lock.get(vin).equals("request"))
+               {
+                    //获取路口所处的节点
+                    LiveJunction liveJunction = livemap.getJunctionMap().get(cross_lane);
+                    checkJunctionLock(vin, liveJunction, false);
+                }
+
             }
         }
     }
@@ -90,7 +90,6 @@ public class ScheduleServiceImpl implements ScheduleService {
          //无车
          if(cars == null || cars.isEmpty()){
              //run
-
          }
          //有车很远  10s以外
          else if(carInfo.getTimestamp()- carArrivalslnfo.getTimestamp() >= 10*1000 ){
@@ -105,8 +104,6 @@ public class ScheduleServiceImpl implements ScheduleService {
          //有车太近
          else{
              //stop
-
-
          }
     }
     /** 一直检测某个路口上的路口锁的获取和释放是否完成 */

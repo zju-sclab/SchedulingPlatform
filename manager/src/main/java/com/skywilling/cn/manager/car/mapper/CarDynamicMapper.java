@@ -3,9 +3,10 @@ package com.skywilling.cn.manager.car.mapper;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import com.skywilling.cn.manager.car.model.CarDynamic;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
-
+@Service
 @Mapper
 public interface CarDynamicMapper {
 

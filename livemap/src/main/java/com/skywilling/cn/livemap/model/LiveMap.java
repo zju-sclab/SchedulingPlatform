@@ -33,7 +33,7 @@ public class LiveMap implements Serializable {
     //记录所有链接到云端的车辆,all car_id
     private Set<String> carsSet = Collections.newSetFromMap(new ConcurrentHashMap<>());
     //记录申请锁的车辆
-    private Map<String,String> carReqLockMap = new ConcurrentHashMap<>();
+    private ConcurrentHashMap<String,String> carReqLockMap = new ConcurrentHashMap<>();
     //记录车辆所在车道的id, car_id ---> lane_id
     private ConcurrentHashMap<String, String> carMap = new ConcurrentHashMap<>();
     //车道id对应车辆，lane-id ---> car_ids

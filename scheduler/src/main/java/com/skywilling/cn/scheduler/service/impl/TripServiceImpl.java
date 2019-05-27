@@ -9,7 +9,6 @@ import com.skywilling.cn.common.exception.park.NoAvailableActionFoundException;
 import com.skywilling.cn.common.model.Node;
 import com.skywilling.cn.common.model.RoutePoint;
 import com.skywilling.cn.common.model.Triple;
-import com.skywilling.cn.common.model.Tuple;
 import com.skywilling.cn.livemap.model.LiveLane;
 import com.skywilling.cn.livemap.service.MapService;
 import com.skywilling.cn.livemap.service.StationService;
@@ -109,8 +108,8 @@ public class TripServiceImpl implements TripService {
      * 2.规划路径
      */
     @Override
-    public String submitTrjTrip(String vin,String parkName, String from, String goal) throws CarNotExistsException,
-            CarNotAliveException, IllegalRideException {
+    public String submitTrjTrip(String vin,String parkName, String goal) throws CarNotExistsException,
+            CarNotAliveException{
 
         AutonomousCarInfo car = carInfoService.getAutoCarInfo(vin);
         /**判断该车是否链接上云平台 */
@@ -121,23 +120,19 @@ public class TripServiceImpl implements TripService {
         if (car.getState() == CarState.LOST.getState()) {
             throw new CarNotAliveException(vin);
         }
-        /**判断该是否发起不合理订单 */
-        if (from == goal)
-            throw new IllegalRideException();
+        /**起点由心跳信息提供*/
         StaticStation outset = new StaticStation();
         outset.setPoint(car.getPose());
         StaticStation destination = new StaticStation();
         Node des_node = mapService.getMap(parkName).getNameToNodeMap().get(goal);
         destination.setPoint(des_node.getX(),des_node.getY(),0,0,0,0,0);
-        /** 生成自动驾驶任务序列*/
+        /** 调用全局规划接口计算得到三元数组结果*/
         Triple<List<String>, List<Double>, List<RoutePoint>> res = trjPlanService.createTrajectory(outset,destination);
         List<RoutePoint> routePoints = res.third;
-        //todo:接口
-        List<String> lanes = new ArrayList<>();
-                //trjPlanService.createTrjSection(outset,destination);
-        Route route = createRouteByGlobalPlan(lanes,from,goal,parkName);
+        //全局规划结果包装成任务
+        //Route route = createRouteByGlobalPlan(lanes,goal,parkName);
         String tripId = tripCore.generateTripId(vin);
-        Trip trip = new Trip(vin, tripId, route);
+        Trip trip = new Trip(vin, tripId,parkName,res.first,res.third);
         try {
             /**提交自动任务序列*/
             tripCore.submitTrjTrip(trip,routePoints);
@@ -148,10 +143,10 @@ public class TripServiceImpl implements TripService {
         }
         return null;
     }
-
-    public Route createRouteByGlobalPlan(List<String> lanes, String from,String to,String parkName){
+    /** 根据通过的路口序列构造route*/
+    public Route createRouteByGlobalPlan(List<String> lanes, String to,String parkName){
         Route route = new Route();
-
+        route.setParkName(parkName);
         return route;
     }
 
@@ -172,7 +167,6 @@ public class TripServiceImpl implements TripService {
                 newLanes.add(lane);
                 i++;
             } else {
-
                 trip.setStart(i);
                 newLanes.addAll(route.getLiveLanes());
                 trip.getRoute().setLiveLanes(newLanes);

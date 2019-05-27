@@ -49,6 +49,7 @@ public class RequsetLockListener extends  BasicListener {
         int next_id = requestLockInfo.getTarget_cross_id();
 
         car.setFromLane(String.valueOf(cur_id));
+        /** next_id = 8888 | 9999 标示开始和结束点 */
         car.setLane(String.valueOf(next_id));
 
         /**异步存入redis*/
