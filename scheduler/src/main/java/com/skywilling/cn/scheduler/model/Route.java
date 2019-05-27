@@ -17,6 +17,8 @@ public class Route implements Serializable {
     private String vin;
     private String parkName;
     private List<LiveLane> liveLanes;
+    private List<String> lanes;
+    private List<Double> times;
     private Node from;
     private Node to;
 

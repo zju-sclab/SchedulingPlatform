@@ -47,10 +47,10 @@ public class Trip implements Serializable {
         this.start = 0;
         this.end = route.getLiveLanes().size();
     }
-   public Trip(String vin,String tripId,String parkName,List<String> curves, List<RoutePoint>routePoints){
+   public Trip(String vin,String tripId,String parkName,Route route,List<String> curves, List<RoutePoint>routePoints){
         this.vin = vin;
         this.id = tripId;
-        this.route = new Route();
+        this.route = route;
         this.parkName = parkName;
         this.startTime = System.currentTimeMillis();
         this.start = 0;

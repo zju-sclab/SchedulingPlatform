@@ -1,7 +1,9 @@
 package com.skywilling.cn.common.model;
 
 import com.skywilling.cn.common.enums.ResultType;
+import lombok.Data;
 
+@Data
 public class BasicResponse {
 
   private int code;
@@ -19,27 +21,4 @@ public class BasicResponse {
     return response;
   }
 
-  public int getCode() {
-    return code;
-  }
-
-  public void setCode(int code) {
-    this.code = code;
-  }
-
-  public String getMsg() {
-    return msg;
-  }
-
-  public void setMsg(String msg) {
-    this.msg = msg;
-  }
-
-  public Object getAttach() {
-    return attach;
-  }
-
-  public void setAttach(Object attach) {
-    this.attach = attach;
-  }
 }

@@ -2,6 +2,8 @@ package com.skywilling.cn.web;
 
 import com.skywilling.cn.common.enums.TypeField;
 import com.skywilling.cn.common.model.Pose;
+import com.skywilling.cn.common.model.RoutePoint;
+import com.skywilling.cn.common.model.Triple;
 import com.skywilling.cn.connection.infrastructure.client.ClientService;
 import com.skywilling.cn.connection.model.Packet;
 import com.skywilling.cn.connection.service.RequestDispatcher;
@@ -19,13 +21,12 @@ import com.skywilling.cn.manager.car.repository.AutoCarInfoGeoAccessor;
 import com.skywilling.cn.manager.car.service.AutoCarInfoService;
 import com.skywilling.cn.manager.car.service.CarInfoService;
 import com.skywilling.cn.manager.car.service.impl.CarDynamicServiceImpl;
+import com.skywilling.cn.scheduler.core.trajectoryalgorithm.GlobalTrajPlanner;
 import com.skywilling.cn.scheduler.model.Route;
+import com.skywilling.cn.scheduler.model.StaticStation;
 import com.skywilling.cn.scheduler.model.Trip;
 import com.skywilling.cn.scheduler.repository.impl.TripAccessorImpl;
-import com.skywilling.cn.scheduler.service.CrossNodeListen;
-import com.skywilling.cn.scheduler.service.NodeLockService;
-import com.skywilling.cn.scheduler.service.RouteService;
-import com.skywilling.cn.scheduler.service.TripService;
+import com.skywilling.cn.scheduler.service.*;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -65,6 +66,8 @@ public class WebApplicationTests {
     MapService mapService;
     @Autowired
     ShapeServiceImpl shapeService;
+    @Autowired
+    GlobalTrajPlanner ser;
 
     /**
      * Netty
@@ -262,7 +265,17 @@ public class WebApplicationTests {
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-
+    }
+    @Test
+    public void GlobalPlanTest(){
+        StaticStation start = new StaticStation();
+        StaticStation target = new StaticStation();
+        start.setPoint(1.16,-0.29,0,0,0,0,0);
+        target.setPoint(-37,101,0,0,0,0,0);
+        Triple<List<String>, List<Double>, List<RoutePoint>> res = ser.createTrajectory(start,target);
+        System.out.println(res.first);
+        System.out.println(res.second);
+        System.out.println(res.third);
     }
 
 }

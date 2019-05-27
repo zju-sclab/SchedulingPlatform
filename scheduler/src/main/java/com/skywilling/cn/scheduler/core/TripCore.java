@@ -77,7 +77,7 @@ public class TripCore {
             throw new IllegalTaskException();
         }
         /**创建根route*/
-        Route route = createSubRoute(trip);
+        Route route = trip.getRoute();
         /**新建一个Lidatask执行*/
         AutoTask task = createTaskByLidarPoint(trip, route, route.getParkName(),routePoints);
         String taskId = taskAccessor.save(task);

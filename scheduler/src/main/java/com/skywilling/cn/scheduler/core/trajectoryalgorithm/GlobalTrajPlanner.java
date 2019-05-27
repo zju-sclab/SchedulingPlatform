@@ -7,7 +7,9 @@ import com.skywilling.cn.common.model.Triple;
 import com.skywilling.cn.scheduler.common.EulerAngle;
 import com.skywilling.cn.scheduler.common.utils;
 import com.skywilling.cn.scheduler.core.trajectoryalgorithm.config.GlobalTrajPlannerConfig;
-import com.skywilling.cn.scheduler.model.*;
+import com.skywilling.cn.scheduler.model.Cross;
+import com.skywilling.cn.scheduler.model.Lane;
+import com.skywilling.cn.scheduler.model.StaticStation;
 import com.skywilling.cn.scheduler.service.TrjPlanService;
 import lombok.Data;
 import org.springframework.stereotype.Service;
@@ -15,22 +17,21 @@ import org.springframework.stereotype.Service;
 import java.io.*;
 import java.util.*;
 
-@Data
-class NearestPose {
-  private int lane_id;
-  private int point_index;
-  private double distance;
-  private Pose point;
-  private Lane nearest_lane;
 
-  public NearestPose() {
-    point = new Pose();
-  }
-}
-
-@Data
 @Service
 public class GlobalTrajPlanner implements TrjPlanService {
+  @Data
+  class NearestPose {
+    private int lane_id;
+    private int point_index;
+    private double distance;
+    private Pose point;
+    private Lane nearest_lane;
+
+    public NearestPose() {
+      point = new Pose();
+    }
+  }
   private String trajFilePath = "";
   private double weight_data;
   private double weight_smooth;
@@ -959,7 +960,7 @@ public class GlobalTrajPlanner implements TrjPlanService {
        file_dir = "yuquanxiaoqu3";
     else
        file_dir = "path_file_Yunlecar";
-    setTrajFilePath(file_dir);
+    setTrjPathFile(file_dir);
     parseConfig();
     constract_Lane_Cross_vec();
     Collections.sort(Lane_vec);

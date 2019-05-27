@@ -1,5 +1,8 @@
 package com.skywilling.cn.scheduler.core.trajectoryalgorithm.config;
 
+import org.springframework.stereotype.Service;
+
+@Service
 public class GlobalTrajPlannerConfig {
     public static String linux_traj_file_path = "/home/sin/catkin_ws/rc_car/src/smartcar/planning/global_planning/";
     public static String windows_traj_file_path = "D:\\work\\Projects\\linxxx\\SchedulingPlatform\\doc\\Map\\lanes\\";
@@ -23,6 +26,6 @@ public class GlobalTrajPlannerConfig {
     public static double thresh_end_length = 8.0;
 
     public static void setTrajFilePath(String parkName){
-        trajFilePath = trajFilePath + parkName +"\\";
+        trajFilePath = trajFilePath + parkName + System.getProperty("file.separator");
     }
 }

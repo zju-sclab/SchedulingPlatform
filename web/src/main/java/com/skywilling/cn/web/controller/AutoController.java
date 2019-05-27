@@ -1,5 +1,6 @@
 package com.skywilling.cn.web.controller;
 
+import com.alibaba.fastjson.JSONObject;
 import com.skywilling.cn.command.biz.AutoServiceBiz;
 import com.skywilling.cn.common.enums.ResultType;
 import com.skywilling.cn.common.exception.CarNotAliveException;
@@ -135,9 +136,16 @@ public class AutoController {
                 return BasicResponse.buildResponse(ResultType.FAILED, "the car has not been added to a park");
             }
             Park park = parkService.query(carDynamic.getParkId());
-            String rideId = tripService.submitTrjTrip(rideParam.getVin(), park.getName(), rideParam.getGoal());
-            if (rideId != null) {
-                return BasicResponse.buildResponse(ResultType.SUCCESS, rideId);
+            Trip trip = tripService.submitTrjTrip(rideParam.getVin(), park.getName(), rideParam.getGoal());
+            JSONObject resp = new JSONObject();
+            resp.put("parkName",trip.getParkName());
+            resp.put("vin",trip.getVin());
+            resp.put("lanes",trip.getRoute().getLanes());
+            resp.put("times",trip.getRoute().getTimes());
+            resp.put("from",trip.getRoute().getFrom().getName());
+            resp.put("to",trip.getRoute().getTo().getName());
+            if (trip != null) {
+                return BasicResponse.buildResponse(ResultType.SUCCESS, resp);
             }
             return BasicResponse.buildResponse(ResultType.FAILED, null);
         } catch (CarNotExistsException e) {

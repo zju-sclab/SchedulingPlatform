@@ -14,7 +14,6 @@ public class RideParam implements Serializable {
 
   private String vin;
   private String from;
-  private String source;
   private String goal;
 
   private double velocity = DEFAULT_VELOCITY;
@@ -34,6 +33,10 @@ public class RideParam implements Serializable {
   public RideParam(String vin, String from, String goal) {
     this.vin = vin;
     this.from = from;
+    this.goal = goal;
+  }
+  public RideParam(String vin,String goal){
+    this.vin = vin;
     this.goal = goal;
   }
 

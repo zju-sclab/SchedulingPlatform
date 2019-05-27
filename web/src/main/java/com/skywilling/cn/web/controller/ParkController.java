@@ -216,7 +216,7 @@ public class ParkController {
     /** 绑定车辆到指定园区 */
     //@RequestBody用于注解到非x-www-form-urlencoded的前端输入,一般是json,xml类型
     //consumes参数,指定处理请求的 提交内容类型 （Content-Type），例如 application/json, text/html
-    @RequestMapping(value = "/park/{parkId}/car", method = RequestMethod.POST, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @RequestMapping(value = "/park/{parkId}/car/bind", method = RequestMethod.POST, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public BasicResponse addCar(@PathVariable("parkId") int parkId, @RequestParam("vin")String vin){
 
         Boolean result  = carDynamicService.bindPark(parkId, vin);
@@ -230,7 +230,7 @@ public class ParkController {
     /**
      * 园区批量添加车辆
      */
-    @RequestMapping(value = "/park/{parkId}/cars", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "/park/{parkId}/cars/bind", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
     public BasicResponse addCars(@PathVariable("parkId") int parkId, @RequestBody List<String> vins) {
 
         boolean res = carDynamicService.bindPark(parkId, vins);
