@@ -32,6 +32,13 @@ public class GlobalTrajPlanner implements TrjPlanService {
       point = new Pose();
     }
   }
+
+  @Data
+  class OriginId{
+    private int start_lane_id;
+    private int end_lane_id;
+  }
+
   private String trajFilePath = "";
   private double weight_data;
   private double weight_smooth;
@@ -179,8 +186,9 @@ public class GlobalTrajPlanner implements TrjPlanService {
   }
 
   private void startPose_cb(
-      StaticStation station, List<Lane> temp_Lane_vec, List<Cross> temp_Cross_vec) {
+      StaticStation station, List<Lane> temp_Lane_vec, List<Cross> temp_Cross_vec, OriginId originId) {
     NearestPose nearestPose = find_nearest_pose(station.getPoint().getPosition(), Lane_vec);
+    originId.setStart_lane_id(nearestPose.lane_id);
     if (!validate(nearestPose, temp_Cross_vec)) {
       // TODO::错误处理::所选点在转弯处
       System.out.println("Start station is set at Cross, return.");
@@ -406,8 +414,9 @@ public class GlobalTrajPlanner implements TrjPlanService {
   }
 
   private void endPose_cb(
-      StaticStation station, List<Lane> temp_Lane_vec, List<Cross> temp_Cross_vec) {
+      StaticStation station, List<Lane> temp_Lane_vec, List<Cross> temp_Cross_vec, OriginId originId) {
     NearestPose nearestPose = find_nearest_pose(station.getPoint().getPosition(), Lane_vec);
+    originId.setEnd_lane_id(nearestPose.lane_id);
     if (!validate(nearestPose, temp_Cross_vec)) {
       // TODO::错误处理::所选点在转弯处
       System.out.println("Target station is set at Cross, return.");
@@ -642,7 +651,7 @@ public class GlobalTrajPlanner implements TrjPlanService {
   }
 
   private List<RoutePoint> convert_result_to_path(
-      List<Integer> result, List<Lane> temp_Lane_vec, List<Cross> temp_Cross_vec) {
+      List<Integer> result, List<Lane> temp_Lane_vec, List<Cross> temp_Cross_vec, OriginId originId) {
     List<RoutePoint> result_path = new ArrayList<>();
     int size = result.size();
     RoutePoint waypoint_start = new RoutePoint();
@@ -658,16 +667,27 @@ public class GlobalTrajPlanner implements TrjPlanService {
       RoutePoint pre = result_path.get(result_path.size() - 1);
       int id = result.get(i);
       List<Pose> next;
+      int lane_id, cross_id;
       if (i % 2 == 1) {
         // lane
         next = temp_Lane_vec.get(id).getPoints();
         speed_limit = lane_speed_limit;
         waypoint_type = 1;
+        if(i == 1){
+          lane_id = originId.getStart_lane_id();
+        }else if(i == size - 2){
+          lane_id = originId.getEnd_lane_id();
+        }else{
+          lane_id = id;
+        }
+        cross_id = -1;
       } else {
         // cross
         next = temp_Cross_vec.get(id).getPoints();
         speed_limit = cross_speed_limit;
         waypoint_type = 0;
+        lane_id = -1;
+        cross_id = id;
       }
       Pose p_start = next.get(0);
       Pose p_last = next.get(next.size() - 1);
@@ -739,6 +759,7 @@ public class GlobalTrajPlanner implements TrjPlanService {
         RoutePoint temp = new RoutePoint();
         temp.setIs_lane(0);
         temp.setCross_id(8888);
+        temp.setLane_id(-1);
         temp.setSpeed_limit(cross_speed_limit);
         temp.setPosition(
             new Position(
@@ -759,6 +780,7 @@ public class GlobalTrajPlanner implements TrjPlanService {
         RoutePoint temp = new RoutePoint();
         temp.setIs_lane(0);
         temp.setCross_id(8888); // 8888代表起步阶段,出站
+        temp.setLane_id(-1);
         temp.setSpeed_limit(cross_speed_limit);
         temp.setPosition(
             new Position(s.getPosition().getX() + i * dx, s.getPosition().getY() + i * dy, 0));
@@ -806,6 +828,7 @@ public class GlobalTrajPlanner implements TrjPlanService {
         RoutePoint temp = new RoutePoint();
         temp.setIs_lane(0);
         temp.setCross_id(9999); // 9999代表结束阶段,入站
+        temp.setLane_id(-1);
         temp.setSpeed_limit(cross_speed_limit);
         temp.setPosition(
             new Position(
@@ -828,6 +851,7 @@ public class GlobalTrajPlanner implements TrjPlanService {
         RoutePoint temp = new RoutePoint();
         temp.setIs_lane(0);
         temp.setCross_id(9999);
+        temp.setLane_id(-1);
         temp.setSpeed_limit(cross_speed_limit);
         temp.setPosition(
             new Position(
@@ -917,13 +941,19 @@ public class GlobalTrajPlanner implements TrjPlanService {
     return !(dist_to_cornor < nearestPose.getDistance());
   }
 
-  private List<String> calcPath(List<Integer> result) {
+  private List<String> calcPath(List<Integer> result, OriginId originId) {
     List<String> res = new ArrayList<>();
     res.add("cross_8888");
     for (int i = 1; i < result.size() - 1; i++) {
       if (i % 2 == 1) {
         // lane
-        res.add("lane_" + result.get(i));
+        if(i == 1){
+          res.add("lane_" + originId.getStart_lane_id());
+        }else if(i == result.size() - 2){
+          res.add("lane_" + originId.getEnd_lane_id());
+        }else{
+          res.add("lane_" + result.get(i));
+        }
       } else {
         // cross
         res.add("cross_" + result.get(i));
@@ -977,14 +1007,16 @@ public class GlobalTrajPlanner implements TrjPlanService {
     List<Lane> temp_Lane_vec = utils.depcopy(Lane_vec);
     List<Cross> temp_Cross_vec = utils.depcopy(Cross_vec);
 
-    startPose_cb(start, temp_Lane_vec, temp_Cross_vec);
-    endPose_cb(target, temp_Lane_vec, temp_Cross_vec);
+    OriginId originId = new OriginId();
+
+    startPose_cb(start, temp_Lane_vec, temp_Cross_vec, originId);
+    endPose_cb(target, temp_Lane_vec, temp_Cross_vec, originId);
 
     List<Integer> result = Dij(start, target, temp_Lane_vec, temp_Cross_vec);
 
-    List<RoutePoint> result_path = convert_result_to_path(result, temp_Lane_vec, temp_Cross_vec);
+    List<RoutePoint> result_path = convert_result_to_path(result, temp_Lane_vec, temp_Cross_vec, originId);
 
-    List<String> path = calcPath(result);
+    List<String> path = calcPath(result, originId);
 
     List<Double> path_time = calcTime(result, temp_Lane_vec, temp_Cross_vec);
 
