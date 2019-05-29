@@ -876,7 +876,7 @@ public class GlobalTrajPlanner implements TrjPlanService {
     }
 
     // 调整每个轨迹点的角度
-    for (int i = 0; i < path_in.size() - 2; i++) {
+    for (int i = 0; i < path_in.size() - 1; i++) {
       RoutePoint p_c = path_in.get(i);
       RoutePoint p_n = path_in.get(i + 1);
       double yaw =
@@ -885,6 +885,7 @@ public class GlobalTrajPlanner implements TrjPlanService {
               p_n.getPosition().getX() - p_c.getPosition().getX());
       path_in.get(i).setOrientation(utils.Euler2Quaternion(new EulerAngle(0, 0, yaw)));
     }
+    path_in.get(path_in.size() - 1).setOrientation(path_in.get(path_in.size()-2).getOrientation());
     return path_in;
   }
 

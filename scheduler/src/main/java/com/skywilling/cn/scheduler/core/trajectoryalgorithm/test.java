@@ -17,11 +17,11 @@ public class test {
         Triple<List<String>, List<Double>, List<RoutePoint>> res = ser.createTrajectory(start,target);
         System.out.println(res.first);
         System.out.println(res.second);
-//        int cnt = 0;
-//        for(RoutePoint p: res.third){
-//            System.out.print(cnt+" ");
-//            System.out.println(p);
-//            cnt++;
-//        }
+        int cnt = 0;
+        for(RoutePoint p: res.third){
+            System.out.print(cnt+" ");
+            System.out.println(p);
+            cnt++;
+        }
     }
 }
