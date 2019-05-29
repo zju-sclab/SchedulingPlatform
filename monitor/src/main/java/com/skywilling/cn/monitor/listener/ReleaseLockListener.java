@@ -42,12 +42,8 @@ public class ReleaseLockListener extends BasicListener {
         }
         /**解析releaseLock的消息*/
         ReleaseLockInfo releaseLockInfo = JSONObject.parseObject(body, ReleaseLockInfo.class);
-
-        /**需要lane_id ---> lane name 映射*/
-        int cur_id = releaseLockInfo.getCurrent_lane_id();
-
-        car.setFromLane(String.valueOf(cur_id));
-        car.setLane("-1");
+        car.setFromLane(releaseLockInfo.getCurrent_lane_id());
+        car.setLane(releaseLockInfo.getTarget_cross_id());
 
         /**异步存入redis*/
         autoCarInfoService.save(car);

@@ -1,5 +1,4 @@
 package com.skywilling.cn.livemap.core;
-import com.skywilling.cn.common.model.LidarPoint;
 import com.skywilling.cn.common.model.Orientation;
 import com.skywilling.cn.common.model.Position;
 import com.skywilling.cn.common.model.RoutePoint;
@@ -8,7 +7,7 @@ import com.skywilling.cn.livemap.model.LiveMap;
 import com.skywilling.cn.livemap.factory.Factory;
 import com.skywilling.cn.livemap.model.LaneShape;
 import com.skywilling.cn.livemap.service.MapService;
-import com.skywilling.cn.livemap.service.ShapeMapService;
+import com.skywilling.cn.livemap.service.ShapeService;
 import org.dom4j.*;
 import org.dom4j.io.SAXReader;
 import org.slf4j.Logger;
@@ -29,7 +28,7 @@ import java.util.List;
 public class StaticLaneShapFactory implements Factory<Boolean> {
     private static final Logger LOG = LoggerFactory.getLogger(StaticLaneShapFactory.class);
     @Autowired
-    ShapeMapService shapeMapService;
+    ShapeService shapeService;
     @Autowired
     MapService mapService;
 
@@ -110,7 +109,7 @@ public class StaticLaneShapFactory implements Factory<Boolean> {
         List<LaneShape> laneShapes = readCSVFiles(parkName, filesnames);
         for (LaneShape laneShape : laneShapes) {
             laneShape.setParkName(parkName);
-            shapeMapService.save(laneShape);
+            shapeService.save(laneShape);
         }
     }
     /**

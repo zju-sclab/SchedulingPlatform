@@ -14,4 +14,5 @@ public interface MapService {
     List<LiveMap> getAllMaps();
     LiveMap createMapByLidarMap(String parkName);
     LiveMap createMapByCycleBus(String parkName);
+    void upDateReqLockMap();
 }

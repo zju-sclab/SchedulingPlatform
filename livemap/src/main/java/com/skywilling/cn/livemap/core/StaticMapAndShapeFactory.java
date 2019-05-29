@@ -1,10 +1,10 @@
 package com.skywilling.cn.livemap.core;
 
-import com.skywilling.cn.common.model.LidarPoint;
 import com.skywilling.cn.common.model.Node;
 import com.skywilling.cn.livemap.model.*;
 import com.skywilling.cn.livemap.service.MapService;
-import com.skywilling.cn.livemap.service.ShapeMapService;
+import com.skywilling.cn.livemap.service.ShapeService;
+import org.apache.el.lang.ELArithmetic;
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
 import org.dom4j.Element;
@@ -14,12 +14,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.io.*;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.List;
 
 /**
  * ClassName StaticMapAndShapeFactory
@@ -31,7 +28,7 @@ public class StaticMapAndShapeFactory {
     private static final Logger LOG = LoggerFactory.getLogger(StaticLaneShapFactory.class);
 
     @Autowired
-    ShapeMapService shapeMapService;
+    ShapeService shapeService;
     @Autowired
     MapService mapService;
 
@@ -59,6 +56,7 @@ public class StaticMapAndShapeFactory {
             station.setName(next.attributeValue("name"));
             /**更新LiveMap的Node集合，基于ID索引*/
             liveMap.getNodeMap().put(String.valueOf(station.getId()), station);
+            liveMap.getNameToNodeMap().put(station.getName(),station);
         }
     }
 
@@ -84,7 +82,7 @@ public class StaticMapAndShapeFactory {
         Iterator<Element> iterator = lanes.elementIterator();
         while (iterator.hasNext()) {
             Element element = iterator.next();
-            loadOneLane(element,liveMap,"curve");
+            loadOneLane(element,liveMap,"cross");
         }
     }
     /**组装lane属性*/
@@ -98,7 +96,27 @@ public class StaticMapAndShapeFactory {
         lane.setV(Double.valueOf(element.attributeValue("v", "0.0")));
         lane.setPriority(Double.valueOf(element.attributeValue("priority", "1.0")));
         //更新LiveMap的Lane
-        liveMap.getLaneMap().put(String.valueOf(lane.getType()+lane.getId()), lane);
+        liveMap.getLaneMap().put(String.valueOf(lane.getType()+"_"+lane.getId()), lane);
+    }
+    private void loadJunctions(Document document, LiveMap liveMap){
+        Element root = document.getRootElement();
+        Element junctions = root.element("junctions");
+        Iterator<Element> iterator = junctions.elementIterator();
+        while(iterator.hasNext()){
+            Element element = iterator.next();
+            LiveJunction liveJunction = new LiveJunction();
+            liveJunction.setId(Integer.valueOf(element.attributeValue("id")));
+            liveJunction.setName(element.attributeValue("name"));
+            String[] curves = element.attributeValue("curves").split(",");
+            for(String c : curves){
+                if(c != null && c != "")
+                {
+                    liveJunction.getCurves().add(c);
+                    liveMap.getJunctionMap().put("cross_"+c,liveJunction);
+                }
+            }
+
+        }
     }
     /**
      * 根据Map.xml构建拓扑地图，拓扑地图仅仅路段和站点的基本信息
@@ -111,6 +129,7 @@ public class StaticMapAndShapeFactory {
             loadNode(document, liveMap);
             loadLanes(document, liveMap);
             loadCurves(document, liveMap);
+            loadJunctions(document,liveMap);
             return liveMap;
         } catch (DocumentException | MalformedURLException e) {
            LOG.warn(e.getMessage());

@@ -8,7 +8,7 @@ import com.skywilling.cn.livemap.model.ShapeMap;
 import java.util.List;
 
 
-public interface ShapeMapService {
+public interface ShapeService {
 
 
     LaneShape query(String parkName, String laneName);

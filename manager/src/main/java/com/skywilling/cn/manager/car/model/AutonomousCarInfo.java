@@ -5,6 +5,7 @@ package com.skywilling.cn.manager.car.model;
 import com.skywilling.cn.common.model.Pose;
 import lombok.Data;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.geo.GeoJsonPoint;
 import org.springframework.data.mongodb.core.index.CompoundIndex;
 import org.springframework.data.mongodb.core.index.CompoundIndexes;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -54,13 +55,13 @@ public class AutonomousCarInfo implements Serializable {
   private String lane;
   @Field
   private long timestamp;
-
+  @Field
   private List<ModuleInfo> RosNodes;
   /**
   * 便于直接使用geohash索引
    * */
-/*  @Field
-  private GeoJsonPoint position;*/
+  @Field
+  private GeoJsonPoint position;
 
   public AutonomousCarInfo() { }
 

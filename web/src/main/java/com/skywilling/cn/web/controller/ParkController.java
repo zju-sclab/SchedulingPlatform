@@ -11,7 +11,7 @@ import com.skywilling.cn.common.model.Node;
 import com.skywilling.cn.livemap.model.Park;
 import com.skywilling.cn.livemap.service.MapService;
 import com.skywilling.cn.livemap.service.ParkService;
-import com.skywilling.cn.livemap.service.ShapeMapService;
+import com.skywilling.cn.livemap.service.ShapeService;
 import com.skywilling.cn.livemap.service.StationService;
 import com.skywilling.cn.manager.car.enumeration.UseStatus;
 import com.skywilling.cn.manager.car.model.CarDynamic;
@@ -44,7 +44,7 @@ public class ParkController {
     private CarDynamicService carDynamicService;
 
     @Autowired
-    private ShapeMapService shapeService;
+    private ShapeService shapeService;
 
     @Autowired
     private StationService stationService;

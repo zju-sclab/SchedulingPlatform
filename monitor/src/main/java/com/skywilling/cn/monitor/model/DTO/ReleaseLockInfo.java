@@ -11,5 +11,6 @@ import java.io.Serializable;
  **/
 @Data
 public class ReleaseLockInfo implements Serializable {
-    private int current_lane_id;
+    private final String current_lane_id;
+    private final String target_cross_id;
 }

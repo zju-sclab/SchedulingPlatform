@@ -1,11 +1,10 @@
 package com.skywilling.cn.scheduler.core;
 
 import com.skywilling.cn.common.exception.park.NoAvailableActionFoundException;
-import com.skywilling.cn.common.model.LidarPoint;
 import com.skywilling.cn.common.model.Node;
 import com.skywilling.cn.livemap.model.*;
 import com.skywilling.cn.livemap.service.MapService;
-import com.skywilling.cn.livemap.service.ShapeMapService;
+import com.skywilling.cn.livemap.service.ShapeService;
 import com.skywilling.cn.manager.car.model.Action;
 import com.skywilling.cn.scheduler.model.Route;
 import com.skywilling.cn.common.model.RoutePoint;
@@ -19,7 +18,7 @@ import java.util.List;
 public class ActionScheduler {
 
     @Autowired
-    ShapeMapService shapeMapService;
+    ShapeService shapeService;
     @Autowired
     MapService mapService;
 
@@ -35,7 +34,7 @@ public class ActionScheduler {
         List<Action> actions = new ArrayList<>(liveLanes.size());
 
         for (LiveLane lane: liveLanes) {
-            LaneShape laneShape = shapeMapService.query(parkName,lane.getName());
+            LaneShape laneShape = shapeService.query(parkName,lane.getName());
             List<RoutePoint> lidarPoints = laneShape.getPath();
             Action action = new Action();
             if (lidarPoints == null|| lidarPoints.size() == 0) {

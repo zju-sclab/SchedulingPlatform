@@ -5,20 +5,15 @@ import com.skywilling.cn.common.config.redis.RedisDao;
 import com.skywilling.cn.livemap.core.StaticLaneShapFactory;
 import com.skywilling.cn.livemap.exception.ParkNameEmptyException;
 import com.skywilling.cn.livemap.model.LaneShape;
-import com.skywilling.cn.livemap.model.LiveLane;
 import com.skywilling.cn.livemap.model.Park;
-import com.skywilling.cn.livemap.model.ShapeMap;
 import com.skywilling.cn.livemap.service.ParkService;
-import com.skywilling.cn.livemap.service.ShapeMapService;
+import com.skywilling.cn.livemap.service.ShapeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-
 
 @Service
-public class ShapeServiceImpl implements ShapeMapService {
+public class ShapeServiceImpl implements ShapeService {
     private static final String PREFIX = "shapeMap_";
     @Autowired
     RedisDao redisDao;

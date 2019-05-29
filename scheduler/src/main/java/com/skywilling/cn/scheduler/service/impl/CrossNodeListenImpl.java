@@ -52,7 +52,7 @@ public class CrossNodeListenImpl implements CrossNodeListen {
 
     @Override
     public void inComingJunction(AutonomousCarInfo carInfo, String junctionName) {
-        //判断开关
+        //开关
         if (!switchOn.equals("true")) {
             return;
         }
@@ -60,20 +60,19 @@ public class CrossNodeListenImpl implements CrossNodeListen {
             return;
         }
         //long start =  System.currentTimeMillis();
-        CompletableFuture<Boolean> acquire = nodeLockService.acquire(carInfo, junctionName);
-        Boolean aBoolean = acquire.getNow(false);
+        CompletableFuture<Boolean> acquireRes = nodeLockService.acquire(carInfo, junctionName);
+        Boolean aBoolean = acquireRes.getNow(false);
         //如果获取锁失败，暂停车端任务
         String vin = carInfo.getVin();
-        if (!aBoolean) {
-//            Trip trip = tripService.get(carInfo.getTripId());
-//            tripCore.kill(trip);
-            /** 暂停车辆的当前任务 */
-            autoServiceBiz.pauseAutonomous(vin);
-        }
-        else{
-            autoServiceBiz.continueAutonomous(vin);
-        }
+/*        if (!aBoolean) {
+            //Trip trip = tripService.get(carInfo.getTripId());
+            //tripCore.kill(trip);
 
+            autoServiceBiz.pauseAutonomous(vin);
+        }else{
+            autoServiceBiz.continueAutonomous(vin);
+        }*/
+        autoServiceBiz.responseLockAutonomous(vin,aBoolean);
     }
 
     /**队列中选择最前面的车唤醒，重启自动驾驶任务*/

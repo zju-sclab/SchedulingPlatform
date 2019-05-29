@@ -12,6 +12,6 @@ import java.io.Serializable;
 
 @Data
 public class RequestLockInfo implements Serializable {
-    private int current_lane_id;
-    private int target_cross_id;
+    private final String current_lane_id;
+    private final String target_cross_id;
 }

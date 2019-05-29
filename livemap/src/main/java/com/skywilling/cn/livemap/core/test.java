@@ -5,6 +5,8 @@ import org.springframework.util.ResourceUtils;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  * ClassName test
@@ -32,6 +34,11 @@ public class test {
             if(!upload.exists()) upload.mkdirs();
             System.out.println("upload ur: "+upload.getAbsolutePath());
             System.out.println("file separator: "+System.getProperty("file.separator"));
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.sss");
+            long time = System.currentTimeMillis();
+            //Date time_Date = new Date();
+            String timeToString = sdf.format(time);
+            System.out.println(timeToString);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }

@@ -4,6 +4,10 @@ import com.skywilling.cn.common.model.Node;
 import lombok.Data;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.LinkedBlockingQueue;
 
 /**
@@ -12,8 +16,7 @@ import java.util.concurrent.LinkedBlockingQueue;
 @Data
 public class LiveJunction extends Node implements Serializable {
 
-    private double priority;
-    private double weight;
+    private Set<String> curves = Collections.newSetFromMap(new ConcurrentHashMap<>());
     //排队通过路口的阻塞队列
     private LinkedBlockingQueue<String> inComingVehicles = new LinkedBlockingQueue<>();
 

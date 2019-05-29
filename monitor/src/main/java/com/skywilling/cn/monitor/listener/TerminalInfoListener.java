@@ -9,6 +9,7 @@ import com.skywilling.cn.manager.car.service.AutoCarInfoService;
 import com.skywilling.cn.manager.car.service.CarDynamicService;
 import com.skywilling.cn.monitor.model.DTO.TerminalInfo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.core.geo.GeoJsonPoint;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
@@ -49,6 +50,9 @@ public class TerminalInfoListener extends BasicListener {
         car.setPose(terminalInfo.getPose());
         car.setTimestamp(terminalInfo.getTimestamp());
         car.setRosNodes(terminalInfo.getNodes());
+        car.setLane("-1");
+        car.setFromLane("-1");
+        car.setPosition(new GeoJsonPoint(terminalInfo.getPose().getPosition().getX(),terminalInfo.getPose().getPosition().getY()));
         //异步存入redis
         autoCarInfoService.save(car);
         //然后异步取redis数据判断，不然会变成同步操作，判断reids数据再做调度

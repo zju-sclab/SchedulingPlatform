@@ -1,4 +1,4 @@
-11:12:58.497 spring-boot-logging [main] WARN  o.s.b.t.j.DuplicateJsonObjectContextCustomizerFactory$DuplicateJsonObjectContextCustomizer - 
+15:46:41.367 spring-boot-logging [main] WARN  o.s.b.t.j.DuplicateJsonObjectContextCustomizerFactory$DuplicateJsonObjectContextCustomizer - 
 
 Found multiple occurrences of org.json.JSONObject on the class path:
 
@@ -7,25 +7,25 @@ Found multiple occurrences of org.json.JSONObject on the class path:
 
 You may wish to exclude one of them to ensure predictable runtime behavior
 
-11:12:58.655 spring-boot-logging [main] INFO  c.s.cn.web.WebApplicationTests - Starting WebApplicationTests on smartcar with PID 10728 (started by Lin in D:\work\Projects\linxxx\SchedulingPlatform\web)
-11:12:58.658 spring-boot-logging [main] INFO  c.s.cn.web.WebApplicationTests - The following profiles are active: dev
-11:13:02.020 spring-boot-logging [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode!
-11:13:02.022 spring-boot-logging [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data repositories in DEFAULT mode.
-11:13:02.070 spring-boot-logging [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 26ms. Found 0 repository interfaces.
-11:13:02.144 spring-boot-logging [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode!
-11:13:02.146 spring-boot-logging [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data repositories in DEFAULT mode.
-11:13:02.165 spring-boot-logging [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 4ms. Found 0 repository interfaces.
-11:13:02.909 spring-boot-logging [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration' of type [org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration$$EnhancerBySpringCGLIB$$4ef505f9] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
-11:13:04.748 spring-boot-logging [main] INFO  org.mongodb.driver.cluster - Cluster created with settings {hosts=[localhost:27017], mode=MULTIPLE, requiredClusterType=UNKNOWN, serverSelectionTimeout='30000 ms', maxWaitQueueSize=500}
-11:13:04.749 spring-boot-logging [main] INFO  org.mongodb.driver.cluster - Adding discovered server localhost:27017 to client view of cluster
-11:13:05.625 spring-boot-logging [cluster-ClusterId{value='5ceb55c0d426e229e8c0484c', description='null'}-localhost:27017] INFO  org.mongodb.driver.connection - Opened connection [connectionId{localValue:1, serverValue:447}] to localhost:27017
-11:13:05.645 spring-boot-logging [cluster-ClusterId{value='5ceb55c0d426e229e8c0484c', description='null'}-localhost:27017] INFO  org.mongodb.driver.cluster - Monitor thread successfully connected to server with description ServerDescription{address=localhost:27017, type=STANDALONE, state=CONNECTED, ok=true, version=ServerVersion{versionList=[4, 0, 9]}, minWireVersion=0, maxWireVersion=7, maxDocumentSize=16777216, logicalSessionTimeoutMinutes=30, roundTripTimeNanos=16445699}
-11:13:05.647 spring-boot-logging [cluster-ClusterId{value='5ceb55c0d426e229e8c0484c', description='null'}-localhost:27017] INFO  org.mongodb.driver.cluster - Discovered cluster type of STANDALONE
-11:13:07.663 spring-boot-logging [main] INFO  c.s.c.c.i.server.NettyServer - listen on port: 9005
-11:13:11.128 spring-boot-logging [main] INFO  o.s.s.c.ThreadPoolTaskExecutor - Initializing ExecutorService 'applicationTaskExecutor'
-11:13:13.158 spring-boot-logging [main] INFO  c.s.cn.web.WebApplicationTests - Started WebApplicationTests in 15.73 seconds (JVM running for 19.682)
-11:13:13.804 spring-boot-logging [Thread-3] INFO  o.s.s.c.ThreadPoolTaskExecutor - Shutting down ExecutorService 'applicationTaskExecutor'
-19:46:52.222 spring-boot-logging [main] WARN  o.s.b.t.j.DuplicateJsonObjectContextCustomizerFactory$DuplicateJsonObjectContextCustomizer - 
+15:46:41.478 spring-boot-logging [main] INFO  c.s.cn.web.WebApplicationTests - Starting WebApplicationTests on smartcar with PID 25132 (started by Lin in D:\work\Projects\linxxx\SchedulingPlatform\web)
+15:46:41.488 spring-boot-logging [main] INFO  c.s.cn.web.WebApplicationTests - The following profiles are active: dev
+15:46:43.575 spring-boot-logging [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode!
+15:46:43.585 spring-boot-logging [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data repositories in DEFAULT mode.
+15:46:43.634 spring-boot-logging [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 38ms. Found 0 repository interfaces.
+15:46:43.660 spring-boot-logging [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode!
+15:46:43.662 spring-boot-logging [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data repositories in DEFAULT mode.
+15:46:43.685 spring-boot-logging [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 7ms. Found 0 repository interfaces.
+15:46:44.941 spring-boot-logging [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration' of type [org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration$$EnhancerBySpringCGLIB$$d8f93e2c] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+15:46:47.058 spring-boot-logging [main] INFO  org.mongodb.driver.cluster - Cluster created with settings {hosts=[localhost:27017], mode=MULTIPLE, requiredClusterType=UNKNOWN, serverSelectionTimeout='30000 ms', maxWaitQueueSize=500}
+15:46:47.059 spring-boot-logging [main] INFO  org.mongodb.driver.cluster - Adding discovered server localhost:27017 to client view of cluster
+15:46:47.215 spring-boot-logging [cluster-ClusterId{value='5cee38e7d426e2622c3f22d7', description='null'}-localhost:27017] INFO  org.mongodb.driver.connection - Opened connection [connectionId{localValue:1, serverValue:644}] to localhost:27017
+15:46:47.220 spring-boot-logging [cluster-ClusterId{value='5cee38e7d426e2622c3f22d7', description='null'}-localhost:27017] INFO  org.mongodb.driver.cluster - Monitor thread successfully connected to server with description ServerDescription{address=localhost:27017, type=STANDALONE, state=CONNECTED, ok=true, version=ServerVersion{versionList=[4, 0, 9]}, minWireVersion=0, maxWireVersion=7, maxDocumentSize=16777216, logicalSessionTimeoutMinutes=30, roundTripTimeNanos=3445067}
+15:46:47.222 spring-boot-logging [cluster-ClusterId{value='5cee38e7d426e2622c3f22d7', description='null'}-localhost:27017] INFO  org.mongodb.driver.cluster - Discovered cluster type of STANDALONE
+15:46:50.107 spring-boot-logging [main] INFO  c.s.c.c.i.server.NettyServer - listen on port: 9005
+15:46:53.091 spring-boot-logging [main] INFO  o.s.s.c.ThreadPoolTaskExecutor - Initializing ExecutorService 'applicationTaskExecutor'
+15:46:54.684 spring-boot-logging [main] INFO  c.s.cn.web.WebApplicationTests - Started WebApplicationTests in 14.23 seconds (JVM running for 17.793)
+15:47:02.681 spring-boot-logging [main] INFO  org.mongodb.driver.connection - Opened connection [connectionId{localValue:2, serverValue:645}] to localhost:27017
+17:56:48.616 spring-boot-logging [main] WARN  o.s.b.t.j.DuplicateJsonObjectContextCustomizerFactory$DuplicateJsonObjectContextCustomizer - 
 
 Found multiple occurrences of org.json.JSONObject on the class path:
 
@@ -34,25 +34,25 @@ Found multiple occurrences of org.json.JSONObject on the class path:
 
 You may wish to exclude one of them to ensure predictable runtime behavior
 
-19:46:52.365 spring-boot-logging [main] INFO  c.s.cn.web.WebApplicationTests - Starting WebApplicationTests on smartcar with PID 35752 (started by Lin in D:\work\Projects\linxxx\SchedulingPlatform\web)
-19:46:52.366 spring-boot-logging [main] INFO  c.s.cn.web.WebApplicationTests - The following profiles are active: dev
-19:46:55.390 spring-boot-logging [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode!
-19:46:55.432 spring-boot-logging [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data repositories in DEFAULT mode.
-19:46:55.510 spring-boot-logging [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 31ms. Found 0 repository interfaces.
-19:46:55.527 spring-boot-logging [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode!
-19:46:55.529 spring-boot-logging [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data repositories in DEFAULT mode.
-19:46:55.540 spring-boot-logging [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 4ms. Found 0 repository interfaces.
-19:46:56.263 spring-boot-logging [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration' of type [org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration$$EnhancerBySpringCGLIB$$ba36bfff] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
-19:46:57.864 spring-boot-logging [main] INFO  org.mongodb.driver.cluster - Cluster created with settings {hosts=[localhost:27017], mode=MULTIPLE, requiredClusterType=UNKNOWN, serverSelectionTimeout='30000 ms', maxWaitQueueSize=500}
-19:46:57.865 spring-boot-logging [main] INFO  org.mongodb.driver.cluster - Adding discovered server localhost:27017 to client view of cluster
-19:46:58.045 spring-boot-logging [cluster-ClusterId{value='5cebce31d426e28ba86af4a0', description='null'}-localhost:27017] INFO  org.mongodb.driver.connection - Opened connection [connectionId{localValue:1, serverValue:530}] to localhost:27017
-19:46:58.052 spring-boot-logging [cluster-ClusterId{value='5cebce31d426e28ba86af4a0', description='null'}-localhost:27017] INFO  org.mongodb.driver.cluster - Monitor thread successfully connected to server with description ServerDescription{address=localhost:27017, type=STANDALONE, state=CONNECTED, ok=true, version=ServerVersion{versionList=[4, 0, 9]}, minWireVersion=0, maxWireVersion=7, maxDocumentSize=16777216, logicalSessionTimeoutMinutes=30, roundTripTimeNanos=4214830}
-19:46:58.054 spring-boot-logging [cluster-ClusterId{value='5cebce31d426e28ba86af4a0', description='null'}-localhost:27017] INFO  org.mongodb.driver.cluster - Discovered cluster type of STANDALONE
-19:47:02.425 spring-boot-logging [main] INFO  c.s.c.c.i.server.NettyServer - listen on port: 9005
-19:47:05.048 spring-boot-logging [main] INFO  o.s.s.c.ThreadPoolTaskExecutor - Initializing ExecutorService 'applicationTaskExecutor'
-19:47:06.349 spring-boot-logging [main] INFO  c.s.cn.web.WebApplicationTests - Started WebApplicationTests in 15.919 seconds (JVM running for 17.779)
-19:47:07.098 spring-boot-logging [Thread-3] INFO  o.s.s.c.ThreadPoolTaskExecutor - Shutting down ExecutorService 'applicationTaskExecutor'
-19:47:46.079 spring-boot-logging [main] WARN  o.s.b.t.j.DuplicateJsonObjectContextCustomizerFactory$DuplicateJsonObjectContextCustomizer - 
+17:56:48.655 spring-boot-logging [main] INFO  c.s.cn.web.WebApplicationTests - Starting WebApplicationTests on smartcar with PID 33120 (started by Lin in D:\work\Projects\linxxx\SchedulingPlatform\web)
+17:56:48.655 spring-boot-logging [main] INFO  c.s.cn.web.WebApplicationTests - The following profiles are active: dev
+17:56:50.509 spring-boot-logging [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode!
+17:56:50.512 spring-boot-logging [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data repositories in DEFAULT mode.
+17:56:50.550 spring-boot-logging [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 27ms. Found 0 repository interfaces.
+17:56:50.565 spring-boot-logging [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode!
+17:56:50.566 spring-boot-logging [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data repositories in DEFAULT mode.
+17:56:50.586 spring-boot-logging [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 8ms. Found 0 repository interfaces.
+17:56:51.241 spring-boot-logging [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration' of type [org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration$$EnhancerBySpringCGLIB$$d62b3ae8] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+17:56:52.527 spring-boot-logging [main] INFO  org.mongodb.driver.cluster - Cluster created with settings {hosts=[localhost:27017], mode=MULTIPLE, requiredClusterType=UNKNOWN, serverSelectionTimeout='30000 ms', maxWaitQueueSize=500}
+17:56:52.527 spring-boot-logging [main] INFO  org.mongodb.driver.cluster - Adding discovered server localhost:27017 to client view of cluster
+17:56:52.636 spring-boot-logging [cluster-ClusterId{value='5cee5764d426e281601a9601', description='null'}-localhost:27017] INFO  org.mongodb.driver.connection - Opened connection [connectionId{localValue:1, serverValue:646}] to localhost:27017
+17:56:52.657 spring-boot-logging [cluster-ClusterId{value='5cee5764d426e281601a9601', description='null'}-localhost:27017] INFO  org.mongodb.driver.cluster - Monitor thread successfully connected to server with description ServerDescription{address=localhost:27017, type=STANDALONE, state=CONNECTED, ok=true, version=ServerVersion{versionList=[4, 0, 9]}, minWireVersion=0, maxWireVersion=7, maxDocumentSize=16777216, logicalSessionTimeoutMinutes=30, roundTripTimeNanos=13889932}
+17:56:52.663 spring-boot-logging [cluster-ClusterId{value='5cee5764d426e281601a9601', description='null'}-localhost:27017] INFO  org.mongodb.driver.cluster - Discovered cluster type of STANDALONE
+17:56:54.973 spring-boot-logging [main] INFO  c.s.c.c.i.server.NettyServer - listen on port: 9005
+17:56:56.431 spring-boot-logging [main] INFO  o.s.s.c.ThreadPoolTaskExecutor - Initializing ExecutorService 'applicationTaskExecutor'
+17:56:57.467 spring-boot-logging [main] INFO  c.s.cn.web.WebApplicationTests - Started WebApplicationTests in 10.298 seconds (JVM running for 12.372)
+17:56:57.920 spring-boot-logging [Thread-3] INFO  o.s.s.c.ThreadPoolTaskExecutor - Shutting down ExecutorService 'applicationTaskExecutor'
+17:57:54.590 spring-boot-logging [main] WARN  o.s.b.t.j.DuplicateJsonObjectContextCustomizerFactory$DuplicateJsonObjectContextCustomizer - 
 
 Found multiple occurrences of org.json.JSONObject on the class path:
 
@@ -61,21 +61,302 @@ Found multiple occurrences of org.json.JSONObject on the class path:
 
 You may wish to exclude one of them to ensure predictable runtime behavior
 
-19:47:46.113 spring-boot-logging [main] INFO  c.s.cn.web.WebApplicationTests - Starting WebApplicationTests on smartcar with PID 20092 (started by Lin in D:\work\Projects\linxxx\SchedulingPlatform\web)
-19:47:46.114 spring-boot-logging [main] INFO  c.s.cn.web.WebApplicationTests - The following profiles are active: dev
-19:47:48.392 spring-boot-logging [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode!
-19:47:48.394 spring-boot-logging [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data repositories in DEFAULT mode.
-19:47:48.432 spring-boot-logging [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 27ms. Found 0 repository interfaces.
-19:47:48.453 spring-boot-logging [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode!
-19:47:48.455 spring-boot-logging [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data repositories in DEFAULT mode.
-19:47:48.473 spring-boot-logging [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 6ms. Found 0 repository interfaces.
-19:47:49.242 spring-boot-logging [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration' of type [org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration$$EnhancerBySpringCGLIB$$26674922] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
-19:47:50.593 spring-boot-logging [main] INFO  org.mongodb.driver.cluster - Cluster created with settings {hosts=[localhost:27017], mode=MULTIPLE, requiredClusterType=UNKNOWN, serverSelectionTimeout='30000 ms', maxWaitQueueSize=500}
-19:47:50.594 spring-boot-logging [main] INFO  org.mongodb.driver.cluster - Adding discovered server localhost:27017 to client view of cluster
-19:47:50.688 spring-boot-logging [cluster-ClusterId{value='5cebce66d426e24e7c1bbf16', description='null'}-localhost:27017] INFO  org.mongodb.driver.connection - Opened connection [connectionId{localValue:1, serverValue:531}] to localhost:27017
-19:47:50.695 spring-boot-logging [cluster-ClusterId{value='5cebce66d426e24e7c1bbf16', description='null'}-localhost:27017] INFO  org.mongodb.driver.cluster - Monitor thread successfully connected to server with description ServerDescription{address=localhost:27017, type=STANDALONE, state=CONNECTED, ok=true, version=ServerVersion{versionList=[4, 0, 9]}, minWireVersion=0, maxWireVersion=7, maxDocumentSize=16777216, logicalSessionTimeoutMinutes=30, roundTripTimeNanos=4226466}
-19:47:50.698 spring-boot-logging [cluster-ClusterId{value='5cebce66d426e24e7c1bbf16', description='null'}-localhost:27017] INFO  org.mongodb.driver.cluster - Discovered cluster type of STANDALONE
-19:47:52.556 spring-boot-logging [main] INFO  c.s.c.c.i.server.NettyServer - listen on port: 9005
-19:47:54.675 spring-boot-logging [main] INFO  o.s.s.c.ThreadPoolTaskExecutor - Initializing ExecutorService 'applicationTaskExecutor'
-19:47:55.781 spring-boot-logging [main] INFO  c.s.cn.web.WebApplicationTests - Started WebApplicationTests in 10.709 seconds (JVM running for 12.893)
-19:47:56.218 spring-boot-logging [Thread-3] INFO  o.s.s.c.ThreadPoolTaskExecutor - Shutting down ExecutorService 'applicationTaskExecutor'
+17:57:54.625 spring-boot-logging [main] INFO  c.s.cn.web.WebApplicationTests - Starting WebApplicationTests on smartcar with PID 16016 (started by Lin in D:\work\Projects\linxxx\SchedulingPlatform\web)
+17:57:54.625 spring-boot-logging [main] INFO  c.s.cn.web.WebApplicationTests - The following profiles are active: dev
+17:57:56.529 spring-boot-logging [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode!
+17:57:56.532 spring-boot-logging [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data repositories in DEFAULT mode.
+17:57:56.577 spring-boot-logging [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 33ms. Found 0 repository interfaces.
+17:57:56.596 spring-boot-logging [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode!
+17:57:56.598 spring-boot-logging [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data repositories in DEFAULT mode.
+17:57:56.617 spring-boot-logging [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 5ms. Found 0 repository interfaces.
+17:57:57.255 spring-boot-logging [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration' of type [org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration$$EnhancerBySpringCGLIB$$70f7547b] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+17:57:58.518 spring-boot-logging [main] INFO  org.mongodb.driver.cluster - Cluster created with settings {hosts=[localhost:27017], mode=MULTIPLE, requiredClusterType=UNKNOWN, serverSelectionTimeout='30000 ms', maxWaitQueueSize=500}
+17:57:58.519 spring-boot-logging [main] INFO  org.mongodb.driver.cluster - Adding discovered server localhost:27017 to client view of cluster
+17:57:58.611 spring-boot-logging [cluster-ClusterId{value='5cee57a6d426e23e900f2d3e', description='null'}-localhost:27017] INFO  org.mongodb.driver.connection - Opened connection [connectionId{localValue:1, serverValue:647}] to localhost:27017
+17:57:58.619 spring-boot-logging [cluster-ClusterId{value='5cee57a6d426e23e900f2d3e', description='null'}-localhost:27017] INFO  org.mongodb.driver.cluster - Monitor thread successfully connected to server with description ServerDescription{address=localhost:27017, type=STANDALONE, state=CONNECTED, ok=true, version=ServerVersion{versionList=[4, 0, 9]}, minWireVersion=0, maxWireVersion=7, maxDocumentSize=16777216, logicalSessionTimeoutMinutes=30, roundTripTimeNanos=4692626}
+17:57:58.621 spring-boot-logging [cluster-ClusterId{value='5cee57a6d426e23e900f2d3e', description='null'}-localhost:27017] INFO  org.mongodb.driver.cluster - Discovered cluster type of STANDALONE
+17:58:00.600 spring-boot-logging [main] INFO  c.s.c.c.i.server.NettyServer - listen on port: 9005
+17:58:02.070 spring-boot-logging [main] INFO  o.s.s.c.ThreadPoolTaskExecutor - Initializing ExecutorService 'applicationTaskExecutor'
+17:58:02.963 spring-boot-logging [main] INFO  c.s.cn.web.WebApplicationTests - Started WebApplicationTests in 9.697 seconds (JVM running for 11.916)
+17:58:03.311 spring-boot-logging [Thread-3] INFO  o.s.s.c.ThreadPoolTaskExecutor - Shutting down ExecutorService 'applicationTaskExecutor'
+18:03:44.543 spring-boot-logging [main] WARN  o.s.b.t.j.DuplicateJsonObjectContextCustomizerFactory$DuplicateJsonObjectContextCustomizer - 
+
+Found multiple occurrences of org.json.JSONObject on the class path:
+
+	jar:file:/C:/Users/Lin/.m2/repository/com/vaadin/external/google/android-json/0.0.20131108.vaadin1/android-json-0.0.20131108.vaadin1.jar!/org/json/JSONObject.class
+	jar:file:/C:/Users/Lin/.m2/repository/org/json/json/20170516/json-20170516.jar!/org/json/JSONObject.class
+
+You may wish to exclude one of them to ensure predictable runtime behavior
+
+18:03:44.573 spring-boot-logging [main] INFO  c.s.cn.web.WebApplicationTests - Starting WebApplicationTests on smartcar with PID 15608 (started by Lin in D:\work\Projects\linxxx\SchedulingPlatform\web)
+18:03:44.573 spring-boot-logging [main] INFO  c.s.cn.web.WebApplicationTests - The following profiles are active: dev
+18:03:47.064 spring-boot-logging [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode!
+18:03:47.068 spring-boot-logging [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data repositories in DEFAULT mode.
+18:03:47.109 spring-boot-logging [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 30ms. Found 0 repository interfaces.
+18:03:47.131 spring-boot-logging [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode!
+18:03:47.134 spring-boot-logging [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data repositories in DEFAULT mode.
+18:03:47.156 spring-boot-logging [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 8ms. Found 0 repository interfaces.
+18:03:48.140 spring-boot-logging [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration' of type [org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration$$EnhancerBySpringCGLIB$$82b85c84] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+18:03:49.408 spring-boot-logging [main] INFO  org.mongodb.driver.cluster - Cluster created with settings {hosts=[localhost:27017], mode=MULTIPLE, requiredClusterType=UNKNOWN, serverSelectionTimeout='30000 ms', maxWaitQueueSize=500}
+18:03:49.409 spring-boot-logging [main] INFO  org.mongodb.driver.cluster - Adding discovered server localhost:27017 to client view of cluster
+18:03:49.505 spring-boot-logging [cluster-ClusterId{value='5cee5905d426e23cf8da43fb', description='null'}-localhost:27017] INFO  org.mongodb.driver.connection - Opened connection [connectionId{localValue:1, serverValue:648}] to localhost:27017
+18:03:49.512 spring-boot-logging [cluster-ClusterId{value='5cee5905d426e23cf8da43fb', description='null'}-localhost:27017] INFO  org.mongodb.driver.cluster - Monitor thread successfully connected to server with description ServerDescription{address=localhost:27017, type=STANDALONE, state=CONNECTED, ok=true, version=ServerVersion{versionList=[4, 0, 9]}, minWireVersion=0, maxWireVersion=7, maxDocumentSize=16777216, logicalSessionTimeoutMinutes=30, roundTripTimeNanos=5087909}
+18:03:49.516 spring-boot-logging [cluster-ClusterId{value='5cee5905d426e23cf8da43fb', description='null'}-localhost:27017] INFO  org.mongodb.driver.cluster - Discovered cluster type of STANDALONE
+18:03:51.619 spring-boot-logging [main] INFO  c.s.c.c.i.server.NettyServer - listen on port: 9005
+18:03:53.331 spring-boot-logging [main] INFO  o.s.s.c.ThreadPoolTaskExecutor - Initializing ExecutorService 'applicationTaskExecutor'
+18:03:54.665 spring-boot-logging [main] INFO  c.s.cn.web.WebApplicationTests - Started WebApplicationTests in 11.048 seconds (JVM running for 13.97)
+18:04:08.775 spring-boot-logging [Thread-3] INFO  o.s.s.c.ThreadPoolTaskExecutor - Shutting down ExecutorService 'applicationTaskExecutor'
+18:04:23.767 spring-boot-logging [main] WARN  o.s.b.t.j.DuplicateJsonObjectContextCustomizerFactory$DuplicateJsonObjectContextCustomizer - 
+
+Found multiple occurrences of org.json.JSONObject on the class path:
+
+	jar:file:/C:/Users/Lin/.m2/repository/com/vaadin/external/google/android-json/0.0.20131108.vaadin1/android-json-0.0.20131108.vaadin1.jar!/org/json/JSONObject.class
+	jar:file:/C:/Users/Lin/.m2/repository/org/json/json/20170516/json-20170516.jar!/org/json/JSONObject.class
+
+You may wish to exclude one of them to ensure predictable runtime behavior
+
+18:04:23.797 spring-boot-logging [main] INFO  c.s.cn.web.WebApplicationTests - Starting WebApplicationTests on smartcar with PID 11012 (started by Lin in D:\work\Projects\linxxx\SchedulingPlatform\web)
+18:04:23.797 spring-boot-logging [main] INFO  c.s.cn.web.WebApplicationTests - The following profiles are active: dev
+18:04:25.747 spring-boot-logging [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode!
+18:04:25.749 spring-boot-logging [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data repositories in DEFAULT mode.
+18:04:25.784 spring-boot-logging [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 26ms. Found 0 repository interfaces.
+18:04:25.801 spring-boot-logging [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode!
+18:04:25.802 spring-boot-logging [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data repositories in DEFAULT mode.
+18:04:25.818 spring-boot-logging [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 6ms. Found 0 repository interfaces.
+18:04:26.410 spring-boot-logging [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration' of type [org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration$$EnhancerBySpringCGLIB$$46cb6f65] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+18:04:27.480 spring-boot-logging [main] INFO  org.mongodb.driver.cluster - Cluster created with settings {hosts=[localhost:27017], mode=MULTIPLE, requiredClusterType=UNKNOWN, serverSelectionTimeout='30000 ms', maxWaitQueueSize=500}
+18:04:27.481 spring-boot-logging [main] INFO  org.mongodb.driver.cluster - Adding discovered server localhost:27017 to client view of cluster
+18:04:27.582 spring-boot-logging [cluster-ClusterId{value='5cee592bd426e22b049080dd', description='null'}-localhost:27017] INFO  org.mongodb.driver.connection - Opened connection [connectionId{localValue:1, serverValue:649}] to localhost:27017
+18:04:27.588 spring-boot-logging [cluster-ClusterId{value='5cee592bd426e22b049080dd', description='null'}-localhost:27017] INFO  org.mongodb.driver.cluster - Monitor thread successfully connected to server with description ServerDescription{address=localhost:27017, type=STANDALONE, state=CONNECTED, ok=true, version=ServerVersion{versionList=[4, 0, 9]}, minWireVersion=0, maxWireVersion=7, maxDocumentSize=16777216, logicalSessionTimeoutMinutes=30, roundTripTimeNanos=4644317}
+18:04:27.591 spring-boot-logging [cluster-ClusterId{value='5cee592bd426e22b049080dd', description='null'}-localhost:27017] INFO  org.mongodb.driver.cluster - Discovered cluster type of STANDALONE
+18:04:29.130 spring-boot-logging [main] INFO  c.s.c.c.i.server.NettyServer - listen on port: 9005
+18:04:31.148 spring-boot-logging [main] INFO  o.s.s.c.ThreadPoolTaskExecutor - Initializing ExecutorService 'applicationTaskExecutor'
+18:04:32.161 spring-boot-logging [main] INFO  c.s.cn.web.WebApplicationTests - Started WebApplicationTests in 9.983 seconds (JVM running for 11.908)
+18:04:32.645 spring-boot-logging [main] INFO  c.alibaba.druid.pool.DruidDataSource - {dataSource-1} inited
+18:04:33.387 spring-boot-logging [Thread-3] INFO  o.s.s.c.ThreadPoolTaskExecutor - Shutting down ExecutorService 'applicationTaskExecutor'
+18:04:33.395 spring-boot-logging [Thread-3] INFO  c.alibaba.druid.pool.DruidDataSource - {dataSource-1} closed
+18:05:03.152 spring-boot-logging [main] WARN  o.s.b.t.j.DuplicateJsonObjectContextCustomizerFactory$DuplicateJsonObjectContextCustomizer - 
+
+Found multiple occurrences of org.json.JSONObject on the class path:
+
+	jar:file:/C:/Users/Lin/.m2/repository/com/vaadin/external/google/android-json/0.0.20131108.vaadin1/android-json-0.0.20131108.vaadin1.jar!/org/json/JSONObject.class
+	jar:file:/C:/Users/Lin/.m2/repository/org/json/json/20170516/json-20170516.jar!/org/json/JSONObject.class
+
+You may wish to exclude one of them to ensure predictable runtime behavior
+
+18:05:03.202 spring-boot-logging [main] INFO  c.s.cn.web.WebApplicationTests - Starting WebApplicationTests on smartcar with PID 10888 (started by Lin in D:\work\Projects\linxxx\SchedulingPlatform\web)
+18:05:03.203 spring-boot-logging [main] INFO  c.s.cn.web.WebApplicationTests - The following profiles are active: dev
+18:05:05.364 spring-boot-logging [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode!
+18:05:05.368 spring-boot-logging [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data repositories in DEFAULT mode.
+18:05:05.423 spring-boot-logging [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 39ms. Found 0 repository interfaces.
+18:05:05.447 spring-boot-logging [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode!
+18:05:05.449 spring-boot-logging [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data repositories in DEFAULT mode.
+18:05:05.470 spring-boot-logging [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 6ms. Found 0 repository interfaces.
+18:05:06.432 spring-boot-logging [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration' of type [org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration$$EnhancerBySpringCGLIB$$7be1f5b9] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+18:05:07.747 spring-boot-logging [main] INFO  org.mongodb.driver.cluster - Cluster created with settings {hosts=[localhost:27017], mode=MULTIPLE, requiredClusterType=UNKNOWN, serverSelectionTimeout='30000 ms', maxWaitQueueSize=500}
+18:05:07.747 spring-boot-logging [main] INFO  org.mongodb.driver.cluster - Adding discovered server localhost:27017 to client view of cluster
+18:05:07.851 spring-boot-logging [cluster-ClusterId{value='5cee5953d426e22a8841c38a', description='null'}-localhost:27017] INFO  org.mongodb.driver.connection - Opened connection [connectionId{localValue:1, serverValue:650}] to localhost:27017
+18:05:07.861 spring-boot-logging [cluster-ClusterId{value='5cee5953d426e22a8841c38a', description='null'}-localhost:27017] INFO  org.mongodb.driver.cluster - Monitor thread successfully connected to server with description ServerDescription{address=localhost:27017, type=STANDALONE, state=CONNECTED, ok=true, version=ServerVersion{versionList=[4, 0, 9]}, minWireVersion=0, maxWireVersion=7, maxDocumentSize=16777216, logicalSessionTimeoutMinutes=30, roundTripTimeNanos=7366167}
+18:05:07.865 spring-boot-logging [cluster-ClusterId{value='5cee5953d426e22a8841c38a', description='null'}-localhost:27017] INFO  org.mongodb.driver.cluster - Discovered cluster type of STANDALONE
+18:05:10.252 spring-boot-logging [main] INFO  c.s.c.c.i.server.NettyServer - listen on port: 9005
+18:05:11.850 spring-boot-logging [main] INFO  o.s.s.c.ThreadPoolTaskExecutor - Initializing ExecutorService 'applicationTaskExecutor'
+18:05:13.128 spring-boot-logging [main] INFO  c.s.cn.web.WebApplicationTests - Started WebApplicationTests in 10.926 seconds (JVM running for 13.118)
+18:05:16.453 spring-boot-logging [main] INFO  c.alibaba.druid.pool.DruidDataSource - {dataSource-1} inited
+18:13:07.223 spring-boot-logging [main] WARN  o.s.b.t.j.DuplicateJsonObjectContextCustomizerFactory$DuplicateJsonObjectContextCustomizer - 
+
+Found multiple occurrences of org.json.JSONObject on the class path:
+
+	jar:file:/C:/Users/Lin/.m2/repository/com/vaadin/external/google/android-json/0.0.20131108.vaadin1/android-json-0.0.20131108.vaadin1.jar!/org/json/JSONObject.class
+	jar:file:/C:/Users/Lin/.m2/repository/org/json/json/20170516/json-20170516.jar!/org/json/JSONObject.class
+
+You may wish to exclude one of them to ensure predictable runtime behavior
+
+18:13:07.253 spring-boot-logging [main] INFO  c.s.cn.web.WebApplicationTests - Starting WebApplicationTests on smartcar with PID 34592 (started by Lin in D:\work\Projects\linxxx\SchedulingPlatform\web)
+18:13:07.253 spring-boot-logging [main] INFO  c.s.cn.web.WebApplicationTests - The following profiles are active: dev
+18:13:08.931 spring-boot-logging [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode!
+18:13:08.935 spring-boot-logging [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data repositories in DEFAULT mode.
+18:13:08.974 spring-boot-logging [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 28ms. Found 0 repository interfaces.
+18:13:08.991 spring-boot-logging [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode!
+18:13:08.992 spring-boot-logging [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data repositories in DEFAULT mode.
+18:13:09.009 spring-boot-logging [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 7ms. Found 0 repository interfaces.
+18:13:09.584 spring-boot-logging [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration' of type [org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration$$EnhancerBySpringCGLIB$$8d62b4c9] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+18:13:10.904 spring-boot-logging [main] INFO  org.mongodb.driver.cluster - Cluster created with settings {hosts=[localhost:27017], mode=MULTIPLE, requiredClusterType=UNKNOWN, serverSelectionTimeout='30000 ms', maxWaitQueueSize=500}
+18:13:10.904 spring-boot-logging [main] INFO  org.mongodb.driver.cluster - Adding discovered server localhost:27017 to client view of cluster
+18:13:10.985 spring-boot-logging [cluster-ClusterId{value='5cee5b36d426e28720108699', description='null'}-localhost:27017] INFO  org.mongodb.driver.connection - Opened connection [connectionId{localValue:1, serverValue:651}] to localhost:27017
+18:13:10.992 spring-boot-logging [cluster-ClusterId{value='5cee5b36d426e28720108699', description='null'}-localhost:27017] INFO  org.mongodb.driver.cluster - Monitor thread successfully connected to server with description ServerDescription{address=localhost:27017, type=STANDALONE, state=CONNECTED, ok=true, version=ServerVersion{versionList=[4, 0, 9]}, minWireVersion=0, maxWireVersion=7, maxDocumentSize=16777216, logicalSessionTimeoutMinutes=30, roundTripTimeNanos=4585783}
+18:13:10.995 spring-boot-logging [cluster-ClusterId{value='5cee5b36d426e28720108699', description='null'}-localhost:27017] INFO  org.mongodb.driver.cluster - Discovered cluster type of STANDALONE
+18:13:12.548 spring-boot-logging [main] INFO  c.s.c.c.i.server.NettyServer - listen on port: 9005
+18:13:13.882 spring-boot-logging [main] INFO  o.s.s.c.ThreadPoolTaskExecutor - Initializing ExecutorService 'applicationTaskExecutor'
+18:13:14.779 spring-boot-logging [main] INFO  c.s.cn.web.WebApplicationTests - Started WebApplicationTests in 9.167 seconds (JVM running for 11.377)
+18:13:15.218 spring-boot-logging [main] INFO  org.mongodb.driver.connection - Opened connection [connectionId{localValue:2, serverValue:652}] to localhost:27017
+18:13:15.622 spring-boot-logging [Thread-3] INFO  o.s.s.c.ThreadPoolTaskExecutor - Shutting down ExecutorService 'applicationTaskExecutor'
+18:13:15.628 spring-boot-logging [Thread-3] INFO  org.mongodb.driver.connection - Closed connection [connectionId{localValue:2, serverValue:652}] to localhost:27017 because the pool has been closed.
+18:13:29.603 spring-boot-logging [main] WARN  o.s.b.t.j.DuplicateJsonObjectContextCustomizerFactory$DuplicateJsonObjectContextCustomizer - 
+
+Found multiple occurrences of org.json.JSONObject on the class path:
+
+	jar:file:/C:/Users/Lin/.m2/repository/com/vaadin/external/google/android-json/0.0.20131108.vaadin1/android-json-0.0.20131108.vaadin1.jar!/org/json/JSONObject.class
+	jar:file:/C:/Users/Lin/.m2/repository/org/json/json/20170516/json-20170516.jar!/org/json/JSONObject.class
+
+You may wish to exclude one of them to ensure predictable runtime behavior
+
+18:13:29.628 spring-boot-logging [main] INFO  c.s.cn.web.WebApplicationTests - Starting WebApplicationTests on smartcar with PID 9728 (started by Lin in D:\work\Projects\linxxx\SchedulingPlatform\web)
+18:13:29.628 spring-boot-logging [main] INFO  c.s.cn.web.WebApplicationTests - The following profiles are active: dev
+18:13:31.362 spring-boot-logging [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode!
+18:13:31.365 spring-boot-logging [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data repositories in DEFAULT mode.
+18:13:31.403 spring-boot-logging [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 29ms. Found 0 repository interfaces.
+18:13:31.444 spring-boot-logging [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode!
+18:13:31.446 spring-boot-logging [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data repositories in DEFAULT mode.
+18:13:31.478 spring-boot-logging [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 13ms. Found 0 repository interfaces.
+18:13:32.241 spring-boot-logging [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration' of type [org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration$$EnhancerBySpringCGLIB$$9412b775] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+18:13:33.357 spring-boot-logging [main] INFO  org.mongodb.driver.cluster - Cluster created with settings {hosts=[localhost:27017], mode=MULTIPLE, requiredClusterType=UNKNOWN, serverSelectionTimeout='30000 ms', maxWaitQueueSize=500}
+18:13:33.357 spring-boot-logging [main] INFO  org.mongodb.driver.cluster - Adding discovered server localhost:27017 to client view of cluster
+18:13:33.435 spring-boot-logging [cluster-ClusterId{value='5cee5b4dd426e22600c61837', description='null'}-localhost:27017] INFO  org.mongodb.driver.connection - Opened connection [connectionId{localValue:1, serverValue:653}] to localhost:27017
+18:13:33.441 spring-boot-logging [cluster-ClusterId{value='5cee5b4dd426e22600c61837', description='null'}-localhost:27017] INFO  org.mongodb.driver.cluster - Monitor thread successfully connected to server with description ServerDescription{address=localhost:27017, type=STANDALONE, state=CONNECTED, ok=true, version=ServerVersion{versionList=[4, 0, 9]}, minWireVersion=0, maxWireVersion=7, maxDocumentSize=16777216, logicalSessionTimeoutMinutes=30, roundTripTimeNanos=3686609}
+18:13:33.443 spring-boot-logging [cluster-ClusterId{value='5cee5b4dd426e22600c61837', description='null'}-localhost:27017] INFO  org.mongodb.driver.cluster - Discovered cluster type of STANDALONE
+18:13:35.018 spring-boot-logging [main] INFO  c.s.c.c.i.server.NettyServer - listen on port: 9005
+18:13:36.347 spring-boot-logging [main] INFO  o.s.s.c.ThreadPoolTaskExecutor - Initializing ExecutorService 'applicationTaskExecutor'
+18:13:37.710 spring-boot-logging [main] INFO  c.s.cn.web.WebApplicationTests - Started WebApplicationTests in 9.351 seconds (JVM running for 11.47)
+18:13:38.217 spring-boot-logging [main] INFO  org.mongodb.driver.connection - Opened connection [connectionId{localValue:2, serverValue:654}] to localhost:27017
+18:13:38.374 spring-boot-logging [Thread-3] INFO  o.s.s.c.ThreadPoolTaskExecutor - Shutting down ExecutorService 'applicationTaskExecutor'
+18:13:38.378 spring-boot-logging [Thread-3] INFO  org.mongodb.driver.connection - Closed connection [connectionId{localValue:2, serverValue:654}] to localhost:27017 because the pool has been closed.
+18:15:29.867 spring-boot-logging [main] WARN  o.s.b.t.j.DuplicateJsonObjectContextCustomizerFactory$DuplicateJsonObjectContextCustomizer - 
+
+Found multiple occurrences of org.json.JSONObject on the class path:
+
+	jar:file:/C:/Users/Lin/.m2/repository/com/vaadin/external/google/android-json/0.0.20131108.vaadin1/android-json-0.0.20131108.vaadin1.jar!/org/json/JSONObject.class
+	jar:file:/C:/Users/Lin/.m2/repository/org/json/json/20170516/json-20170516.jar!/org/json/JSONObject.class
+
+You may wish to exclude one of them to ensure predictable runtime behavior
+
+18:15:29.896 spring-boot-logging [main] INFO  c.s.cn.web.WebApplicationTests - Starting WebApplicationTests on smartcar with PID 8328 (started by Lin in D:\work\Projects\linxxx\SchedulingPlatform\web)
+18:15:29.897 spring-boot-logging [main] INFO  c.s.cn.web.WebApplicationTests - The following profiles are active: dev
+18:15:31.705 spring-boot-logging [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode!
+18:15:31.707 spring-boot-logging [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data repositories in DEFAULT mode.
+18:15:31.741 spring-boot-logging [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 26ms. Found 0 repository interfaces.
+18:15:31.757 spring-boot-logging [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode!
+18:15:31.759 spring-boot-logging [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data repositories in DEFAULT mode.
+18:15:31.773 spring-boot-logging [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 6ms. Found 0 repository interfaces.
+18:15:32.485 spring-boot-logging [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration' of type [org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration$$EnhancerBySpringCGLIB$$796ef487] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+18:15:33.634 spring-boot-logging [main] INFO  org.mongodb.driver.cluster - Cluster created with settings {hosts=[localhost:27017], mode=MULTIPLE, requiredClusterType=UNKNOWN, serverSelectionTimeout='30000 ms', maxWaitQueueSize=500}
+18:15:33.635 spring-boot-logging [main] INFO  org.mongodb.driver.cluster - Adding discovered server localhost:27017 to client view of cluster
+18:15:33.718 spring-boot-logging [cluster-ClusterId{value='5cee5bc5d426e220884bc201', description='null'}-localhost:27017] INFO  org.mongodb.driver.connection - Opened connection [connectionId{localValue:1, serverValue:655}] to localhost:27017
+18:15:33.725 spring-boot-logging [cluster-ClusterId{value='5cee5bc5d426e220884bc201', description='null'}-localhost:27017] INFO  org.mongodb.driver.cluster - Monitor thread successfully connected to server with description ServerDescription{address=localhost:27017, type=STANDALONE, state=CONNECTED, ok=true, version=ServerVersion{versionList=[4, 0, 9]}, minWireVersion=0, maxWireVersion=7, maxDocumentSize=16777216, logicalSessionTimeoutMinutes=30, roundTripTimeNanos=4537827}
+18:15:33.727 spring-boot-logging [cluster-ClusterId{value='5cee5bc5d426e220884bc201', description='null'}-localhost:27017] INFO  org.mongodb.driver.cluster - Discovered cluster type of STANDALONE
+18:15:35.279 spring-boot-logging [main] INFO  c.s.c.c.i.server.NettyServer - listen on port: 9005
+18:15:37.168 spring-boot-logging [main] INFO  o.s.s.c.ThreadPoolTaskExecutor - Initializing ExecutorService 'applicationTaskExecutor'
+18:15:38.480 spring-boot-logging [main] INFO  c.s.cn.web.WebApplicationTests - Started WebApplicationTests in 9.74 seconds (JVM running for 11.839)
+18:15:39.032 spring-boot-logging [main] INFO  org.mongodb.driver.connection - Opened connection [connectionId{localValue:2, serverValue:656}] to localhost:27017
+18:15:39.575 spring-boot-logging [Thread-3] INFO  o.s.s.c.ThreadPoolTaskExecutor - Shutting down ExecutorService 'applicationTaskExecutor'
+18:15:39.579 spring-boot-logging [Thread-3] INFO  org.mongodb.driver.connection - Closed connection [connectionId{localValue:2, serverValue:656}] to localhost:27017 because the pool has been closed.
+18:17:26.560 spring-boot-logging [main] WARN  o.s.b.t.j.DuplicateJsonObjectContextCustomizerFactory$DuplicateJsonObjectContextCustomizer - 
+
+Found multiple occurrences of org.json.JSONObject on the class path:
+
+	jar:file:/C:/Users/Lin/.m2/repository/com/vaadin/external/google/android-json/0.0.20131108.vaadin1/android-json-0.0.20131108.vaadin1.jar!/org/json/JSONObject.class
+	jar:file:/C:/Users/Lin/.m2/repository/org/json/json/20170516/json-20170516.jar!/org/json/JSONObject.class
+
+You may wish to exclude one of them to ensure predictable runtime behavior
+
+18:17:26.594 spring-boot-logging [main] INFO  c.s.cn.web.WebApplicationTests - Starting WebApplicationTests on smartcar with PID 9256 (started by Lin in D:\work\Projects\linxxx\SchedulingPlatform\web)
+18:17:26.594 spring-boot-logging [main] INFO  c.s.cn.web.WebApplicationTests - The following profiles are active: dev
+18:17:28.793 spring-boot-logging [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode!
+18:17:28.796 spring-boot-logging [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data repositories in DEFAULT mode.
+18:17:28.845 spring-boot-logging [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 38ms. Found 0 repository interfaces.
+18:17:28.870 spring-boot-logging [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode!
+18:17:28.873 spring-boot-logging [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data repositories in DEFAULT mode.
+18:17:28.894 spring-boot-logging [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 7ms. Found 0 repository interfaces.
+18:17:29.807 spring-boot-logging [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration' of type [org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration$$EnhancerBySpringCGLIB$$d1460e9a] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+18:17:31.104 spring-boot-logging [main] INFO  org.mongodb.driver.cluster - Cluster created with settings {hosts=[localhost:27017], mode=MULTIPLE, requiredClusterType=UNKNOWN, serverSelectionTimeout='30000 ms', maxWaitQueueSize=500}
+18:17:31.104 spring-boot-logging [main] INFO  org.mongodb.driver.cluster - Adding discovered server localhost:27017 to client view of cluster
+18:17:31.205 spring-boot-logging [cluster-ClusterId{value='5cee5c3bd426e224281ac971', description='null'}-localhost:27017] INFO  org.mongodb.driver.connection - Opened connection [connectionId{localValue:1, serverValue:657}] to localhost:27017
+18:17:31.213 spring-boot-logging [cluster-ClusterId{value='5cee5c3bd426e224281ac971', description='null'}-localhost:27017] INFO  org.mongodb.driver.cluster - Monitor thread successfully connected to server with description ServerDescription{address=localhost:27017, type=STANDALONE, state=CONNECTED, ok=true, version=ServerVersion{versionList=[4, 0, 9]}, minWireVersion=0, maxWireVersion=7, maxDocumentSize=16777216, logicalSessionTimeoutMinutes=30, roundTripTimeNanos=5072746}
+18:17:31.218 spring-boot-logging [cluster-ClusterId{value='5cee5c3bd426e224281ac971', description='null'}-localhost:27017] INFO  org.mongodb.driver.cluster - Discovered cluster type of STANDALONE
+18:17:33.000 spring-boot-logging [main] INFO  c.s.c.c.i.server.NettyServer - listen on port: 9005
+18:17:35.027 spring-boot-logging [main] INFO  o.s.s.c.ThreadPoolTaskExecutor - Initializing ExecutorService 'applicationTaskExecutor'
+18:17:36.213 spring-boot-logging [main] INFO  c.s.cn.web.WebApplicationTests - Started WebApplicationTests in 10.476 seconds (JVM running for 13.646)
+18:17:36.706 spring-boot-logging [main] INFO  org.mongodb.driver.connection - Opened connection [connectionId{localValue:2, serverValue:658}] to localhost:27017
+18:20:02.323 spring-boot-logging [main] WARN  o.s.b.t.j.DuplicateJsonObjectContextCustomizerFactory$DuplicateJsonObjectContextCustomizer - 
+
+Found multiple occurrences of org.json.JSONObject on the class path:
+
+	jar:file:/C:/Users/Lin/.m2/repository/com/vaadin/external/google/android-json/0.0.20131108.vaadin1/android-json-0.0.20131108.vaadin1.jar!/org/json/JSONObject.class
+	jar:file:/C:/Users/Lin/.m2/repository/org/json/json/20170516/json-20170516.jar!/org/json/JSONObject.class
+
+You may wish to exclude one of them to ensure predictable runtime behavior
+
+18:20:02.364 spring-boot-logging [main] INFO  c.s.cn.web.WebApplicationTests - Starting WebApplicationTests on smartcar with PID 30040 (started by Lin in D:\work\Projects\linxxx\SchedulingPlatform\web)
+18:20:02.365 spring-boot-logging [main] INFO  c.s.cn.web.WebApplicationTests - The following profiles are active: dev
+18:20:05.943 spring-boot-logging [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode!
+18:20:05.945 spring-boot-logging [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data repositories in DEFAULT mode.
+18:20:05.992 spring-boot-logging [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 38ms. Found 0 repository interfaces.
+18:20:06.014 spring-boot-logging [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode!
+18:20:06.016 spring-boot-logging [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data repositories in DEFAULT mode.
+18:20:06.035 spring-boot-logging [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 8ms. Found 0 repository interfaces.
+18:20:06.633 spring-boot-logging [Thread-3] INFO  o.s.s.c.ThreadPoolTaskExecutor - Shutting down ExecutorService 'applicationTaskExecutor'
+18:20:06.641 spring-boot-logging [Thread-3] INFO  org.mongodb.driver.connection - Closed connection [connectionId{localValue:2, serverValue:658}] to localhost:27017 because the pool has been closed.
+18:20:07.210 spring-boot-logging [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration' of type [org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration$$EnhancerBySpringCGLIB$$bb0554a4] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+18:20:10.140 spring-boot-logging [main] INFO  org.mongodb.driver.cluster - Cluster created with settings {hosts=[localhost:27017], mode=MULTIPLE, requiredClusterType=UNKNOWN, serverSelectionTimeout='30000 ms', maxWaitQueueSize=500}
+18:20:10.140 spring-boot-logging [main] INFO  org.mongodb.driver.cluster - Adding discovered server localhost:27017 to client view of cluster
+18:20:10.339 spring-boot-logging [cluster-ClusterId{value='5cee5cdad426e275587a45a3', description='null'}-localhost:27017] INFO  org.mongodb.driver.connection - Opened connection [connectionId{localValue:1, serverValue:659}] to localhost:27017
+18:20:10.347 spring-boot-logging [cluster-ClusterId{value='5cee5cdad426e275587a45a3', description='null'}-localhost:27017] INFO  org.mongodb.driver.cluster - Monitor thread successfully connected to server with description ServerDescription{address=localhost:27017, type=STANDALONE, state=CONNECTED, ok=true, version=ServerVersion{versionList=[4, 0, 9]}, minWireVersion=0, maxWireVersion=7, maxDocumentSize=16777216, logicalSessionTimeoutMinutes=30, roundTripTimeNanos=5037485}
+18:20:10.349 spring-boot-logging [cluster-ClusterId{value='5cee5cdad426e275587a45a3', description='null'}-localhost:27017] INFO  org.mongodb.driver.cluster - Discovered cluster type of STANDALONE
+18:20:12.296 spring-boot-logging [main] INFO  c.s.c.c.i.server.NettyServer - listen on port: 9005
+18:20:14.524 spring-boot-logging [main] INFO  o.s.s.c.ThreadPoolTaskExecutor - Initializing ExecutorService 'applicationTaskExecutor'
+18:20:34.034 spring-boot-logging [main] WARN  o.s.b.t.j.DuplicateJsonObjectContextCustomizerFactory$DuplicateJsonObjectContextCustomizer - 
+
+Found multiple occurrences of org.json.JSONObject on the class path:
+
+	jar:file:/C:/Users/Lin/.m2/repository/com/vaadin/external/google/android-json/0.0.20131108.vaadin1/android-json-0.0.20131108.vaadin1.jar!/org/json/JSONObject.class
+	jar:file:/C:/Users/Lin/.m2/repository/org/json/json/20170516/json-20170516.jar!/org/json/JSONObject.class
+
+You may wish to exclude one of them to ensure predictable runtime behavior
+
+18:20:34.066 spring-boot-logging [main] INFO  c.s.cn.web.WebApplicationTests - Starting WebApplicationTests on smartcar with PID 25440 (started by Lin in D:\work\Projects\linxxx\SchedulingPlatform\web)
+18:20:34.067 spring-boot-logging [main] INFO  c.s.cn.web.WebApplicationTests - The following profiles are active: dev
+18:20:36.088 spring-boot-logging [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode!
+18:20:36.091 spring-boot-logging [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data repositories in DEFAULT mode.
+18:20:36.148 spring-boot-logging [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 44ms. Found 0 repository interfaces.
+18:20:36.171 spring-boot-logging [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode!
+18:20:36.173 spring-boot-logging [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data repositories in DEFAULT mode.
+18:20:36.196 spring-boot-logging [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 8ms. Found 0 repository interfaces.
+18:20:37.118 spring-boot-logging [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration' of type [org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration$$EnhancerBySpringCGLIB$$322ac5bc] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+18:20:38.381 spring-boot-logging [main] INFO  org.mongodb.driver.cluster - Cluster created with settings {hosts=[localhost:27017], mode=MULTIPLE, requiredClusterType=UNKNOWN, serverSelectionTimeout='30000 ms', maxWaitQueueSize=500}
+18:20:38.381 spring-boot-logging [main] INFO  org.mongodb.driver.cluster - Adding discovered server localhost:27017 to client view of cluster
+18:20:38.481 spring-boot-logging [cluster-ClusterId{value='5cee5cf6d426e263602c6222', description='null'}-localhost:27017] INFO  org.mongodb.driver.connection - Opened connection [connectionId{localValue:1, serverValue:660}] to localhost:27017
+18:20:38.488 spring-boot-logging [cluster-ClusterId{value='5cee5cf6d426e263602c6222', description='null'}-localhost:27017] INFO  org.mongodb.driver.cluster - Monitor thread successfully connected to server with description ServerDescription{address=localhost:27017, type=STANDALONE, state=CONNECTED, ok=true, version=ServerVersion{versionList=[4, 0, 9]}, minWireVersion=0, maxWireVersion=7, maxDocumentSize=16777216, logicalSessionTimeoutMinutes=30, roundTripTimeNanos=4639028}
+18:20:38.491 spring-boot-logging [cluster-ClusterId{value='5cee5cf6d426e263602c6222', description='null'}-localhost:27017] INFO  org.mongodb.driver.cluster - Discovered cluster type of STANDALONE
+18:20:40.705 spring-boot-logging [main] INFO  c.s.c.c.i.server.NettyServer - listen on port: 9005
+18:20:42.326 spring-boot-logging [main] INFO  o.s.s.c.ThreadPoolTaskExecutor - Initializing ExecutorService 'applicationTaskExecutor'
+18:20:43.650 spring-boot-logging [main] INFO  c.s.cn.web.WebApplicationTests - Started WebApplicationTests in 10.598 seconds (JVM running for 13.447)
+18:21:33.740 spring-boot-logging [pool-2-thread-1] INFO  org.mongodb.driver.connection - Opened connection [connectionId{localValue:2, serverValue:661}] to localhost:27017
+18:21:33.772 spring-boot-logging [main] INFO  org.mongodb.driver.connection - Opened connection [connectionId{localValue:3, serverValue:662}] to localhost:27017
+18:21:41.795 spring-boot-logging [main] INFO  c.alibaba.druid.pool.DruidDataSource - {dataSource-1} inited
+18:24:39.013 spring-boot-logging [main] WARN  o.s.b.t.j.DuplicateJsonObjectContextCustomizerFactory$DuplicateJsonObjectContextCustomizer - 
+
+Found multiple occurrences of org.json.JSONObject on the class path:
+
+	jar:file:/C:/Users/Lin/.m2/repository/com/vaadin/external/google/android-json/0.0.20131108.vaadin1/android-json-0.0.20131108.vaadin1.jar!/org/json/JSONObject.class
+	jar:file:/C:/Users/Lin/.m2/repository/org/json/json/20170516/json-20170516.jar!/org/json/JSONObject.class
+
+You may wish to exclude one of them to ensure predictable runtime behavior
+
+18:24:39.047 spring-boot-logging [main] INFO  c.s.cn.web.WebApplicationTests - Starting WebApplicationTests on smartcar with PID 24908 (started by Lin in D:\work\Projects\linxxx\SchedulingPlatform\web)
+18:24:39.048 spring-boot-logging [main] INFO  c.s.cn.web.WebApplicationTests - The following profiles are active: dev
+18:24:41.079 spring-boot-logging [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode!
+18:24:41.083 spring-boot-logging [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data repositories in DEFAULT mode.
+18:24:41.121 spring-boot-logging [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 27ms. Found 0 repository interfaces.
+18:24:41.141 spring-boot-logging [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode!
+18:24:41.143 spring-boot-logging [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data repositories in DEFAULT mode.
+18:24:41.159 spring-boot-logging [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 6ms. Found 0 repository interfaces.
+18:24:42.095 spring-boot-logging [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration' of type [org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration$$EnhancerBySpringCGLIB$$c01dca16] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+18:24:43.321 spring-boot-logging [main] INFO  org.mongodb.driver.cluster - Cluster created with settings {hosts=[localhost:27017], mode=MULTIPLE, requiredClusterType=UNKNOWN, serverSelectionTimeout='30000 ms', maxWaitQueueSize=500}
+18:24:43.321 spring-boot-logging [main] INFO  org.mongodb.driver.cluster - Adding discovered server localhost:27017 to client view of cluster
+18:24:43.439 spring-boot-logging [cluster-ClusterId{value='5cee5debd426e2614c0fe459', description='null'}-localhost:27017] INFO  org.mongodb.driver.connection - Opened connection [connectionId{localValue:1, serverValue:663}] to localhost:27017
+18:24:43.446 spring-boot-logging [cluster-ClusterId{value='5cee5debd426e2614c0fe459', description='null'}-localhost:27017] INFO  org.mongodb.driver.cluster - Monitor thread successfully connected to server with description ServerDescription{address=localhost:27017, type=STANDALONE, state=CONNECTED, ok=true, version=ServerVersion{versionList=[4, 0, 9]}, minWireVersion=0, maxWireVersion=7, maxDocumentSize=16777216, logicalSessionTimeoutMinutes=30, roundTripTimeNanos=5389043}
+18:24:43.449 spring-boot-logging [cluster-ClusterId{value='5cee5debd426e2614c0fe459', description='null'}-localhost:27017] INFO  org.mongodb.driver.cluster - Discovered cluster type of STANDALONE
+18:24:45.680 spring-boot-logging [main] INFO  c.s.c.c.i.server.NettyServer - listen on port: 9005
+18:24:47.261 spring-boot-logging [main] INFO  o.s.s.c.ThreadPoolTaskExecutor - Initializing ExecutorService 'applicationTaskExecutor'
+18:24:48.455 spring-boot-logging [main] INFO  c.s.cn.web.WebApplicationTests - Started WebApplicationTests in 10.494 seconds (JVM running for 13.329)
+18:25:12.075 spring-boot-logging [main] INFO  org.mongodb.driver.connection - Opened connection [connectionId{localValue:2, serverValue:664}] to localhost:27017
+18:25:35.833 spring-boot-logging [main] INFO  c.alibaba.druid.pool.DruidDataSource - {dataSource-1} inited

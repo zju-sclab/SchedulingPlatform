@@ -37,7 +37,8 @@ public class NodeLockServiceImpl implements NodeLockService {
         }
         nodeLock = nodeLockMap.get(nodeName);
         CarDynamic carDynamic = carDynamicService.query(car.getVin());
-        double priority = laneService.getLane(carDynamic.getParkName(), car.getLane()).getPriority();
+        /**car_cur_lane 的 priority*/
+        double priority = laneService.getLane(carDynamic.getParkName(), car.getFromLane()).getPriority();
         return nodeLock.acquire(car.getVin(), priority);
     }
 

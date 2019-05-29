@@ -61,4 +61,9 @@ public class AutoServiceBiz {
   public CompletableFuture<Boolean> continueAutonomous(String vin){
     return requestSender.sendRequest(vin, TypeField.CONTINUE_AUTONOMOUS, new JSONObject());
   }
+  public CompletableFuture<Boolean> responseLockAutonomous(String vin, boolean requestRes){
+    JSONObject jsonObject = new JSONObject();
+    jsonObject.put("result",requestRes?"Run":"Stop");
+    return requestSender.sendRequest(vin,TypeField.RESPONSE_LOCK,jsonObject);
+  }
 }

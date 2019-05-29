@@ -8,10 +8,7 @@ import com.skywilling.cn.connection.infrastructure.client.ClientService;
 import com.skywilling.cn.connection.model.Packet;
 import com.skywilling.cn.connection.service.RequestDispatcher;
 import com.skywilling.cn.connection.service.RequestSender;
-import com.skywilling.cn.livemap.model.LiveLane;
-import com.skywilling.cn.livemap.model.LiveMap;
-import com.skywilling.cn.livemap.model.LiveStation;
-import com.skywilling.cn.livemap.model.Park;
+import com.skywilling.cn.livemap.model.*;
 import com.skywilling.cn.livemap.service.MapService;
 import com.skywilling.cn.livemap.service.ParkService;
 import com.skywilling.cn.livemap.service.impl.ShapeServiceImpl;
@@ -34,14 +31,17 @@ import org.springframework.boot.configurationprocessor.json.JSONObject;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.geo.GeoJsonPoint;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.util.ResourceUtils;
 
 import javax.annotation.Resource;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ConcurrentHashMap;
 
 /* import org.springframework.data.geo.Point; */
 
@@ -99,6 +99,9 @@ public class WebApplicationTests {
 
     @Autowired
     TripAccessorImpl tripAccessor;
+
+    @Autowired
+    ScheduleService scheduleService;
 
     /**
      * 数据库测试
@@ -158,7 +161,7 @@ public class WebApplicationTests {
     public void mapTest(){
         String parkName = "yuquanxiaoqu3";
         Park park = parkService.queryByName(parkName);
-        LiveMap map = mapService.getMap(parkName);
+        LiveMap map = mapService.getMap(park.getName());
         System.out.println(map);
     }
 
@@ -198,15 +201,22 @@ public class WebApplicationTests {
         //测试mongodb的查找
         List<AutonomousCarInfo> mongocars = autoCarInfoGeoAccessor.getByLane("lane_1");
         System.out.println(mongocars);
-        //List<AutonomousCarInfo> mongocars2 = autoCarInfoGeoAccessor.findByDist(new GeoJsonPoint(0,0),0.01);
+        List<AutonomousCarInfo> mongocars2 = autoCarInfoGeoAccessor.findByDist(new GeoJsonPoint(0,0),0.01);
         //System.out.println(mongocars2);
     }
     @Test
     public void MongoRemoveAndFindAllTest(){
 
-        autoCarInfoGeoAccessor.remove("lane", "lane_1");
+        //autoCarInfoGeoAccessor.remove("lane", "lane_1");
         List<AutonomousCarInfo> all = autoCarInfoGeoAccessor.getAll();
-        System.out.println(all);
+        autoCarInfoGeoAccessor.remove("vin","00012345");
+        for(AutonomousCarInfo autonomousCarInfo : all){
+            autonomousCarInfo.setFromLane("lane_0");
+            autonomousCarInfo.setLane("cross_0");
+            autoCarInfoService.save(autonomousCarInfo);
+        }
+        AutonomousCarInfo a = autoCarInfoService.get("00000000112417002");
+        List<AutonomousCarInfo> b = autoCarInfoGeoAccessor.getAll();
     }
     @Test
     public void TripSaveTest(){
@@ -215,7 +225,20 @@ public class WebApplicationTests {
         trip.setEndStation(new LiveStation());
         tripAccessor.save(trip);
     }
-
+    @Test
+    public void UtilTest(){
+        String[] str = new String[]{"2","2,3,4","2,3"};
+        List<String[]> res_split = new ArrayList<>();
+        for(String s :  str){
+            res_split.add(s.split(","));
+        }
+        for(int i = 0; i < res_split.size(); i++){
+            for(int j = 0; j < res_split.get(i).length; j++){
+                System.out.print(res_split.get(i)[j] + " ");
+            }
+            System.out.println("end");
+        }
+    }
     /**
      * 全局规划测试
      */
@@ -276,6 +299,12 @@ public class WebApplicationTests {
         System.out.println(res.first);
         System.out.println(res.second);
         System.out.println(res.third);
+    }
+
+    @Test
+    public void ScheduleTest(){
+        mapService.upDateReqLockMap();
+        scheduleService.checkAllClient();
     }
 
 }

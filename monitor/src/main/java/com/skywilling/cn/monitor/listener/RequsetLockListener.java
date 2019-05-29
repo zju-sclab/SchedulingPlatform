@@ -43,15 +43,8 @@ public class RequsetLockListener extends  BasicListener {
         }
         /**解析requestLock的消息*/
         RequestLockInfo requestLockInfo  = JSONObject.parseObject(body, RequestLockInfo.class);
-
-        /**需要lane_id ---> lane name 映射*/
-        int cur_id = requestLockInfo.getCurrent_lane_id();
-        int next_id = requestLockInfo.getTarget_cross_id();
-
-        car.setFromLane(String.valueOf(cur_id));
-        /** next_id = 8888 | 9999 标示开始和结束点 */
-        car.setLane(String.valueOf(next_id));
-
+        car.setFromLane(requestLockInfo.getCurrent_lane_id());
+        car.setLane(requestLockInfo.getTarget_cross_id());
         /**异步存入redis*/
         autoCarInfoService.save(car);
 

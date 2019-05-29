@@ -2,23 +2,24 @@ package com.skywilling.cn.livemap.service.impl;
 
 
 import com.skywilling.cn.common.config.redis.RedisDao;
-import com.skywilling.cn.common.exception.CarNotExistsException;
 import com.skywilling.cn.livemap.core.StaticMapAndShapeFactory;
 import com.skywilling.cn.livemap.core.StaticMapFactory;
 import com.skywilling.cn.livemap.model.*;
 import com.skywilling.cn.livemap.service.MapService;
 import com.skywilling.cn.livemap.service.ParkService;
-import com.skywilling.cn.livemap.service.ShapeMapService;
+import com.skywilling.cn.livemap.service.ShapeService;
 import com.skywilling.cn.manager.car.model.AutonomousCarInfo;
+import com.skywilling.cn.manager.car.model.CarDynamic;
 import com.skywilling.cn.manager.car.repository.impl.AutoCarInfoGeoAccessorImpl;
 import com.skywilling.cn.manager.car.service.AutoCarInfoService;
+import com.skywilling.cn.manager.car.service.CarDynamicService;
+import io.swagger.models.auth.In;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
 @Service
@@ -30,7 +31,7 @@ public class MapServiceImpl implements MapService {
     @Autowired
     private ParkService parkService;
     @Autowired
-    private ShapeMapService shapeMapService;
+    private ShapeService shapeService;
     @Autowired
     StaticMapFactory staticMapFactory;
     @Autowired
@@ -39,6 +40,8 @@ public class MapServiceImpl implements MapService {
     AutoCarInfoService autoCarInfoService;
     @Autowired
     AutoCarInfoGeoAccessorImpl autoCarInfoGeoAccessor;
+    @Autowired
+    CarDynamicService carDynamicService;
 
    /** 获取所有动态地图 */
    @Override
@@ -83,7 +86,7 @@ public class MapServiceImpl implements MapService {
             //读取本地文件
             LiveMap liveMap = staticMapFactory.create(parkName, park.getMapFileUrl());
             addMap(liveMap);
-            shapeMapService.create(parkName);
+            shapeService.create(parkName);
             maps.put(liveMap.getParkName(), liveMap);
             return liveMap;
         }
@@ -106,35 +109,52 @@ public class MapServiceImpl implements MapService {
     }
 
     /**
-     * 每0.1s钟从redis刷新数据到内存Map
+     * 每0.1s钟从redis刷新内存数据库的数据到内存的Map
      */
     @Scheduled(fixedRate = 100)
-    private void upDateReqLockMap(){
-        for(String mapName: maps.keySet() ){
-            LiveMap map = getMap(mapName);
+    @Override
+    public void upDateReqLockMap(){
+
+            /**从mongoDb拿到所有车俩的实时数据 */
             List<AutonomousCarInfo> autonomousCarInfoList = autoCarInfoGeoAccessor.getAll();
-            System.out.println("map service get all car: " + autonomousCarInfoList.size());
+            //System.out.println("map service get all car: " + autonomousCarInfoList.size());
             for(AutonomousCarInfo carInfo : autonomousCarInfoList){
                 String vin = carInfo.getVin();
-                System.out.println("map service get car: " + vin);
+                CarDynamic carDynamic = carDynamicService.query(vin);
+                if(carDynamic == null) {
+                    //System.out.println("no such car");
+                    continue;
+                }
+                int parkId = carDynamic.getParkId();
+                String parkName = parkService.query(parkId).getName();
+                LiveMap map = getMap(parkName);
+                //System.out.println("map service get car: " + vin);
                 /**未连接上系统*/
-                if(!autoCarInfoService.isConnected(vin)) {
-                    /**释放一下锁*/
+                if(!autoCarInfoService.isConnected(vin)||carInfo.getFromLane() == null && carInfo.getLane() == null) {
+                    /**尝试去释放一下锁*/
                     map.getCarReqLockMap().put(String.valueOf(vin),"release");
                     continue;
                 }
-                /**有心跳信息上传*/
-                if(carInfo.getFromLane() != null && carInfo.getLane() != null && Integer.valueOf(carInfo.getLane())<=1000)
+                final String[] cur_lane_info = carInfo.getFromLane().split("_");
+                final String[] cross_lane_info = carInfo.getLane().split("_");
+
+                if(cur_lane_info[0].equals("cross") && cur_lane_info[1].equals("8888")){
+                    map.getCarMap().put(vin,carInfo.getLane());
+                }
+                else if(cross_lane_info[0].equals("cross") && cross_lane_info[1].equals("9999") ){
+                    map.getCarMap().put(vin,carInfo.getFromLane());
+                }
+                else if(cur_lane_info[0].equals("lane") && cross_lane_info[0].equals("cross"))
                 {
                     //request Lock
                     map.getCarReqLockMap().put(vin,"request");
                     map.getCarMap().put(vin,carInfo.getFromLane());
-                }else if(carInfo.getFromLane() != null && carInfo.getLane() == null){
+                }
+                else if(cur_lane_info[0].equals("cross") && cross_lane_info[0].equals("lane")){
                     //release lock
                     map.getCarReqLockMap().put(vin,"release");
-                    map.getCarMap().put(vin,carInfo.getLane());
+                    map.getCarMap().put(vin,carInfo.getFromLane());
                 }
             }
-        }
     }
 }

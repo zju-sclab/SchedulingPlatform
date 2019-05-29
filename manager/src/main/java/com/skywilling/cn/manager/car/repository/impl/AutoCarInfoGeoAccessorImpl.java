@@ -23,13 +23,12 @@ public class AutoCarInfoGeoAccessorImpl implements AutoCarInfoGeoAccessor {
 
     @Override
     public void save(AutonomousCarInfo autonomousCarInfo) {
-
         mongoTemplate.save(autonomousCarInfo);
     }
 
     @Override
-    public List<AutonomousCarInfo> getByLane(String lane) {
-        Query query=new Query(Criteria.where("lane").is(lane));
+    public List<AutonomousCarInfo> getByLane(String laneId) {
+        Query query=new Query(Criteria.where("lane").is(laneId));
         return  mongoTemplate.find(query,AutonomousCarInfo.class);
     }
 

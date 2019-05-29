@@ -19,6 +19,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
@@ -53,12 +54,12 @@ public class ScheduleServiceImpl implements ScheduleService {
     @Override
     public void checkAllClient() {
         List<LiveMap> maps = mapService.getAllMaps();
-        SimpleDateFormat sdf=new SimpleDateFormat("MM/dd/yyyy HH:mm:ss.SSS");
+        //SimpleDateFormat sdf=new SimpleDateFormat("MM/dd/yyyy HH:mm:ss.SSS");
         for(LiveMap livemap : maps) {
-            System.out.println("schedule time at : "+sdf.format(System.currentTimeMillis()));
-            System.out.println("schedule map name: "+livemap.getParkName());
+            //System.out.println("schedule time at : "+sdf.format(System.currentTimeMillis()));
+            //System.out.println("schedule map name: "+livemap.getParkName());
             ConcurrentHashMap<String,String> car_req_lock = livemap.getCarReqLockMap();
-            System.out.println("schedule car-req_lock: "+car_req_lock.keySet().size()+"req");
+            //System.out.println("schedule car-req_lock: "+car_req_lock.keySet().size()+"req");
             for (String vin : car_req_lock.keySet()) {
 
                 AutonomousCarInfo carInfo = autoCarInfoService.get(vin);
@@ -68,13 +69,14 @@ public class ScheduleServiceImpl implements ScheduleService {
                 if(car_req_lock.get(vin).equals("release")){
                     LiveJunction liveJunction = livemap.getJunctionMap().get(from_lane);
                     checkJunctionLock(vin, liveJunction, true);
+                    car_req_lock.remove(vin);
                 }
-                //起始点的crossId为8888，9999
                 else if(car_req_lock.get(vin).equals("request"))
                {
                     //获取路口所处的节点
                     LiveJunction liveJunction = livemap.getJunctionMap().get(cross_lane);
                     checkJunctionLock(vin, liveJunction, false);
+                    car_req_lock.remove(vin);
                 }
 
             }
@@ -84,7 +86,7 @@ public class ScheduleServiceImpl implements ScheduleService {
     /** 一直检测某条路上时间窗口是否当前车辆距离上一辆时间距离小于10s */
     @Override
     public void checkLaneTimeWindow(String vin, LiveLane liveLane) {
-         List<CarArrivalslnfo> cars = liveLane.getVehicles();
+         List<CarArrivalslnfo> cars = new ArrayList<>();
          AutonomousCarInfo carInfo = autoCarInfoService.get(vin);
          CarArrivalslnfo carArrivalslnfo = cars.get(cars.size()-1);
          //无车

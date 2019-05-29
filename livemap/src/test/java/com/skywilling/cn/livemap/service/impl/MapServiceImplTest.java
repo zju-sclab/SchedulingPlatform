@@ -5,13 +5,11 @@ import com.skywilling.cn.livemap.core.StaticMapFactory;
 import com.skywilling.cn.livemap.model.LiveMap;
 import com.skywilling.cn.livemap.service.MapService;
 import com.skywilling.cn.livemap.service.ParkService;
-import com.skywilling.cn.livemap.service.ShapeMapService;
+import com.skywilling.cn.livemap.service.ShapeService;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.concurrent.ConcurrentHashMap;
-
-import static org.junit.Assert.*;
 
 public class MapServiceImplTest {
     private static final String PREFIX = "map_";
@@ -21,7 +19,7 @@ public class MapServiceImplTest {
     @Autowired
     private ParkService parkService;
     @Autowired
-    private ShapeMapService shapeMapService;
+    private ShapeService shapeService;
     @Autowired
     private MapService mapService;
     @Autowired
