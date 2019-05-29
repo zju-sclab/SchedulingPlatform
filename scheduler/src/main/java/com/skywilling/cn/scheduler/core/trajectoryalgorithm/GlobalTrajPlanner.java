@@ -1,9 +1,6 @@
 package com.skywilling.cn.scheduler.core.trajectoryalgorithm;
 
-import com.skywilling.cn.common.model.Pose;
-import com.skywilling.cn.common.model.Position;
-import com.skywilling.cn.common.model.RoutePoint;
-import com.skywilling.cn.common.model.Triple;
+import com.skywilling.cn.common.model.*;
 import com.skywilling.cn.scheduler.common.EulerAngle;
 import com.skywilling.cn.scheduler.common.utils;
 import com.skywilling.cn.scheduler.core.trajectoryalgorithm.config.GlobalTrajPlannerConfig;
@@ -885,7 +882,7 @@ public class GlobalTrajPlanner implements TrjPlanService {
               p_n.getPosition().getX() - p_c.getPosition().getX());
       path_in.get(i).setOrientation(utils.Euler2Quaternion(new EulerAngle(0, 0, yaw)));
     }
-    path_in.get(path_in.size() - 1).setOrientation(path_in.get(path_in.size()-2).getOrientation());
+    path_in.get(path_in.size() - 1).setOrientation((Orientation) path_in.get(path_in.size()-2).getOrientation().clone());
     return path_in;
   }
 
