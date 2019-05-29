@@ -17,6 +17,8 @@ public class test {
         Triple<List<String>, List<Double>, List<RoutePoint>> res = ser.createTrajectory(start,target);
         System.out.println(res.first);
         System.out.println(res.second);
-        System.out.println(res.third);
+        for(RoutePoint p: res.third){
+            System.out.println(p);
+        }
     }
 }

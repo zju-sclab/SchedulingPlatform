@@ -667,27 +667,27 @@ public class GlobalTrajPlanner implements TrjPlanService {
       RoutePoint pre = result_path.get(result_path.size() - 1);
       int id = result.get(i);
       List<Pose> next;
-      int lane_id, cross_id;
+      int temp_lane_id, temp_cross_id;
       if (i % 2 == 1) {
         // lane
         next = temp_Lane_vec.get(id).getPoints();
         speed_limit = lane_speed_limit;
         waypoint_type = 1;
         if(i == 1){
-          lane_id = originId.getStart_lane_id();
+          temp_lane_id = originId.getStart_lane_id();
         }else if(i == size - 2){
-          lane_id = originId.getEnd_lane_id();
+          temp_lane_id = originId.getEnd_lane_id();
         }else{
-          lane_id = id;
+          temp_lane_id = id;
         }
-        cross_id = -1;
+        temp_cross_id = -1;
       } else {
         // cross
         next = temp_Cross_vec.get(id).getPoints();
         speed_limit = cross_speed_limit;
         waypoint_type = 0;
-        lane_id = -1;
-        cross_id = id;
+        temp_lane_id = -1;
+        temp_cross_id = id;
       }
       Pose p_start = next.get(0);
       Pose p_last = next.get(next.size() - 1);
@@ -705,6 +705,8 @@ public class GlobalTrajPlanner implements TrjPlanService {
         RoutePoint in_waypoint = new RoutePoint();
         in_waypoint.setIs_lane(waypoint_type);
         in_waypoint.setSpeed_limit(speed_limit);
+        in_waypoint.setLane_id(temp_lane_id);
+        in_waypoint.setCross_id(temp_cross_id);
         in_waypoint.setPosition(point.getPosition());
         in_waypoint.setOrientation(point.getOrientation());
         result_path.add(in_waypoint);
