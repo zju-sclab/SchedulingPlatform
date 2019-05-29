@@ -12,13 +12,16 @@ public class test {
         TrjPlanService ser= new GlobalTrajPlanner();
         StaticStation start = new StaticStation();
         StaticStation target = new StaticStation();
-        start.setPoint(0,0,0,0,0,0,0);
-        target.setPoint(20,50,0,0,0,0,0);
+        start.setPoint(-0.01,-0.01,0,0,0,0,1.0);
+        target.setPoint(-37,101,0,0,0,0,0);
         Triple<List<String>, List<Double>, List<RoutePoint>> res = ser.createTrajectory(start,target);
         System.out.println(res.first);
         System.out.println(res.second);
-        for(RoutePoint p: res.third){
-            System.out.println(p);
-        }
+//        int cnt = 0;
+//        for(RoutePoint p: res.third){
+//            System.out.print(cnt+" ");
+//            System.out.println(p);
+//            cnt++;
+//        }
     }
 }

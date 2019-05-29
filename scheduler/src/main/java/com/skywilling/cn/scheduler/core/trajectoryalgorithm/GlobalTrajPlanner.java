@@ -694,12 +694,12 @@ public class GlobalTrajPlanner implements TrjPlanService {
       if (utils.distance2points(pre.getPosition(), p_start.getPosition())
           > utils.distance2points(pre.getPosition(), p_last.getPosition())) {
         // reverse path
+        List<Pose> temp_list = new ArrayList<>();
         int n_length = next.size();
-        for (int j = 0; i < n_length / 2; i++) {
-          Pose temp = next.get(j);
-          next.set(i, next.get(n_length - 1 - i));
-          next.set(n_length - i - 1, temp);
+        for (int j = n_length - 1; j >= 0; j--) {
+          temp_list.add((Pose) next.get(j).clone());
         }
+        next = temp_list;
       }
       for (Pose point : next) {
         RoutePoint in_waypoint = new RoutePoint();
@@ -1015,6 +1015,9 @@ public class GlobalTrajPlanner implements TrjPlanService {
     endPose_cb(target, temp_Lane_vec, temp_Cross_vec, originId);
 
     List<Integer> result = Dij(start, target, temp_Lane_vec, temp_Cross_vec);
+//    for(Pose p:temp_Cross_vec.get(3).getPoints()){
+//      System.out.println(p);
+//    }
 
     List<RoutePoint> result_path = convert_result_to_path(result, temp_Lane_vec, temp_Cross_vec, originId);
 
