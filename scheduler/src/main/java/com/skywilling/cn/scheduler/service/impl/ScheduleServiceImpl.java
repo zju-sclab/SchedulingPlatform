@@ -80,17 +80,18 @@ public class ScheduleServiceImpl implements ScheduleService {
                     LOG.info("schedule car_release_lock_req: " + vin + " at: " + cross_id);
                     LiveJunction liveJunction = livemap.getJunctionMap().get(cross_id);
                     crossNodeListen.outGoingJunction(vin,liveJunction.getName());
-                    livemap.getCarReqLockMap().remove(vin);
+                    car_req_lock.remove(vinreq);
                 }
                 else
                {//request req
                     LOG.info("schedule car_request_lock_req: " + carInfo.getVin() + " at: " + cross_id);
                     LiveJunction liveJunction = livemap.getJunctionMap().get(cross_id);
                     crossNodeListen.inComingJunction(vin,lane_id, liveJunction.getName());
-                    livemap.getCarReqLockMap().remove(vin);
+                    car_req_lock.remove(vinreq);
                 }
 
             }
+            livemap.setCarReqLockMap(car_req_lock);
             mapService.addMap(livemap);
         }
     }

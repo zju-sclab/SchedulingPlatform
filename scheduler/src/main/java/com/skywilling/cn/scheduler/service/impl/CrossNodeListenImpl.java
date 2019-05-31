@@ -1,6 +1,7 @@
 package com.skywilling.cn.scheduler.service.impl;
 
 
+import com.esotericsoftware.minlog.Log;
 import com.skywilling.cn.command.biz.AutoServiceBiz;
 import com.skywilling.cn.connection.service.RequestSender;
 import com.skywilling.cn.livemap.service.MapService;
@@ -13,6 +14,8 @@ import com.skywilling.cn.scheduler.service.CrossNodeListen;
 import com.skywilling.cn.scheduler.service.NodeLockService;
 import com.skywilling.cn.scheduler.service.RouteService;
 import com.skywilling.cn.scheduler.service.TripService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -22,7 +25,7 @@ import java.util.concurrent.CompletableFuture;
 @Component
 public class CrossNodeListenImpl implements CrossNodeListen {
 
-
+    Logger log = LoggerFactory.getLogger(CrossNodeListen.class);
     @Autowired
     private AutoCarInfoService autoCarInfoService;
     @Autowired
@@ -78,16 +81,13 @@ public class CrossNodeListenImpl implements CrossNodeListen {
     @Override
     public void outGoingJunction(String vin, String junctionName) {
 
-        if (!switchOn.equals(true)) {
-            return;
-        }
+        Log.warn("crossNodeListen outgoing: "+vin + " at " + junctionName);
         String next_block_Car = nodeLockService.release(vin, junctionName);
-        if (next_block_Car == null) return;
-        AutonomousCarInfo car = autoCarInfoService.get(next_block_Car);
-        String carVin = car.getVin();
-        /**给车端发送重新启动信号*/
-        autoServiceBiz.continueAutonomous(carVin);
+        if (next_block_Car != null){
+            AutonomousCarInfo car = autoCarInfoService.get(next_block_Car);
+            autoServiceBiz.continueAutonomous(car.getVin());
+        }
+        autoServiceBiz.responseLockAutonomous(vin,true);
 
     }
-
 }

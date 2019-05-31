@@ -105,7 +105,7 @@ public class RequsetLockListener extends  BasicListener {
                 mapService.getMap(parkName).getCarMap().put(vin,cur_id);
                 autoCarRequest.setLane_id(cur_id);
                 autoCarRequest.setCross_id(next_id);
-                liveMap.getCarReqLockMap().put(vin+"request",autoCarRequest);
+                liveMap.getCarReqLockMap().put(vin+"request"+System.currentTimeMillis(),autoCarRequest);
                 if(liveMap.getLaneToCarMap().get((next_id)) == null ) {
                     liveMap.getLaneToCarMap().put(next_id, new ArrayList<>());
                 }

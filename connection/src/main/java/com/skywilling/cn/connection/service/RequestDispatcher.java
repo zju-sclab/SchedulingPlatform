@@ -67,8 +67,6 @@ public class RequestDispatcher {
                 }
                 else if(packet.getType() == TypeField.RELEASE_LOCK.getType()){
                     LOG.info("car release Response : " + carResponse.getCode() +" "+ carResponse.getAttach());
-                    Packet.Builder builder = new Packet.Builder();
-                    ctx.writeAndFlush(builder.buildResponse(packet, carResponse).build());
                 }
                 else{
                     Packet.Builder builder = new Packet.Builder();

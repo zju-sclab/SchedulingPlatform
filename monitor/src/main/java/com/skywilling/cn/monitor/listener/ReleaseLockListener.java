@@ -54,7 +54,7 @@ public class ReleaseLockListener extends BasicListener {
         if (car == null) {
             return null;
         }
-        LOG.info("进入锁释放监听器内部：");
+        LOG.info("进入锁释放监听器内部：" );
         /**解析releaseLock的消息*/
         ReleaseLockInfo releaseLockInfo = JSONObject.parseObject(body, ReleaseLockInfo.class);
         String cur_id = releaseLockInfo.getCurrent_id();
@@ -70,7 +70,7 @@ public class ReleaseLockListener extends BasicListener {
         autoCarRequest.setVin(vin);
 
         LiveMap liveMap = mapService.getMap(parkName);
-
+        LOG.warn("map yuquanxiaoqu3 carMap size: " + liveMap.getCarMap().size());
         String last_lane_id = null;
         /** 如果存在vin的车道定位记录,删除旧的,添加新的 */
         if(liveMap.getCarMap().get(vin) != null )
@@ -78,7 +78,8 @@ public class ReleaseLockListener extends BasicListener {
 
         /**修改车道定位记录  */
         if(last_lane_id != null){
-            liveMap.getLaneToCarMap().get(last_lane_id).remove(vin);
+            if(liveMap.getLaneToCarMap().get(last_lane_id) != null)
+                liveMap.getLaneToCarMap().get(last_lane_id).remove(vin);
         }
         /**释放当前cur_id标识的合流点并更新位置为当前cross_xx*/
         liveMap.getCarMap().put(vin,cur_id);
@@ -88,7 +89,7 @@ public class ReleaseLockListener extends BasicListener {
         }
         liveMap.getLaneToCarMap().get(cur_id).add(vin);
 
-        liveMap.getCarReqLockMap().put(vin+"release",autoCarRequest);
+        liveMap.getCarReqLockMap().put(vin+"release"+System.currentTimeMillis(),autoCarRequest);
         LOG.warn("in release lock listener carReqMap size: " + liveMap.getCarReqLockMap().size());
         mapService.addMap(liveMap);
         /**异步存入redis*/
