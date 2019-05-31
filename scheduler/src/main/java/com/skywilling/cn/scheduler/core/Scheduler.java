@@ -26,35 +26,6 @@ public class Scheduler {
    *
    * for active scheduling.
    */
-
-  List<Integer> split(String regionName, Route route) {
-    List<Integer> cuttingPoints = new ArrayList<>();
-    // current we simply the implementation of split
-    for (int i = 0; i < route.getLiveLanes().size(); ++i) {
-      LiveLane lane = route.getLiveLanes().get(i);
-      if (shouldStop(regionName, lane.getTo())) {
-        cuttingPoints.add(i + 1);
-      }
-    }
-    if (cuttingPoints.size() == 0) {
-      cuttingPoints.add(route.getLiveLanes().size());
-    }
-    return cuttingPoints;
-  }
-
-  //todo leave to implementation
-  protected boolean shouldStop(String regionName, Node node) {
-    return false;
-  }
-
-  /**
-   * for passive occasions,  try to acquireLock pass rights
-   * todo leave to implementation
-   */
-  public boolean acquireDrivingRights(String vin, String regionName, String nodeName) {
-    return false;
-  }
-
   @Data
   public static class NodeLock {
       private String name;
@@ -89,10 +60,10 @@ public class Scheduler {
               return 0;
           }
       }
-
+     /**轮询某辆车是否已在队列*/
       public boolean hasCar(String vin){
-          for(Element x : inComingVehicles){
-              if(x.getVin().equals(vin)){
+          for(Element car : inComingVehicles){
+              if(car.getVin().equals(vin)){
                   return true;
               }
           }
@@ -102,16 +73,15 @@ public class Scheduler {
       public CompletableFuture<Boolean> acquire(String vin, double priority) {
           CompletableFuture<Boolean> result = new CompletableFuture<>();
           try {
-
               lock.lock();
               if (owner == null || StringUtils.equals(owner, vin)) {
-                  LOG.warn("vin: " + vin + " accquire lock and be the owner ! ");
+                  LOG.warn("vin: " + vin + " acquire lock and be the owner of " + name);
                   owner = vin;
                   result.complete(true);
               } else {
-                  LOG.warn("vin: " + vin + " accquire lock and wait in queue ! ");
+                  LOG.warn("vin: " + vin + " acquire lock and wait in queue ! ");
                   Element element = new Element(vin, result, priority);
-                  inComingVehicles.put(element);
+                  inComingVehicles.offer(element);
               }
           } finally {
               lock.unlock();

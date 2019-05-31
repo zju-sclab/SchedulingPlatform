@@ -51,8 +51,7 @@ public class ScheduleServiceImpl implements ScheduleService {
     @Autowired
     CrossNodeListen crossNodeListen;
 
-    /** 调度bean注入完成后在后台持续检测所有车端上传信息通道，检测所有车辆的实时位置，根据规则进行调度规划 */
-
+    /** 调度bean注入完成后在后台持续检测所有车端的调度请求，根据路口调度的规则进行调度规划 */
     @Scheduled(fixedRate = 1000)
     @Override
     public void checkAllClient() {
@@ -77,14 +76,14 @@ public class ScheduleServiceImpl implements ScheduleService {
 
                 //release req
                 if(!is_request){
-                    LOG.info("schedule car_release_lock_req: " + vin + " at: " + cross_id);
+                    LOG.warn("schedule car_release_lock_req: " + vin + " at: " + cross_id);
                     LiveJunction liveJunction = livemap.getJunctionMap().get(cross_id);
                     crossNodeListen.outGoingJunction(vin,liveJunction.getName());
                     car_req_lock.remove(vinreq);
                 }
                 else
                {//request req
-                    LOG.info("schedule car_request_lock_req: " + carInfo.getVin() + " at: " + cross_id);
+                    LOG.warn("schedule car_request_lock_req: " + carInfo.getVin() + " at: " + cross_id);
                     LiveJunction liveJunction = livemap.getJunctionMap().get(cross_id);
                     crossNodeListen.inComingJunction(vin,lane_id, liveJunction.getName());
                     car_req_lock.remove(vinreq);

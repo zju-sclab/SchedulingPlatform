@@ -56,24 +56,23 @@ public class CrossNodeListenImpl implements CrossNodeListen {
     @Override
     public void inComingJunction(String vin,String laneId, String junctionName) {
         //开关
-        if (!switchOn.equals("true")) {
-            return;
-        }
+//        if (!switchOn.equals("true")) {
+//            return;
+//        }
         if (nodeLockService.vehicleIsExist(vin, junctionName)) {
+            log.warn("路口锁队列已存在 : " + vin + " at " + junctionName);
             return;
         }
-        //long start =  System.currentTimeMillis();
+        log.warn("cross node lock service acquire : " + vin + " at " + junctionName);
         CompletableFuture<Boolean> acquireRes = nodeLockService.acquire(vin,laneId, junctionName);
         Boolean aBoolean = acquireRes.getNow(false);
-        //如果获取锁失败，暂停车端任务
 /*        if (!aBoolean) {
             //Trip trip = tripService.get(carInfo.getTripId());
             //tripCore.kill(trip);
-
             autoServiceBiz.pauseAutonomous(vin);
-        }else{
-            autoServiceBiz.continueAutonomous(vin);
-        }*/
+          }
+          else   autoServiceBiz.continueAutonomous(vin);
+        */
         autoServiceBiz.responseLockAutonomous(vin,aBoolean);
     }
 
@@ -84,6 +83,7 @@ public class CrossNodeListenImpl implements CrossNodeListen {
         Log.warn("crossNodeListen outgoing: "+vin + " at " + junctionName);
         String next_block_Car = nodeLockService.release(vin, junctionName);
         if (next_block_Car != null){
+            Log.warn("crossNodeListen continue task : "+vin + " at " + junctionName);
             AutonomousCarInfo car = autoCarInfoService.get(next_block_Car);
             autoServiceBiz.continueAutonomous(car.getVin());
         }

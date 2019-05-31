@@ -1,21 +1,18 @@
 package com.skywilling.cn.scheduler.service.impl;
 
-
-import com.mysql.jdbc.log.LogFactory;
 import com.skywilling.cn.livemap.service.LaneService;
 import com.skywilling.cn.livemap.service.ParkService;
-import com.skywilling.cn.manager.car.model.AutonomousCarInfo;
 import com.skywilling.cn.manager.car.model.CarDynamic;
 import com.skywilling.cn.manager.car.service.CarDynamicService;
 import com.skywilling.cn.scheduler.core.Scheduler;
 import com.skywilling.cn.scheduler.service.NodeLockService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ConcurrentHashMap;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 @Service
 public class NodeLockServiceImpl implements NodeLockService {
     public static Logger Log = LoggerFactory.getLogger(NodeLockService.class);
@@ -38,12 +35,12 @@ public class NodeLockServiceImpl implements NodeLockService {
         Scheduler.NodeLock nodeLock;
         if (!nodeLockMap.containsKey(nodeName)) {
             nodeLock = new Scheduler.NodeLock(nodeName);
-            Log.warn("nodelock named: " + nodeName + "has been created!");
+            Log.warn("node lock named: " + nodeName + "has been created!");
             nodeLockMap.put(nodeName, nodeLock);
         }
         nodeLock = nodeLockMap.get(nodeName);
         CarDynamic carDynamic = carDynamicService.query(vin);
-        /**car_cur_lane 的 priority*/
+        /**priority*/
         String parkName = parkService.query(carDynamic.getParkId()).getName();
         double priority = laneService.getLane(parkName, laneId).getPriority();
         return nodeLock.acquire(vin, priority);
@@ -54,10 +51,10 @@ public class NodeLockServiceImpl implements NodeLockService {
         Scheduler.NodeLock nodeLock = nodeLockMap.get(nodeName);
         String result = null;
         if (nodeLock != null) {
-            Log.warn("NodeLockService release is execute, step into nodelock release !");
+            Log.warn("NodeLockService release is executed, step into node lock release!");
             result = nodeLock.release(vin);
         }
-        Log.warn("NodeLockService release not execute!");
+        else Log.warn("NodeLockService release is not executed!");
         return result;
     }
 
