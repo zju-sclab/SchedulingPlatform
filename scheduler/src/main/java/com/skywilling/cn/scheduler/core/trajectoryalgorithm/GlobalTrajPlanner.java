@@ -236,16 +236,10 @@ public class GlobalTrajPlanner implements TrjPlanService {
       }
 
       for (int cross_id : t_lane.getPre_id()) {
-        //                System.out.println("cross "+cross_id+" originan pre:
-        // "+temp_Cross_vec.get(cross_id).getPre_id());
-        //                System.out.println("cross "+cross_id+" originan next:
-        // "+temp_Cross_vec.get(cross_id).getNext_id());
         for (Iterator<Integer> iter = temp_Cross_vec.get(cross_id).getPre_id().iterator();
             iter.hasNext(); ) {
           Integer it = iter.next();
           if (it == nearestPose.getLane_id()) {
-            //                        System.out.println("delete "+it +" from cross "+cross_id +"
-            // preid");
             iter.remove();
             temp_Cross_vec.get(cross_id).addPre_id(l_node_final.getId());
             break;
@@ -255,25 +249,13 @@ public class GlobalTrajPlanner implements TrjPlanService {
             iter.hasNext(); ) {
           Integer it = iter.next();
           if (it == nearestPose.getLane_id()) {
-            //                        System.out.println("delete "+it +" from cross "+cross_id +"
-            // nextid");
             iter.remove();
-            //                        System.out.println("add " + l_node_final.getId() + " to cross"
-            // + cross_id + " nextid");
             temp_Cross_vec.get(cross_id).addNext_id(l_node_final.getId());
             break;
           }
         }
-        //                System.out.println("cross "+cross_id+" after pre:
-        // "+temp_Cross_vec.get(cross_id).getPre_id());
-        //                System.out.println("cross "+cross_id+" after next:
-        // "+temp_Cross_vec.get(cross_id).getNext_id());
       }
       for (int cross_id : t_lane.getNext_id()) {
-        //                System.out.println("cross "+cross_id+" originan pre:
-        // "+temp_Cross_vec.get(cross_id).getPre_id());
-        //                System.out.println("cross "+cross_id+" originan next:
-        // "+temp_Cross_vec.get(cross_id).getNext_id());
         for (Iterator<Integer> iter = temp_Cross_vec.get(cross_id).getPre_id().iterator();
             iter.hasNext(); ) {
           Integer it = iter.next();
@@ -292,11 +274,6 @@ public class GlobalTrajPlanner implements TrjPlanService {
             break;
           }
         }
-        //                System.out.println("cross "+cross_id+" after pre:
-        // "+temp_Cross_vec.get(cross_id).getPre_id());
-        //                System.out.println("cross "+cross_id+" after next:
-        // "+temp_Cross_vec.get(cross_id).getNext_id());
-
       }
 
       c_node.setId(temp_Cross_vec.size());
@@ -339,10 +316,6 @@ public class GlobalTrajPlanner implements TrjPlanService {
       }
 
       for (int cross_id : t_lane.getPre_id()) {
-        //                System.out.println("cross "+cross_id+" originan pre:
-        // "+temp_Cross_vec.get(cross_id).getPre_id());
-        //                System.out.println("cross "+cross_id+" originan next:
-        // "+temp_Cross_vec.get(cross_id).getNext_id());
         for (Iterator<Integer> iter = temp_Cross_vec.get(cross_id).getPre_id().iterator();
             iter.hasNext(); ) {
           Integer it = iter.next();
@@ -361,16 +334,8 @@ public class GlobalTrajPlanner implements TrjPlanService {
             break;
           }
         }
-        //                System.out.println("cross "+cross_id+" after pre:
-        // "+temp_Cross_vec.get(cross_id).getPre_id());
-        //                System.out.println("cross "+cross_id+" after next:
-        // "+temp_Cross_vec.get(cross_id).getNext_id());
       }
       for (int cross_id : t_lane.getNext_id()) {
-        //                System.out.println("cross "+cross_id+" originan pre:
-        // "+temp_Cross_vec.get(cross_id).getPre_id());
-        //                System.out.println("cross "+cross_id+" originan next:
-        // "+temp_Cross_vec.get(cross_id).getNext_id());
         for (Iterator<Integer> iter = temp_Cross_vec.get(cross_id).getPre_id().iterator();
             iter.hasNext(); ) {
           Integer it = iter.next();
@@ -389,11 +354,6 @@ public class GlobalTrajPlanner implements TrjPlanService {
             break;
           }
         }
-        //                System.out.println("cross "+cross_id+" after pre:
-        // "+temp_Cross_vec.get(cross_id).getPre_id());
-        //                System.out.println("cross "+cross_id+" after next:
-        // "+temp_Cross_vec.get(cross_id).getNext_id());
-
       }
 
       c_node.setId(temp_Cross_vec.size());
@@ -503,11 +463,6 @@ public class GlobalTrajPlanner implements TrjPlanService {
           break;
         }
       }
-      //                System.out.println("cross "+cross_id+" after pre:
-      // "+temp_Cross_vec.get(cross_id).getPre_id());
-      //                System.out.println("cross "+cross_id+" after next:
-      // "+temp_Cross_vec.get(cross_id).getNext_id());
-
     }
     temp_Lane_vec.add(l_node2);
 
@@ -518,9 +473,9 @@ public class GlobalTrajPlanner implements TrjPlanService {
     c_node.addPre_id(l_node2.getId());
     temp_Cross_vec.add(c_node);
 
-    temp_Cross_vec.get(nearestPose.getLane_id()).getPre_id().clear();
-    temp_Cross_vec.get(nearestPose.getLane_id()).getNext_id().clear();
-    temp_Cross_vec.get(nearestPose.getLane_id()).getPoints().clear();
+//    temp_Cross_vec.get(nearestPose.getLane_id()).getPre_id().clear();
+//    temp_Cross_vec.get(nearestPose.getLane_id()).getNext_id().clear();
+//    temp_Cross_vec.get(nearestPose.getLane_id()).getPoints().clear();
   }
 
   private NearestPose find_nearest_pose(Position p, List<Lane> lane_list) {
@@ -1013,9 +968,6 @@ public class GlobalTrajPlanner implements TrjPlanService {
     endPose_cb(target, temp_Lane_vec, temp_Cross_vec, originId);
 
     List<Integer> result = Dij(start, target, temp_Lane_vec, temp_Cross_vec);
-//    for(Pose p:temp_Cross_vec.get(3).getPoints()){
-//      System.out.println(p);
-//    }
 
     List<RoutePoint> result_path = convert_result_to_path(result, temp_Lane_vec, temp_Cross_vec, originId);
 
