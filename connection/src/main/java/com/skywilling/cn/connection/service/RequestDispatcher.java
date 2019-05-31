@@ -1,5 +1,7 @@
 package com.skywilling.cn.connection.service;
 
+import com.alibaba.druid.proxy.jdbc.JdbcParameter;
+import com.alibaba.fastjson.JSONObject;
 import com.skywilling.cn.common.enums.TypeField;
 import com.skywilling.cn.common.model.BasicCarResponse;
 import com.skywilling.cn.connection.infrastructure.client.ClientPromise;
@@ -7,11 +9,14 @@ import com.skywilling.cn.connection.infrastructure.client.ClientService;
 import com.skywilling.cn.connection.model.ACK;
 import com.skywilling.cn.connection.model.Packet;
 import com.skywilling.cn.connection.model.ProtocolField;
+import com.skywilling.cn.monitor.listener.BasicListener;
 import com.skywilling.cn.monitor.listener.ListenerMap;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.util.Attribute;
 import io.netty.util.AttributeKey;
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -24,6 +29,7 @@ import java.util.concurrent.Executors;
  */
 @Component
 public class RequestDispatcher {
+    private static final Logger LOG = LoggerFactory.getLogger(RequestDispatcher.class);
 
     @Value("${netty.dispatch.threads}")
     private int threadNum;
@@ -49,27 +55,52 @@ public class RequestDispatcher {
         executorService.submit(() -> {
             BasicCarResponse carResponse;
             if (ACK.COMMAND.getCode() == packet.getAck()) {
+                LOG.info("carRequest: " + " type :" + packet.getType() + " vin " + packet.getVin());
                 carResponse = commandHandler(ctx, packet); //请求包
+
             } else {
                 carResponse = responseHandler(packet); //回复包
             }
-            if (carResponse != null) {
-                Packet.Builder builder = new Packet.Builder();
-                ctx.writeAndFlush(builder.buildResponse(packet, carResponse).build());
+            if(carResponse != null){
+                if (packet.getType() == TypeField.REQUEST_LOCK.getType()) {
+                    LOG.info("car request Response : " + carResponse.getCode() +" "+ carResponse.getAttach());
+                }
+                else if(packet.getType() == TypeField.RELEASE_LOCK.getType()){
+                    LOG.info("car release Response : " + carResponse.getCode() +" "+ carResponse.getAttach());
+                    Packet.Builder builder = new Packet.Builder();
+                    ctx.writeAndFlush(builder.buildResponse(packet, carResponse).build());
+                }
+                else{
+                    Packet.Builder builder = new Packet.Builder();
+                    ctx.writeAndFlush(builder.buildResponse(packet, carResponse).build());
+                }
+
             }
+
         });
     }
 
     public BasicCarResponse commandHandler(final ChannelHandlerContext ctx, Packet packet) {
-        System.out.println(packet.getRequestId());
+
         TypeField typeField = TypeField.valueOf(packet.getType());
         if (TypeField.LOGIN == typeField) {
             return loginHandler(ctx, packet);
         }
-        /**Type 21 == Ox15 为车端发送过来的终端消息,包括位置和方向,速度和转角等等 */
-
+        else if(TypeField.REQUEST_LOCK == typeField){
+            LOG.warn("receive request lock info : " + packet.getVin());
+            String name = typeField.getDesc();
+            BasicListener listener = listenerMap.getListener(name);
+            return listener.process(packet.getVin(),packet.getData());
+        }
+        else if(TypeField.RELEASE_LOCK == typeField){
+            LOG.warn("receive release lock info : " + packet.getVin());
+            String name = typeField.getDesc();
+            BasicListener listener = listenerMap.getListener(name);
+            return listener.process(packet.getVin(),packet.getData());
+        }
+        /**Type Ox15 为车端发送过来的终端消息,包括位置和方向,速度和转角等等 */
         else if (typeField != null) {
-            /**login, logout, heartbeat ,registration,terminalInfo..*/
+            /**logout, heartbeat ,registration,terminalInfo..*/
             return listenerMap.getListener(typeField.getDesc()).process(packet.getVin(), packet.getData());
         }
         return null;

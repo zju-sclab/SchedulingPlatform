@@ -25,6 +25,7 @@ public class AutoCarInfoAccessorImpl implements AutoCarInfoAccessor {
   }
 
   @Override
+  //Todo:cache过期时间
   public void save(AutonomousCarInfo carInfo) {
     String key = generateKey(carInfo.getVin());
     redisDao.save(key, carInfo);

@@ -5,9 +5,9 @@ import com.skywilling.cn.manager.car.model.AutonomousCarInfo;
 
 public interface CrossNodeListen {
 
-  void inComingJunction(AutonomousCarInfo carInfo, String junctionName);
+  void inComingJunction(String vin, String laneId, String junctionName);
 
-  void outGoingJunction(AutonomousCarInfo carInfo, String junctionName);
+  void outGoingJunction(String vin, String junctionName);
 
   //void OnArrivingStation(AutonomousCarInfo carInfo, String statonName);
 

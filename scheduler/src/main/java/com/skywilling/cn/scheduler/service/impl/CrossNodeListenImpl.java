@@ -51,19 +51,18 @@ public class CrossNodeListenImpl implements CrossNodeListen {
 
 
     @Override
-    public void inComingJunction(AutonomousCarInfo carInfo, String junctionName) {
+    public void inComingJunction(String vin,String laneId, String junctionName) {
         //开关
         if (!switchOn.equals("true")) {
             return;
         }
-        if (nodeLockService.vehicleIsExist(carInfo.getVin(), junctionName)) {
+        if (nodeLockService.vehicleIsExist(vin, junctionName)) {
             return;
         }
         //long start =  System.currentTimeMillis();
-        CompletableFuture<Boolean> acquireRes = nodeLockService.acquire(carInfo, junctionName);
+        CompletableFuture<Boolean> acquireRes = nodeLockService.acquire(vin,laneId, junctionName);
         Boolean aBoolean = acquireRes.getNow(false);
         //如果获取锁失败，暂停车端任务
-        String vin = carInfo.getVin();
 /*        if (!aBoolean) {
             //Trip trip = tripService.get(carInfo.getTripId());
             //tripCore.kill(trip);
@@ -77,17 +76,17 @@ public class CrossNodeListenImpl implements CrossNodeListen {
 
     /**队列中选择最前面的车唤醒，重启自动驾驶任务*/
     @Override
-    public void outGoingJunction(AutonomousCarInfo carInfo, String junctionName) {
+    public void outGoingJunction(String vin, String junctionName) {
 
         if (!switchOn.equals(true)) {
             return;
         }
-        String nextCar = nodeLockService.release(carInfo.getVin(), junctionName);
-        if (nextCar == null) return;
-        AutonomousCarInfo car = autoCarInfoService.get(nextCar);
-        String vin = car.getVin();
+        String next_block_Car = nodeLockService.release(vin, junctionName);
+        if (next_block_Car == null) return;
+        AutonomousCarInfo car = autoCarInfoService.get(next_block_Car);
+        String carVin = car.getVin();
         /**给车端发送重新启动信号*/
-        autoServiceBiz.continueAutonomous(vin);
+        autoServiceBiz.continueAutonomous(carVin);
 
     }
 

@@ -1,6 +1,7 @@
 package com.skywilling.cn.manager.car.repository;
 
 
+import com.skywilling.cn.common.model.AutoCarRequest;
 import com.skywilling.cn.manager.car.model.AutonomousCarInfo;
 import org.springframework.data.mongodb.core.geo.GeoJsonPoint;
 
@@ -34,4 +35,10 @@ public interface AutoCarInfoGeoAccessor {
     List<AutonomousCarInfo>  getAll();
 
     void insert(AutonomousCarInfo autonomousCarInfo);
+
+    void saveReq(AutoCarRequest autoCarRequest);
+
+    List<AutoCarRequest> getAllReq();
+
+
 }

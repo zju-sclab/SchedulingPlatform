@@ -1,26 +1,43 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration  scan="true" scanPeriod="60 seconds" debug="false">
-    <contextName>spring-boot-logging</contextName>
+    <contextName>scheduling platform-spring-boot-logging</contextName>
     <!--定义日志文件的存储地址 勿在 LogBack 的配置中使用相对路径-->
     <property name="log.path" value="log" />
     <!--输出到控制台-->
     <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
         <!-- 级别过滤 -->
-        <filter class="ch.qos.logback.classic.filter.LevelFilter">
-            <level>INFO</level>
-            <onMatch>ACCEPT</onMatch>
-            <onMismatch>DENY</onMismatch>
-        </filter>
         <encoder>
             <pattern>%d{HH:mm:ss.SSS} %contextName [%thread] %-5level %logger{36} - %msg%n</pattern>
         </encoder>
     </appender>
-
     <!--输出到文件-->
-    <appender name="file" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <file>${log.path}/spring-boot-logging.log</file>
+    <appender name="info_file" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>WARN</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <fileNamePattern>${log.path}/spring-boot-logging.%d{yyyy-MM-dd}.log.zip</fileNamePattern>
+            <fileNamePattern>${log.path}/spring-boot-logging.%d{yyyy-MM-dd}.info.log.zip</fileNamePattern>
+            <!-- 日志保存周期 -->
+            <maxHistory>30</maxHistory>
+            <!-- 总大小 -->
+            <totalSizeCap>1GB</totalSizeCap>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} %contextName [%thread] %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
+    <!--输出到文件-->
+    <appender name="warn_file" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>WARN</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+<!--        <file>${log.path}/spring-boot-logging_warn.log</file>-->
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${log.path}/spring-boot-logging.%d{yyyy-MM-dd}.warn.log.zip</fileNamePattern>
             <!-- 日志保存周期 -->
             <maxHistory>30</maxHistory>
             <!-- 总大小 -->
@@ -33,9 +50,9 @@
 
     <root level="info">
         <appender-ref ref="console" />
-        <appender-ref ref="file" />
+        <appender-ref ref ="info_file"/>
+        <appender-ref ref ="warn_file"/>
     </root>
-
     <!-- logback为java中的包 -->
     <logger name="com.baiding"/>
 

@@ -2,6 +2,7 @@ package com.skywilling.cn.scheduler.core;
 
 import com.skywilling.cn.common.exception.park.NoAvailableActionFoundException;
 import com.skywilling.cn.common.model.Node;
+import com.skywilling.cn.common.model.Node_Json;
 import com.skywilling.cn.livemap.model.*;
 import com.skywilling.cn.livemap.service.MapService;
 import com.skywilling.cn.livemap.service.ShapeService;
@@ -43,8 +44,8 @@ public class ActionScheduler {
             Node from = lane.getFrom();
             Node to = lane.getTo();
             action.setLaneName(lane.getName());
-            action.setOutset(liveMap.getNodeMap().get(from.getName()));
-            action.setGoal(liveMap.getNodeMap().get(to.getName()));
+            action.setOutset(new Node_Json(liveMap.getNodeMap().get(from.getName())));
+            action.setGoal(new Node_Json(liveMap.getNodeMap().get(to.getName())));
             action.setPoints(laneShape.getPath());
             action.setV(lane.getV());
             /** request type LIDAR */
@@ -68,8 +69,8 @@ public class ActionScheduler {
         }
         Node from = route.getFrom();
         Node to = route.getTo();
-        action.setOutset(from);
-        action.setGoal(to);
+        action.setOutset(new Node_Json(from));
+        action.setGoal(new Node_Json(to));
         action.setPoints(routePoints);
         action.setType("LIDAR");
         return action;

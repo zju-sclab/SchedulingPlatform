@@ -20,7 +20,7 @@ public enum TypeField {
   CONTINUE_AUTONOMOUS(0x32, "continue task"),
   FIRE_LIDAR_AUTONOMOUS(0x33, "fire lidar task"),
   REQUEST_LOCK(0x41,"request lock"),
-  RESPONSE_LOCK( 0x42,"respone lock"),
+  RESPONSE_LOCK(0x42,"respond lock"),
   RELEASE_LOCK(0x43, "release lock");
 
   private final String desc;

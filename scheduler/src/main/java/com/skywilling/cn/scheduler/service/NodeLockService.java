@@ -10,7 +10,7 @@ public interface NodeLockService {
 
     Scheduler.NodeLock find(String nodeName);
 
-    CompletableFuture<Boolean> acquire(AutonomousCarInfo car, String nodeName);
+    CompletableFuture<Boolean> acquire(String vin,String laneId, String nodeName);
 
     String release(String vin, String nodeName);
 

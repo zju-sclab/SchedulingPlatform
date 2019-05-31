@@ -70,9 +70,12 @@ public class Packet implements Serializable {
     }
 
     public Builder buildResponse(Packet packet, BasicCarResponse response){
-      this.packet = packet;
-      packet.ack=response.getCode();
-      packet.data=response.getAttach().toString();
+      this.packet.type = packet.type;
+      this.packet.requestId = packet.requestId;
+      this.packet.vin = packet.getVin();
+      this.packet.version = packet.getVersion();
+      this.packet.ack = response.getCode();
+      this.packet.data = JSONObject.toJSONString(response.getAttach());
       return this;
     }
 

@@ -26,6 +26,6 @@ public class LiveLane implements Serializable {
    /**
     * 动态添加车辆的出入信息，记录进入这个路的起点时间和离开这条路终点的时间信息
     */
-   private ConcurrentLinkedDeque<CarArrivalslnfo> vehicles_time_table;
+   private ConcurrentHashMap<String,CarArrivalslnfo> vehicles_time_table;
 
 }

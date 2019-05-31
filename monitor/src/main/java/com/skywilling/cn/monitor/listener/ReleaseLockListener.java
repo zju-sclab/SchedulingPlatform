@@ -2,15 +2,24 @@ package com.skywilling.cn.monitor.listener;
 
 import com.alibaba.fastjson.JSONObject;
 import com.skywilling.cn.common.enums.TypeField;
+import com.skywilling.cn.common.model.AutoCarRequest;
 import com.skywilling.cn.common.model.BasicCarResponse;
+import com.skywilling.cn.livemap.model.LiveMap;
+import com.skywilling.cn.livemap.service.MapService;
+import com.skywilling.cn.livemap.service.ParkService;
 import com.skywilling.cn.manager.car.model.AutonomousCarInfo;
 import com.skywilling.cn.manager.car.service.AutoCarInfoService;
 import com.skywilling.cn.manager.car.service.CarDynamicService;
 import com.skywilling.cn.monitor.model.DTO.ReleaseLockInfo;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 /**
  * ClassName ReleaseLockListener
@@ -20,17 +29,22 @@ import javax.annotation.PostConstruct;
 
 @Component
 public class ReleaseLockListener extends BasicListener {
+    private static final Logger LOG = LoggerFactory.getLogger(RequsetLockListener.class);
     @Autowired
     ListenerMap listenerMap;
     @Autowired
     AutoCarInfoService autoCarInfoService;
     @Autowired
     CarDynamicService carDynamicService;
+    @Autowired
+    ParkService parkService;
+    @Autowired
+    MapService mapService;
 
     @Override
     @PostConstruct
     public void init() {
-        listenerMap.addListener(TypeField.REQUEST_LOCK.getDesc(), this);
+        listenerMap.addListener(TypeField.RELEASE_LOCK.getDesc(), this);
     }
 
     @Override
@@ -40,38 +54,45 @@ public class ReleaseLockListener extends BasicListener {
         if (car == null) {
             return null;
         }
+        LOG.info("进入锁释放监听器内部：");
         /**解析releaseLock的消息*/
         ReleaseLockInfo releaseLockInfo = JSONObject.parseObject(body, ReleaseLockInfo.class);
-        car.setFromLane(releaseLockInfo.getCurrent_lane_id());
-        car.setLane(releaseLockInfo.getTarget_cross_id());
+        String cur_id = releaseLockInfo.getCurrent_id();
+        String next_id = releaseLockInfo.getNext_id();
 
+        int parkId = carDynamicService.query(car.getVin()).getParkId();
+        String parkName = parkService.query(parkId).getName();
+
+        AutoCarRequest autoCarRequest = new AutoCarRequest();
+        autoCarRequest.setRequestFlag(false);//release req
+        autoCarRequest.setLane_id(next_id);
+        autoCarRequest.setCross_id(cur_id);
+        autoCarRequest.setVin(vin);
+
+        LiveMap liveMap = mapService.getMap(parkName);
+
+        String last_lane_id = null;
+        /** 如果存在vin的车道定位记录,删除旧的,添加新的 */
+        if(liveMap.getCarMap().get(vin) != null )
+            last_lane_id = liveMap.getCarMap().get(vin);
+
+        /**修改车道定位记录  */
+        if(last_lane_id != null){
+            liveMap.getLaneToCarMap().get(last_lane_id).remove(vin);
+        }
+        /**释放当前cur_id标识的合流点并更新位置为当前cross_xx*/
+        liveMap.getCarMap().put(vin,cur_id);
+
+        if(liveMap.getLaneToCarMap().get((cur_id)) == null ) {
+            liveMap.getLaneToCarMap().put(cur_id, new ArrayList<>());
+        }
+        liveMap.getLaneToCarMap().get(cur_id).add(vin);
+
+        liveMap.getCarReqLockMap().put(vin+"release",autoCarRequest);
+        LOG.warn("in release lock listener carReqMap size: " + liveMap.getCarReqLockMap().size());
+        mapService.addMap(liveMap);
         /**异步存入redis*/
         autoCarInfoService.save(car);
-
-      /*  CarDynamic carDynamic = carDynamicService.query(vin);
-        String parkName = carDynamic.getParkName();
-        LiveMap liveMap = mapService.getMap(parkName);
-        Map<String,List<String>> laneToCarMap  = liveMap.getLaneToCarMap();
-        Map<String,String> carMap = liveMap.getCarMap();
-        String cur_lane_id = "";
-        if(carMap.get(vin) != null && carMap.get(vin) != "") {
-            cur_lane_id = carMap.get(vin);
-        }
-        *//**修改车道级定位记录  *//*
-        carMap.put(vin,String.valueOf(cur_id));
-        if(!cur_lane_id.equals("")){
-            laneToCarMap.get(String.valueOf(cur_lane_id)).remove(vin);
-            laneToCarMap.get(String.valueOf(cur_id)).add(vin);
-        }
-        *//**删除某条LiveLane车辆到达的记录*//*
-        List<CarArrivalslnfo> car_time_records = liveMap.getLaneMap().get(String.valueOf(cur_id)).getVehicles();
-        car_time_records.remove(car_time_records.size() - 1);
-
-        LiveJunction liveJunction = liveMap.getJunctionMap().get(String.valueOf(cur_id));*/
-        /**以cur_id寻找到对应的liveJunction然后借助NodeLock模块发起锁释放的调度*/
-/*
-        scheduleService.checkJunctionLock(vin,liveJunction,true);
-*/
 
         return new BasicCarResponse(0, new Object());
     }

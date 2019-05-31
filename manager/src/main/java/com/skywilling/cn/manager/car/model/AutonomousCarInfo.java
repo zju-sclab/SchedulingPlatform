@@ -3,7 +3,9 @@ package com.skywilling.cn.manager.car.model;
 
 
 import com.skywilling.cn.common.model.Pose;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.geo.GeoJsonPoint;
 import org.springframework.data.mongodb.core.index.CompoundIndex;
@@ -16,6 +18,8 @@ import java.io.Serializable;
 import java.util.List;
 
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 @Repository
 @Document(collection = "autonomousCarInfo")
 //复合索引，加复合索引后通过复合索引字段查询将大大提高速度,如@CompoundIndex(name = "age_idx", def = "{'lastName': 1, 'age': -1}")
@@ -60,14 +64,16 @@ public class AutonomousCarInfo implements Serializable {
   /**
   * 便于直接使用geohash索引
    * */
-  @Field
-  private GeoJsonPoint position;
+/*  private GeoJsonPoint geoJsonPoint;*/
 
-  public AutonomousCarInfo() { }
 
   public AutonomousCarInfo(String vin) {
     this.vin = vin;
     this.tripId = null;
   }
+/*  public AutonomousCarInfo(String vin, GeoJsonPoint jsonPoint){
+    this.vin = vin;
+    this.setGeoJsonPoint(jsonPoint);
+  }*/
 
 }

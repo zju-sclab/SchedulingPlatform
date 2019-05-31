@@ -1,14 +1,12 @@
 package com.skywilling.cn.livemap.model;
 
+import com.skywilling.cn.common.model.AutoCarRequest;
 import com.skywilling.cn.common.model.Node;
 import io.swagger.models.auth.In;
 import lombok.Data;
 
 import java.io.Serializable;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
 
@@ -31,9 +29,9 @@ public class LiveMap implements Serializable {
     private ConcurrentHashMap<String, LiveLane> laneMap = new ConcurrentHashMap<>();
 
     //车集合，记录所有链接到云端的车辆
-    private Set<String> carsSet = Collections.newSetFromMap(new ConcurrentHashMap<>());
+    private Set<String> carsSet = new HashSet<>();
     //车锁表，记录申请锁的车辆
-    private ConcurrentHashMap<String,String> carReqLockMap = new ConcurrentHashMap<>();
+    private ConcurrentHashMap<String,AutoCarRequest> carReqLockMap = new ConcurrentHashMap<>();
     //车路表，记录车辆所在车道的id, car_id ---> lane_id
     private ConcurrentHashMap<String, String> carMap = new ConcurrentHashMap<>();
     //路车表，车道id对应车辆，lane-id ---> car_ids

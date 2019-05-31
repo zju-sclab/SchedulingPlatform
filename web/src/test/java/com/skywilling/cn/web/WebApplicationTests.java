@@ -1,6 +1,7 @@
 package com.skywilling.cn.web;
 
 import com.skywilling.cn.common.enums.TypeField;
+import com.skywilling.cn.common.model.AutoCarRequest;
 import com.skywilling.cn.common.model.Pose;
 import com.skywilling.cn.common.model.RoutePoint;
 import com.skywilling.cn.common.model.Triple;
@@ -14,10 +15,12 @@ import com.skywilling.cn.livemap.service.ParkService;
 import com.skywilling.cn.livemap.service.impl.ShapeServiceImpl;
 import com.skywilling.cn.manager.car.model.AutonomousCarInfo;
 import com.skywilling.cn.manager.car.model.CarDynamic;
+import com.skywilling.cn.manager.car.model.SiteExt;
 import com.skywilling.cn.manager.car.repository.AutoCarInfoGeoAccessor;
 import com.skywilling.cn.manager.car.service.AutoCarInfoService;
 import com.skywilling.cn.manager.car.service.CarInfoService;
 import com.skywilling.cn.manager.car.service.impl.CarDynamicServiceImpl;
+import com.skywilling.cn.manager.car.service.impl.SiteExtDao;
 import com.skywilling.cn.scheduler.core.trajectoryalgorithm.GlobalTrajPlanner;
 import com.skywilling.cn.scheduler.model.Route;
 import com.skywilling.cn.scheduler.model.StaticStation;
@@ -30,8 +33,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.configurationprocessor.json.JSONObject;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.data.geo.Point;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.geo.GeoJsonPoint;
+import org.springframework.data.mongodb.core.geo.GeoJsonPolygon;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.util.ResourceUtils;
 
@@ -39,6 +44,7 @@ import javax.annotation.Resource;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ConcurrentHashMap;
@@ -88,7 +94,8 @@ public class WebApplicationTests {
     TripService tripService;
     @Autowired
     NodeLockService nodeLockService;
-
+    @Autowired
+    private SiteExtDao siteExtDao;
     @Autowired
     MongoTemplate mongoTemplate;
     @Autowired
@@ -161,17 +168,60 @@ public class WebApplicationTests {
     public void mapTest(){
         String parkName = "yuquanxiaoqu3";
         Park park = parkService.queryByName(parkName);
+        //mapService.createMapByLidarMap(parkName);
         LiveMap map = mapService.getMap(park.getName());
         System.out.println(map);
     }
 
     @Test
     public void mapPrintTest(){
-        String parkName = "yuquanxiaoqu";
-        LiveMap liveMap = mapService.getMap(parkName);
+        String parkName = "yuquanxiaoqu3";
+        List<LiveMap> liveMap = mapService.getAllMaps();
         System.out.println(liveMap);
     }
+    @Test
+    public void TestGeoJsonPoints(){
+        GeoJsonPoint geoJsonPoint1 = new GeoJsonPoint(new Point(113.330908,23.155678));
+        SiteExt siteExt1 = new SiteExt("A",geoJsonPoint1);
+        GeoJsonPoint geoJsonPoint2 = new GeoJsonPoint(new Point(113.33831,23.137335));
+        SiteExt siteExt2 = new SiteExt("B",geoJsonPoint2);
 
+        siteExtDao.insert(siteExt1,"SiteExt");
+        siteExtDao.insert(siteExt2,"SiteExt");
+    }
+    @Test
+    public void TestGeoPolgy(){
+        Point p1 = new Point(113.314882,23.163055);
+        Point p2 = new Point(113.355845,23.167042);
+        Point p3 = new Point(113.370289,23.149564);
+        Point p4 = new Point(113.356779,23.129758);
+        Point p5 = new Point(113.338238,23.13913);
+        Point p6 = new Point(113.330979,23.124706);
+        Point p7 = new Point(113.313588,23.140858);
+        Point p8 = new Point(113.323865,23.158204);
+        Point p9 = new Point(113.314882,23.163055);
+        List<Point> list = new ArrayList<>();
+        list.add(p1);
+        list.add(p2);
+        list.add(p3);
+        list.add(p4);
+        list.add(p5);
+        list.add(p6);
+        list.add(p7);
+        list.add(p8);
+        list.add(p9);
+       //用9个点围成一个区域，首尾两个点p1和p9要相同，才能构成一个区域
+        GeoJsonPolygon geoJsonPolygon = new GeoJsonPolygon(list);
+       //传入区域和数据库表名
+        List<SiteExt> pointInPolygon = siteExtDao.findPointInPolygon(geoJsonPolygon,"SiteExt");
+        pointInPolygon.forEach(
+                p -> {
+                    System.out.println(p.getLocation());
+                }
+        );
+        List<SiteExt> res = siteExtDao.findByDist(new GeoJsonPoint(new Point(113.33,23.14)),200);
+        System.out.println(res);
+    }
     @Test
     public void MongoInsertAndSaveTest(){
         AutonomousCarInfo autonomousCarInfo = new AutonomousCarInfo();
@@ -195,28 +245,33 @@ public class WebApplicationTests {
     @Test
     public void MongofindByLaneTest(){
 
-        //测试redis的查找
-        AutonomousCarInfo a = autoCarInfoService.get("00012345");
-        System.out.println(a);
         //测试mongodb的查找
-        List<AutonomousCarInfo> mongocars = autoCarInfoGeoAccessor.getByLane("lane_1");
+        List<AutonomousCarInfo> mongocars = autoCarInfoGeoAccessor.getByLane("cross_0");
         System.out.println(mongocars);
-        List<AutonomousCarInfo> mongocars2 = autoCarInfoGeoAccessor.findByDist(new GeoJsonPoint(0,0),0.01);
-        //System.out.println(mongocars2);
+        List<AutonomousCarInfo> mongocars2 = autoCarInfoGeoAccessor.findByDist(new GeoJsonPoint(new Point(0.1,0.01)),20);
+        System.out.println(mongocars2);
     }
     @Test
     public void MongoRemoveAndFindAllTest(){
-
         //autoCarInfoGeoAccessor.remove("lane", "lane_1");
         List<AutonomousCarInfo> all = autoCarInfoGeoAccessor.getAll();
+        System.out.println(all);
         autoCarInfoGeoAccessor.remove("vin","00012345");
-        for(AutonomousCarInfo autonomousCarInfo : all){
-            autonomousCarInfo.setFromLane("lane_0");
-            autonomousCarInfo.setLane("cross_0");
-            autoCarInfoService.save(autonomousCarInfo);
+        autoCarInfoGeoAccessor.remove("vin","00000000112417002");
+        List<String> cars = new LinkedList<>();
+        cars.add("00000000112417002");
+        for(String vin :cars){
+            AutonomousCarInfo car = new AutonomousCarInfo(vin);
+            car.setVin(vin);
+            car.setPose(new Pose());
+            car.setFromLane("lane_0");
+            car.setLane("cross_0");
+            autoCarInfoService.save(car);
         }
         AutonomousCarInfo a = autoCarInfoService.get("00000000112417002");
+        System.out.println(a);
         List<AutonomousCarInfo> b = autoCarInfoGeoAccessor.getAll();
+        System.out.println(b);
     }
     @Test
     public void TripSaveTest(){
@@ -225,53 +280,18 @@ public class WebApplicationTests {
         trip.setEndStation(new LiveStation());
         tripAccessor.save(trip);
     }
-    @Test
-    public void UtilTest(){
-        String[] str = new String[]{"2","2,3,4","2,3"};
-        List<String[]> res_split = new ArrayList<>();
-        for(String s :  str){
-            res_split.add(s.split(","));
-        }
-        for(int i = 0; i < res_split.size(); i++){
-            for(int j = 0; j < res_split.get(i).length; j++){
-                System.out.print(res_split.get(i)[j] + " ");
-            }
-            System.out.println("end");
-        }
-    }
-    /**
-     * 全局规划测试
-     */
+
+    /**全局规划测试*/
     @Test
     public void routeServiceTest(){
-        String from = "caolou";
-        String to = "shengyi";
+        String from = "caolou";String to = "shengyi";
         String parkName = "yuquanxiaoqu2";
-        /** input : yuquanxiaoqu 2
-         * output: lane_3 3 caolou shengyi 1 [lane_3] [lane_3] */
+        /** input : yuquanxiaoqu 2  output: lane_3 3 caolou shengyi 1 [lane_3] [lane_3] */
         Route route = routeService.navigate(parkName, from, to);
         for(LiveLane liveLane: route.getLiveLanes()){
-            System.out.println(liveLane.getName() + " "+ liveLane.getId()+ " " + liveLane.getFrom().getName()
-                    + " " +
-                   liveLane.getTo().getName() + " " + liveLane.getPriority() + " "+ liveLane.getFrom().getLanesStart()
-                    + " " + liveLane.getTo().getLanesEnd());
+            System.out.println("lane_name: " + liveLane.getName() + " lane_id: "+ liveLane.getId()+ " from: " +
+                    liveLane.getFrom().getName() + " to: " + liveLane.getTo().getName() + " weight: " + liveLane.getPriority() + " ");
         }
-
-    }
-
-    @Test
-    public void NettyTest(){
-        CompletableFuture<Boolean> resultFuture = new CompletableFuture<>();
-        Packet.Builder builder = new Packet.Builder();
-        JSONObject s = new JSONObject();
-        //18位Id
-        Packet packet = builder.buildRequest("S000000000000000095", TypeField.valueOf(0x21)).buildBody(s)
-                .build();
-        CompletableFuture<Packet> respFuture = clientService.sendRequest(packet);
-        if (respFuture == null) {
-            throw new NullPointerException();
-        }
-        respFuture.whenComplete(new RequestSender.PacketConsumer(resultFuture));
     }
 
     @Test
@@ -303,7 +323,15 @@ public class WebApplicationTests {
 
     @Test
     public void ScheduleTest(){
-        mapService.upDateReqLockMap();
+        AutoCarRequest autoCarRequest = new AutoCarRequest();
+        autoCarRequest.setRequestFlag(true);
+        autoCarRequest.setLane_id("lane_0");
+        autoCarRequest.setCross_id("cross_0");
+        String vin = "00000000112417002";
+        String parkName = "yuquanxiaoqu3";
+        LiveMap map = mapService.getMap(parkName);
+        map.getCarReqLockMap().put(vin,autoCarRequest);
+        mapService.addMap(map);
         scheduleService.checkAllClient();
     }
 

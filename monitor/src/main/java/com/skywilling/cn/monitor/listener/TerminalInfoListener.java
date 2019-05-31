@@ -9,6 +9,7 @@ import com.skywilling.cn.manager.car.service.AutoCarInfoService;
 import com.skywilling.cn.manager.car.service.CarDynamicService;
 import com.skywilling.cn.monitor.model.DTO.TerminalInfo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.geo.Point;
 import org.springframework.data.mongodb.core.geo.GeoJsonPoint;
 import org.springframework.stereotype.Component;
 
@@ -39,7 +40,7 @@ public class TerminalInfoListener extends BasicListener {
     public BasicCarResponse process(String vin, String body) {
         AutonomousCarInfo car = autoCarInfoService.getOrCreate(vin);
         //判断是否登陆的依据是redis是否存有该车信息,登陆逻辑会添加车辆vin到redis
-        if (car == null) {
+        if (car== null) {
             return null;
         }
         //车端上传的终端信息，包括速度，转角，挡位，姿态（位置，方向），ros nodes，时间戳
@@ -50,9 +51,7 @@ public class TerminalInfoListener extends BasicListener {
         car.setPose(terminalInfo.getPose());
         car.setTimestamp(terminalInfo.getTimestamp());
         car.setRosNodes(terminalInfo.getNodes());
-        car.setLane("-1");
-        car.setFromLane("-1");
-        car.setPosition(new GeoJsonPoint(terminalInfo.getPose().getPosition().getX(),terminalInfo.getPose().getPosition().getY()));
+        //car.setGeoJsonPoint(geoJsonPoint);
         //异步存入redis
         autoCarInfoService.save(car);
         //然后异步取redis数据判断，不然会变成同步操作，判断reids数据再做调度

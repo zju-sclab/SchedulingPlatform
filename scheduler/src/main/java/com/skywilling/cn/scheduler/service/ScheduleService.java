@@ -10,6 +10,6 @@ public interface ScheduleService {
 
     void checkLaneTimeWindow(String vin, LiveLane liveLane);
 
-    void checkJunctionLock(String vin, LiveJunction liveJunction, boolean isRealse);
+    void checkJunctionLock(String vin,String laneId, LiveJunction liveJunction, boolean isRealse);
 
 }

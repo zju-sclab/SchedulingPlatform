@@ -90,14 +90,26 @@ public class Scheduler {
           }
       }
 
+      public boolean hasCar(String vin){
+          for(Element x : inComingVehicles){
+              if(x.getVin().equals(vin)){
+                  return true;
+              }
+          }
+          return false;
+      }
+
       public CompletableFuture<Boolean> acquire(String vin, double priority) {
           CompletableFuture<Boolean> result = new CompletableFuture<>();
           try {
+
               lock.lock();
               if (owner == null || StringUtils.equals(owner, vin)) {
+                  LOG.warn("vin: " + vin + " accquire lock and be the owner ! ");
                   owner = vin;
                   result.complete(true);
               } else {
+                  LOG.warn("vin: " + vin + " accquire lock and wait in queue ! ");
                   Element element = new Element(vin, result, priority);
                   inComingVehicles.put(element);
               }
@@ -109,15 +121,18 @@ public class Scheduler {
 
       public String release(String vin) {
           if (!owner.equalsIgnoreCase(vin)) {
+              LOG.warn("vin: " + vin + " release lock and invalid ! ");
               return null;
           }
           try {
               lock.lock();
               Element front = inComingVehicles.poll();
               if (front != null) {
+                  LOG.warn("vin: " + vin + " release lock and notify vin : " + front.vin);
                   owner = front.vin;
                   front.result.complete(true);
               } else {
+                  LOG.warn("vin: " + vin + " release lock and notify nobody! ");
                   owner = null;
               }
           } finally {

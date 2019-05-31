@@ -152,6 +152,7 @@ public class TripServiceImpl implements TripService {
         //全局规划结果包装成任务
         Route route = new Route();
         Node from_node = new Node();
+        from_node.setName("source");
         from_node.setX(car.getPose().getPosition().getX());
         from_node.setY(car.getPose().getPosition().getY());
         route.setVin(vin);
