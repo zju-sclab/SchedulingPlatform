@@ -1,6 +1,5 @@
 package com.skywilling.cn.livemap.model;
 
-import com.skywilling.cn.manager.car.model.CarDynamic;
 import lombok.Data;
 
 import java.io.Serializable;

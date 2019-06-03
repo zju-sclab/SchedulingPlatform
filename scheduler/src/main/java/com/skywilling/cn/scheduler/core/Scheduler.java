@@ -90,6 +90,7 @@ public class Scheduler {
       }
 
       public String release(String vin) {
+          if(vin == null) return null;
           if (!owner.equalsIgnoreCase(vin)) {
               LOG.warn("vin: " + vin + " release lock and invalid ! ");
               return null;

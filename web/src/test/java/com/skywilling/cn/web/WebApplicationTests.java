@@ -1,15 +1,14 @@
 package com.skywilling.cn.web;
 
-import com.skywilling.cn.common.enums.TypeField;
-import com.skywilling.cn.common.model.AutoCarRequest;
 import com.skywilling.cn.common.model.Pose;
 import com.skywilling.cn.common.model.RoutePoint;
 import com.skywilling.cn.common.model.Triple;
 import com.skywilling.cn.connection.infrastructure.client.ClientService;
-import com.skywilling.cn.connection.model.Packet;
 import com.skywilling.cn.connection.service.RequestDispatcher;
 import com.skywilling.cn.connection.service.RequestSender;
-import com.skywilling.cn.livemap.model.*;
+import com.skywilling.cn.livemap.model.LiveLane;
+import com.skywilling.cn.livemap.model.LiveMap;
+import com.skywilling.cn.livemap.model.Park;
 import com.skywilling.cn.livemap.service.MapService;
 import com.skywilling.cn.livemap.service.ParkService;
 import com.skywilling.cn.livemap.service.impl.ShapeServiceImpl;
@@ -24,15 +23,12 @@ import com.skywilling.cn.manager.car.service.impl.SiteExtDao;
 import com.skywilling.cn.scheduler.core.trajectoryalgorithm.GlobalTrajPlanner;
 import com.skywilling.cn.scheduler.model.Route;
 import com.skywilling.cn.scheduler.model.StaticStation;
-import com.skywilling.cn.scheduler.model.Trip;
 import com.skywilling.cn.scheduler.repository.impl.TripAccessorImpl;
 import com.skywilling.cn.scheduler.service.*;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.configurationprocessor.json.JSONObject;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.core.io.ClassPathResource;
 import org.springframework.data.geo.Point;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.geo.GeoJsonPoint;
@@ -40,14 +36,11 @@ import org.springframework.data.mongodb.core.geo.GeoJsonPolygon;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.util.ResourceUtils;
 
-import javax.annotation.Resource;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ConcurrentHashMap;
 
 /* import org.springframework.data.geo.Point; */
 

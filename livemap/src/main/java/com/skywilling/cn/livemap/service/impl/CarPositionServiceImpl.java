@@ -5,7 +5,7 @@ import com.skywilling.cn.livemap.service.CarPositionService;
 import com.skywilling.cn.livemap.service.MapService;
 import com.skywilling.cn.manager.car.service.AutoCarInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.annotation.Scheduled;
+
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -43,11 +43,5 @@ public class CarPositionServiceImpl implements CarPositionService {
         String lane = liveMap.getCarMap().get(vin);
         return lane;
     }
-    /**
-     * 每1s钟向redis刷新数据
-     */
-    @Scheduled(fixedRate = 1000)
-    public void updateLiveMapByCarInfo(){
-         //Todo:刷新车辆在liveMap中记录的位置
-    }
+
 }

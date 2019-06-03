@@ -56,7 +56,7 @@ public class ScheduleServiceImpl implements ScheduleService {
     @Override
     public void checkAllClient() {
         List<LiveMap> maps = mapService.getAllMaps();
-        //LOG.info("schedule maps size: " + maps.size());
+        LOG.info("schedule maps size: " + maps.size());
         for(LiveMap livemap : maps) {
             //LOG.info("schedule map name: "+livemap.getParkName());
             ConcurrentHashMap<String,AutoCarRequest> car_req_lock = livemap.getCarReqLockMap();
@@ -78,6 +78,7 @@ public class ScheduleServiceImpl implements ScheduleService {
                 if(!is_request){
                     LOG.warn("schedule car_release_lock_req: " + vin + " at: " + cross_id);
                     LiveJunction liveJunction = livemap.getJunctionMap().get(cross_id);
+                    if(liveJunction != null)
                     crossNodeListen.outGoingJunction(vin,liveJunction.getName());
                     car_req_lock.remove(vinreq);
                 }
@@ -85,6 +86,7 @@ public class ScheduleServiceImpl implements ScheduleService {
                {//request req
                     LOG.warn("schedule car_request_lock_req: " + carInfo.getVin() + " at: " + cross_id);
                     LiveJunction liveJunction = livemap.getJunctionMap().get(cross_id);
+                   if(liveJunction != null)
                     crossNodeListen.inComingJunction(vin,lane_id, liveJunction.getName());
                     car_req_lock.remove(vinreq);
                 }

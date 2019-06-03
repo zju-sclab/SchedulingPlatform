@@ -35,7 +35,7 @@ public class NodeLockServiceImpl implements NodeLockService {
         Scheduler.NodeLock nodeLock;
         if (!nodeLockMap.containsKey(nodeName)) {
             nodeLock = new Scheduler.NodeLock(nodeName);
-            Log.warn("node lock named: " + nodeName + "has been created!");
+            Log.warn("node lock named: " + nodeName + "  has been created!");
             nodeLockMap.put(nodeName, nodeLock);
         }
         nodeLock = nodeLockMap.get(nodeName);
