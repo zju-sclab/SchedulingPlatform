@@ -12,14 +12,8 @@ public class ParkServiceImplTest {
     @Autowired
     private ParkMapper parkMapper;
 
-
     @Test
     public void save() {
-         Park park = new Park();
-         park.setName("xuanzhou");
-         park.setMapFileUrl("/doc/Map/map.xml");
-         park.setShapeFileUrl("/doc/Map/shape");
-         parkMapper.save(park);
 
     }
 

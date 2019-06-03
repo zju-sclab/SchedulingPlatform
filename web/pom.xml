@@ -23,16 +23,7 @@
             <artifactId>connection</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
-        <dependency>
-            <groupId>com.skywilling.cn</groupId>
-            <artifactId>scheduler</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-        </dependency>
-        <dependency>
-            <groupId>com.skywilling.cn</groupId>
-            <artifactId>scheduler</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-        </dependency>
+
         <dependency>
             <groupId>com.skywilling.cn</groupId>
             <artifactId>command</artifactId>
@@ -53,7 +44,6 @@
             <artifactId>jedis</artifactId>
             <version>2.9.0</version>
         </dependency>
-
 
     </dependencies>
 

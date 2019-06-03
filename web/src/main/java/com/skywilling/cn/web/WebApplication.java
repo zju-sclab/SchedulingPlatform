@@ -1,6 +1,5 @@
 package com.skywilling.cn.web;
 
-import com.skywilling.cn.livemap.service.impl.MapServiceImpl;
 import org.mybatis.spring.annotation.MapperScan;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,9 +23,6 @@ public class WebApplication implements CommandLineRunner {
 
     @Override
     public void run(String... args) {
-        LOG.info("SPRING BOOT INIT AT " + System.currentTimeMillis());
-        LOG.debug("this is a debug");
-        LOG.warn("this is a warn");
-        LOG.error("this is a error");
+        LOG.warn("spring boot start and this is a start.");
     }
 }

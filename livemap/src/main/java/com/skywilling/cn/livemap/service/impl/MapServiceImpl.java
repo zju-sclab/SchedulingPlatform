@@ -48,7 +48,7 @@ public class MapServiceImpl implements MapService {
     @Autowired
     CarDynamicService carDynamicService;
 
-    @PostConstruct
+    //@PostConstruct
     public void init(){
         String parkName = "yuquanxiaoqu3";
         if(!maps.contains(parkName))
@@ -113,7 +113,7 @@ public class MapServiceImpl implements MapService {
     /**
      * 每1s钟向redis刷新数据
      */
-    @Scheduled(fixedRate = 1000)
+    @Scheduled(fixedRate = 100000)
     private void syncFile() {
         for (String name : maps.keySet()) {
             redisDao.save(PREFIX + name, maps.get(name));

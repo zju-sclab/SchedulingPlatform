@@ -9,11 +9,11 @@ import org.springframework.data.mongodb.core.index.CompoundIndex;
 import org.springframework.data.mongodb.core.index.CompoundIndexes;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-/**
- * ClassName SiteExt
- * Author  Lin
- * Date 2019/5/30 16:56
- **/
+    /**
+     * ClassName SiteExt
+     * Author  Lin
+     * Date 2019/5/30 16:56
+     **/
 @Data
 @AllArgsConstructor
 @NoArgsConstructor

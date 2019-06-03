@@ -121,16 +121,6 @@ public class WebApplicationTests {
     }
 
     /**
-     * 查找园区测试
-     */
-    @Test
-    public void parkQuerytest(){
-        Park park1 = parkService.queryByName("sss");
-        Park park2 = parkService.query(14);
-        System.out.println(park2);
-    }
-
-    /**
      * 新建园区测试
      */
     @Test
@@ -140,7 +130,7 @@ public class WebApplicationTests {
         park.setShapeFileUrl("D:\\work\\Projects\\linxxx\\SchedulingPlatform\\doc\\Map\\shape\\");
         park.setImgUrl("D:\\work\\Projects\\linxxx\\SchedulingPlatform\\doc\\Map");
         park.setName("yuquanxiaoqu3");
-        parkService.save(park);
+        if(parkService.queryByName("yuquanxiaoqu3")==null) parkService.save(park);
     }
 
     /**
@@ -149,17 +139,15 @@ public class WebApplicationTests {
     @Test
     public void updatepark(){
         Park park = parkService.queryByName("yuquanxiaoqu3");
-        park.setMapFileUrl("file:\\"+ "D:\\work\\Projects\\linxxx\\SchedulingPlatform\\doc\\Map\\map2.xml");
+        park.setMapFileUrl("file:\\"+ System.getProperty("user.dir")+"\\src\\main\\resources\\config\\dev\\map2.xml");
         park.setShapeFileUrl("D:\\work\\Projects\\linxxx\\SchedulingPlatform\\doc\\Map\\shape\\");
         park.setImgUrl("D:\\work\\Projects\\linxxx\\SchedulingPlatform\\doc\\Map");
         System.out.println(park.getId());
         parkService.update(park);
+        Park park2 = parkService.query(park.getId());
+        System.out.println(park2);
     }
 
-    @Test
-    public void mapAddTest(){
-        List<LiveMap> liveMap = mapService.getAllMaps();
-    }
 
     /**
      * 解析Map和Shape测试
@@ -168,18 +156,12 @@ public class WebApplicationTests {
     public void mapTest(){
         String parkName = "yuquanxiaoqu3";
         Park park = parkService.queryByName(parkName);
-        //mapService.createMapByLidarMap(parkName);
         LiveMap map = mapService.getMap(park.getName());
         System.out.println(map);
     }
 
-    @Test
-    public void mapPrintTest(){
-        String parkName = "yuquanxiaoqu3";
-        List<LiveMap> liveMap = mapService.getAllMaps();
-        System.out.println(liveMap);
-    }
-    @Test
+
+    //@Test
     public void TestGeoJsonPoints(){
         GeoJsonPoint geoJsonPoint1 = new GeoJsonPoint(new Point(113.330908,23.155678));
         SiteExt siteExt1 = new SiteExt("A",geoJsonPoint1);
@@ -219,38 +201,13 @@ public class WebApplicationTests {
                     System.out.println(p.getLocation());
                 }
         );
-        List<SiteExt> res = siteExtDao.findByDist(new GeoJsonPoint(new Point(113.33,23.14)),200);
+        SiteExt near = siteExtDao.nearVehicle(new GeoJsonPoint(new Point(113.330908,23.155678)));
+        System.out.println(near);
+        List<SiteExt> res = siteExtDao.findByDist(new GeoJsonPoint(new Point(113.33,23.14)),2000);
         System.out.println(res);
     }
-    @Test
-    public void MongoInsertAndSaveTest(){
-        AutonomousCarInfo autonomousCarInfo = new AutonomousCarInfo();
-        autonomousCarInfo.setStation("zetong");
-        autonomousCarInfo.setVin("00012345");
-        autonomousCarInfo.setVelocity(5);
-        autonomousCarInfo.setLane("lane_1");
-        autonomousCarInfo.setStation("zetong");
-        Pose pose = new Pose();
-        //pose.setOrientation(new Orientation());
-        //pose.setPoint(new Point());
-        autonomousCarInfo.setPose(pose);
-        //autonomousCarInfo.setPosition(new GeoJsonPoint(new Point(pose.getPoint().getX(), pose.getPoint().getY())));
-        autonomousCarInfo.setTripId("00112345");
-        autonomousCarInfo.setTaskId("0x122356");
-        autonomousCarInfo.setGear(2);
-        autonomousCarInfo.setState(-1);
-        //测试redis、MongoDB的插入，一起插入
-        autoCarInfoService.save(autonomousCarInfo);
-    }
-    @Test
-    public void MongofindByLaneTest(){
 
-        //测试mongodb的查找
-        List<AutonomousCarInfo> mongocars = autoCarInfoGeoAccessor.getByLane("cross_0");
-        System.out.println(mongocars);
-        List<AutonomousCarInfo> mongocars2 = autoCarInfoGeoAccessor.findByDist(new GeoJsonPoint(new Point(0.1,0.01)),20);
-        System.out.println(mongocars2);
-    }
+
     @Test
     public void MongoRemoveAndFindAllTest(){
         //autoCarInfoGeoAccessor.remove("lane", "lane_1");
@@ -273,16 +230,8 @@ public class WebApplicationTests {
         List<AutonomousCarInfo> b = autoCarInfoGeoAccessor.getAll();
         System.out.println(b);
     }
-    @Test
-    public void TripSaveTest(){
-        Trip trip = new Trip();
-        trip.setStartStation(new LiveStation());
-        trip.setEndStation(new LiveStation());
-        tripAccessor.save(trip);
-    }
 
     /**全局规划测试*/
-    @Test
     public void routeServiceTest(){
         String from = "caolou";String to = "shengyi";
         String parkName = "yuquanxiaoqu2";
@@ -319,20 +268,6 @@ public class WebApplicationTests {
         System.out.println(res.first);
         System.out.println(res.second);
         System.out.println(res.third);
-    }
-
-    @Test
-    public void ScheduleTest(){
-        AutoCarRequest autoCarRequest = new AutoCarRequest();
-        autoCarRequest.setRequestFlag(true);
-        autoCarRequest.setLane_id("lane_0");
-        autoCarRequest.setCross_id("cross_0");
-        String vin = "00000000112417002";
-        String parkName = "yuquanxiaoqu3";
-        LiveMap map = mapService.getMap(parkName);
-        map.getCarReqLockMap().put(vin,autoCarRequest);
-        mapService.addMap(map);
-        scheduleService.checkAllClient();
     }
 
 }

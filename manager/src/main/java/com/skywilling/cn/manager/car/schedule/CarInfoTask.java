@@ -40,10 +40,10 @@ public class CarInfoTask {
   @Scheduled(fixedDelay = 10000)
   public void updateAutoDriveCar() {
     Set<String> keys = redisDao.keys("CAR_*");
+    logger.info("update car_info to car_dynamic: " + keys.size());
     keys.forEach(key -> {
       String vin = key.substring(4);
       AutonomousCarInfo carInfo = autoCarInfoService.get(vin);
-
       CarDynamic carDynamic = new CarDynamic();
       carDynamic.setVin(vin);
       carDynamic.setConnect(carInfo.getState() == -1 ? 0: 1);
@@ -63,7 +63,7 @@ public class CarInfoTask {
     });
   }
 
-  @Scheduled(fixedDelay = 10000)
+  //@Scheduled(fixedDelay = 10000)
   public void updateRealCar() {
     List<CarDynamic> carDynamics = carDynamicService.queryRealCar(1, Integer.MAX_VALUE).getList();
     logger.info("updateRealCar: " + carDynamics.size());
