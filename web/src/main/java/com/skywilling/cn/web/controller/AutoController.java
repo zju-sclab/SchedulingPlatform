@@ -39,30 +39,23 @@ import java.util.concurrent.ExecutionException;
 @RestController
 public class AutoController {
 
-    private static final Logger LOG = LoggerFactory.getLogger(AutoController.class);
-
     @Autowired
     private AutoServiceBiz autoServiceBiz;
-
     @Autowired
     private CarInfoService carInfoService;
-
     @Autowired
     private TaskService taskService;
-
     @Autowired
     private TripService tripService;
-
     @Autowired
     private CarDynamicService carDynamicService;
-
     @Autowired
     private ParkService parkService;
 
     /**
      * 查询当前车辆任务状态
      */
-    @RequestMapping(value = "/car/{vin}/current", method = RequestMethod.GET)
+    @RequestMapping(value = "/car/task/{vin}", method = RequestMethod.GET)
     public BasicResponse currentTask(@PathVariable("vin") String vin) {
         try {
             AutoTask task = taskService.getCurrentTask(vin);
@@ -70,7 +63,7 @@ public class AutoController {
                 TaskView taskView = TaskView.getFrom(task);
                 return BasicResponse.buildResponse(ResultType.SUCCESS, taskView);
             }
-            throw new TaskNotExistException(vin);
+            else throw new TaskNotExistException(vin);
         } catch (CarNotExistsException | TaskNotExistException e) {
             return BasicResponse.buildResponse(ResultType.FAILED, e.getMessage());
         }
@@ -79,7 +72,7 @@ public class AutoController {
     /**
      * 查询Task的执行状态
      */
-    @RequestMapping(value = "/task/{taskId}/state")
+    @RequestMapping(value = "/car/task/{taskId}")
     public BasicResponse taskState(@PathVariable("taskId") String taskId) {
         Integer status = taskService.queryStatus(taskId);
         if (status == null) {
@@ -90,13 +83,9 @@ public class AutoController {
 
     /**
      *   车端开启自动驾驶任务，提交的参数:
-     *   vin;
-     *   source;
-     *   goal;
-     *   velocity ,DEFAULT_VELOCITY;
-     *   acc，DEFAULT_ACCELEARTION;
+     *   vin, source, goal, velocity = DEFAULT_VELOCITY, acc = DEFAULT_ACCELEARTION;
      */
-    @RequestMapping(value = "/car/start", method = RequestMethod.POST)
+    @RequestMapping(value = "/car/site/start", method = RequestMethod.POST)
     @ResponseBody
     public BasicResponse startAutonomous(RideParam rideParam) {
         try {
@@ -122,11 +111,10 @@ public class AutoController {
         }
     }
     /**
-     *   车端开启定点到达A->B的自动驾驶任务，提交的参数:
-     *   vin;
-     *   goal;
+     *   车端开启定点到达A->B的自动循迹驾驶任务，提交的参数:
+     *   vin, goal;
      */
-    @RequestMapping(value = "/trj/start", method = RequestMethod.POST)
+    @RequestMapping(value = "/car/trj/start", method = RequestMethod.POST)
     @ResponseBody
     public BasicResponse startTrjAutonomous(RideParam rideParam) {
         try {
@@ -144,115 +132,111 @@ public class AutoController {
             resp.put("times",trip.getRoute().getTimes());
             resp.put("from",trip.getRoute().getFrom().getName());
             resp.put("to",trip.getRoute().getTo().getName());
-            if (trip != null) {
-                return BasicResponse.buildResponse(ResultType.SUCCESS, resp);
-            }
-            return BasicResponse.buildResponse(ResultType.FAILED, null);
+            return BasicResponse.buildResponse(ResultType.SUCCESS, resp);
         } catch (CarNotExistsException e) {
-            return BasicResponse.buildResponse(ResultType.CAR_NOT_EXISTS, null);
+            return BasicResponse.buildResponse(ResultType.CAR_NOT_EXISTS, e.getMessage());
         } catch (CarNotAliveException e) {
-            return BasicResponse.buildResponse(ResultType.CAR_NOT_CONNECTED, null);
+            return BasicResponse.buildResponse(ResultType.CAR_NOT_CONNECTED, e.getMessage());
         } catch (IllegalRideException e) {
-            return BasicResponse.buildResponse(ResultType.FAILED, null);
+            return BasicResponse.buildResponse(ResultType.FAILED, e.getMessage());
         }
     }
 
     /**
-     * 车端停止自动驾驶
+     * 车端停止自动驾驶trj,site 通用
      */
     @RequestMapping(value = "/car/{vin}/stop", method = RequestMethod.GET)
     @ResponseBody
     public BasicResponse stopAutonomous(@PathVariable(name = "vin") String vin) {
         CompletableFuture<Boolean> asyncResult = autoServiceBiz.killAutonomous(vin);
-        List<Trip> trips = tripService.queryBy(vin,1,12);
         try {
-            for(Trip trip : trips) {
-                if (asyncResult.get()) {
-                    if (trip.getTaskIds() == null || trip.getTaskIds().size() == 0)
-                        return BasicResponse.buildResponse(ResultType.SUCCESS, null);
-                }
-                return BasicResponse.buildResponse(ResultType.FAILED, null);
+            if(asyncResult.get()){
+                return BasicResponse.buildResponse(ResultType.SUCCESS,("stop successful!"));
             }
         } catch (InterruptedException | ExecutionException e) {
-            LOG.error(e.getMessage());
+            return BasicResponse.buildResponse(ResultType.FAILED,e.getMessage());
         }
-        return BasicResponse.buildResponse(ResultType.FAILED, null);
+        return BasicResponse.buildResponse(ResultType.FAILED, "car stop failed");
     }
 
     /**
      * 查询车辆的健康状态信息
      */
-   /* @RequestMapping(value = "/car/{vin}/health", method = RequestMethod.GET)
+    @RequestMapping(value = "/car/{vin}/health", method = RequestMethod.GET)
     @ResponseBody
     public BasicResponse checkModuleHealth(@PathVariable(name = "vin") String vin) {
         try {
             List<ModuleInfo> moduleInfos = carInfoService.getAllNodesInfo(vin);
             BasicResponse.buildResponse(ResultType.SUCCESS, moduleInfos);
         } catch (Exception e) {
-            LOG.error(e.getMessage());
+            return  BasicResponse.buildResponse(ResultType.FAILED,e.getMessage());
         }
-        return BasicResponse.buildResponse(ResultType.FAILED, null);
-    }*/
+        return BasicResponse.buildResponse(ResultType.FAILED, "failed");
+    }
 
+    /**
+     * 查询ride(trip）信息
+     */
     @RequestMapping(value = "car/ride/{rideId}", method = RequestMethod.GET)
     public BasicResponse getRide(@PathVariable("rideId") String rideId) {
         Trip ride = tripService.get(rideId);
         if (ride == null) {
-            return BasicResponse.buildResponse(ResultType.FAILED, null);
+            return BasicResponse.buildResponse(ResultType.FAILED, "ride is not exist");
         }
         return BasicResponse.buildResponse(ResultType.SUCCESS, ride);
     }
 
+    /**
+     * 旧接口
+     * 租用空闲车，对于使用中的车不能再使用，只通过数据库查询标志位
+     */
     @RequestMapping(value = "/car/rent", method = RequestMethod.POST)
     @ResponseBody
-    public BasicResponse fireRide(RideParam rideParam) {
+    public BasicResponse fireRide(RideParam rideParam) throws NullPointerException, IllegalRideException {
         try {
             CarDynamic carDynamic = carDynamicService.query(rideParam.getVin());
             if (carDynamic == null) {
                 return BasicResponse.buildResponse(ResultType.FAILED, "the car isn't exist");
             }
             Park park = parkService.query(carDynamic.getParkId());
-            String rideId = tripService.submitTrip(rideParam.getVin(), park.getName(), rideParam.getFrom(),rideParam.getGoal(),
+            String rideId = tripService.submitTrip(rideParam.getVin(), park.getName(),
+                    rideParam.getFrom(),rideParam.getGoal(),
                     rideParam.getVelocity(),
                     rideParam.getAcc());
             if (rideId != null) {
                 carDynamicService.markRentedCar(rideParam.getVin(), DriveType.AUTONOMOUS);
-                return BasicResponse.buildResponse(ResultType.SUCCESS, rideId);
+                return BasicResponse.buildResponse(ResultType.SUCCESS, "rent ride start successful");
             }
-            return BasicResponse.buildResponse(ResultType.FAILED, null);
-        } catch (NullPointerException e) {
-            return BasicResponse.buildResponse(ResultType.FAILED, e.getMessage());
+            return BasicResponse.buildResponse(ResultType.FAILED, "rent failed");
         } catch (CarNotAliveException e) {
-            return BasicResponse.buildResponse(ResultType.CAR_NOT_CONNECTED, "");
+            return BasicResponse.buildResponse(ResultType.CAR_NOT_CONNECTED, e.getMessage());
         } catch (CarNotExistsException e) {
-            return BasicResponse.buildResponse(ResultType.CAR_NOT_EXISTS, "");
-        } catch (IllegalRideException e) {
-            return BasicResponse.buildResponse(ResultType.FAILED, null);
+            return BasicResponse.buildResponse(ResultType.CAR_NOT_EXISTS, e.getMessage());
         }
     }
 
-    @RequestMapping(value = "/ride/{rideId}", method = RequestMethod.GET)
-    @ResponseBody
-    public BasicResponse getWholeRideInfo(@PathVariable("rideId") String rideId) {
-        Trip ride = tripService.get(rideId);
-        if (ride != null) {
-            return BasicResponse.buildResponse(ResultType.SUCCESS, ride);
-        }
-        return BasicResponse.buildResponse(ResultType.FAILED, null);
-    }
 
 
+    /**
+     * 旧接口
+     * 借助rideId停止并释放使用中的车辆
+     */
     @RequestMapping(value = "/ride/{rideId}/stop", method = RequestMethod.POST)
     @ResponseBody
     public BasicResponse stopRide(@PathVariable("rideId") String rideId) {
         Trip ride = tripService.get(rideId);
+        //任务空或者已经正常结束
         if (tripService.stopTrip(rideId)) {
             carDynamicService.markFreeCar(ride.getVin());
-            return BasicResponse.buildResponse(ResultType.SUCCESS, null);
+            return BasicResponse.buildResponse(ResultType.SUCCESS, "stop ride successful");
         }
-        return BasicResponse.buildResponse(ResultType.FAILED, null);
+        //任务非正常结束
+        return BasicResponse.buildResponse(ResultType.FAILED, "stop ride failed because trip not finish");
     }
 
+    /**
+     * 查询当前所有的ride（trip）
+     */
     @RequestMapping(value = "/rides", method = RequestMethod.GET)
     @ResponseBody
     public BasicResponse queryRides(@RequestParam("page") int page, @RequestParam("size") int size) {
@@ -260,17 +244,4 @@ public class AutoController {
         return BasicResponse.buildResponse(ResultType.SUCCESS, rides);
     }
 
-  /*  @RequestMapping(value = "/ride/status/{status}", method = RequestMethod.GET)
-    public BasicResponse getRidesByJobStatus(@PathVariable("status") int status,
-                                             @RequestParam("page") int page,
-                                             @RequestParam("size") int size) {
-        try {
-            RideStatus rideStatus= RideStatus.valueOf(status);
-            List<Trip> rides = tripService.queryByStrus(rideStatus, page, size);
-            return BasicResponse.buildResponse(ResultType.SUCCESS, rides);
-        } catch (Exception e) {
-            LOG.error("getRidesByJobStatus: " + e.getMessage());
-            return BasicResponse.buildResponse(ResultType.FAILED, e.getMessage());
-        }
-    }*/
 }

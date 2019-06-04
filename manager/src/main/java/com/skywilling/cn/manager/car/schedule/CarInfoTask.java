@@ -25,16 +25,12 @@ public class CarInfoTask {
 
   @Autowired
   private CarDynamicService carDynamicService;
-
   @Autowired
   private AutoCarInfoService autoCarInfoService;
-
   @Autowired
   private RedisDao redisDao;
-
   @Autowired
   private RestTemplate restTemplate;
-
   private Logger logger = LoggerFactory.getLogger(CarInfoTask.class);
 
   @Scheduled(fixedDelay = 10000)
@@ -49,8 +45,8 @@ public class CarInfoTask {
       carDynamic.setConnect(carInfo.getState() == -1 ? 0: 1);
       Pose pose = carInfo.getPose();
       if (pose != null && pose.getPosition() != null) {
-        carDynamic.setLatitude(pose.getPosition().getX());
-        carDynamic.setLongitude(pose.getPosition().getY());
+        carDynamic.setLatitude(pose.getPosition().getY());
+        carDynamic.setLongitude(pose.getPosition().getX());
         carDynamic.setIsValid(pose.getPosition().getStatus());
         carDynamic.setLane(carInfo.getLane());
         carDynamic.setStation(carInfo.getStation());

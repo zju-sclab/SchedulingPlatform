@@ -12,6 +12,7 @@ import com.skywilling.cn.common.model.Node;
 import com.skywilling.cn.livemap.model.Park;
 import com.skywilling.cn.livemap.service.ParkService;
 import com.skywilling.cn.manager.car.enumeration.*;
+import com.skywilling.cn.manager.car.model.AutonomousCarInfo;
 import com.skywilling.cn.manager.car.model.CarDynamic;
 import com.skywilling.cn.manager.car.model.ModuleInfo;
 import com.skywilling.cn.manager.car.service.CarDynamicService;
@@ -40,57 +41,56 @@ import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static org.springframework.http.MediaType.MULTIPART_FORM_DATA;
+import static org.springframework.http.MediaType.MULTIPART_FORM_DATA_VALUE;
+
 /**
  * CarInfo related queries are placed here.
  */
 @CrossOrigin(origins = "*")
-@RequestMapping(value = "/api/v2/carInfo")
+@RequestMapping(value = "/api/v2/info")
 @RestController
 public class CarInfoController {
 
-  private static final Logger LOG = LoggerFactory.getLogger(CarInfoController.class);
   @Autowired
   ClientService clientService;
   @Autowired
   LockService lockService;
-
-
   @Autowired
   CarInfoService carInfoService;
-
   @Autowired
   CarDynamicService carDynamicService;
-
-
-
   @Autowired
   private ParkService parkService;
-
   @Autowired
   private TaskService taskService;
-
   @Autowired
   private TripService tripService;
 
 
-  /** 查询所有链接的车端 */
-  @RequestMapping(value = "/clients", method = RequestMethod.GET)
+  /**
+   * 查询所有已经通过TX2链接上云端的车端（区别T_BOX）
+   */
+  @RequestMapping(value = "/car/connected", method = RequestMethod.GET)
   public BasicResponse getAutonomousClients(@RequestParam(value = "page", required = true) int page,
                                             @RequestParam(value = "size", required = true) int size){
     return BasicResponse.buildResponse(ResultType.SUCCESS, clientService.getAllClients());
   }
 
-  @RequestMapping(value = "/cars", method = RequestMethod.GET)
+    /**
+     * 根据查询条件查询车的静态信息
+     */
+  @RequestMapping(value = "/car/findByCondition", method = RequestMethod.GET)
   public BasicResponse cars(@RequestParam(value = "parkId", required = false) Integer parkId,
+                            @RequestParam(value = "parkName", required = false) String parkName,
                             @RequestParam(value = "type", required = false) Integer type,
                             @RequestParam(value = "simulation", required = false) Integer simulation,
                             @RequestParam(value = "definitionId", required = false) Integer definitionId,
                             @RequestParam(value = "connect", required = false) Integer connect,
-                            @RequestParam(value = "useStatus", required = false) Integer useStatus,
-                            HttpServletRequest request) {
-
+                            @RequestParam(value = "useStatus", required = false) Integer useStatus) {
 
         CarDynamic carDynamic = new CarDynamic();
+        carDynamic.setParkName(parkName);
         carDynamic.setParkId(parkId);
         carDynamic.setType(type);
         carDynamic.setSimulation(simulation);
@@ -102,111 +102,126 @@ public class CarInfoController {
         return BasicResponse.buildResponse(ResultType.SUCCESS, pageView);
   }
 
-  @RequestMapping(value = "/car/vins", method = RequestMethod.GET)
-  public BasicResponse queryVins(@RequestParam(value = "vin", required = false) String vin) {
-        try {
-          List<String> vins = carInfoService.queryVins(vin);
-          return BasicResponse.buildResponse(ResultType.SUCCESS, vins);
-        }catch (Exception e) {
-          return BasicResponse.buildResponse(ResultType.FAILED, e.getClass());
-        }
-  }
 
+    /**
+     * 查询当前车的ride信息
+     */
   @RequestMapping(value = "/car/{vin}/ride", method = RequestMethod.GET)
   public BasicResponse getRide(@PathVariable("vin") String vin) {
         String taskId = carInfoService.getTaskId(vin);
         if (taskId == null) {
-          return BasicResponse.buildResponse(ResultType.SUCCESS, "");
+          return BasicResponse.buildResponse(ResultType.SUCCESS, "no taskId bind to car");
         }
         AutoTask task = taskService.getTaskById(taskId);
         if (task == null) {
-          return BasicResponse.buildResponse(ResultType.FAILED, "");
+          return BasicResponse.buildResponse(ResultType.FAILED, "task is not exist");
         }
         Trip ride = tripService.get(task.getRideId());
         return BasicResponse.buildResponse(ResultType.SUCCESS, ride);
   }
-
+    /**
+     * 根据日期查询当前车的ride信息
+     */
   @RequestMapping(value = "/car/{vin}/rides", method = RequestMethod.GET)
   public BasicResponse getHistoryRides(@PathVariable("vin") String vin,
            @RequestParam(value = "start", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") Date start,
            @RequestParam(value = "end", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") Date end) {
         try {
-               List<Trip> rides = null;
+               List<Trip> rides;
                if (start == null || end == null) {
-               rides = tripService.queryBy(vin, 1, 12);
-          }else{
-               rides = tripService.queryBy(vin, start, end, 1, 12);
-          }
-          return BasicResponse.buildResponse(ResultType.SUCCESS, rides);
-        } catch (Exception e) {
-          return BasicResponse.buildResponse(ResultType.FAILED, null);
+                   rides = tripService.queryBy(vin, 1, 12);
+               }else{
+                   rides = tripService.queryBy(vin, start, end, 1, 12);
+                }
+              return BasicResponse.buildResponse(ResultType.SUCCESS, rides);
+         } catch (Exception e) {
+            return BasicResponse.buildResponse(ResultType.FAILED, null);
         }
   }
-  /** add a  car*/
+    /**
+     * 根据条件添加一辆车的静态信息
+     */
   @RequestMapping(value = "/car/add", method = RequestMethod.POST, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-  public BasicResponse addCar(@RequestParam(value = "vin", required = false )String vin,
+  public BasicResponse addCarByCondition(@RequestParam(value = "vin", required = false )String vin,
                               @RequestParam(value = "parkId", required = false) Integer parkId,
+                              @RequestParam(value = "parkName",required = false) String parkName,
+                              @RequestParam(value = "carPlate", required = false)String carPlate,
                               @RequestParam(value = "type", required = false) Integer type,
                               @RequestParam(value = "simulation", required = false) Integer simulation,
-                              @RequestParam(value = "definitionId", required = false) Integer definitionId,
-                              @RequestParam(value = "connect", required = false) Integer connect,
-                              @RequestParam(value = "useStatus", required = false) Integer useStatus,
-                              HttpServletRequest request) {
-      CarDynamic carDynamic = new CarDynamic();
-      carDynamic.setVin(vin);
-      carDynamic.setParkId(parkId);
-      carDynamic.setType(type);
-      carDynamic.setSimulation(simulation);
-      carDynamic.setDefinitionId(definitionId);
-      carDynamic.setConnect(connect);
-      carDynamic.setUseStatus(useStatus);
-    try {
-      carDynamic.setDriveMode(DriveType.AUTONOMOUS.getCode());
-      carDynamicService.save(carDynamic);
-      return BasicResponse.buildResponse(ResultType.SUCCESS, carDynamic);
-    } catch (CarNotVinException e) {
-      return BasicResponse.buildResponse(ResultType.FAILED, e.getMessage());
-    }
-  }
-  /** delete a car*/
-  @RequestMapping(value = "/car/{vin}/delete", method = {RequestMethod.DELETE, RequestMethod.POST})
-  public BasicResponse deleteCar(@PathVariable("vin") String vin) {
-    CarDynamic carDynamic = carDynamicService.query(vin);
-    if (carDynamic != null && carDynamic.getParkId() != null) {
-      return BasicResponse.buildResponse(ResultType.FAILED, "该车辆已与园区进行绑定，无法删除");
-    }
-    carDynamicService.delete(vin);
-    return BasicResponse.buildResponse(ResultType.SUCCESS, null);
-  }
-
-  /**直接更新车辆信息,可以指定园区*/
-  @RequestMapping(value = "/car/{vin}/update", method = RequestMethod.POST, consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
-  public BasicResponse updateCar(@PathVariable String vin, CarDynamic carDynamic) {
-
-          if (carDynamic == null || (carDynamic.getParkId() == null && carDynamic.getCarPlate() == null
-              && carDynamic.getType() == null && carDynamic.getSimulation() == null)) {
-              return BasicResponse.buildResponse(ResultType.FAILED, "the update info is empty");
-          }
+                              @RequestParam(value = "definitionId", required = false) Integer definitionId) {
+          CarDynamic carDynamic = new CarDynamic();
           carDynamic.setVin(vin);
-          try {
-               CarDynamic query = carDynamicService.query(carDynamic.getVin());
-            if (query == null) {
-              return BasicResponse.buildResponse(ResultType.FAILED, "the car is not exists");
-            }
-              carDynamicService.update(carDynamic);
-              return BasicResponse.buildResponse(ResultType.SUCCESS, null);
-             } catch (CarNotVinException e) {
-              e.printStackTrace();
-              return BasicResponse.buildResponse(ResultType.FAILED, e.getMessage());
-            } catch (Exception e) {
-              return BasicResponse.buildResponse(ResultType.FAILED, e.getMessage());
-            }
+          carDynamic.setParkId(parkId);
+          carDynamic.setParkName(parkName);
+          carDynamic.setCarPlate(carPlate);
+          carDynamic.setType(type);
+          carDynamic.setSimulation(simulation);
+          carDynamic.setDefinitionId(definitionId);
+        try {
+            carDynamic.setDriveMode(DriveType.AUTONOMOUS.getCode());
+            carDynamicService.save(carDynamic);
+            return BasicResponse.buildResponse(ResultType.SUCCESS, carDynamic);
+        } catch (CarNotVinException e) {
+            return BasicResponse.buildResponse(ResultType.FAILED, e.getMessage());
+        }
+  }
+    /**
+     * 数据库删除一辆车
+     */
+  @RequestMapping(value = "/car/delete", method = {RequestMethod.DELETE, RequestMethod.POST})
+  public BasicResponse deleteCar(@RequestParam("vin") String vin) {
+      CarDynamic carDynamic = carDynamicService.query(vin);
+      if (carDynamic != null && carDynamic.getParkId() != null) {
+          return BasicResponse.buildResponse(ResultType.FAILED, "该车辆已与园区进行绑定，无法删除");
+      }
+      carDynamicService.delete(vin);
+      return BasicResponse.buildResponse(ResultType.SUCCESS, null);
+  }
+    /**
+     * 根据vin查询车的静态信息
+     */
+    @RequestMapping(value = "/car/query", method = RequestMethod.GET)
+    public BasicResponse querySQL(@RequestParam(value = "vin", required = false) String vin) {
+        try {
+            CarDynamic carDynamic = carInfoService.get(vin);
+            return BasicResponse.buildResponse(ResultType.SUCCESS, carDynamic);
+        }catch (Exception e) {
+            return BasicResponse.buildResponse(ResultType.FAILED, e.getMessage());
+        }
+    }
+  /**
+   * 根基条件更新车辆信息,可以重新指定园区
+   * */
+  @RequestMapping(value = "/car/update", method = RequestMethod.POST, consumes = MULTIPART_FORM_DATA_VALUE)
+  public BasicResponse updateCar(@RequestParam(value = "vin")String vin,
+                                 @RequestParam(value = "parkId", required = false) Integer parkId,
+                                 @RequestParam(value = "parkName",required = false) String parkName,
+                                 @RequestParam(value = "carPlate",required = false) String carPlate,
+                                 @RequestParam(value = "type", required = false) Integer type,
+                                 @RequestParam(value = "simulation", required = false) Integer simulation,
+                                 @RequestParam(value = "definitionId", required = false) Integer definitionId) {
+      CarDynamic carDynamic = carDynamicService.query(vin);
+      if (carDynamic == null) {
+              return BasicResponse.buildResponse(ResultType.FAILED, "the car is not exist");
+      }
+      if(parkId != null) carDynamic.setParkId(parkId);
+      if(parkName != null) carDynamic.setParkName(parkName);
+      if(carPlate != null) carDynamic.setCarPlate(carPlate);
+      if(type != null) carDynamic.setType(type);
+      if(simulation != null) carDynamic.setSimulation(simulation);
+      if(definitionId != null) carDynamic.setDefinitionId(definitionId);
+      try {
+          carDynamicService.update(carDynamic);
+          return BasicResponse.buildResponse(ResultType.SUCCESS,carDynamic);
+      } catch (CarNotVinException e) {
+          return BasicResponse.buildResponse(ResultType.SUCCESS, "no vin is bind to car_dynamic update");
+      }
   }
 
   /**
    * 获取所有未与园区绑定的车辆
    */
-  @RequestMapping(value = "/car/unbound", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+  @RequestMapping(value = "/car/unbound", method = RequestMethod.GET)
   public BasicResponse getAllUnboundCar(@RequestParam("page") int page, @RequestParam("size") int size) {
 
         PageInfo<CarDynamic> pageInfo = carDynamicService.queryUnbound(page, size);
@@ -214,26 +229,28 @@ public class CarInfoController {
         return BasicResponse.buildResponse(ResultType.SUCCESS, pageView);
   }
 
+    /**
+     * 通过数据库查询车辆当前的位置，如果已经离线，查询的是上一次断线前的位置
+     */
   @RequestMapping(value = "/car/{vin}/position", method = RequestMethod.GET)
   public BasicResponse getPosition(@PathVariable(name = "vin") String vin) {
-        try {
-              CarDynamic carDynamic = carDynamicService.query(vin);
-              if (carDynamic == null) {
-                  return BasicResponse.buildResponse(ResultType.FAILED, "the car is not exist");
-              }
-              Park park = parkService.query(carDynamic.getParkId());
-              if (park == null) {
-                return BasicResponse.buildResponse(ResultType.FAILED, "the car is not bind to park");
-              }
-              Position pos = carInfoService.getPosition(vin);
-              return BasicResponse.buildResponse(ResultType.SUCCESS, pos);
-           } catch (NullPointerException e) {
-             return BasicResponse.buildResponse(ResultType.FAILED, null);
-        }
+      CarDynamic carDynamic = carDynamicService.query(vin);
+      if (carDynamic == null) {
+          return BasicResponse.buildResponse(ResultType.FAILED, "the car is not exist");
+      }
+      Park park = parkService.query(carDynamic.getParkId());
+      if (park == null) {
+          return BasicResponse.buildResponse(ResultType.FAILED, "the car is not bind to park");
+      }
+      Position pos = carInfoService.getPosition(vin);
+      return BasicResponse.buildResponse(ResultType.SUCCESS, pos);
   }
 
-  @RequestMapping(value = "/car/carInfos", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
-  public BasicResponse getCarInfos(@RequestBody ParkAndCar parkAndCar) {
+    /**
+     * 旧接口
+     */
+  @RequestMapping(value = "/car/parkCars", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+  public BasicResponse parkCarsBypParkName(@RequestBody ParkAndCar parkAndCar) {
 
         Park park = parkService.query(parkAndCar.getParkId());
         if (park == null) {
@@ -259,31 +276,21 @@ public class CarInfoController {
 
   @RequestMapping(value = "/car/{vin}/health", method = RequestMethod.GET)
   public BasicResponse getHealthMsg(@PathVariable("vin") String vin) {
+        List<ModuleInfo> moduleInfoList = carInfoService.getAllNodesInfo(vin);
+        if (moduleInfoList == null) {
+          return BasicResponse.buildResponse(ResultType.CAR_NOT_EXISTS, null);
+        }
+        return BasicResponse.buildResponse(ResultType.SUCCESS, moduleInfoList);
 
-          try {
-                List<ModuleInfo> moduleInfoList = carInfoService.getAllNodesInfo(vin);
-                if (moduleInfoList == null) {
-                  return BasicResponse.buildResponse(ResultType.CAR_NOT_EXISTS, null);
-                }
-                return BasicResponse.buildResponse(ResultType.SUCCESS, moduleInfoList);
-          } catch (NullPointerException e) {
-                return BasicResponse.buildResponse(ResultType.FAILED, null);
-          }
   }
 
-  @RequestMapping(value = "/car/{vin}/carInfo", method = RequestMethod.GET)
+  @RequestMapping(value = "/car/{vin}/infos", method = RequestMethod.GET)
   public BasicResponse getCarInfo(@PathVariable("vin") String vin) {
-
-    try {
-      CarDynamic latest = carInfoService.get(vin);
-      if (latest == null) {
-        return BasicResponse.buildResponse(ResultType.CAR_NOT_EXISTS, null);
-      }
-      return BasicResponse.buildResponse(ResultType.SUCCESS, latest);
-    } catch (RuntimeException e) {
-
-    }
-    return BasicResponse.buildResponse(ResultType.FAILED, null);
+         CarDynamic latest = carInfoService.get(vin);
+         if (latest == null) {
+            return BasicResponse.buildResponse(ResultType.CAR_NOT_EXISTS, null);
+         }
+         return BasicResponse.buildResponse(ResultType.SUCCESS, latest);
   }
 
   /**
@@ -292,11 +299,11 @@ public class CarInfoController {
    */
   @RequestMapping(value = "/car/{vin}/alive", method = RequestMethod.GET)
   public BasicResponse checkIsAlive(@PathVariable(name = "vin") String vin) {
-    boolean connected = carInfoService.isConnected(vin);
-    if (connected) {
-      return BasicResponse.buildResponse(ResultType.SUCCESS, null);
-    }
-    return BasicResponse.buildResponse(ResultType.FAILED, null);
+        boolean connected = carInfoService.isConnected(vin);
+        if (connected) {
+          return BasicResponse.buildResponse(ResultType.SUCCESS, "connected");
+        }
+        return BasicResponse.buildResponse(ResultType.FAILED, "car alive failed");
   }
 
   /**
@@ -329,7 +336,7 @@ public class CarInfoController {
   public BasicResponse unlockCar(@PathVariable(name = "id") String vin, @RequestParam(name = "data") String data,
                                  @RequestParam(name = "type") Integer type, @RequestParam(name = "source") String source) {
       // try to unlock car
-      LOG.info("unlockCar", "vin = %s, data = %s, type = %s, source = %s", vin, data, type, source);
+      //LOG.info("unlockCar", "vin = %s, data = %s, type = %s, source = %s", vin, data, type, source);
       if (type == 0) {
           if (lockService.unlockByKey(vin, data)) {
             return BasicResponse.buildResponse(ResultType.SUCCESS, null);
@@ -363,7 +370,7 @@ public class CarInfoController {
   @RequestMapping(value = "/car/{id}/lock", method = RequestMethod.POST)
   public BasicResponse lockCar(@PathVariable(name = "id") String vin, @RequestParam(name = "data") String data,
                                @RequestParam(name = "source") String source) {
-        LOG.info("[lockCar]", "lock car %s from source %s", vin, source);
+        //LOG.info("[lockCar]", "lock car %s from source %s", vin, source);
         lockService.lock(vin);
         if (StringUtils.equals(source, "app")) {
               lockService.updateKey(vin, data);
@@ -372,13 +379,4 @@ public class CarInfoController {
         }
         return BasicResponse.buildResponse(ResultType.SUCCESS, null);
   }
-
-/*  @RequestMapping(value = "/car/types", method = RequestMethod.GET)
-  public BasicResponse getCarTypes() {
-        try {
-          return BasicResponse.buildResponse(ResultType.SUCCESS, carTypeService.query());
-        } catch (Exception e) {
-          return BasicResponse.buildResponse(ResultType.FAILED, e.getClass());
-        }
-  }*/
 }

@@ -80,10 +80,10 @@ public class CrossNodeListenImpl implements CrossNodeListen {
     @Override
     public void outGoingJunction(String vin, String junctionName) {
 
-        Log.warn("crossNodeListen outgoing: "+vin + " at " + junctionName);
+        log.warn("crossNodeListen outgoing: "+vin + " at " + junctionName);
         String next_block_Car = nodeLockService.release(vin, junctionName);
         if (next_block_Car != null){
-            Log.warn("crossNodeListen continue task : "+vin + " at " + junctionName);
+            log.warn("crossNodeListen continue task : "+vin + " at " + junctionName);
             AutonomousCarInfo car = autoCarInfoService.get(next_block_Car);
             autoServiceBiz.continueAutonomous(car.getVin());
         }
