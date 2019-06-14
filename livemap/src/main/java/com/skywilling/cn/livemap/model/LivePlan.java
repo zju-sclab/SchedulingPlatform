@@ -7,13 +7,13 @@ import java.io.Serializable;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
- * ClassName LiveOrder
+ * ClassName LivePlan
  * Author  Lin
  * Date 2019/6/10 11:37
  **/
 
 @Data
-public class LiveOrder implements Serializable {
-     private  CacheManager cacheManager = new CacheManager();
+public class LivePlan implements Serializable {
+     private  CacheManager cacheManager = CacheManager.getCacheManagerInstance();
 
 }

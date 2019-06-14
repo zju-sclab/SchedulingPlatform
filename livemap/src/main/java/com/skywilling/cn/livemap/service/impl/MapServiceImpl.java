@@ -2,6 +2,7 @@ package com.skywilling.cn.livemap.service.impl;
 
 
 import com.skywilling.cn.common.config.redis.RedisDao;
+import com.skywilling.cn.common.model.Node;
 import com.skywilling.cn.livemap.core.StaticMapAndShapeFactory;
 import com.skywilling.cn.livemap.core.StaticMapFactory;
 import com.skywilling.cn.livemap.model.*;
@@ -195,5 +196,12 @@ public class MapServiceImpl implements MapService {
                     map.getCarMap().put(vin,carInfo.getFromLane());
                 }
             }*/
+    }
+
+    @Override
+    public Node getNode(String nodeName,String parkName) {
+        LiveMap map = getMap(parkName);
+        Node node = map.getNameToNodeMap().get(nodeName);
+        return node;
     }
 }

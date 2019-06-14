@@ -3,8 +3,12 @@ package com.skywilling.cn.scheduler.service;
 import com.skywilling.cn.common.exception.CarNotAliveException;
 import com.skywilling.cn.common.exception.CarNotExistsException;
 import com.skywilling.cn.common.exception.IllegalRideException;
+import com.skywilling.cn.common.model.Node;
+import com.skywilling.cn.common.model.Order;
+import com.skywilling.cn.common.model.Plan;
 import com.skywilling.cn.manager.car.model.AutonomousCarInfo;
 import com.skywilling.cn.scheduler.model.Route;
+import com.skywilling.cn.scheduler.model.StaticStation;
 import com.skywilling.cn.scheduler.model.Trip;
 
 import java.util.Date;
@@ -40,13 +44,16 @@ public interface TripService {
 
     Trip getLiveTripBy(String vin);
 
-    public List<Trip> query(int page, int size);
+    List<Trip> query(int page, int size);
 
-    public List<Trip> queryBy(String vin, int page, int size);
+    List<Trip> queryBy(String vin, int page, int size);
 
-    public List<Trip> queryBy(String vin, Date start, Date end, int page, int size);
+    List<Trip> queryBy(String vin, Date start, Date end, int page, int size);
 
+    StaticStation createStaticPointByNode(Node node);
 
+    List<Plan> createPlanByOrders(Order[] orders);
 
+    Plan createPlanByOrder(Order order);
 
 }

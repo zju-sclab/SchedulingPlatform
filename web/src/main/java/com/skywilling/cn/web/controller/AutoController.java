@@ -8,6 +8,8 @@ import com.skywilling.cn.common.exception.CarNotExistsException;
 import com.skywilling.cn.common.exception.IllegalRideException;
 import com.skywilling.cn.common.model.BasicResponse;
 
+import com.skywilling.cn.common.model.Order;
+import com.skywilling.cn.common.model.Plan;
 import com.skywilling.cn.common.model.TaskState;
 import com.skywilling.cn.connection.common.exception.TaskNotExistException;
 import com.skywilling.cn.livemap.model.Park;
@@ -21,13 +23,17 @@ import com.skywilling.cn.manager.task.model.AutoTask;
 import com.skywilling.cn.manager.task.service.TaskService;
 
 
+import com.skywilling.cn.scheduler.core.trajectoryalgorithm.GlobalTrajPlanner;
 import com.skywilling.cn.scheduler.model.Trip;
+import com.skywilling.cn.scheduler.service.OrderService;
 import com.skywilling.cn.scheduler.service.TripService;
 import com.skywilling.cn.web.model.RideParam;
 import com.skywilling.cn.web.model.view.TaskView;
+import javafx.application.Application;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -51,6 +57,10 @@ public class AutoController {
     private CarDynamicService carDynamicService;
     @Autowired
     private ParkService parkService;
+    @Autowired
+    GlobalTrajPlanner globalTrajPlanner;
+    @Autowired
+    OrderService orderService;
 
     /**
      * 查询当前车辆任务状态
@@ -243,5 +253,9 @@ public class AutoController {
         List<Trip> rides = tripService.query(page, size);
         return BasicResponse.buildResponse(ResultType.SUCCESS, rides);
     }
+    /**
+     * 查询当前的调度表
+     */
+
 
 }

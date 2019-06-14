@@ -1,11 +1,11 @@
 package com.skywilling.cn.livemap.service;
 
-import com.skywilling.cn.common.model.Order;
-import com.skywilling.cn.livemap.model.LiveOrder;
+import com.skywilling.cn.common.model.Plan;
+import com.skywilling.cn.livemap.model.LivePlan;
 
-public interface OrderService {
-    void put(String username,Order order,String parkName);
-    LiveOrder getLiveOrder(String parkName);
-    void createLiveOrder(String parkName);
-    Order get(String username,String parkName);
+public interface PlanService {
+    void put(String username,Plan plan,String parkName);
+    LivePlan getLivePlan(String parkName);
+    LivePlan createLivePlan(String parkName);
+    Plan get(String username,String parkName);
 }

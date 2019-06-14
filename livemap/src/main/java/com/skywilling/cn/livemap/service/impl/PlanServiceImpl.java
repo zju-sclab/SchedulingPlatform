@@ -1,66 +1,67 @@
 package com.skywilling.cn.livemap.service.impl;
 
-import com.skywilling.cn.common.model.Order;
-import com.skywilling.cn.livemap.model.LiveMap;
-import com.skywilling.cn.livemap.model.LiveOrder;
-import com.skywilling.cn.livemap.service.OrderService;
+import com.skywilling.cn.common.model.Plan;
+import com.skywilling.cn.livemap.model.LivePlan;
+import com.skywilling.cn.livemap.service.PlanService;
 import com.skywilling.cn.livemap.util.CacheManager;
-import com.sun.tools.corba.se.idl.constExpr.Or;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
 
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
- * ClassName OrderServiceImpl
+ * ClassName PlanServiceImpl
  * Author  Lin
  * Date 2019/6/10 17:30
  **/
-
-public class OrderServiceImpl implements OrderService {
-    private static final Logger LOG = LoggerFactory.getLogger(OrderService.class);
-    private static final String PREFIX = "order_";
-    private static ConcurrentHashMap<String, LiveOrder> orders = new ConcurrentHashMap<>();
+@Service
+public class PlanServiceImpl implements PlanService {
+    private static final Logger LOG = LoggerFactory.getLogger(PlanService.class);
+    private  static final String PREFIX = "plans_";
+    private  ConcurrentHashMap<String, LivePlan> plans = new ConcurrentHashMap<>();
     @Override
-    public void put(String username, Order order,String parkName) {
-        LiveOrder orderMap = orders.get(parkName);
-        if(orderMap == null){
-            LiveOrder new_order = new LiveOrder();
-            try {
-                new_order.getCacheManager().put(username,order);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            orders.put(PREFIX+parkName, new_order);
+    public void put(String username, Plan plan,String parkName) {
+        LivePlan plan_map = getLivePlan(parkName);
+        try {
+            plan_map.getCacheManager().put(username,plan);
+        } catch (Exception e) {
+           LOG.info(e.getMessage());
         }
+        plans.put(PREFIX+parkName, plan_map);
     }
 
     @Override
-    public LiveOrder getLiveOrder(String parkName) {
-        LiveOrder liveOrder = orders.get(PREFIX + parkName);
-        return liveOrder;
+    public LivePlan getLivePlan(String parkName) {
+        LivePlan livePlan = this.plans.get(PREFIX + parkName);
+        if(livePlan == null){
+            livePlan = createLivePlan(parkName);
+        }
+        return livePlan;
     }
 
     @Override
-    public void createLiveOrder(String parkName) {
-
+    public LivePlan createLivePlan(String parkName) {
+        LivePlan livePlan = new LivePlan();
+        this.plans.put(PREFIX + parkName, livePlan);
+        return livePlan;
     }
 
     @Override
-    public Order get(String username, String parkName) {
-         LiveOrder liveOrder = getLiveOrder(parkName);
-         return (Order)liveOrder.getCacheManager().get(username);
+    public Plan get(String username, String parkName) {
+         LivePlan livePlan = getLivePlan(parkName);
+         return (Plan)livePlan.getCacheManager().get(username);
     }
 
     public static void main(String []args){
-        OrderServiceImpl o = new OrderServiceImpl();
+        PlanServiceImpl o = new PlanServiceImpl();
         String parkName = "yuquanxiaoqu3";
-        o.put("l",new Order(),parkName);
-        o.put("Lis",new Order(),parkName);
-        o.put("ll",new Order(),parkName);
-        System.out.println(orders);
-        LiveOrder liveOrder = o.getLiveOrder(parkName);
-        CacheManager cacheManager = liveOrder.getCacheManager();
+        o.put("l",new Plan(),parkName);
+        o.put("Lis",new Plan(),parkName);
+        o.put("ll",new Plan(),parkName);
+        //System.out.println(plans);
+        LivePlan livePlan = o.getLivePlan(parkName);
+        CacheManager cacheManager = livePlan.getCacheManager();
         cacheManager.init(1);
         Object o1 = cacheManager.get("l");
         Object o2 = cacheManager.get("ll");
@@ -69,7 +70,7 @@ public class OrderServiceImpl implements OrderService {
         try {
             Thread.sleep(2000L);
         } catch (InterruptedException e) {
-            e.printStackTrace();
+           LOG.info(e.getMessage());
         }
          o1 = cacheManager.get("l");
          o2 = cacheManager.get("ll");

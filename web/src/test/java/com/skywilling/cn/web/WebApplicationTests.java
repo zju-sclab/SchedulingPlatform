@@ -67,10 +67,6 @@ public class WebApplicationTests {
     ShapeServiceImpl shapeService;
     @Autowired
     GlobalTrajPlanner ser;
-
-    /**
-     * Netty
-     */
     @Autowired
     RequestSender requestSender;
     @Autowired
@@ -93,13 +89,10 @@ public class WebApplicationTests {
     MongoTemplate mongoTemplate;
     @Autowired
     AutoCarInfoGeoAccessor autoCarInfoGeoAccessor;
-
     @Autowired
     ClientService clientService;
-
     @Autowired
     TripAccessorImpl tripAccessor;
-
     @Autowired
     ScheduleService scheduleService;
 
@@ -194,9 +187,9 @@ public class WebApplicationTests {
                     System.out.println(p.getLocation());
                 }
         );
-        SiteExt near = siteExtDao.nearVehicle(new GeoJsonPoint(new Point(113.330908,23.155678)));
+        SiteExt near = siteExtDao.nearVehicle(new GeoJsonPoint(113.330907,23.155675));
         System.out.println(near);
-        List<SiteExt> res = siteExtDao.findByDist(new GeoJsonPoint(new Point(113.33,23.14)),2000);
+        List<SiteExt> res = siteExtDao.findByDist(new GeoJsonPoint(new Point(113.33,23.14)),2);
         System.out.println(res);
     }
 
@@ -253,10 +246,8 @@ public class WebApplicationTests {
     }
     @Test
     public void GlobalPlanTest(){
-        StaticStation start = new StaticStation();
-        StaticStation target = new StaticStation();
-        start.setPoint(1.16,-0.29,0,0,0,0,0);
-        target.setPoint(-37,101,0,0,0,0,0);
+        StaticStation start = new StaticStation(1.16,-0.29,0,0,0,0,0);
+        StaticStation target = new StaticStation(-37,101,0,0,0,0,0);;
         Triple<List<String>, List<Double>, List<RoutePoint>> res = ser.createTrajectory(start,target);
         System.out.println(res.first);
         System.out.println(res.second);

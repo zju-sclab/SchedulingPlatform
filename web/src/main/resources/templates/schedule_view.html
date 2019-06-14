@@ -1,10 +1,38 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:layout="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
-    <title>$Title$</title>
+    <title>schedule table</title>
 </head>
 <body>
-$END$
+
+<h2>Show M orders initial schedule table</h2>>
+
+<div layout:fragment="content">
+    <table class="table">
+        <thead class="sunflower">
+        <tr>
+            <td>Plan_ID</td>
+            <td>userName</td>
+            <td>StartTime</td>
+            <td>Outset</td>>
+            <td>Goal</td>
+            <td>TimeSequence</td>
+            <td>PathSequence</td>
+        </tr>
+        </thead>
+        <tbody th:each="plan : ${plans}">
+        <tr>
+            <td class="text-str" th:text="${plan.id}"></td>
+            <td class="text-str" th:text="${plan.userName}"></td>
+            <td class="text-str" th:text="${plan.startTime}"></td>
+            <td class="text-str" th:text="${plan.outset}"></td>
+            <td class="text-str" th:text="${plan.destination}"></td>
+            <td class="text-str" th:text="${plan.useTimes}"></td>
+            <td class="text-str" th:text="${plan.sequence}"></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
 </body>
 </html>

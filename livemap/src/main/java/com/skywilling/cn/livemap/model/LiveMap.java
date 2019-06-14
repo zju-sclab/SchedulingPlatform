@@ -2,6 +2,7 @@ package com.skywilling.cn.livemap.model;
 
 import com.skywilling.cn.common.model.AutoCarRequest;
 import com.skywilling.cn.common.model.Node;
+import com.skywilling.cn.livemap.util.CacheManager;
 import io.swagger.models.auth.In;
 import lombok.Data;
 
@@ -36,6 +37,8 @@ public class LiveMap implements Serializable {
     private ConcurrentHashMap<String, String> carMap = new ConcurrentHashMap<>();
     //路车表，车道id对应车辆，lane-id ---> car_ids
     private ConcurrentHashMap<String, List<String>> laneToCarMap = new ConcurrentHashMap<>();
+
+    //private static CacheManager cacheManager = new CacheManager();
 
 
 }

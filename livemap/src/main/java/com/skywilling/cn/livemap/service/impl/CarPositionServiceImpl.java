@@ -1,5 +1,6 @@
 package com.skywilling.cn.livemap.service.impl;
 
+
 import com.skywilling.cn.livemap.model.LiveMap;
 import com.skywilling.cn.livemap.service.CarPositionService;
 import com.skywilling.cn.livemap.service.MapService;
@@ -20,7 +21,6 @@ import java.util.List;
 public class CarPositionServiceImpl implements CarPositionService {
     @Autowired
     MapService mapService;
-
     @Autowired
     AutoCarInfoService autoCarInfoService;
 

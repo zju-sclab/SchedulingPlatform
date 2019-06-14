@@ -1,4 +1,4 @@
-package com.skywilling.cn.scheduler.service.impl;
+package com.skywilling.cn.scheduler.service;
 
 import com.skywilling.cn.common.model.Order;
 import com.skywilling.cn.common.model.Plan;

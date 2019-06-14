@@ -6,9 +6,7 @@ import com.skywilling.cn.common.exception.CarNotExistsException;
 import com.skywilling.cn.common.exception.IllegalRideException;
 import com.skywilling.cn.common.exception.IllegalTaskException;
 import com.skywilling.cn.common.exception.park.NoAvailableActionFoundException;
-import com.skywilling.cn.common.model.Node;
-import com.skywilling.cn.common.model.RoutePoint;
-import com.skywilling.cn.common.model.Triple;
+import com.skywilling.cn.common.model.*;
 import com.skywilling.cn.livemap.model.LiveLane;
 import com.skywilling.cn.livemap.model.LiveMap;
 import com.skywilling.cn.livemap.service.MapService;
@@ -30,6 +28,7 @@ import com.skywilling.cn.scheduler.service.TrjPlanService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -70,9 +69,8 @@ public class TripServiceImpl implements TripService {
      * 2.规划路径
      */
     @Override
-    public String submitTrip(String vin, String parkName, String from, String goal,
-                             double velocity, double acceleration) throws CarNotExistsException,
-                                                                          CarNotAliveException, IllegalRideException {
+    public String submitTrip(String vin, String parkName, String from, String goal, double velocity, double acceleration)
+                                   throws CarNotExistsException, CarNotAliveException, IllegalRideException {
 
        AutonomousCarInfo car = carInfoService.getAutoCarInfo(vin);
         /**判断该车是否链接上云平台 */
@@ -115,9 +113,7 @@ public class TripServiceImpl implements TripService {
      * 2.规划路径
      */
     @Override
-    public Trip submitTrjTrip(String vin,String parkName, String goal) throws CarNotExistsException,
-            CarNotAliveException{
-
+    public Trip submitTrjTrip(String vin,String parkName, String goal) throws CarNotExistsException, CarNotAliveException{
         AutonomousCarInfo car = carInfoService.getAutoCarInfo(vin);
         /**判断该车是否链接上云平台 */
         if (car == null) {
@@ -128,28 +124,13 @@ public class TripServiceImpl implements TripService {
             throw new CarNotAliveException(vin);
         }
         /**起点由心跳信息提供*/
-        StaticStation outset = new StaticStation();
-        outset.setPoint(car.getPose());
-        StaticStation destination = new StaticStation();
-        LiveMap liveMap = mapService.getMap(parkName);
-        /**内存初始化镜像地图*/
-       if(liveMap == null )
-           mapService.createMapByLidarMap(parkName);
-        liveMap = mapService.getMap(parkName);
-        Node des_node = null;
-        ConcurrentHashMap<String, Node> nodemap  = liveMap.getNodeMap();
-        for(String id: nodemap.keySet()){
-            Node curNode = nodemap.get(id);
-            if(curNode.getName().equals(goal)){
-                des_node = curNode;
-                break;
-            }
-        }
-        destination.setPoint(des_node.getX(),des_node.getY(),0,0,0,0,0);
+        StaticStation outset = new StaticStation(car.getPose());
+        Node des_node = mapService.getNode(goal,parkName);
+        StaticStation destination = createStaticPointByNode(des_node);
         /** 调用全局规划接口计算得到三元数组结果*/
         Triple<List<String>, List<Double>, List<RoutePoint>> res = trjPlanService.createTrajectory(outset,destination);
         List<RoutePoint> routePoints = res.third;
-        //全局规划结果包装成任务
+        /**全局规划结果包装成任务*/
         Route route = new Route();
         Node from_node = new Node();
         from_node.setName("source");
@@ -173,8 +154,6 @@ public class TripServiceImpl implements TripService {
         }
         return null;
     }
-
-
 
     /**
      * 根据全局路径重新规划自动驾驶任务序列
@@ -235,5 +214,30 @@ public class TripServiceImpl implements TripService {
     @Override
     public List<Trip> queryBy(String vin, Date start, Date end, int page, int size) {
         return tripAccessor.queryBy(vin, start, end, page, size);
+    }
+
+    /**Node转为StaticPoint全局规划*/
+    @Override
+    public StaticStation createStaticPointByNode(Node node) {
+        StaticStation des_static_station = new StaticStation(node.getX(),node.getY(),0,0,0,0,0);
+        return des_static_station;
+    }
+   /**批量创建Plan**/
+    @Override
+    public List<Plan> createPlanByOrders(Order[] orders) {
+        List<Plan> plans = new ArrayList<>();
+        for(int i = 0; i < orders.length; i++){
+            plans.add(createPlanByOrder(orders[i]));
+        }
+        return plans;
+    }
+   /**创建Plan**/
+    @Override
+    public Plan createPlanByOrder(Order order) {
+        StaticStation cur = createStaticPointByNode(mapService.getNode(order.getOutset(),order.getParkName()));
+        StaticStation next = createStaticPointByNode(mapService.getNode(order.getDestination(),order.getParkName()));
+        Triple<List<String>,List<Double>,List<RoutePoint>> res = trjPlanService.createTrajectory(cur,next);
+        Plan plan = new Plan(order, res.second, res.first);
+        return plan;
     }
 }

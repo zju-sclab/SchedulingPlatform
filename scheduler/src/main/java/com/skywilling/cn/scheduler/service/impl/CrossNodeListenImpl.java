@@ -22,6 +22,8 @@ import org.springframework.stereotype.Component;
 
 import java.util.concurrent.CompletableFuture;
 
+import static java.lang.Thread.sleep;
+
 @Component
 public class CrossNodeListenImpl implements CrossNodeListen {
 
@@ -73,6 +75,13 @@ public class CrossNodeListenImpl implements CrossNodeListen {
           }
           else   autoServiceBiz.continueAutonomous(vin);
         */
+
+           try {
+               sleep(3000);
+           } catch (InterruptedException e) {
+               e.printStackTrace();
+           }
+
         autoServiceBiz.responseLockAutonomous(vin,aBoolean);
     }
 

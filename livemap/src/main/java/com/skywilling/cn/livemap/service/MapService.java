@@ -1,5 +1,6 @@
 package com.skywilling.cn.livemap.service;
 
+import com.skywilling.cn.common.model.Node;
 import com.skywilling.cn.livemap.model.LiveJunction;
 import com.skywilling.cn.livemap.model.LiveLane;
 import com.skywilling.cn.livemap.model.LiveMap;
@@ -15,4 +16,5 @@ public interface MapService {
     LiveMap createMapByLidarMap(String parkName);
     LiveMap createMapByCycleBus(String parkName);
     void upDateReqLockMap();
+    Node getNode(String nodeName,String parkName);
 }
