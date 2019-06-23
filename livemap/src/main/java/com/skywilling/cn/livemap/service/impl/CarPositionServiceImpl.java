@@ -1,6 +1,4 @@
 package com.skywilling.cn.livemap.service.impl;
-
-
 import com.skywilling.cn.livemap.model.LiveMap;
 import com.skywilling.cn.livemap.service.CarPositionService;
 import com.skywilling.cn.livemap.service.MapService;

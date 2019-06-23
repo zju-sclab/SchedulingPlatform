@@ -35,7 +35,6 @@ import org.springframework.data.mongodb.core.geo.GeoJsonPoint;
 import org.springframework.data.mongodb.core.geo.GeoJsonPolygon;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.util.ResourceUtils;
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
@@ -112,7 +111,7 @@ public class WebApplicationTests {
     @Test
     public void parkAdd(){
         Park park = new Park();
-        park.setMapFileUrl("D:\\work\\Projects\\linxxx\\SchedulingPlatform\\doc\\Map\\map2.xml");
+        park.setMapFileUrl("file:\\"+"D:\\work\\Projects\\linxxx\\SchedulingPlatform\\doc\\Map\\map2.xml");
         park.setShapeFileUrl("D:\\work\\Projects\\linxxx\\SchedulingPlatform\\doc\\Map\\shape\\");
         park.setImgUrl("D:\\work\\Projects\\linxxx\\SchedulingPlatform\\doc\\Map");
         park.setName("yuquanxiaoqu3");

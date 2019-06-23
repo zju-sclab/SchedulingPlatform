@@ -244,14 +244,14 @@ public class CacheManager {
         }
 
 
-        public static void main(String[] args) throws Exception {
+/*        public static void main(String[] args) throws Exception {
             CacheManager cacheManager = CacheManager.getCacheManagerInstance();
             cacheManager.init(2);
 
             for (int i = 0; i < 200; i++) {
                 cacheManager.put(i + "", i);
             }
-        }
+        }*/
 }
 
 

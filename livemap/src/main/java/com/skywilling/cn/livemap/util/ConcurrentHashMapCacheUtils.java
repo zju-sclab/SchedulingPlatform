@@ -1,6 +1,5 @@
 package com.skywilling.cn.livemap.util;
 
-import com.skywilling.cn.common.model.Order;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -249,12 +248,12 @@ static class CleanTimeOutThread implements Runnable {
         }
     }
 }
-   public static void main(String[] args) throws InterruptedException {
+/*   public static void main(String[] args) throws InterruptedException {
     setCache("lin",new Order(),1L);
     //setCleanThreadRun();
     startCleanThread();
     setCache("x",new Object(),1L);
     Thread.sleep(ConcurrentHashMapCacheUtils.ONE_MINUTE*3);
-   }
+   }*/
 
 }

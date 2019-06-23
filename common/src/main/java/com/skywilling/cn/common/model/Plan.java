@@ -12,7 +12,7 @@ import java.util.List;
  * Author  Lin
  * Date 2019/6/10 9:40
  **/
-@Data
+
 public class Plan implements Serializable {
     private String id;
     private String userName;
@@ -40,5 +40,69 @@ public class Plan implements Serializable {
         sequence = curves;
         sequence.remove(0);
         sequence.remove(sequence.size()-1);
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public String getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(String startTime) {
+        this.startTime = startTime;
+    }
+
+    public String getOutset() {
+        return outset;
+    }
+
+    public void setOutset(String outset) {
+        this.outset = outset;
+    }
+
+    public String getDestination() {
+        return destination;
+    }
+
+    public void setDestination(String destination) {
+        this.destination = destination;
+    }
+
+    public String getParkName() {
+        return parkName;
+    }
+
+    public void setParkName(String parkName) {
+        this.parkName = parkName;
+    }
+
+    public List<Double> getUseTimes() {
+        return useTimes;
+    }
+
+    public void setUseTimes(List<Double> useTimes) {
+        this.useTimes = useTimes;
+    }
+
+    public List<String> getSequence() {
+        return sequence;
+    }
+
+    public void setSequence(List<String> sequence) {
+        this.sequence = sequence;
     }
 }

@@ -53,7 +53,7 @@ public class PlanServiceImpl implements PlanService {
          return (Plan)livePlan.getCacheManager().get(username);
     }
 
-    public static void main(String []args){
+    /*public static void main(String []args){
         PlanServiceImpl o = new PlanServiceImpl();
         String parkName = "yuquanxiaoqu3";
         o.put("l",new Plan(),parkName);
@@ -76,5 +76,5 @@ public class PlanServiceImpl implements PlanService {
          o2 = cacheManager.get("ll");
          o3 = cacheManager.get("Lis");
         System.out.println(o1+"" +o2+""+o3);
-    }
+    }*/
 }
