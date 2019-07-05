@@ -30,7 +30,7 @@ public class CacheManager {
         private  LinkedList<Object> cacheUseRecord = new LinkedList<>();
 
         //可缓存最大数量
-        private  Integer MAX_CACHE_SIZE = 200;
+        private  Integer MAX_CACHE_SIZE = 2000;
 
         //重入读写锁
         private  ReentrantReadWriteLock reentrantReadWriteLock = new ReentrantReadWriteLock();
@@ -52,13 +52,12 @@ public class CacheManager {
 
         private void initClearTask() {
             //启动清除失效缓存数据
+            //todo:后续可以线程池多线程清理
             if (clearExpireCacheEnable) {
                 new ClearCacheTask().start();
             }
         }
 
-
-        public static  CacheManager getPrototypeInstance(){ return new CacheManager();}
 
         public static CacheManager getCacheManagerInstance() {
             return CacheManagerFactory.CACHE_MANAGER;
@@ -149,7 +148,7 @@ public class CacheManager {
             //更新使用记录
             touchUseRecord(key);
 
-            return entry == null ? null : entry.value;
+            return entry.value;
         }
 
         //更新缓存访问时间

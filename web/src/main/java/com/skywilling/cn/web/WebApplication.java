@@ -11,7 +11,6 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 
 
 @SpringBootApplication(scanBasePackages = {"com.skywilling.cn"})
-//@EnableAutoConfiguration(exclude={DataSourceAutoConfiguration.class})
 @MapperScan("com.skywilling.cn.*.*.mapper")
 @EnableScheduling
 @EnableAsync

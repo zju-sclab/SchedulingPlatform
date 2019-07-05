@@ -10,7 +10,7 @@ import com.skywilling.cn.livemap.model.LivePlan;
 import com.skywilling.cn.livemap.service.PlanService;
 import com.skywilling.cn.livemap.util.CacheManager;
 import com.skywilling.cn.scheduler.service.TripService;
-import javafx.beans.binding.ObjectExpression;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;

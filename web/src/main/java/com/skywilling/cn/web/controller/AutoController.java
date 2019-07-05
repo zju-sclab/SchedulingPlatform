@@ -29,7 +29,7 @@ import com.skywilling.cn.scheduler.service.OrderService;
 import com.skywilling.cn.scheduler.service.TripService;
 import com.skywilling.cn.web.model.RideParam;
 import com.skywilling.cn.web.model.view.TaskView;
-import javafx.application.Application;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
