@@ -65,7 +65,7 @@ public class RequsetLockListener extends  BasicListener {
         String parkName = parkService.query(parkId).getName();
 
         AutoCarRequest autoCarRequest = new AutoCarRequest();
-        autoCarRequest.setRequestFlag(true);
+        autoCarRequest.setLock(true);
         autoCarRequest.setVin(vin);
 
         LiveMap liveMap = mapService.getMap(parkName);
@@ -93,16 +93,19 @@ public class RequsetLockListener extends  BasicListener {
         if(cur_id.startsWith("cross")){
             String[] curIds = cur_id.split("_");
             if(curIds[1].equals("8888")){
-                mapService.getMap(parkName).getCarMap().put(vin,next_id);
+                if(mapService.getMap(parkName).getCarMap() != null)
+                    mapService.getMap(parkName).getCarMap().put(vin,next_id);
             }
         }
         else if(cur_id.startsWith("lane")){
             String[] nextIds = next_id.split("_");
             if(nextIds[1].equals("9999")){
-                liveMap.getCarMap().put(vin,cur_id);
+                if(liveMap.getCarMap()!=null)
+                    liveMap.getCarMap().put(vin,cur_id);
             }
             else{
-                mapService.getMap(parkName).getCarMap().put(vin,cur_id);
+                if(mapService.getMap(parkName).getCarMap()!=null)
+                    mapService.getMap(parkName).getCarMap().put(vin,cur_id);
                 autoCarRequest.setLane_id(cur_id);
                 autoCarRequest.setCross_id(next_id);
                 liveMap.getCarReqLockMap().put(vin+"request"+System.currentTimeMillis(),autoCarRequest);
@@ -112,7 +115,7 @@ public class RequsetLockListener extends  BasicListener {
                 liveMap.getLaneToCarMap().get(next_id).add(vin);
             }
         }
-        LOG.warn("in request lock listener carReqMap size: " + liveMap.getCarReqLockMap().size());
+        LOG.warn("request_lock listener record carReqMap size: [{}] " , liveMap.getCarReqLockMap().size());
         mapService.addMap(liveMap);
         /**异步存入redis*/
         autoCarInfoService.save(car);

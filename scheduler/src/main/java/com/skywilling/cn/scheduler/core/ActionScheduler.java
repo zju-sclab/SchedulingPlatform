@@ -1,6 +1,6 @@
 package com.skywilling.cn.scheduler.core;
 
-import com.skywilling.cn.common.exception.park.NoAvailableActionFoundException;
+import com.skywilling.cn.common.exception.NoAvailableActionFoundException;
 import com.skywilling.cn.common.model.Node;
 import com.skywilling.cn.common.model.Node_Json;
 import com.skywilling.cn.livemap.model.*;

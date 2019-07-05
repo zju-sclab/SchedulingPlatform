@@ -5,7 +5,7 @@ import com.skywilling.cn.common.exception.CarNotAliveException;
 import com.skywilling.cn.common.exception.CarNotExistsException;
 import com.skywilling.cn.common.exception.IllegalRideException;
 import com.skywilling.cn.common.exception.IllegalTaskException;
-import com.skywilling.cn.common.exception.park.NoAvailableActionFoundException;
+import com.skywilling.cn.common.exception.NoAvailableActionFoundException;
 import com.skywilling.cn.common.model.*;
 import com.skywilling.cn.livemap.model.LiveLane;
 import com.skywilling.cn.livemap.model.LiveMap;
@@ -24,16 +24,12 @@ import com.skywilling.cn.scheduler.model.Trip;
 import com.skywilling.cn.scheduler.repository.TripAccessor;
 import com.skywilling.cn.scheduler.service.RouteService;
 import com.skywilling.cn.scheduler.service.TripService;
-import com.skywilling.cn.scheduler.service.TrjPlanService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 
 @Service
 public class TripServiceImpl implements TripService {

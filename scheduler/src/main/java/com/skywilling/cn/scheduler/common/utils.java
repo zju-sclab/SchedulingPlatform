@@ -61,12 +61,10 @@ public class utils {
 
             ByteArrayInputStream byteIn = new ByteArrayInputStream(byteOut.toByteArray());
             ObjectInputStream inStream = new ObjectInputStream(byteIn);
-            List<T> destList = (List<T>)inStream.readObject();
+            List<T> destList = (List <T>)inStream.readObject();
             return destList;
 
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
+        } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
         }
         return null;

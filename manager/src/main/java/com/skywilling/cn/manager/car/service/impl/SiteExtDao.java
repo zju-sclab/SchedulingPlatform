@@ -39,7 +39,8 @@ public class SiteExtDao {
 
     public void insertBatch(List<SiteExt> list, String collectionName) {
 
-        // BulkMode.UNORDERED:表示并行处理，遇到错误时能继续执行不影响其他操作；BulkMode.ORDERED：表示顺序执行，遇到错误时会停止所有执行
+        // BulkMode.UNORDERED:表示并行处理，遇到错误时能继续执行不影响其他操作；
+        // BulkMode.ORDERED：表示顺序执行，遇到错误时会停止所有执行
         BulkOperations ops = mongoTemplate.bulkOps(BulkOperations.BulkMode.UNORDERED, collectionName);
         ops.insert(list);
         // 执行操作
@@ -49,8 +50,7 @@ public class SiteExtDao {
 
     public List<SiteExt> findAll(String collectionName) {
         Query query=new Query();
-        List<SiteExt> list = mongoTemplate.find(query, SiteExt.class,collectionName);
-        return list;
+        return mongoTemplate.find(query, SiteExt.class, collectionName);
     }
 
     public List<SiteExt> findByDist(GeoJsonPoint geoJsonPoint, double dis) {
@@ -63,7 +63,7 @@ public class SiteExtDao {
     public SiteExt nearVehicle(GeoJsonPoint point) {
         Criteria geoCriteria = Criteria.where("location").nearSphere(point);
         Query query= Query.query(geoCriteria);
-        query.with(new PageRequest(0,1));
+        query.with(PageRequest.of(0,1));
         return mongoTemplate.find(query,SiteExt.class).get(0);
     }
 }

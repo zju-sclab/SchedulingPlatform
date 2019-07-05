@@ -47,7 +47,7 @@ public class NettyServer {
     try {
       this.initializer = new ChannelInitializer<SocketChannel>() {
         @Override
-        protected void initChannel(SocketChannel ch) throws Exception {
+        protected void initChannel(SocketChannel ch) {
           ChannelPipeline pipeline = ch.pipeline();
 
           pipeline.addLast("decoder", new LineBasedFrameDecoder(Integer.MAX_VALUE));
@@ -86,9 +86,9 @@ public class NettyServer {
       bootstrap.childOption(ChannelOption.ALLOW_HALF_CLOSURE, true);
       future = bootstrap.bind(port);
       future.sync();
-      LOG.info("listen on port: " + port);
+      LOG.info("listen on port : [{}]", port);
     } catch (InterruptedException e) {
-      LOG.error("start Server encountered an error {}", e.getCause());
+      LOG.error("start Server encountered an error ",e.getCause());
       shutdown();
     }
   }

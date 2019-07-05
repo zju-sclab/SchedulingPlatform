@@ -56,27 +56,27 @@ public class ScheduleServiceImpl implements ScheduleService {
     @Override
     public void checkAllClient() {
         List<LiveMap> maps = mapService.getAllMaps();
-        LOG.info("schedule maps size: " + maps.size());
+        LOG.info("schedule maps size is [{}]" , maps.size());
         for(LiveMap livemap : maps) {
-            //LOG.info("schedule map name: "+livemap.getParkName());
+            LOG.info("schedule map name: "+livemap.getParkName());
             ConcurrentHashMap<String,AutoCarRequest> car_req_lock = livemap.getCarReqLockMap();
-            LOG.info("schedule car_req_lock: "+car_req_lock.keySet().size()+" request at: "+livemap.getParkName());
+            LOG.info("current schedule request number is [{}]: ", car_req_lock.keySet().size());
             for (String vinreq : car_req_lock.keySet()) {
                 AutoCarRequest carRequest = car_req_lock.get(vinreq);
                 String vin = carRequest.getVin();
                 AutonomousCarInfo carInfo = autoCarInfoService.get(vin);
                 if(carInfo == null){
-                    LOG.warn("car "  + vin + " is not connected, can`t schedule!");
+                    LOG.warn("car [{}] is not connected, no carInfo is uploaded", vin);
                     continue;
                 }
 
-                boolean is_request = carRequest.isRequestFlag();
+                boolean lock = carRequest.isLock();
                 String cross_id = carRequest.getCross_id();
                 String lane_id = carRequest.getLane_id();
 
                 //release req
-                if(!is_request){
-                    LOG.warn("schedule car_release_lock_req: " + vin + " at: " + cross_id);
+                if(!lock){
+                    LOG.warn("current request is [{}] send a release_lock request at [{}]: ",vin,cross_id);
                     LiveJunction liveJunction = livemap.getJunctionMap().get(cross_id);
                     if(liveJunction != null)
                     crossNodeListen.outGoingJunction(vin,liveJunction.getName());
@@ -84,10 +84,10 @@ public class ScheduleServiceImpl implements ScheduleService {
                 }
                 else
                {//request req
-                    LOG.warn("schedule car_request_lock_req: " + carInfo.getVin() + " at: " + cross_id);
+                    LOG.warn("current request is [{}] send a get_lock request at [{}]: ",vin,cross_id);
                     LiveJunction liveJunction = livemap.getJunctionMap().get(cross_id);
                    if(liveJunction != null)
-                    crossNodeListen.inComingJunction(vin,lane_id, liveJunction.getName());
+                    crossNodeListen.inComingJunction(vin,lane_id,liveJunction.getName());
                     car_req_lock.remove(vinreq);
                 }
 
@@ -101,7 +101,7 @@ public class ScheduleServiceImpl implements ScheduleService {
     @Override
     public void checkJunctionLock(String vin, String laneId, LiveJunction liveJunction, boolean isRelease) {
            if(!isRelease)
-               crossNodeListen.inComingJunction(vin,laneId, liveJunction.getName());
+               crossNodeListen.inComingJunction(vin,laneId,liveJunction.getName());
            else
                crossNodeListen.outGoingJunction(vin,liveJunction.getName());
     }

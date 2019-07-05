@@ -16,7 +16,7 @@ import java.io.Serializable;
 @NoArgsConstructor
 public class AutoCarRequest implements Serializable {
     private String vin;
-    private boolean requestFlag;
+    private boolean lock;
     private String lane_id;
     private String cross_id;
 

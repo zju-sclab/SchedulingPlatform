@@ -46,7 +46,7 @@ public class AutoCarInfoGeoAccessorImpl implements AutoCarInfoGeoAccessor {
     public AutonomousCarInfo nearVehicle(GeoJsonPoint point) {
         Criteria geoCriteria = Criteria.where("geoJsonPoint").nearSphere(point);
         Query query= Query.query(geoCriteria);
-        query.with(new PageRequest(0,1));
+        query.with(PageRequest.of(0,1));
         return mongoTemplate.find(query,AutonomousCarInfo.class).get(0);
     }
 

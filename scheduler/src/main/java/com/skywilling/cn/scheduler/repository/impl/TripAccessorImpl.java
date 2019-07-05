@@ -45,7 +45,7 @@ public class TripAccessorImpl implements TripAccessor {
   public Trip findLastedBy(String vin) {
     Query query = new Query();
     query.addCriteria(Criteria.where("vin").is(vin));
-    query.with(new Sort(new Sort.Order(Sort.Direction.DESC, "startTime")));
+    query.with(new Sort(Sort.Direction.DESC, "startTime"));
     List<Trip> rides = mongoTemplate.find(query, Trip.class);
     return rides.stream().findFirst().orElse(null);
   }
@@ -53,7 +53,7 @@ public class TripAccessorImpl implements TripAccessor {
   @Override
   public List<Trip> query(int page, int size) {
     Query query = new Query();
-    query.with(new Sort(new Order(Direction.DESC, "startTime"))).with(new PageRequest(page, size));
+    query.with(new Sort(Direction.DESC, "startTime")).with(PageRequest.of(page, size));
     return mongoTemplate.find(query, Trip.class);
   }
 
@@ -61,7 +61,7 @@ public class TripAccessorImpl implements TripAccessor {
   public List<Trip> queryByJobStatus(Enumerations.JobStatusType jobStatusType, int page, int size) {
     Query query = new Query();
     query.addCriteria(Criteria.where("status").is(jobStatusType));
-    query.with(new Sort(new Order(Direction.DESC, "startTime"))).with(new PageRequest(page, size));
+    query.with(new Sort(Direction.DESC, "startTime")).with(PageRequest.of(page, size));
     return mongoTemplate.find(query, Trip.class);
   }
 
@@ -69,7 +69,7 @@ public class TripAccessorImpl implements TripAccessor {
   public List<Trip> queryBy(String vin, int page,int size) {
     Query query = new Query();
     query.addCriteria(Criteria.where("vin").is(vin));
-    query.with(new Sort(new Order(Direction.DESC, "startTime"))).with(new PageRequest(page, size));
+    query.with(new Sort(Direction.DESC, "startTime")).with(PageRequest.of(page, size));
     return mongoTemplate.find(query, Trip.class);
 
   }
@@ -80,7 +80,7 @@ public class TripAccessorImpl implements TripAccessor {
     query.addCriteria(Criteria.where("vin").is(vin))
         .addCriteria(Criteria.where("startTime").gte(start))
         .addCriteria(Criteria.where("startTime").lte(end));
-    query.with(new Sort(new Order(Direction.DESC, "startTime"))).with(new PageRequest(page, size));
+    query.with(new Sort(Direction.DESC, "startTime")).with(PageRequest.of(page, size));
     return mongoTemplate.find(query, Trip.class);
   }
 

@@ -1,4 +1,4 @@
-package com.skywilling.cn.common.exception.park;
+package com.skywilling.cn.common.exception;
 
 public class NoAvailableActionFoundException extends Throwable {
 

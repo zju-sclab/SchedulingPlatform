@@ -36,19 +36,22 @@ public class AutoServiceBiz {
   /** 启动自动驾驶*/
   public CompletableFuture<Boolean> fireAutonomous(AutoTask autoTask) {
     String vin = autoTask.getVin();
-    JSONObject jsonObject = new JSONObject();
-    jsonObject.put("taskId", autoTask.getTaskId());
-    jsonObject.put("actions", autoTask.getAction());
+    JSONObject jsonObject = new JSONObject(){{
+      put("taskId", autoTask.getTaskId());
+      put("actions", autoTask.getAction());
+    }};
     return requestSender.sendRequest(vin, TypeField.FIRE_AUTONOMOUS,jsonObject);
   }
 
   /** 启动自动驾驶*/
   public CompletableFuture<Boolean> fireLidarAutonomous(AutoTask autoTask) {
     String vin = autoTask.getVin();
-    JSONObject jsonObject = new JSONObject();
-    jsonObject.put("taskId", autoTask.getTaskId());
-    jsonObject.put("speed",autoTask.getVelocity());
-    jsonObject.put("route", autoTask.getAction());
+    JSONObject jsonObject = new JSONObject(){{
+      put("taskId", autoTask.getTaskId());
+      put("speed",autoTask.getVelocity());
+      put("route", autoTask.getAction());
+    }};
+
     return requestSender.sendRequest(vin, TypeField.FIRE_LANE_AUTONOMOUS,jsonObject);
   }
 
@@ -63,11 +66,8 @@ public class AutoServiceBiz {
   }
 
   public CompletableFuture<Boolean> responseLockAutonomous(String vin, boolean requestRes){
-    JSONObject jsonObject = new JSONObject();
-    if(requestRes)
-      jsonObject.put("command","RUN");
-    else
-      jsonObject.put("command","STOP");
+    String val = requestRes?"RUN":"STOP";
+    JSONObject jsonObject = new JSONObject(){{put("command", val);}};
     return requestSender.sendRequest(vin,TypeField.RESPONSE_LOCK,jsonObject);
   }
 }
