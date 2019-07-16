@@ -5,6 +5,8 @@ import com.skywilling.cn.common.enums.ResultType;
 import com.skywilling.cn.common.model.BasicResponse;
 import com.skywilling.cn.manager.task.model.AutoTask;
 import com.skywilling.cn.manager.task.service.TaskService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @CrossOrigin(origins = "*")
+@Api(tags = "任务管理")
 @RequestMapping(value = "/api/v2/task")
 @RestController
 public class TaskController {
@@ -22,6 +25,8 @@ public class TaskController {
     @Autowired
     TaskService taskService;
 
+
+    @ApiOperation("根据任务id查询任务")
     @RequestMapping(value = "/{taskId}", method = RequestMethod.GET)
     public BasicResponse getTask(@PathVariable("taskId") String taskId) {
         AutoTask task = taskService.getTaskById(taskId);
@@ -31,6 +36,7 @@ public class TaskController {
         return BasicResponse.buildResponse(ResultType.FAILED, null);
     }
 
+    @ApiOperation("查询所有任务")
     @RequestMapping(value = "/{status}", method = RequestMethod.GET)
     public BasicResponse getTasks(@PathVariable("status") int status,
                                   @RequestParam("page") int page,

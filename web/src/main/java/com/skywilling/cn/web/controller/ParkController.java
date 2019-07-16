@@ -19,6 +19,8 @@ import com.skywilling.cn.manager.car.service.CarDynamicService;
 import com.skywilling.cn.web.model.view.CarView;
 import com.skywilling.cn.web.model.view.PageView;
 import com.skywilling.cn.web.utils.ViewBuilder;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
@@ -30,6 +32,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @CrossOrigin(origins = "*")
+@Api(tags = "园区管理")
 @RestController
 @RequestMapping(value = "/api/v2")
 public class ParkController {
@@ -64,6 +67,7 @@ public class ParkController {
     /**
      * 更新园区的地图信息
      */
+    @ApiOperation("更新园区的地图信息")
     @RequestMapping(value = "/park/updateRegion", method = RequestMethod.POST, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public BasicResponse updateRegion(@RequestParam("parkId") int parkId, @RequestParam("mapUrl") String mapUrl,
                                       @RequestParam("shapeUrl") String shapeUrl, HttpServletRequest request) {
@@ -94,6 +98,7 @@ public class ParkController {
     /**
      * 根据名字和地图路径来添加园区
      */
+    @ApiOperation("根据名字和地图路径来添加园区")
     @RequestMapping(value = "/park/add", method = RequestMethod.POST, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public BasicResponse addPark(@RequestParam("parkName")String parkName, @RequestParam("mapUrl") String mapUrl,
                                  @RequestParam("shapeUrl") String shapeUrl, HttpServletRequest request) {
@@ -120,6 +125,7 @@ public class ParkController {
         }
     }
     /**根据id来删除园区和地图*/
+    @ApiOperation("根据id来删除园区和地图")
     @RequestMapping(value = "/park/{parkId}/delete", method = RequestMethod.POST)
     public BasicResponse delete(@PathVariable("parkId") int parkId) {
 
@@ -141,6 +147,7 @@ public class ParkController {
     /**
      * 根据Id查询园区信息
      */
+    @ApiOperation("根据Id查询园区信息")
     @RequestMapping(value = "/park/{parkId}", method = RequestMethod.GET)
     public BasicResponse getPark(@PathVariable("parkId") int parkId) {
 
@@ -154,6 +161,7 @@ public class ParkController {
     /**
      * 根据Name查询园区信息
      */
+    @ApiOperation("根据Name查询园区信息")
     @RequestMapping(value = "/park/{parkName}", method = RequestMethod.GET)
     public BasicResponse getPark(@PathVariable("parkName") String parkName) {
 
@@ -168,6 +176,7 @@ public class ParkController {
     /**
      * 查询全部园区信息
      */
+    @ApiOperation("查询全部园区信息")
     @RequestMapping(value = "/parks", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public BasicResponse getWebParks(@RequestParam("page") int page  ,
                                      @RequestParam("size") int size) {
@@ -184,6 +193,7 @@ public class ParkController {
     /**
      * Park仅表示园区，Map表示园区的地图
      */
+    @ApiOperation("查询园区中的所有站台")
     @RequestMapping(value = "/park/{parkId}/stations", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public BasicResponse getStations(@PathVariable("parkId") int parkId) {
 
@@ -201,6 +211,7 @@ public class ParkController {
     /**
      *  根据园区名和站点名查找站点信息的地图接口
      */
+    @ApiOperation("根据园区名和站点名查找站点信息的地图接口")
     @RequestMapping(value = "/park/{parkId}/station/{stationName}", method = RequestMethod.GET)
     public BasicResponse getStation(@PathVariable("parkId") int parkId,@PathVariable("stationName")String stationName){
 
@@ -216,6 +227,7 @@ public class ParkController {
     /** 绑定车辆到指定园区 */
     //@RequestBody用于注解到非x-www-form-urlencoded的前端输入,一般是json,xml类型
     //consumes参数,指定处理请求的 提交内容类型 （Content-Type），例如 application/json, text/html
+    @ApiOperation("绑定车辆到指定园区")
     @RequestMapping(value = "/park/{parkId}/car/bind", method = RequestMethod.POST, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public BasicResponse addCar(@PathVariable("parkId") int parkId, @RequestParam("vin")String vin){
 
@@ -230,6 +242,7 @@ public class ParkController {
     /**
      * 园区批量添加车辆
      */
+    @ApiOperation("园区批量添加车辆")
     @RequestMapping(value = "/park/{parkId}/cars/bind", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
     public BasicResponse addCars(@PathVariable("parkId") int parkId, @RequestBody List<String> vins) {
 
@@ -244,6 +257,7 @@ public class ParkController {
      * 分页查询与园区绑定的车辆
      */
     //produces指定返回的内容类型 ，仅当request请求头中的(Accept)类型中包含该指定类型才返回
+    @ApiOperation("分页查询与园区绑定的车辆")
     @RequestMapping(value = "/park/{parkId}/carsByPage", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public BasicResponse getAllCarsByPark(@PathVariable("parkId") int parkId,
                                           @RequestParam("page") int page,
@@ -254,6 +268,7 @@ public class ParkController {
         return BasicResponse.buildResponse(ResultType.SUCCESS, pageView);
     }
     //直接根据园区id查询
+    @ApiOperation("直接根据园区id查询")
     @RequestMapping(value = "/park/{parkId}/cars", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public BasicResponse getAllCarsByPark(@PathVariable("parkId") int parkId) {
 
@@ -265,6 +280,7 @@ public class ParkController {
     /**
      * 将单个车辆与园区解绑
      */
+    @ApiOperation("将单个车辆与园区解绑")
     @RequestMapping(value = "/park/{parkId}/car/unbind", method = RequestMethod.POST,
             produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public BasicResponse unbind(@PathVariable("parkId") int parkId, @RequestParam("vin")String vin) {
@@ -297,6 +313,7 @@ public class ParkController {
         }
     }*/
     /** 查询空闲的停止不动的车辆 */
+    @ApiOperation("查询空闲的停止不动的车辆")
     @RequestMapping(value = "/park/{parkId}/cars/free", method = RequestMethod.GET)
     public BasicResponse getFreeCarsByPark(@PathVariable("parkId") int parkId) {
         Park park = parkService.query(parkId);

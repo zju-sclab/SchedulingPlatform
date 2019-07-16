@@ -27,6 +27,8 @@ import com.skywilling.cn.web.model.view.PageView;
 import com.skywilling.cn.web.service.LockService;
 import com.skywilling.cn.web.utils.ViewBuilder;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -50,6 +52,7 @@ import static org.springframework.http.MediaType.MULTIPART_FORM_DATA_VALUE;
 @CrossOrigin(origins = "*")
 @RequestMapping(value = "/api/v2/info")
 @RestController
+@Api(tags = "车辆信息管理")
 public class CarInfoController {
 
   @Autowired
@@ -71,6 +74,7 @@ public class CarInfoController {
   /**
    * 查询所有已经通过TX2链接上云端的车端（区别T_BOX）
    */
+  @ApiOperation("查询所有已经通过TX2链接上云端的车端（区别T_BOX）")
   @RequestMapping(value = "/car/connected", method = RequestMethod.GET)
   public BasicResponse getAutonomousClients(@RequestParam(value = "page", required = true) int page,
                                             @RequestParam(value = "size", required = true) int size){
@@ -80,6 +84,7 @@ public class CarInfoController {
     /**
      * 根据查询条件查询车的静态信息
      */
+    @ApiOperation("根据查询条件查询车的静态信息")
   @RequestMapping(value = "/car/findByCondition", method = RequestMethod.GET)
   public BasicResponse cars(@RequestParam(value = "parkId", required = false) Integer parkId,
                             @RequestParam(value = "parkName", required = false) String parkName,
@@ -106,6 +111,7 @@ public class CarInfoController {
     /**
      * 查询当前车的ride信息
      */
+    @ApiOperation("查询当前车的ride信息")
   @RequestMapping(value = "/car/{vin}/ride", method = RequestMethod.GET)
   public BasicResponse getRide(@PathVariable("vin") String vin) {
         String taskId = carInfoService.getTaskId(vin);
@@ -122,6 +128,7 @@ public class CarInfoController {
     /**
      * 根据日期查询当前车的ride信息
      */
+    @ApiOperation("根据日期查询当前车的ride信息")
   @RequestMapping(value = "/car/{vin}/rides", method = RequestMethod.GET)
   public BasicResponse getHistoryRides(@PathVariable("vin") String vin,
            @RequestParam(value = "start", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") Date start,
@@ -141,6 +148,7 @@ public class CarInfoController {
     /**
      * 根据条件添加一辆车的静态信息
      */
+    @ApiOperation("根据条件添加一辆车的静态信息")
   @RequestMapping(value = "/car/add", method = RequestMethod.POST, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
   public BasicResponse addCarByCondition(@RequestParam(value = "vin", required = false )String vin,
                               @RequestParam(value = "parkId", required = false) Integer parkId,
@@ -168,6 +176,7 @@ public class CarInfoController {
     /**
      * 数据库删除一辆车
      */
+    @ApiOperation("数据库删除一辆车")
   @RequestMapping(value = "/car/delete", method = {RequestMethod.DELETE, RequestMethod.POST})
   public BasicResponse deleteCar(@RequestParam("vin") String vin) {
       CarDynamic carDynamic = carDynamicService.query(vin);
@@ -180,6 +189,7 @@ public class CarInfoController {
     /**
      * 根据vin查询车的静态信息
      */
+    @ApiOperation("根据vin查询车的静态信息")
     @RequestMapping(value = "/car/query", method = RequestMethod.GET)
     public BasicResponse querySQL(@RequestParam(value = "vin", required = false) String vin) {
         try {
@@ -192,6 +202,7 @@ public class CarInfoController {
   /**
    * 根基条件更新车辆信息,可以重新指定园区
    * */
+  @ApiOperation("根基条件更新车辆信息,可以重新指定园区")
   @RequestMapping(value = "/car/update", method = RequestMethod.POST, consumes = MULTIPART_FORM_DATA_VALUE)
   public BasicResponse updateCar(@RequestParam(value = "vin")String vin,
                                  @RequestParam(value = "parkId", required = false) Integer parkId,
@@ -221,6 +232,7 @@ public class CarInfoController {
   /**
    * 获取所有未与园区绑定的车辆
    */
+  @ApiOperation("获取所有未与园区绑定的车辆")
   @RequestMapping(value = "/car/unbound", method = RequestMethod.GET)
   public BasicResponse getAllUnboundCar(@RequestParam("page") int page, @RequestParam("size") int size) {
 
@@ -232,6 +244,7 @@ public class CarInfoController {
     /**
      * 通过数据库查询车辆当前的位置，如果已经离线，查询的是上一次断线前的位置
      */
+    @ApiOperation("通过数据库查询车辆当前的位置，如果已经离线，查询的是上一次断线前的位置")
   @RequestMapping(value = "/car/{vin}/position", method = RequestMethod.GET)
   public BasicResponse getPosition(@PathVariable(name = "vin") String vin) {
       CarDynamic carDynamic = carDynamicService.query(vin);
@@ -249,6 +262,7 @@ public class CarInfoController {
     /**
      * 旧接口
      */
+    @ApiOperation("The interface has been deprecated")
   @RequestMapping(value = "/car/parkCars", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
   public BasicResponse parkCarsBypParkName(@RequestBody ParkAndCar parkAndCar) {
 
@@ -274,6 +288,7 @@ public class CarInfoController {
         return BasicResponse.buildResponse(ResultType.FAILED, carViews);
   }
 
+    @ApiOperation("The interface has been deprecated")
   @RequestMapping(value = "/car/{vin}/health", method = RequestMethod.GET)
   public BasicResponse getHealthMsg(@PathVariable("vin") String vin) {
         List<ModuleInfo> moduleInfoList = carInfoService.getAllNodesInfo(vin);
@@ -284,6 +299,7 @@ public class CarInfoController {
 
   }
 
+    @ApiOperation("The interface has been deprecated")
   @RequestMapping(value = "/car/{vin}/infos", method = RequestMethod.GET)
   public BasicResponse getCarInfo(@PathVariable("vin") String vin) {
          CarDynamic latest = carInfoService.get(vin);
@@ -297,6 +313,7 @@ public class CarInfoController {
    * 查询车辆是否是连接状态
    * @param vin 车辆vin码
    */
+  @ApiOperation("查询车辆是否是连接状态")
   @RequestMapping(value = "/car/{vin}/alive", method = RequestMethod.GET)
   public BasicResponse checkIsAlive(@PathVariable(name = "vin") String vin) {
         boolean connected = carInfoService.isConnected(vin);
@@ -311,13 +328,17 @@ public class CarInfoController {
    * @param vin 车辆vin码
    * @param key 秘钥
    */
+  @ApiOperation("设置车辆秘钥")
   @RequestMapping(value = "/car/{id}/key", method = RequestMethod.POST)
   public BasicResponse updateVinKey(@PathVariable(name = "id") String vin, @RequestParam(name = "key") String key) {
       lockService.updateKey(vin, key);
       return BasicResponse.buildResponse(ResultType.SUCCESS, null);
   }
 
-
+  /*
+  * 更新检验码
+  * */
+  @ApiOperation("更新检验码")
   @RequestMapping(value = "/car/{id}/verifyCode", method = RequestMethod.POST)
   public BasicResponse updateVinVerifyCode(@PathVariable(name = "id") String vin,
                                            @RequestParam(name = "verifyCode") String verifyCode) {
@@ -332,6 +353,7 @@ public class CarInfoController {
    * @param type    解锁类型，type=0，使用key; type=1，验证码解锁
    * @param source  解锁请求来源，app或system应用系统
    */
+  @ApiOperation("车辆解锁")
   @RequestMapping(value = "/car/{id}/unlock", method = RequestMethod.POST)
   public BasicResponse unlockCar(@PathVariable(name = "id") String vin, @RequestParam(name = "data") String data,
                                  @RequestParam(name = "type") Integer type, @RequestParam(name = "source") String source) {
@@ -353,6 +375,7 @@ public class CarInfoController {
   }
 
   /**查询锁状态 */
+  @ApiOperation("查询锁状态")
   @RequestMapping(value = "/car/{id}/lock", method = RequestMethod.GET)
   public BasicResponse getVinLockState(@PathVariable(name = "id") String vin) {
         if (lockService.isLocked(vin)) {
@@ -367,6 +390,7 @@ public class CarInfoController {
    * @param data    秘钥
    * @param source  来源，app或system
    */
+  @ApiOperation("车辆上锁")
   @RequestMapping(value = "/car/{id}/lock", method = RequestMethod.POST)
   public BasicResponse lockCar(@PathVariable(name = "id") String vin, @RequestParam(name = "data") String data,
                                @RequestParam(name = "source") String source) {

@@ -29,7 +29,11 @@ import com.skywilling.cn.scheduler.service.OrderService;
 import com.skywilling.cn.scheduler.service.TripService;
 import com.skywilling.cn.web.model.RideParam;
 import com.skywilling.cn.web.model.view.TaskView;
-
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.annotations.ApiOperation;
+import javafx.application.Application;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,8 +45,11 @@ import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 
 @CrossOrigin
+//映射接口
 @RequestMapping(value = "/api/v2/auto")
 @RestController
+//该类的作用
+@Api(tags = "自动驾驶管理")
 public class AutoController {
 
     @Autowired
@@ -65,7 +72,8 @@ public class AutoController {
     /**
      * 查询当前车辆任务状态
      */
-    @RequestMapping(value = "/car/task/{vin}", method = RequestMethod.GET)
+    @ApiOperation("查询当前车辆任务状态")
+    @RequestMapping(value = "/car/tasks/vin/{vin}", method = RequestMethod.GET)
     public BasicResponse currentTask(@PathVariable("vin") String vin) {
         try {
             AutoTask task = taskService.getCurrentTask(vin);
@@ -82,7 +90,9 @@ public class AutoController {
     /**
      * 查询Task的执行状态
      */
-    @RequestMapping(value = "/car/task/{taskId}")
+    //应该就是简单的get方法
+    @ApiOperation("查询Task的执行状态")
+    @RequestMapping(value = "/car/tasks/taskId/{taskId}", method = RequestMethod.GET)
     public BasicResponse taskState(@PathVariable("taskId") String taskId) {
         Integer status = taskService.queryStatus(taskId);
         if (status == null) {
@@ -91,10 +101,21 @@ public class AutoController {
         return BasicResponse.buildResponse(ResultType.SUCCESS, TaskState.valueOf(status));
     }
 
+//    @ApiOperation("查询Task的执行状态")
+//    @RequestMapping(value = "/car/task/{taskId}")
+//    public BasicResponse taskState(@PathVariable("taskId") String taskId) {
+//        Integer status = taskService.queryStatus(taskId);
+//        if (status == null) {
+//            return BasicResponse.buildResponse(ResultType.FAILED, "Can't find the task");
+//        }
+//        return BasicResponse.buildResponse(ResultType.SUCCESS, TaskState.valueOf(status));
+//    }
+
     /**
      *   车端开启自动驾驶任务，提交的参数:
      *   vin, source, goal, velocity = DEFAULT_VELOCITY, acc = DEFAULT_ACCELEARTION;
      */
+    @ApiOperation("车端开启自动驾驶任务")
     @RequestMapping(value = "/car/site/start", method = RequestMethod.POST)
     @ResponseBody
     public BasicResponse startAutonomous(RideParam rideParam) {
@@ -124,7 +145,12 @@ public class AutoController {
      *   车端开启定点到达A->B的自动循迹驾驶任务，提交的参数:
      *   vin, goal;
      */
+    @ApiOperation("车端开启定点到达A->B的自动循迹驾驶任务")
     @RequestMapping(value = "/car/trj/start", method = RequestMethod.POST)
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "vin", value = "车辆ID", required = true, dataType = "string"),
+            @ApiImplicitParam(name = "goal", value = "目标地址", required = true, dataType = "string")
+    })
     @ResponseBody
     public BasicResponse startTrjAutonomous(RideParam rideParam) {
         try {
@@ -155,6 +181,7 @@ public class AutoController {
     /**
      * 车端停止自动驾驶trj,site 通用
      */
+    @ApiOperation("车端停止自动驾驶trj,site")
     @RequestMapping(value = "/car/{vin}/stop", method = RequestMethod.GET)
     @ResponseBody
     public BasicResponse stopAutonomous(@PathVariable(name = "vin") String vin) {
@@ -172,6 +199,7 @@ public class AutoController {
     /**
      * 查询车辆的健康状态信息
      */
+    @ApiOperation("查询车辆的健康状态信息")
     @RequestMapping(value = "/car/{vin}/health", method = RequestMethod.GET)
     @ResponseBody
     public BasicResponse checkModuleHealth(@PathVariable(name = "vin") String vin) {
@@ -187,6 +215,7 @@ public class AutoController {
     /**
      * 查询ride(trip）信息
      */
+    @ApiOperation("查询ride(trip）信息")
     @RequestMapping(value = "car/ride/{rideId}", method = RequestMethod.GET)
     public BasicResponse getRide(@PathVariable("rideId") String rideId) {
         Trip ride = tripService.get(rideId);
@@ -200,6 +229,7 @@ public class AutoController {
      * 旧接口
      * 租用空闲车，对于使用中的车不能再使用，只通过数据库查询标志位
      */
+    @ApiOperation("The interface has been deprecated")
     @RequestMapping(value = "/car/rent", method = RequestMethod.POST)
     @ResponseBody
     public BasicResponse fireRide(RideParam rideParam) throws NullPointerException, IllegalRideException {
@@ -231,6 +261,7 @@ public class AutoController {
      * 旧接口
      * 借助rideId停止并释放使用中的车辆
      */
+    @ApiOperation("The interface has been deprecated")
     @RequestMapping(value = "/ride/{rideId}/stop", method = RequestMethod.POST)
     @ResponseBody
     public BasicResponse stopRide(@PathVariable("rideId") String rideId) {
@@ -247,6 +278,7 @@ public class AutoController {
     /**
      * 查询当前所有的ride（trip）
      */
+    @ApiOperation("查询当前所有的ride（trip）")
     @RequestMapping(value = "/rides", method = RequestMethod.GET)
     @ResponseBody
     public BasicResponse queryRides(@RequestParam("page") int page, @RequestParam("size") int size) {

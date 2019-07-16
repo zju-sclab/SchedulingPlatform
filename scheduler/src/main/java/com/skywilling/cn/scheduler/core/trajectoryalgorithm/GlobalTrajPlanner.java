@@ -941,10 +941,12 @@ public class GlobalTrajPlanner implements TrjPlanService {
     Cross_vec = new ArrayList<>();
     String os = System.getProperty("os.name");
     String file_dir;
-    if(os.toLowerCase().startsWith("win"))
-       file_dir = "yuquanxiaoqu3";
-    else
-       file_dir = "path_file_Yunlecar";
+    //    if(os.toLowerCase().startsWith("win"))
+//       file_dir = "yuquanxiaoqu3";
+//    else
+//       file_dir = "path_file_Yunlecar";
+    //目前都是玉泉校区
+    file_dir = "yuquanxiaoqu3";
     setTrjPathFile(file_dir);
     parseConfig();
     constract_Lane_Cross_vec();

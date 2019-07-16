@@ -10,7 +10,9 @@ import com.skywilling.cn.livemap.model.LivePlan;
 import com.skywilling.cn.livemap.service.PlanService;
 import com.skywilling.cn.livemap.util.CacheManager;
 import com.skywilling.cn.scheduler.service.TripService;
-
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import javafx.beans.binding.ObjectExpression;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -26,6 +28,7 @@ import java.util.Map;
  * Date 2019/6/10 11:24
  **/
 @CrossOrigin
+@Api(tags = "订单管理")
 @RequestMapping(value = "/api/v2/order/")
 @Controller
 public class OrderController {
@@ -36,6 +39,7 @@ public class OrderController {
     /**
      * 批量订单
      */
+    @ApiOperation("批量订单")
     @RequestMapping(value="/addOrders", method = RequestMethod.POST)
     @ResponseBody
     public BasicResponse addOrders(@RequestParam String username, @RequestParam("startTime")String startTime,
@@ -61,6 +65,7 @@ public class OrderController {
         return BasicResponse.buildResponse(ResultType.SUCCESS, resp);
     }
 
+    @ApiOperation("添加订单")
     @RequestMapping(value="/add", method = RequestMethod.POST)
     @ResponseBody
     public BasicResponse addOrder(Order order, ModelMap map){
@@ -71,6 +76,8 @@ public class OrderController {
         resp.put("plans",plan);
         return BasicResponse.buildResponse(ResultType.SUCCESS,resp);
     }
+
+    @ApiOperation("查询路径")
     @RequestMapping(value = "/plan/{parkName}", method = RequestMethod.GET)
     public String queryPlan(ModelMap map, @PathVariable("parkName") String parkName){
         LivePlan livePlan = planService.getLivePlan(parkName);

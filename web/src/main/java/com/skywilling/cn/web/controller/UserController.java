@@ -22,6 +22,8 @@ import com.skywilling.cn.web.model.view.UserUpdateParam;
 import com.skywilling.cn.web.model.view.UserView;
 import com.skywilling.cn.web.utils.SmsHelper;
 import com.skywilling.cn.web.utils.ViewBuilder;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -36,6 +38,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @CrossOrigin(origins = "*")
+@Api(tags = "用户管理")
 @RestController
 @RequestMapping("api/v2")
 public class UserController {
@@ -57,6 +60,8 @@ public class UserController {
   @Autowired
   private PermissionService permissionService;
 
+
+  @ApiOperation("验证用户信息")
   @RequestMapping(value = "/user/verifyCode", method = RequestMethod.GET)
   public BasicResponse sendVerifyCode(@RequestParam("phoneNumber") String phoneNumber,
                                       @RequestParam("type") int type) {
@@ -99,6 +104,7 @@ public class UserController {
     return BasicResponse.buildResponse(ResultType.FAILED, "验证码发送失败");
   }
 
+  @ApiOperation("用户注册")
   @RequestMapping(value = "/user/register", method = RequestMethod.POST, consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
   public BasicResponse register(UserRegisterInfo registerInfo) {
 
@@ -134,6 +140,7 @@ public class UserController {
     }
   }
 
+  @ApiOperation("用户登陆")
   @RequestMapping(value = "/user/login", method = RequestMethod.POST, consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
   public BasicResponse login(@RequestParam(value = "username", required = false) String username,
                              @RequestParam(value = "password", required = false) String password,
@@ -182,12 +189,15 @@ public class UserController {
     }
   }
 
+
+  @ApiOperation("用户登出")
   @RequestMapping(value = "/user/{uid}/logout", method = RequestMethod.POST, consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
   public BasicResponse logout(@PathVariable("uid") Integer uid, HttpServletRequest request) {
 
     return BasicResponse.buildResponse(ResultType.SUCCESS, null);
   }
 
+  @ApiOperation("用户修改密码")
   @RequestMapping(value = "/user/password/change", method = RequestMethod.POST, consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
   public BasicResponse passwordChange(@RequestParam("phoneNumber") String phoneNumber,
                                       @RequestParam("password") String password,
@@ -222,6 +232,7 @@ public class UserController {
     return BasicResponse.buildResponse(ResultType.SUCCESS, null);
   }
 
+  @ApiOperation("获取所有用户的信息")
   @RequestMapping(value = "/users", method = RequestMethod.GET)
   public BasicResponse users(@RequestParam("page") int page,
                              @RequestParam("size") int size,
@@ -242,6 +253,7 @@ public class UserController {
   /**
    * 根据Uid查询信息
    */
+  @ApiOperation("根据Uid查询信息")
   @RequestMapping(value = "/user/{userId}", method = RequestMethod.GET, consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
   public BasicResponse userByQueryId(@PathVariable("userId") int userId) {
     try {
@@ -254,6 +266,7 @@ public class UserController {
   /**
    * 根据phoneNumber查询信息
    */
+  @ApiOperation("根据phoneNumber查询信息")
   @RequestMapping(value = "/user/{phoneNumber}", method = RequestMethod.GET, consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
   public BasicResponse userByQueryPhone(@PathVariable("phoneNumber") int number){
     try {
@@ -265,6 +278,7 @@ public class UserController {
   }
 
   //自动延时token
+  @ApiOperation("自动延时token")
   @RequestMapping(value = "/token/refresh", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
   public BasicResponse refreshToken() {
 
@@ -272,6 +286,7 @@ public class UserController {
   }
 
   //仅限超级管理员和用户本身可以修改，不能修改用户角色和状态
+  @ApiOperation("更新用户信息，仅限超级管理员和用户本身可以修改")
   @RequestMapping(value = "/user/{uid}/update", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
   public BasicResponse updateUser(@PathVariable("uid") Integer uid,
                                   @RequestBody UserUpdateParam updateParam,
@@ -286,6 +301,7 @@ public class UserController {
   }
 
   //以下的方法只能由超级管理员调用
+  @ApiOperation("添加用户")
   @RequestMapping(value = "/user/add", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
   public BasicResponse addUser(@RequestBody UserAddParam addParam) {
     UserInfo userInfo = addParam.toUserInfo();
@@ -302,6 +318,7 @@ public class UserController {
     }
   }
 
+  @ApiOperation("修改用户的角色")
   @RequestMapping(value = "/user/{userId}/role/{roleId}")
   public BasicResponse changeRole(@PathVariable("userId") int userId,
                                   @PathVariable("roleId") int roleId) {
@@ -316,6 +333,7 @@ public class UserController {
     return BasicResponse.buildResponse(ResultType.SUCCESS, null);
   }
 
+  @ApiOperation("删除用户")
   @RequestMapping(value = "/user/{uid}/delete", method = RequestMethod.POST, consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
   public BasicResponse delete(@PathVariable("uid") Integer uid) {
     try {
@@ -329,6 +347,7 @@ public class UserController {
   /**
    * 密码重置为“abc123”，用户可以通过password/change接口修改密码
    */
+  @ApiOperation("修改密码")
   @RequestMapping(value = "/user/{uid}/resetPwd", method = RequestMethod.POST, consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
   public BasicResponse resetPwd(@PathVariable("uid") Integer uid) {
     try {
