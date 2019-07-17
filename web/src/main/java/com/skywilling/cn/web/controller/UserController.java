@@ -319,7 +319,7 @@ public class UserController {
   }
 
   @ApiOperation("修改用户的角色")
-  @RequestMapping(value = "/user/{userId}/role/{roleId}")
+  @RequestMapping(value = "/user/{userId}/role/{roleId}", method = RequestMethod.POST)
   public BasicResponse changeRole(@PathVariable("userId") int userId,
                                   @PathVariable("roleId") int roleId) {
     UserRole role = roleService.query(roleId);
