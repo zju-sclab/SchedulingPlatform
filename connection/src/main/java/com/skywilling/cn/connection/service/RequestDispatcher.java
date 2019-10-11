@@ -82,6 +82,11 @@ public class RequestDispatcher {
 
         TypeField typeField = TypeField.valueOf(packet.getType());
         if (TypeField.LOGIN == typeField) {
+            if(packet.getVin().length()==17&&packet.getType() == 1){
+                //login of vehicle you shold put the carclient in the map
+                clientService.open(packet.getVin(),ctx.channel());
+                LOG.warn("increase length of car pool");
+            }
             return loginHandler(ctx, packet);
         }
         else if(TypeField.REQUEST_LOCK == typeField){
@@ -92,6 +97,13 @@ public class RequestDispatcher {
         }
         else if(TypeField.RELEASE_LOCK == typeField){
             LOG.warn("receive release lock info : " + packet.getVin());
+            String name = typeField.getDesc();
+            BasicListener listener = listenerMap.getListener(name);
+            return listener.process(packet.getVin(),packet.getData());
+        }
+        else if(TypeField.COMMAND == typeField){
+            LOG.warn("receive command info : " + packet.getVin());
+            clientService.sendCommand(packet);
             String name = typeField.getDesc();
             BasicListener listener = listenerMap.getListener(name);
             return listener.process(packet.getVin(),packet.getData());

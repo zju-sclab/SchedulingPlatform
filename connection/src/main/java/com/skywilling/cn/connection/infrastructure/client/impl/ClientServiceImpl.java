@@ -1,5 +1,6 @@
 package com.skywilling.cn.connection.infrastructure.client.impl;
 
+import com.alibaba.fastjson.JSONObject;
 import com.skywilling.cn.connection.infrastructure.client.ClientPromise;
 import com.skywilling.cn.connection.infrastructure.client.ClientService;
 import com.skywilling.cn.connection.model.CarClient;
@@ -63,6 +64,39 @@ public class ClientServiceImpl implements ClientService, ClientPromise {
       }
       return response;
   }
+
+    /** 按照协议发送消息到车端 */
+    @Override
+    public CompletableFuture<Packet> sendCommand(Packet packet) {
+
+        CompletableFuture<Packet> response = new CompletableFuture<>();
+        try {
+            //这里指定TCP的消息通道为vin对用的Socket链接
+
+            String js = packet.getData();
+            LOG.warn(js);
+            JSONObject jsonObject = JSONObject.parseObject(js);
+            LOG.warn(jsonObject.getString("target"));
+            String vin = jsonObject.getString("target");
+
+            CarClient carClient = carPool.getOrDefault(vin, null);
+            Channel channel = carClient.getChannel();
+            if (carClient == null || channel == null || packet == null) {
+                return null;
+            }
+            packet.setRequestId(carClient.getNextRequestId());
+            channel.writeAndFlush(packet);
+            carClient.addAsyncResult(packet.getRequestId(), response);
+        } catch (NullPointerException e) {
+            response.completeExceptionally(e);
+            return null;
+        }
+        return response;
+    }
+
+
+
+
   /** 查找所有的车端链接 */
   @Override
   public List<String> getAllClients() {

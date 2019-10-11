@@ -7,8 +7,12 @@ public class GlobalTrajPlannerConfig {
     //public static String linux_traj_file_path = "/home/sin/catkin_ws/rc_car/src/smartcar/planning/global_planning/";
     //public static String windows_traj_file_path = "D:\\work\\Projects\\linxxx\\SchedulingPlatform\\doc\\Map\\lanes\\";
     //方炜豪的笔记本对应的csv路径
-    public static String linux_traj_file_path = "/home/po/Desktop/SchedulingPlatform/scheduler/src/main/resources/lanes/";
+    //    public static String linux_traj_file_path = "/home/po/Desktop/SchedulingPlatform/scheduler/src/main/resources/lanes/";
+    //    public static String windows_traj_file_path = "D:\\work\\Projects\\linxxx\\SchedulingPlatform\\doc\\Map\\lanes\\";
+    //path for simulation
+    public static String linux_traj_file_path = "/home/simulation/Desktop/SchedulingPlatform-netty/scheduler/src/main/resources/lanes/";
     public static String windows_traj_file_path = "D:\\work\\Projects\\linxxx\\SchedulingPlatform\\doc\\Map\\lanes\\";
+
     public static String trajFilePath = "";
     static{
         String os = System.getProperty("os.name");

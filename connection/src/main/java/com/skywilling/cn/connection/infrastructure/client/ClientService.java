@@ -17,5 +17,7 @@ public interface ClientService {
 
   CompletableFuture<Packet> sendRequest(Packet packet);
 
+  CompletableFuture<Packet> sendCommand(Packet packet);
+
   List<String> getAllClients();
 }

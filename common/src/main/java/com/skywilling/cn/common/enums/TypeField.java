@@ -3,6 +3,7 @@ package com.skywilling.cn.common.enums;
 public enum TypeField {
   REGISTRATION(0x00, "registration"),
   LOGIN(0x01, "login"),
+  COMMAND(0x02, "command"),
   HEARTBEAT(0x02, "heartbeat"),
   LOGOUT(0x03, "logout"),
   MODE_CHANGE(0x04, "mode change"),

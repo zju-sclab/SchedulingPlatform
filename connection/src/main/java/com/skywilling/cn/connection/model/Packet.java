@@ -18,6 +18,19 @@ public class Packet implements Serializable {
   private int requestId;
 
 
+  public int getType(){
+    return type;
+  }
+
+  public String getVin(){
+    return vin;
+  }
+
+  public String getData(){
+    return data;
+  }
+
+
   @Override
   public boolean equals(Object o) {
     if (this == o) {
