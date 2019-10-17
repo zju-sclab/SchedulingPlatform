@@ -101,9 +101,12 @@ public class RequestDispatcher {
             BasicListener listener = listenerMap.getListener(name);
             return listener.process(packet.getVin(),packet.getData());
         }
-        else if(TypeField.COMMAND == typeField){
-            LOG.warn("receive command info : " + packet.getVin());
-            clientService.sendCommand(packet);
+        else if(TypeField.TELE_COTROL == typeField){
+            LOG.warn(packet.getData());
+            if(clientService.getRemote()!=null)
+                clientService.sendCommand(clientService.getRemote(),packet);
+            else
+                LOG.warn("null warning ");
             String name = typeField.getDesc();
             BasicListener listener = listenerMap.getListener(name);
             return listener.process(packet.getVin(),packet.getData());

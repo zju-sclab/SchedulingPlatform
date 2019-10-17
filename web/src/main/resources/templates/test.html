@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Remote Control</title>
+    <script src="https://cdn.staticfile.org/vue/2.2.2/vue.min.js"></script>
+    <script src="https://cdn.bootcss.com/vue-resource/1.5.1/vue-resource.js"></script>
+</head>
+<body>
+    <div id="app">
+        <div id = "carVin" style = "width:200px"  > 
+            <li v-for="(item,i) in list" style="margin-bottom:49px;border-bottom:1px solid red" v-on:click = "chooseRemote(item)"> vin:{{item}}</li>
+        </div>
+        <input type="button" value="获取当前所有车辆" v-on:click="getInfo">
+        <input type="button" value="post方式" v-on:click="postInfo">
+        <input type="button" value="jsonp方式" v-on:click="jsonpInfo">
+    </div>
+</body> 
+<script src="test.js">
+
+</script>
+</html>

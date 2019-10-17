@@ -3,7 +3,6 @@ package com.skywilling.cn.common.enums;
 public enum TypeField {
   REGISTRATION(0x00, "registration"),
   LOGIN(0x01, "login"),
-  COMMAND(0x02, "command"),
   HEARTBEAT(0x02, "heartbeat"),
   LOGOUT(0x03, "logout"),
   MODE_CHANGE(0x04, "mode change"),
@@ -17,6 +16,7 @@ public enum TypeField {
   PREPARE_FIRE(0x20, "prepare fire"),
   FIRE_AUTONOMOUS(0x21, "fire task"),
   FIRE_LANE_AUTONOMOUS(0x22, "fire lane task"),
+  TELE_COTROL(0x23, "command"),
   PAUSE_AUTONOMOUS(0x31,"pause task"),
   CONTINUE_AUTONOMOUS(0x32, "continue task"),
   FIRE_LIDAR_AUTONOMOUS(0x33, "fire lidar task"),

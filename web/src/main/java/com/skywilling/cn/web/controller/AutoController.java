@@ -12,6 +12,7 @@ import com.skywilling.cn.common.model.Order;
 import com.skywilling.cn.common.model.Plan;
 import com.skywilling.cn.common.model.TaskState;
 import com.skywilling.cn.connection.common.exception.TaskNotExistException;
+import com.skywilling.cn.connection.infrastructure.client.ClientService;
 import com.skywilling.cn.livemap.model.Park;
 import com.skywilling.cn.livemap.service.ParkService;
 import com.skywilling.cn.manager.car.enumeration.DriveType;
@@ -68,6 +69,12 @@ public class AutoController {
     GlobalTrajPlanner globalTrajPlanner;
     @Autowired
     OrderService orderService;
+    @Autowired
+    ClientService clientService;
+
+
+
+
 
     /**
      * 查询当前车辆任务状态

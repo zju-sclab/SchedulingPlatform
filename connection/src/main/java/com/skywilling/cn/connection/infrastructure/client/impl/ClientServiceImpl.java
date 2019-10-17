@@ -25,6 +25,8 @@ public class ClientServiceImpl implements ClientService, ClientPromise {
   /** 内存Mao保存车id到车端链接的映射 */
   private ConcurrentHashMap<String, CarClient> carPool = new ConcurrentHashMap<>();
   /** 打开一个新的车端链接 */
+  private  CarClient remoteTarget = null;
+
   @Override
   public void open(String vin, Channel channel) {
     CarClient carClient = new CarClient(vin, channel);
@@ -34,8 +36,20 @@ public class ClientServiceImpl implements ClientService, ClientPromise {
   @Override
   public void close(String vin) {
     CarClient carClient = carPool.remove(vin);
+    remoteTarget = null;
     carClient.close();
   }
+
+    @Override
+    public void chooseRemote(String vin) {
+        remoteTarget = carPool.getOrDefault(vin, null);
+    }
+
+    @Override
+    public CarClient getRemote() {
+        return remoteTarget;
+    }
+
   /** 判断链接是否存活 */
   @Override
   public boolean isAlive(String vin) {
@@ -67,19 +81,18 @@ public class ClientServiceImpl implements ClientService, ClientPromise {
 
     /** 按照协议发送消息到车端 */
     @Override
-    public CompletableFuture<Packet> sendCommand(Packet packet) {
+    public CompletableFuture<Packet> sendCommand(CarClient carClient,Packet packet) {
 
         CompletableFuture<Packet> response = new CompletableFuture<>();
         try {
             //这里指定TCP的消息通道为vin对用的Socket链接
 
-            String js = packet.getData();
-            LOG.warn(js);
-            JSONObject jsonObject = JSONObject.parseObject(js);
-            LOG.warn(jsonObject.getString("target"));
-            String vin = jsonObject.getString("target");
+//            String js = packet.getData();
+//            LOG.warn(js);
+//            JSONObject jsonObject = JSONObject.parseObject(js);
+//            LOG.warn(jsonObject.getString("target"));
+//            String vin = jsonObject.getString("target");
 
-            CarClient carClient = carPool.getOrDefault(vin, null);
             Channel channel = carClient.getChannel();
             if (carClient == null || channel == null || packet == null) {
                 return null;

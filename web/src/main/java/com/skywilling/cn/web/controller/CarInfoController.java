@@ -71,6 +71,19 @@ public class CarInfoController {
   private TripService tripService;
 
 
+    @ApiOperation("根据vin更新远程遥控的车辆")
+    @RequestMapping(value = "/car/choose/remote", method = RequestMethod.POST)
+    public BasicResponse chooseRemoteCar(@RequestParam(value = "vin", required = true)String vin) {
+        try {
+            clientService.chooseRemote(vin);
+            String targetVin = clientService.getRemote().getVin();
+            return BasicResponse.buildResponse(ResultType.SUCCESS, targetVin);
+        } catch (Exception e) {
+            return BasicResponse.buildResponse(ResultType.FAILED, e.getMessage());
+        }
+    }
+
+
   /**
    * 查询所有已经通过TX2链接上云端的车端（区别T_BOX）
    */
@@ -78,6 +91,7 @@ public class CarInfoController {
   @RequestMapping(value = "/car/connected", method = RequestMethod.GET)
   public BasicResponse getAutonomousClients(@RequestParam(value = "page", required = true) int page,
                                             @RequestParam(value = "size", required = true) int size){
+    System.out.println(clientService.getAllClients());
     return BasicResponse.buildResponse(ResultType.SUCCESS, clientService.getAllClients());
   }
 
