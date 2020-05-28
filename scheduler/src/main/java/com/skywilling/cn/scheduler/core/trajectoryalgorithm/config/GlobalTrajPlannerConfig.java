@@ -10,18 +10,27 @@ public class GlobalTrajPlannerConfig {
     //    public static String linux_traj_file_path = "/home/po/Desktop/SchedulingPlatform/scheduler/src/main/resources/lanes/";
     //    public static String windows_traj_file_path = "D:\\work\\Projects\\linxxx\\SchedulingPlatform\\doc\\Map\\lanes\\";
     //path for simulation
-    public static String linux_traj_file_path = "/home/simulation/Desktop/SchedulingPlatform-netty/scheduler/src/main/resources/lanes/";
-    public static String windows_traj_file_path = "D:\\work\\Projects\\linxxx\\SchedulingPlatform\\doc\\Map\\lanes\\";
+    public static String root_path = System.getProperty("user.dir");
+    //    public static String linux_traj_file_path = root_path + "/scheduler/src/main/resources/lanes/";
+    public static String linux_traj_file_path = "/doc/Map/lanes/";
+    public static String windows_traj_file_path = "\\doc\\Map\\lanes\\";
+
+//    public static String windows_traj_file_path = "D:\\work\\Projects\\linxxx\\SchedulingPlatform\\doc\\Map\\lanes\\";
 
     public static String trajFilePath = "";
     static{
+        if(root_path == "/"){
+            root_path = "";
+        }
+        linux_traj_file_path = root_path+linux_traj_file_path;
+        windows_traj_file_path = root_path+windows_traj_file_path;
         String os = System.getProperty("os.name");
         if(os.toLowerCase().startsWith("win")){
            trajFilePath = windows_traj_file_path;
         }else{
             trajFilePath = linux_traj_file_path;
         }
-    }
+        }
     public static double weight_data = 0.47;
     public static double weight_smooth = 0.14;
     public static double tolerance = 0.17;
@@ -33,6 +42,10 @@ public class GlobalTrajPlannerConfig {
     public static double thresh_end_length = 8.0;
 
     public static void setTrajFilePath(String parkName){
+
         trajFilePath = trajFilePath + parkName + System.getProperty("file.separator");
+        System.out.println("----------------------------------");
+        System.out.println(trajFilePath);
+        System.out.println("---------------------------------");
     }
 }

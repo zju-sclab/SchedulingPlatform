@@ -14,7 +14,7 @@ import java.util.Date;
  * Date 2019/5/27 11:16
  **/
 
-public class test {
+/*public class test {
     public static void main(String[] args){
         try {
             //在开发测试模式时，得到的地址为：{项目(模块)跟目录}/target/static/images/upload/
@@ -43,4 +43,4 @@ public class test {
             e.printStackTrace();
         }
     }
-}
+}*/

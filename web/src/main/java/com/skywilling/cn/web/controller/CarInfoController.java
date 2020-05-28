@@ -75,6 +75,7 @@ public class CarInfoController {
     @RequestMapping(value = "/car/choose/remote", method = RequestMethod.POST)
     public BasicResponse chooseRemoteCar(@RequestParam(value = "vin", required = true)String vin) {
         try {
+            //choose remote不应该由clientService来实现
             clientService.chooseRemote(vin);
             String targetVin = clientService.getRemote().getVin();
             return BasicResponse.buildResponse(ResultType.SUCCESS, targetVin);

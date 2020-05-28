@@ -56,6 +56,7 @@ public class RequestDispatcher {
             BasicCarResponse carResponse;
             if (ACK.COMMAND.getCode() == packet.getAck()) {
                 LOG.info("carRequest: " + " type :" + packet.getType() + " vin " + packet.getVin());
+                //这里进行处理命令模式处理
                 carResponse = commandHandler(ctx, packet); //请求包
 
             } else {
@@ -102,6 +103,7 @@ public class RequestDispatcher {
             return listener.process(packet.getVin(),packet.getData());
         }
         else if(TypeField.TELE_COTROL == typeField){
+            //TODO:这里需要重写 写的太杂了
             LOG.warn(packet.getData());
             if(clientService.getRemote()!=null)
                 clientService.sendCommand(clientService.getRemote(),packet);
@@ -112,6 +114,7 @@ public class RequestDispatcher {
             return listener.process(packet.getVin(),packet.getData());
         }
         /**Type Ox15 为车端发送过来的终端消息,包括位置和方向,速度和转角等等 */
+        //这里是如果是心跳包等等情况下
         else if (typeField != null) {
             /**logout, heartbeat ,registration,terminalInfo..*/
             return listenerMap.getListener(typeField.getDesc()).process(packet.getVin(), packet.getData());

@@ -109,12 +109,12 @@ public class JwtToken {
     return Integer.valueOf(uidClaim.asString());
   }
 
-  public static void main(String[] args) throws UnsupportedEncodingException, TokenException {
+  /*public static void main(String[] args) throws UnsupportedEncodingException, TokenException {
 
 //    String token = JwtToken.createToken(1);
     String token  = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJ3ZWIiLCJ1aWQiOiIxIiwiaXNzIjoiU2VydmljZSIsImV4cCI6MTUzMjY2NzQwOCwiaWF0IjoxNTMyNjYwMjA4fQ.Ns6OxjgeElfGk32CQeF6sgkO3fDqsPVLUMh3LJ-txM4";
     Integer uid = JwtToken.getUID(token);
 
     System.out.print(uid);
-  }
+  }*/
 }

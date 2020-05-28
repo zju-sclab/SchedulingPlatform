@@ -154,10 +154,7 @@ public class AutoController {
      */
     @ApiOperation("车端开启定点到达A->B的自动循迹驾驶任务")
     @RequestMapping(value = "/car/trj/start", method = RequestMethod.POST)
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "vin", value = "车辆ID", required = true, dataType = "string"),
-            @ApiImplicitParam(name = "goal", value = "目标地址", required = true, dataType = "string")
-    })
+
     @ResponseBody
     public BasicResponse startTrjAutonomous(RideParam rideParam) {
         try {
