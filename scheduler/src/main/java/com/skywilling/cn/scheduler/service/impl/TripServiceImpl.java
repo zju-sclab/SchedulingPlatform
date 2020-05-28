@@ -121,6 +121,7 @@ public class TripServiceImpl implements TripService {
         }
         /**起点由心跳信息提供*/
 //        StaticStation outset = new StaticStation(car.getPose());
+        //用于测试 出发点确定
         Node outset_node = mapService.getNode("caolou",parkName);
         StaticStation outset = createStaticPointByNode(outset_node);
         Node des_node = mapService.getNode(goal,parkName);

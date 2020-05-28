@@ -70,6 +70,7 @@ public class MapServiceImpl implements MapService {
     public LiveMap getMap(String parkName) {
         if (!maps.containsKey(parkName)) {
             LOG.info("creat live map : " + parkName + " in memory. ");
+            //测试仿真车辆时候为yuquanxiaoqu5
             LiveMap liveMap = createMapByLidarMap(parkName);
             maps.put(parkName,liveMap);
         }
@@ -80,8 +81,12 @@ public class MapServiceImpl implements MapService {
     public LiveMap createMapByLidarMap(String parkName) {
        Park park = parkService.queryByName(parkName);
        LiveMap liveMap = null;
+        String root_path = System.getProperty("user.dir");
+        if(root_path == "/"){
+            root_path = "";
+        }
        if (park != null && park.getShapeFileUrl() != null && park.getMapFileUrl() != null){
-           liveMap = staticMapAndShapeFactory.create(parkName,park.getMapFileUrl(),park.getShapeFileUrl());
+           liveMap = staticMapAndShapeFactory.create(parkName,root_path+ park.getMapFileUrl(),root_path + park.getShapeFileUrl());
        }
        else{
            LOG.warn("no map or shape file to create livemap named: " + parkName);

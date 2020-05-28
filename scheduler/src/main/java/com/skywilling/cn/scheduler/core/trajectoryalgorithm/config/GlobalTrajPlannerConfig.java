@@ -4,21 +4,11 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class GlobalTrajPlannerConfig {
-    //public static String linux_traj_file_path = "/home/sin/catkin_ws/rc_car/src/smartcar/planning/global_planning/";
-    //public static String windows_traj_file_path = "D:\\work\\Projects\\linxxx\\SchedulingPlatform\\doc\\Map\\lanes\\";
-    //方炜豪的笔记本对应的csv路径
-    //    public static String linux_traj_file_path = "/home/po/Desktop/SchedulingPlatform/scheduler/src/main/resources/lanes/";
-    //    public static String windows_traj_file_path = "D:\\work\\Projects\\linxxx\\SchedulingPlatform\\doc\\Map\\lanes\\";
-    //path for simulation
-    public static String root_path = System.getProperty("user.dir");
-    //    public static String linux_traj_file_path = root_path + "/scheduler/src/main/resources/lanes/";
     public static String linux_traj_file_path = "/doc/Map/lanes/";
     public static String windows_traj_file_path = "\\doc\\Map\\lanes\\";
-
-//    public static String windows_traj_file_path = "D:\\work\\Projects\\linxxx\\SchedulingPlatform\\doc\\Map\\lanes\\";
-
     public static String trajFilePath = "";
     static{
+        String root_path = System.getProperty("user.dir");
         if(root_path == "/"){
             root_path = "";
         }
