@@ -32,10 +32,7 @@ public class GlobalTrajPlannerConfig {
     public static double thresh_end_length = 8.0;
 
     public static void setTrajFilePath(String parkName){
-
+        //设置路径文件的url地址
         trajFilePath = trajFilePath + parkName + System.getProperty("file.separator");
-        System.out.println("----------------------------------");
-        System.out.println(trajFilePath);
-        System.out.println("---------------------------------");
     }
 }

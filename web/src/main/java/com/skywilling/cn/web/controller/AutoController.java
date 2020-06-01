@@ -34,7 +34,6 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
-import javafx.application.Application;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -163,6 +162,7 @@ public class AutoController {
             if (carDynamic == null) {
                 return BasicResponse.buildResponse(ResultType.FAILED, "the car has not been added to a park");
             }
+            //通过车辆对应的园区id来获取园区信息 同时可以获得园区的名字
             Park park = parkService.query(carDynamic.getParkId());
             Trip trip = tripService.submitTrjTrip(rideParam.getVin(), park.getName(), rideParam.getGoal());
             JSONObject resp = new JSONObject();
