@@ -34,5 +34,11 @@ public class GlobalTrajPlannerConfig {
     public static void setTrajFilePath(String parkName){
         //设置路径文件的url地址
         trajFilePath = trajFilePath + parkName + System.getProperty("file.separator");
+        System.out.println(trajFilePath);
+    }
+
+    public static void setAbsoluteTrajFilePath(String filePath){
+        //设置路径文件的url地址
+        trajFilePath = filePath;
     }
 }

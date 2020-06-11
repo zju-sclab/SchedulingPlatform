@@ -124,6 +124,7 @@ public class StaticMapAndShapeFactory {
     public LiveMap create(String parkName, String mapUrl, String shapeUrl) {
         LiveMap liveMap = new LiveMap();
         try {
+            mapUrl = "file:\\" + mapUrl;
             Document document = parse(mapUrl);
             liveMap.setParkName(parkName);
             loadNode(document, liveMap);

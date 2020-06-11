@@ -120,10 +120,10 @@ public class TripServiceImpl implements TripService {
             throw new CarNotAliveException(vin);
         }
         /**起点由心跳信息提供*/
-//        StaticStation outset = new StaticStation(car.getPose());
+        StaticStation outset = new StaticStation(car.getPose());
         //用于测试 出发点确定
-        Node outset_node = mapService.getNode("caolou",parkName);
-        StaticStation outset = createStaticPointByNode(outset_node);
+//        Node outset_node = mapService.getNode("caolou",parkName);
+//        StaticStation outset = createStaticPointByNode(outset_node);
         Node des_node = mapService.getNode(goal,parkName);
         StaticStation destination = createStaticPointByNode(des_node);
         /** 调用全局规划接口计算得到三元数组结果*/

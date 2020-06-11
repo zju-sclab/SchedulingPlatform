@@ -947,10 +947,31 @@ public class  GlobalTrajPlanner implements TrjPlanService {
     file_dir = "simulation_Town01";
     setTrjPathFile(file_dir);
     parseConfig();
+    //读取文件部分
     constract_Lane_Cross_vec();
     Collections.sort(Lane_vec);
     Collections.sort(Cross_vec);
   }
+
+    public GlobalTrajPlanner(String type) throws Exception {
+        Lane_vec = new ArrayList<>();
+        Cross_vec = new ArrayList<>();
+        if(type=="DEBUG"){
+            //加入一个DEBUG专用模式 因为System.getProperty()并不能获取纯根目录
+            GlobalTrajPlannerConfig.setAbsoluteTrajFilePath("C:\\soft\\SchedulingPlatform\\doc\\Map\\lanes\\simulation_Town01\\");
+        }else if(type == "DEPOLYMENT"){
+            String file_dir;
+            file_dir = "simulation_Town01";
+            setTrjPathFile(file_dir);
+        }else{
+            throw new Exception("You need to specific your type in DEBUG||DEPOLYMENT");
+        }
+        parseConfig();
+        //读取文件部分
+        constract_Lane_Cross_vec();
+        Collections.sort(Lane_vec);
+        Collections.sort(Cross_vec);
+    }
 
   @Override
   public Triple<List<String>, List<Double>, List<RoutePoint>> createTrajectory(StaticStation start, StaticStation target) {

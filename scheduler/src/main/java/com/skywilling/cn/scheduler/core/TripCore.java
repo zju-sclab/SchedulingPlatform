@@ -80,15 +80,16 @@ public class TripCore {
         Route route = trip.getRoute();
         /**新建一个Lidatask执行*/
         AutoTask task = createTaskByLidarPoint(trip, route, route.getParkName(),routePoints);
-        String taskId = taskAccessor.save(task);
-        task.setTaskId(taskId);
+        //TODO：记录了任务
+//        String taskId = taskAccessor.save(task);
+//        task.setTaskId(taskId);
         /**这里优化了一步，不再预热直接启动自动驾驶，干嘛要prepare?
          *设置了PreparedListener任务监听器,执行完成会调用submit（task）*/
         autoTaskService.submit(task);
-        trip.getTaskIds().add(taskId);
+//        trip.getTaskIds().add(taskId);
         /**保存Trip状态*/
         //Todo 调试的时候这里提示插入错误 Node和LiveStaion的id
-        tripAccessor.save(trip);
+//        tripAccessor.save(trip);
     }
 
     /**创建任务*/
