@@ -973,6 +973,12 @@ public class  GlobalTrajPlanner implements TrjPlanService {
         Collections.sort(Cross_vec);
     }
 
+  /**
+   * the implement of the interface method createTrajectory to create trajectory from start to target
+    * @param start
+   * @param target
+   * @return Triple<List<String>, List<Double>, List<RoutePoint>>
+   */
   @Override
   public Triple<List<String>, List<Double>, List<RoutePoint>> createTrajectory(StaticStation start, StaticStation target) {
     if (utils.distance2points(start.getPoint().getPosition(), target.getPoint().getPosition())
