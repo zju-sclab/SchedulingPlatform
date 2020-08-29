@@ -185,6 +185,7 @@ public class  GlobalTrajPlanner implements TrjPlanService {
 
   private void startPose_cb(
       StaticStation station, List<Lane> temp_Lane_vec, List<Cross> temp_Cross_vec, OriginId originId) {
+    //这个函数应该是生成入站的路径的
     NearestPose nearestPose = find_nearest_pose(station.getPoint().getPosition(), Lane_vec);
     originId.setStart_lane_id(nearestPose.lane_id);
     if (!validate(nearestPose, temp_Cross_vec)) {
@@ -192,6 +193,7 @@ public class  GlobalTrajPlanner implements TrjPlanService {
       System.out.println("Start station is set at Cross, return.");
     }
     EulerAngle start_station_angle = utils.Quaternion2Euler(station.getPoint().getOrientation());
+    start_station_angle.setAngle(0,0,3.13);
     EulerAngle nearest_lane_angle = utils.Quaternion2Euler(nearestPose.getPoint().getOrientation());
     Cross c_node = new Cross();
     Cross c_node_final = new Cross();
@@ -986,6 +988,7 @@ public class  GlobalTrajPlanner implements TrjPlanService {
       // TODO::起止点太近返回
       return null;
     }
+    //列出现在所有的lane的向量
     List<Lane> temp_Lane_vec = utils.depcopy(Lane_vec);
     List<Cross> temp_Cross_vec = utils.depcopy(Cross_vec);
 
