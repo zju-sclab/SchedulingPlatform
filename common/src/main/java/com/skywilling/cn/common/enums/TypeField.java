@@ -16,13 +16,14 @@ public enum TypeField {
   PREPARE_FIRE(0x20, "prepare fire"),
   FIRE_AUTONOMOUS(0x21, "fire task"),
   FIRE_LANE_AUTONOMOUS(0x22, "fire lane task"),
-  TELE_COTROL(0x23, "command"),
+  TELE_CONTROL(0x23, "command"),
   PAUSE_AUTONOMOUS(0x31,"pause task"),
   CONTINUE_AUTONOMOUS(0x32, "continue task"),
   FIRE_LIDAR_AUTONOMOUS(0x33, "fire lidar task"),
   REQUEST_LOCK(0x41,"request lock"),
   RESPONSE_LOCK(0x42,"respond lock"),
-  RELEASE_LOCK(0x43, "release lock");
+  RELEASE_LOCK(0x43, "release lock"),
+  PURSUIT_STATION_POINT(0x50, "pursuit station");
 
   private final String desc;
   private final int type;

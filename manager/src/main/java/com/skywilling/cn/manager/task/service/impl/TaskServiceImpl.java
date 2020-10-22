@@ -45,6 +45,11 @@ public class TaskServiceImpl implements TaskService {
   }
 
   @Override
+  public List<AutoTask> getAllTasks() {
+    return taskAccessor.getAllTasks();
+  }
+
+  @Override
   public AutoTask getCurrentTask(String vin) throws CarNotExistsException {
     AutonomousCarInfo car = autoCarInfoService.get(vin);
     if (car == null) {

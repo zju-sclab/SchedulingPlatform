@@ -27,7 +27,8 @@ public class AutoCarInfoServiceImpl implements AutoCarInfoService {
   @Override
   public void save(AutonomousCarInfo autonomousCarInfo) {
     autoCarInfoAccessor.save(autonomousCarInfo);
-    autoCarInfoGeoAccessor.save(autonomousCarInfo);
+    //TODO: MONGODB没有配置
+    //autoCarInfoGeoAccessor.save(autonomousCarInfo);
   }
 
   @Override

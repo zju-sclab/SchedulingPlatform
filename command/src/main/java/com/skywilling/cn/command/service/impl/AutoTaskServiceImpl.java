@@ -41,6 +41,7 @@ public class AutoTaskServiceImpl implements AutoTaskService {
         }
         autoTask.setStatus(TaskState.SUBMITTING.getCode());
         taskService.update(autoTask);
+        //这里才发送数据
         CompletableFuture<Boolean> future = autoServiceBiz.fireLidarAutonomous(autoTask);
         checkResult(autoTask,future);
         return future;

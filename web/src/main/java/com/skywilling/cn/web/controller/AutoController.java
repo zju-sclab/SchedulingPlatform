@@ -6,14 +6,12 @@ import com.skywilling.cn.common.enums.ResultType;
 import com.skywilling.cn.common.exception.CarNotAliveException;
 import com.skywilling.cn.common.exception.CarNotExistsException;
 import com.skywilling.cn.common.exception.IllegalRideException;
-import com.skywilling.cn.common.model.BasicResponse;
+import com.skywilling.cn.common.model.*;
 
-import com.skywilling.cn.common.model.Order;
-import com.skywilling.cn.common.model.Plan;
-import com.skywilling.cn.common.model.TaskState;
 import com.skywilling.cn.connection.common.exception.TaskNotExistException;
 import com.skywilling.cn.connection.infrastructure.client.ClientService;
 import com.skywilling.cn.livemap.model.Park;
+import com.skywilling.cn.livemap.service.MapService;
 import com.skywilling.cn.livemap.service.ParkService;
 import com.skywilling.cn.manager.car.enumeration.DriveType;
 import com.skywilling.cn.manager.car.model.CarDynamic;
@@ -29,6 +27,7 @@ import com.skywilling.cn.scheduler.model.Trip;
 import com.skywilling.cn.scheduler.service.OrderService;
 import com.skywilling.cn.scheduler.service.TripService;
 import com.skywilling.cn.web.model.RideParam;
+import com.skywilling.cn.web.model.StationInfo;
 import com.skywilling.cn.web.model.view.TaskView;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -40,6 +39,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
@@ -52,6 +52,8 @@ import java.util.concurrent.ExecutionException;
 @Api(tags = "自动驾驶管理")
 public class AutoController {
 
+    @Autowired
+    private MapService mapService;
     @Autowired
     private AutoServiceBiz autoServiceBiz;
     @Autowired
@@ -87,7 +89,9 @@ public class AutoController {
                 TaskView taskView = TaskView.getFrom(task);
                 return BasicResponse.buildResponse(ResultType.SUCCESS, taskView);
             }
-            else throw new TaskNotExistException(vin);
+            else {
+                throw new TaskNotExistException(vin);
+            }
         } catch (CarNotExistsException | TaskNotExistException e) {
             return BasicResponse.buildResponse(ResultType.FAILED, e.getMessage());
         }
@@ -156,6 +160,39 @@ public class AutoController {
 
     @ResponseBody
     public BasicResponse startTrjAutonomous(RideParam rideParam) {
+        try {
+            CarDynamic carDynamic = carDynamicService.query(rideParam.getVin());
+            /**检查数据库中是否存在车辆   */
+            if (carDynamic == null) {
+                return BasicResponse.buildResponse(ResultType.FAILED, "the car has not been added to a park");
+            }
+            //通过车辆对应的园区id来获取园区信息 同时可以获得园区的名字
+            Park park = parkService.query(carDynamic.getParkId());
+            Trip trip = tripService.submitTrjTrip(rideParam.getVin(), park.getName(), rideParam.getGoal());
+            JSONObject resp = new JSONObject();
+            resp.put("parkName",trip.getParkName());
+            resp.put("vin",trip.getVin());
+            resp.put("lanes",trip.getRoute().getLanes());
+            resp.put("times",trip.getRoute().getTimes());
+            resp.put("from",trip.getRoute().getFrom().getName());
+            resp.put("to",trip.getRoute().getTo().getName());
+            return BasicResponse.buildResponse(ResultType.SUCCESS, resp);
+        } catch (CarNotExistsException e) {
+            return BasicResponse.buildResponse(ResultType.CAR_NOT_EXISTS, e.getMessage());
+        } catch (CarNotAliveException e) {
+            return BasicResponse.buildResponse(ResultType.CAR_NOT_CONNECTED, e.getMessage());
+        } catch (IllegalRideException e) {
+            return BasicResponse.buildResponse(ResultType.FAILED, e.getMessage());
+        }
+    }
+
+
+
+    @ApiOperation("车端开启定点到达A->B的自动循迹驾驶任务 并且云端每隔一段时间下发路径")
+    @RequestMapping(value = "/car/section/start", method = RequestMethod.POST)
+
+    @ResponseBody
+    public BasicResponse startSectionAutonomous(RideParam rideParam) {
         try {
             CarDynamic carDynamic = carDynamicService.query(rideParam.getVin());
             /**检查数据库中是否存在车辆   */
@@ -290,8 +327,29 @@ public class AutoController {
         return BasicResponse.buildResponse(ResultType.SUCCESS, rides);
     }
     /**
-     * 查询当前的调度表
+     * 出发到一个站点处
      */
+
+    @ApiOperation("根据站点的信息进行巡迹")
+    @RequestMapping(value = "/car/trj/station", method = RequestMethod.POST)
+    @ResponseBody
+    public BasicResponse trjStation(String vin, String goal) {
+        try{
+            CarDynamic carDynamic = carDynamicService.query(vin);
+            if (carDynamic == null) {
+                return BasicResponse.buildResponse(ResultType.FAILED, "the car is not exist");
+            }
+            //通过tripService来提交Trip数据
+            Park park = parkService.query(carDynamic.getParkId());
+            if (park == null) {
+                return BasicResponse.buildResponse(ResultType.FAILED, "指定园区不存在");
+            }
+            Trip trip = tripService.submitStationTrip(vin, park.getName(), goal);
+            return BasicResponse.buildResponse(ResultType.SUCCESS, new JSONObject());
+        }catch (Exception e){
+            return BasicResponse.buildResponse(ResultType.FAILED, new JSONObject());
+        }
+    }
 
 
 }

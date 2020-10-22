@@ -76,4 +76,22 @@ public class ActionScheduler {
         return action;
     }
 
+    /**
+     * 到某个站点的任务实现 终点的信息在route里面
+     */
+    public Action convertToStationAction(String parkName, Route route)
+            throws NoAvailableActionFoundException  {
+        LiveMap liveMap =  mapService.getMap(parkName);
+        if (liveMap == null){
+            return null;
+        }
+        Action action = new Action();
+        Node from = route.getFrom();
+        Node to = route.getTo();
+        action.setOutset(new Node_Json(from));
+        action.setGoal(new Node_Json(to));
+        action.setType("STATION");
+        return action;
+    }
+
 }

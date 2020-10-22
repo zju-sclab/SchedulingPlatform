@@ -49,6 +49,17 @@ public class TaskController {
         }
     }
 
+    @ApiOperation("查询所有任务")
+    @RequestMapping(value = "/queryAll", method = RequestMethod.GET)
+    public BasicResponse getAllTasks() {
+        try{
+            List<AutoTask> tasks = taskService.getAllTasks();
+            return BasicResponse.buildResponse(ResultType.SUCCESS, tasks);
+        } catch (Exception e) {
+            return BasicResponse.buildResponse(ResultType.FAILED, e.getMessage());
+        }
+    }
+
 /*    public void setTaskService(TaskService taskService) {
         this.taskService = taskService;
     }*/

@@ -10,6 +10,7 @@ import com.skywilling.cn.common.model.Position;
 import com.skywilling.cn.connection.infrastructure.client.ClientService;
 import com.skywilling.cn.common.model.Node;
 import com.skywilling.cn.livemap.model.Park;
+import com.skywilling.cn.livemap.service.MapService;
 import com.skywilling.cn.livemap.service.ParkService;
 import com.skywilling.cn.manager.car.enumeration.*;
 import com.skywilling.cn.manager.car.model.AutonomousCarInfo;
@@ -39,6 +40,7 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -54,7 +56,8 @@ import static org.springframework.http.MediaType.MULTIPART_FORM_DATA_VALUE;
 @RestController
 @Api(tags = "车辆信息管理")
 public class CarInfoController {
-
+  @Autowired
+  private MapService mapService;
   @Autowired
   ClientService clientService;
   @Autowired
@@ -90,9 +93,9 @@ public class CarInfoController {
    */
   @ApiOperation("查询所有已经通过TX2链接上云端的车端（区别T_BOX）")
   @RequestMapping(value = "/car/connected", method = RequestMethod.GET)
-  public BasicResponse getAutonomousClients(@RequestParam(value = "page", required = true) int page,
-                                            @RequestParam(value = "size", required = true) int size){
+  public BasicResponse getAutonomousClients(){
     System.out.println(clientService.getAllClients());
+    //List<String>
     return BasicResponse.buildResponse(ResultType.SUCCESS, clientService.getAllClients());
   }
 
@@ -140,6 +143,31 @@ public class CarInfoController {
         Trip ride = tripService.get(task.getRideId());
         return BasicResponse.buildResponse(ResultType.SUCCESS, ride);
   }
+
+
+    /**
+     * 查询当前车的對應的stations
+     */
+    @ApiOperation("查询当前车的ride信息")
+    @RequestMapping(value = "/car/{vin}/stations", method = RequestMethod.GET)
+    public BasicResponse getCarStations(@PathVariable("vin") String vin) {
+        CarDynamic carDynamic = carDynamicService.query(vin);
+        if (carDynamic == null) {
+            return BasicResponse.buildResponse(ResultType.FAILED, "the car is not exist");
+        }
+
+        Park park = parkService.query(carDynamic.getParkId());
+        if (park == null) {
+            return BasicResponse.buildResponse(ResultType.FAILED, "指定园区不存在");
+        }
+        //查询LiveMap的Node节点返回前端
+        List<Node> stations = new ArrayList<>();
+        stations.addAll(mapService.getMap(park.getName()).getNodeMap().values());
+
+        return BasicResponse.buildResponse(ResultType.SUCCESS, stations);
+
+    }
+
     /**
      * 根据日期查询当前车的ride信息
      */

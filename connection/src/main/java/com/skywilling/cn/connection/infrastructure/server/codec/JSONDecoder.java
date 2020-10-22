@@ -10,6 +10,8 @@ public class JSONDecoder extends ChannelInboundHandlerAdapter{
   @Override
   public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
     if (msg instanceof String) {
+      //TODO: 这里输出了msg的内容
+      System.out.println(msg);
       Packet packet = JSONObject.parseObject((String) msg, Packet.class);
       ctx.fireChannelRead(packet);
     }

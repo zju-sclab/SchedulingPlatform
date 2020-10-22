@@ -10,4 +10,5 @@ public interface TaskAccessor {
   void update(AutoTask autoTask);
 
   List<AutoTask> getTasks(int status, int page, int size);
+  List<AutoTask> getAllTasks();
 }

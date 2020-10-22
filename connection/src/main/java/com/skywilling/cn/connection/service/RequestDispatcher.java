@@ -41,6 +41,8 @@ public class RequestDispatcher {
     ClientPromise clientPromise;
     @Autowired
     ListenerMap listenerMap;
+    @Autowired
+    RequestSender requestSender;
 
     public RequestDispatcher() {
         //分配固定大小度的线程池多线程地处理请求的分派
@@ -60,6 +62,7 @@ public class RequestDispatcher {
                 carResponse = commandHandler(ctx, packet); //请求包
 
             } else {
+                // 这里对应的是车端返回的数值
                 carResponse = responseHandler(packet); //回复包
             }
             if(carResponse != null){
@@ -70,6 +73,7 @@ public class RequestDispatcher {
                     LOG.info("car release Response : " + carResponse.getCode() +" "+ carResponse.getAttach());
                 }
                 else{
+                    // 这里是返回我们的值
                     Packet.Builder builder = new Packet.Builder();
                     ctx.writeAndFlush(builder.buildResponse(packet, carResponse).build());
                 }
@@ -102,8 +106,8 @@ public class RequestDispatcher {
             BasicListener listener = listenerMap.getListener(name);
             return listener.process(packet.getVin(),packet.getData());
         }
-        else if(TypeField.TELE_COTROL == typeField){
-            //TODO:这里需要重写 写的太杂了
+        else if(TypeField.TELE_CONTROL == typeField){
+            //TODO:这里需要重写 写的太杂了 getRemote是通过ip和port来获取新的链接的
             LOG.warn(packet.getData());
             if(clientService.getRemote()!=null)
                 clientService.sendCommand(clientService.getRemote(),packet);
@@ -125,13 +129,16 @@ public class RequestDispatcher {
     /**车端回复的消息,用于调度指令的回复和路径规划任务下发的回复,type分为prepared_auto和fire_auto,tele_atuo,pause_auto等等*/
     private BasicCarResponse loginHandler(final ChannelHandlerContext ctx, Packet packet) {
         String vin = packet.getVin();
+        //requestSender.sendRequest(vin, TypeField.LOGIN,  new JSONObject());
+        //TODO: 出问题了
         BasicCarResponse process = listenerMap.getListener(TypeField.LOGIN.getDesc()).process(vin, packet.getData());
         if (ACK.SUCCESS.getCode() == process.getCode()) {
             /**保存vin到ctx上下文并打开一个vin标识的TCP通道注册到ctx*/
             AttributeKey<String> key = AttributeKey.valueOf(ProtocolField.VIN.getField());
             Attribute<String> vinAttr = ctx.channel().attr(key);
             vinAttr.setIfAbsent(vin);
-            clientService.open(vin, ctx.channel());
+            //回复一个包
+            //clientService.open(vin, ctx.channel());
         }
         return process;
     }

@@ -38,6 +38,12 @@ public interface TripService {
     Trip submitTrjTrip(String vin, String parkName, String goal) throws CarNotExistsException,
             CarNotAliveException, IllegalRideException;
 
+    Trip submitSectionTrip(String vin, String parkName, String goal) throws CarNotExistsException,
+            CarNotAliveException, IllegalRideException;
+
+    Trip submitStationTrip(String vin, String parkName, String goal) throws CarNotExistsException,
+            CarNotAliveException, IllegalRideException;
+
     Trip updateRoute(AutonomousCarInfo carInfo, Route route);
 
     Trip get(String id);

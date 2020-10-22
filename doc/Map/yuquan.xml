@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<!--version: 版本, time: 更新时间-->
+<region id="ZJU" version="0.3" time="2019/05/15">
+    <nodes>
+        <!-- do mapping some point to fixed station -->
+        <node id="0" name="则通正门"    x="-1.12"      y="1.2"  z="0"   type="station" zh=""/>
+        <node id="1" name="集装箱车库"   x="-6.4"    y="54.4"  z="0"   type="station" zh=""/>
+        <ndoe id="2" name="教九"    x="-32"    y="107.6"  z="0"   type="station" zh=""/>
+        <node id="3" name="曹光彪大楼"   x="-74.5"    y="134.0"  z="0"  type="station" zh=""/>
+        <node id="4" name="计算机学院"   x="-94"    y="64"  z="0"     type="station" zh=""/>
+    </nodes>
+</region>

@@ -946,7 +946,7 @@ public class  GlobalTrajPlanner implements TrjPlanService {
     String file_dir;
     //目前都是玉泉校区 默认是yuquanxiaoqu3
 //    file_dir = "yuquanxiaoqu3";
-    file_dir = "simulation_Town01";
+    file_dir = "simulation_Town03";
     setTrjPathFile(file_dir);
     parseConfig();
     //读取文件部分
@@ -963,7 +963,7 @@ public class  GlobalTrajPlanner implements TrjPlanService {
             GlobalTrajPlannerConfig.setAbsoluteTrajFilePath("C:\\soft\\SchedulingPlatform\\doc\\Map\\lanes\\simulation_Town01\\");
         }else if(type == "DEPOLYMENT"){
             String file_dir;
-            file_dir = "simulation_Town01";
+            file_dir = "simulation_Town03";
             setTrjPathFile(file_dir);
         }else{
             throw new Exception("You need to specific your type in DEBUG||DEPOLYMENT");

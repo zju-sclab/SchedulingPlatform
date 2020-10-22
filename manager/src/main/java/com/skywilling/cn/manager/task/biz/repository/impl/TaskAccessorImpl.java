@@ -4,10 +4,13 @@ import com.skywilling.cn.common.config.redis.RedisDao;
 import com.skywilling.cn.manager.task.biz.repository.TaskAccessor;
 import com.skywilling.cn.manager.task.model.AutoTask;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Repository;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Set;
 
 @Repository
 public class TaskAccessorImpl implements TaskAccessor {
@@ -49,6 +52,16 @@ public class TaskAccessorImpl implements TaskAccessor {
     if (redisDao.exists(getKey(autoTask.getTaskId()))) {
       redisDao.save(getKey(autoTask.getTaskId()), autoTask);
     }
+  }
+
+  @Override
+  public List<AutoTask> getAllTasks() {
+    Set<String> keys = redisDao.keys("TASK*");
+    List<AutoTask> tasks = new ArrayList<>();
+    for(String key:keys){
+      tasks.add((AutoTask)redisDao.read(key));
+    }
+    return tasks;
   }
 
   @Override

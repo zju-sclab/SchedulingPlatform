@@ -3,6 +3,8 @@ package com.skywilling.cn.livemap.service;
 import com.github.pagehelper.PageInfo;
 import com.skywilling.cn.livemap.model.Park;
 
+import java.util.List;
+
 
 public interface ParkService {
 
@@ -20,7 +22,7 @@ public interface ParkService {
 
   Park queryByName(String name);
 
-  PageInfo<Park> query(int page, int size);
+  List<Park> query();
 
 
 

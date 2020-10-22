@@ -19,6 +19,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.PostConstruct;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
@@ -45,17 +46,17 @@ public class MapServiceImpl implements MapService {
     @Autowired
     CarDynamicService carDynamicService;
 
-    //@PostConstruct
+    @PostConstruct
     public void init(){
-        String parkName = "yuquanxiaoqu3";
+        String parkName = "simulation_Town01";
         if(!maps.contains(parkName))
         {
             LOG.info("Static Map init to create livemap named: " + parkName);
             LiveMap liveMap = createMapByLidarMap(parkName);
             addMap(liveMap);
+        }else{
+            LOG.info("maps size : " + maps.size() + " contains: " + parkName);
         }
-        else
-           LOG.info("maps size : " + maps.size() + " contains: " + parkName);
     }
    /** 获取所有动态地图 */
    @Override

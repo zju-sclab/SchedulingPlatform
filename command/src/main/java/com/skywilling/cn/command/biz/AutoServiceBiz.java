@@ -22,6 +22,7 @@ public class AutoServiceBiz {
   @Autowired
   TaskAccessor taskAccessor;
 
+
   /** 预热自动驾驶*/
   public CompletableFuture<Boolean> prepareAutonomous(AutoTask autoTask) {
     LOG.info("prepareTask taskId {}", autoTask.getTaskId());
@@ -69,5 +70,18 @@ public class AutoServiceBiz {
     String val = requestRes?"RUN":"STOP";
     JSONObject jsonObject = new JSONObject(){{put("command", val);}};
     return requestSender.sendRequest(vin,TypeField.RESPONSE_LOCK,jsonObject);
+  }
+
+  /*发送站点信息*/
+  public CompletableFuture<Boolean> sendStationInfo(String vin, double x, double y, double z, double pitch, double roll, double yaw){
+    JSONObject jsonObject = new JSONObject(){{
+      put("x", x);
+      put("y",y);
+      put("z", z);
+      put("pitch", pitch);
+      put("roll", roll);
+      put("yaw", yaw);
+    }};
+    return requestSender.sendRequest(vin, TypeField.PURSUIT_STATION_POINT, jsonObject);
   }
 }

@@ -22,13 +22,14 @@ import java.util.List;
  *    FINAL_SAVING:
  * */
 
-public interface TaskService {
+public interface  TaskService {
 
   Integer queryStatus(String taskId);
 
   AutoTask getTaskById(String taskId);
 
   List<AutoTask> getTasks(int status, int page, int size);
+  List<AutoTask> getAllTasks();
 
   AutoTask getCurrentTask(String vin) throws CarNotExistsException;
 

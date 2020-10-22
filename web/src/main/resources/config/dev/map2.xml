@@ -3,8 +3,8 @@
 <region id="ZJU" version="0.3" time="2019/05/15">
   <nodes>
     <!-- do mapping some point to fixed station -->
-    <node id="0" name="zetong"    x="0"      y="0"     type="station" zh=""/>
-    <node id="4" name="jiaojiu"   x="-37"    y="101"    type="station" zh=""/>
+    <node id="0" name="zetong"    x="67.7986"      y="11.5222"     type="station" zh=""/>
+    <node id="4" name="jiaojiu"   x="65.9418"    y="25.4627"    type="station" zh=""/>
     <ndoe id="6" name="caolou"    x="-82"    y="125"    type="station" zh=""/>
     <node id="5" name="shengyi"   x="-52"    y="145"    type="station" zh=""/>
     <node id="1" name="zetong2"   x="-31"    y="0"       type="station" zh=""/>
@@ -40,5 +40,5 @@
     <junction id = "3" name = "caolou" curves = "5,6,7"  />
     <junction id = "4" name = "caolou2" curves = "4"  />
     <junction id = "5" name = "shiyanlou" curves = "8"  />
-  </junctions>>
+  </junctions>
 </region>

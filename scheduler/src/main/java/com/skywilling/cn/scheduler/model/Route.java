@@ -5,6 +5,7 @@ import com.skywilling.cn.common.model.Node;
 import lombok.Data;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -16,9 +17,9 @@ public class Route implements Serializable {
     private int id;
     private String vin;
     private String parkName;
-    private List<LiveLane> liveLanes;
-    private List<String> lanes;
-    private List<Double> times;
+    private List<LiveLane> liveLanes = new ArrayList<>();
+    private List<String> lanes = new ArrayList<>();
+    private List<Double> times = new ArrayList<>();
     private Node from;
     private Node to;
 

@@ -148,9 +148,8 @@ public class ParkController {
      * 根据Id查询园区信息
      */
     @ApiOperation("根据Id查询园区信息")
-    @RequestMapping(value = "/park/{parkId}", method = RequestMethod.GET)
+    @RequestMapping(value = "/park/parkId/{parkId}", method = RequestMethod.GET)
     public BasicResponse getPark(@PathVariable("parkId") int parkId) {
-
         try {
             Park park = parkService.query(parkId);
             return BasicResponse.buildResponse(ResultType.SUCCESS, park);
@@ -162,7 +161,7 @@ public class ParkController {
      * 根据Name查询园区信息
      */
     @ApiOperation("根据Name查询园区信息")
-    @RequestMapping(value = "/park/{parkName}", method = RequestMethod.GET)
+    @RequestMapping(value = "/park/parkName/{parkName}", method = RequestMethod.GET)
     public BasicResponse getPark(@PathVariable("parkName") String parkName) {
 
         try {
@@ -178,13 +177,11 @@ public class ParkController {
      */
     @ApiOperation("查询全部园区信息")
     @RequestMapping(value = "/parks", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public BasicResponse getWebParks(@RequestParam("page") int page  ,
-                                     @RequestParam("size") int size) {
-
+    public BasicResponse getWebParks() {
         try {
-            PageInfo<Park> parkPageInfo = parkService.query( page, size);
-            PageView pageView = ViewBuilder.build(parkPageInfo);
-            return BasicResponse.buildResponse(ResultType.SUCCESS, pageView);
+            List<Park> parkPageInfo = parkService.query();
+            //PageView pageView = ViewBuilder.build(parkPageInfo);
+            return BasicResponse.buildResponse(ResultType.SUCCESS, parkPageInfo);
         } catch (Exception e) {
             return BasicResponse.buildResponse(ResultType.FAILED, e.getMessage());
         }

@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
 public class ParkServiceImpl implements ParkService {
 
@@ -66,7 +68,10 @@ public class ParkServiceImpl implements ParkService {
   }
 
   @Override
-  public PageInfo<Park> query(int page, int size) {
-    return PageHelper.startPage(page, size).doSelectPageInfo(() -> parkMapper.query());
+  public List<Park> query() {
+    return  parkMapper.query();
+    //return PageHelper.startPage(page, size).doSelectPageInfo(() -> parkMapper.query());
   }
+
+
 }

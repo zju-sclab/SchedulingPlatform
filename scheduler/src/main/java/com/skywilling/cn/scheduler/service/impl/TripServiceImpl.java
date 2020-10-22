@@ -154,6 +154,66 @@ public class TripServiceImpl implements TripService {
         return null;
     }
 
+
+
+    @Override
+    public Trip submitSectionTrip(String vin, String parkName, String goal) throws CarNotExistsException, CarNotAliveException, IllegalRideException {
+        AutonomousCarInfo car = carInfoService.getAutoCarInfo(vin);
+        /**判断该车是否链接上云平台 */
+        if (car == null) {
+            throw new CarNotExistsException(vin);
+        }
+        /**判断该车是否链接丢失 */
+        if (car.getState() == CarState.LOST.getState()) {
+            throw new CarNotAliveException(vin);
+        }
+        /**起点由心跳信息提供*/
+        StaticStation outset = new StaticStation(car.getPose());
+        Node des_node = mapService.getNode(goal,parkName);
+        StaticStation destination = createStaticPointByNode(des_node);
+        /** 调用全局规划接口计算得到三元数组结果*/
+        Triple<List<String>, List<Double>, List<RoutePoint>> res = trjPlanService.createTrajectory(outset,destination);
+        // RoutePoint is_lane 以及lane和cross的id
+        List<RoutePoint> routePoints = res.third;
+        // 这里并没有放入到trip当中
+        return null;
+    }
+
+    @Override
+    public Trip submitStationTrip(String vin, String parkName, String goal) throws CarNotExistsException,
+            CarNotAliveException, IllegalRideException{
+        AutonomousCarInfo car = carInfoService.getAutoCarInfo(vin);
+        /**判断该车是否链接上云平台 */
+        if (car == null) {
+            throw new CarNotExistsException(vin);
+        }
+        /**判断该车是否链接丢失 */
+        if (car.getState() == CarState.LOST.getState()) {
+            throw new CarNotAliveException(vin);
+        }
+        //通过终点的Node来作为放入到route当中
+        Node des_node = mapService.getNode(goal, parkName);
+        Node from_node = new Node();
+        from_node.setName("source");
+        from_node.setX(car.getPose().getPosition().getX());
+        from_node.setY(car.getPose().getPosition().getY());
+        Route route = new Route();
+        route.setVin(vin);
+        route.setParkName(parkName);
+        route.setFrom(from_node);
+        route.setTo(des_node);
+        String tripId = tripCore.generateTripId(vin);
+        //trip就是类似订单的存在 autotask就是进行的任务
+        Trip trip = new Trip(vin, tripId, route);
+        try{
+            tripCore.submitStationTrip(trip);
+            return trip;
+        }catch (Exception | NoAvailableActionFoundException e){
+            e.printStackTrace();
+        }
+        return null;
+    }
+
     /**
      * 根据全局路径重新规划自动驾驶任务序列
      * start为当前停止点的start序列号
@@ -218,7 +278,7 @@ public class TripServiceImpl implements TripService {
     /**Node转为StaticPoint全局规划*/
     @Override
     public StaticStation createStaticPointByNode(Node node) {
-        StaticStation des_static_station = new StaticStation(node.getX(),node.getY(),0,0,0,0,0);
+        StaticStation des_static_station = new StaticStation(node.getX(),node.getY(),0,0,0,0.985737,0.168295);
         return des_static_station;
     }
    /**批量创建Plan**/
