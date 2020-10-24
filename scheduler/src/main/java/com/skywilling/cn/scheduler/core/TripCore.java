@@ -86,6 +86,8 @@ public class TripCore {
         /**这里优化了一步，不再预热直接启动自动驾驶，干嘛要prepare?
          *设置了PreparedListener任务监听器,执行完成会调用submit（task）*/
         autoTaskService.submit(task);
+        //autoTaskService.submit(task);
+
         trip.getTaskIds().add(taskId);
         /**保存Trip状态*/
         //Todo 调试的时候这里提示插入错误 Node和LiveStaion的id

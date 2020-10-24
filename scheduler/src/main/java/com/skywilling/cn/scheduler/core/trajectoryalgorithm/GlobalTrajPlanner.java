@@ -946,7 +946,7 @@ public class  GlobalTrajPlanner implements TrjPlanService {
     String file_dir;
     //目前都是玉泉校区 默认是yuquanxiaoqu3
 //    file_dir = "yuquanxiaoqu3";
-    file_dir = "simulation_Town03";
+    file_dir = "yuquan";
     setTrjPathFile(file_dir);
     parseConfig();
     //读取文件部分

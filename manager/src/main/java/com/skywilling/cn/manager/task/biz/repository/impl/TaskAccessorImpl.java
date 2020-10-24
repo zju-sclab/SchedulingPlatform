@@ -56,7 +56,7 @@ public class TaskAccessorImpl implements TaskAccessor {
 
   @Override
   public List<AutoTask> getAllTasks() {
-    Set<String> keys = redisDao.keys("TASK*");
+    Set<String> keys = redisDao.keys("TASK1*");
     List<AutoTask> tasks = new ArrayList<>();
     for(String key:keys){
       tasks.add((AutoTask)redisDao.read(key));

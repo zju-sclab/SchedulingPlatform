@@ -27,7 +27,7 @@ public class TaskController {
 
 
     @ApiOperation("根据任务id查询任务")
-    @RequestMapping(value = "/{taskId}", method = RequestMethod.GET)
+    @RequestMapping(value = "/taskId/{taskId}", method = RequestMethod.GET)
     public BasicResponse getTask(@PathVariable("taskId") String taskId) {
         AutoTask task = taskService.getTaskById(taskId);
         if (task != null) {
@@ -37,7 +37,7 @@ public class TaskController {
     }
 
     @ApiOperation("查询所有任务")
-    @RequestMapping(value = "/{status}", method = RequestMethod.GET)
+    @RequestMapping(value = "/status/{status}", method = RequestMethod.GET)
     public BasicResponse getTasks(@PathVariable("status") int status,
                                   @RequestParam("page") int page,
                                   @RequestParam("size") int size) {
@@ -54,6 +54,7 @@ public class TaskController {
     public BasicResponse getAllTasks() {
         try{
             List<AutoTask> tasks = taskService.getAllTasks();
+            System.out.println(tasks);
             return BasicResponse.buildResponse(ResultType.SUCCESS, tasks);
         } catch (Exception e) {
             return BasicResponse.buildResponse(ResultType.FAILED, e.getMessage());

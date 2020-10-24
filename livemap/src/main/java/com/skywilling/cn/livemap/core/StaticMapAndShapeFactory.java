@@ -127,6 +127,9 @@ public class StaticMapAndShapeFactory {
         LiveMap liveMap = new LiveMap();
         try {
             //mapUrl = "file:\\\\" + mapUrl;
+            LOG.warn("------");
+            LOG.warn(mapUrl);
+            LOG.warn("------");
             Document document = parse(mapUrl);
             liveMap.setParkName(parkName);
             loadNode(document, liveMap);
