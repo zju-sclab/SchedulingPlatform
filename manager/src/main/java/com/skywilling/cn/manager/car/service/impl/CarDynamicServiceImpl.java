@@ -27,7 +27,9 @@ public class CarDynamicServiceImpl implements CarDynamicService {
   @Transactional
   @Override
   public void save(CarDynamic carDynamic) throws CarNotVinException {
-    if (carDynamic.getVin() == null) throw new CarNotVinException();
+    if (carDynamic.getVin() == null){
+      throw new CarNotVinException();
+    }
     carDynamicMapper.save(carDynamic);
   }
 
@@ -35,7 +37,9 @@ public class CarDynamicServiceImpl implements CarDynamicService {
   @Override
   public void save(List<CarDynamic> carDynamics) throws CarNotVinException {
     for (CarDynamic carDynamic : carDynamics) {
-      if (carDynamic.getVin() == null) throw new CarNotVinException();
+      if (carDynamic.getVin() == null){
+        throw new CarNotVinException();
+      }
       carDynamicMapper.save(carDynamic);
     }
   }
@@ -49,7 +53,9 @@ public class CarDynamicServiceImpl implements CarDynamicService {
   @Transactional
   @Override
   public void update(CarDynamic carDynamic) throws CarNotVinException {
-    if (carDynamic.getVin() == null) throw new CarNotVinException();
+    if (carDynamic.getVin() == null){
+      throw new CarNotVinException();
+    }
     carDynamicMapper.update(carDynamic);
   }
 
@@ -154,7 +160,9 @@ public class CarDynamicServiceImpl implements CarDynamicService {
   @Override
   public boolean bindPark(int parkId, List<String> vins) {
     int count = carDynamicMapper.checkBind(vins);
-    if (count > 0) return false;
+    if (count > 0){
+      return false;
+    }
     carDynamicMapper.bindPark(parkId, vins);
     return true;
   }

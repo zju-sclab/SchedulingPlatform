@@ -48,7 +48,8 @@ public class MapServiceImpl implements MapService {
 
     @PostConstruct
     public void init(){
-        String parkName = "simulation_Town01";
+        //TODO: 初始化地图 根据不同的开发环境进行切换
+        String parkName = "则通楼区域";
         if(!maps.contains(parkName))
         {
             LOG.info("Static Map init to create livemap named: " + parkName);

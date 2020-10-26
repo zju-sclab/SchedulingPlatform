@@ -6,6 +6,7 @@ import com.skywilling.cn.common.enums.ResultType;
 import com.skywilling.cn.common.exception.CarNotVinException;
 import com.skywilling.cn.common.model.BasicResponse;
 
+import com.skywilling.cn.common.model.GeoLocation;
 import com.skywilling.cn.common.model.Position;
 import com.skywilling.cn.connection.infrastructure.client.ClientService;
 import com.skywilling.cn.common.model.Node;
@@ -98,6 +99,18 @@ public class CarInfoController {
     //List<String>
     return BasicResponse.buildResponse(ResultType.SUCCESS, clientService.getAllClients());
   }
+
+    /**
+     * 查詢對應vin gps info
+     */
+    @ApiOperation("查询對應vin gps info")
+    @RequestMapping(value = "/car/gps/{vin}", method = RequestMethod.GET)
+    public BasicResponse getGPSInfo(@PathVariable(name = "vin") String vin){
+        CarDynamic carDynamic = carDynamicService.query(vin);
+        GeoLocation geoLocation = new GeoLocation(carDynamic.getLongitude(), carDynamic.getLatitude(), carDynamic.getAltitude());
+        //List<String>
+        return BasicResponse.buildResponse(ResultType.SUCCESS, geoLocation);
+    }
 
     /**
      * 根据查询条件查询车的静态信息

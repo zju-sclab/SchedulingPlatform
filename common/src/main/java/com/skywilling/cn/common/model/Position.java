@@ -7,7 +7,8 @@ import java.io.Serializable;
 @Data
 public class Position implements Serializable,Cloneable {
 
-//  private static final long serialVersionUID = -6776766621769031316L;
+  private static final long serialVersionUID = -136374983830099639L;
+  //  private static final long serialVersionUID = -6776766621769031316L;
   private double x;
   private double y;
   private double z;

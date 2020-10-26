@@ -16,7 +16,7 @@ import javax.annotation.PostConstruct;
 
 
 @Component
-public class    LoginListener extends BasicListener {
+public class LoginListener extends BasicListener {
 
     @Autowired
     ListenerMap listenerMap;
