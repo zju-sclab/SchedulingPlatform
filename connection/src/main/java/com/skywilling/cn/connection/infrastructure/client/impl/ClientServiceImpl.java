@@ -20,7 +20,6 @@ import java.util.function.Consumer;
 
 @Service
 public class ClientServiceImpl implements ClientService, ClientPromise {
-
   private static final Logger LOG = LoggerFactory.getLogger(ClientServiceImpl.class);
   /** 内存Mao保存车id到车端链接的映射 */
   private ConcurrentHashMap<String, CarClient> carPool = new ConcurrentHashMap<>();
@@ -39,7 +38,10 @@ public class ClientServiceImpl implements ClientService, ClientPromise {
         CarClient carClient = carPool.get(vin);
         carClient.close();
         carPool.remove(vin);
-        remoteTarget = null;
+        if(remoteTarget.getVin() == vin){
+            //失去链接之后 我们的远程遥控链接也需要关闭
+            remoteTarget = null;
+        }
     }
   }
 
