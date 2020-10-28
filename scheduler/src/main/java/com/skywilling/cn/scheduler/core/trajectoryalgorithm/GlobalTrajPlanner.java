@@ -1,5 +1,6 @@
 package com.skywilling.cn.scheduler.core.trajectoryalgorithm;
 
+import com.skywilling.cn.common.config.MapConfig;
 import com.skywilling.cn.common.model.*;
 import com.skywilling.cn.scheduler.common.EulerAngle;
 import com.skywilling.cn.scheduler.common.utils;
@@ -9,8 +10,11 @@ import com.skywilling.cn.scheduler.model.Lane;
 import com.skywilling.cn.scheduler.model.StaticStation;
 import com.skywilling.cn.scheduler.service.TrjPlanService;
 import lombok.Data;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.PostConstruct;
 import java.io.*;
 import java.util.*;
 
@@ -48,6 +52,8 @@ public class  GlobalTrajPlanner implements TrjPlanService {
   private List<Cross> Cross_vec;
   private double thresh_start_length; // thresh长距离,用于截取lane_front
   private double thresh_end_length;
+  @Autowired
+  MapConfig mapConfig;
 
   private void setTrjPathFile(String parkName) {
     GlobalTrajPlannerConfig.setTrajFilePath(parkName);
@@ -572,7 +578,9 @@ public class  GlobalTrajPlanner implements TrjPlanService {
           MIN = dist[j];
         }
       }
-      if (u == -1 || u == t) break;
+      if (u == -1 || u == t){
+          break;
+      }
       visit[u] = true;
       for (int v = 0; v < c_size; v++) {
         if (!visit[v] && graph[u][v] != -1) {
@@ -943,11 +951,18 @@ public class  GlobalTrajPlanner implements TrjPlanService {
     Lane_vec = new ArrayList<>();
     Cross_vec = new ArrayList<>();
     String os = System.getProperty("os.name");
+
+  }
+
+  @PostConstruct
+  public void init(){
     String file_dir;
     //目前都是玉泉校区 默认是yuquanxiaoqu3
-//    file_dir = "yuquanxiaoqu3";
     // TODO: 这里需要切换
-    file_dir = "yuquan";
+    //file_dir = "yuquan";
+    //file_dir = "yuquanxiaoqu3";
+    file_dir = mapConfig.getInitPathFile();
+
     setTrjPathFile(file_dir);
     parseConfig();
     //读取文件部分
@@ -955,6 +970,8 @@ public class  GlobalTrajPlanner implements TrjPlanService {
     Collections.sort(Lane_vec);
     Collections.sort(Cross_vec);
   }
+
+
 
     public GlobalTrajPlanner(String type) throws Exception {
         Lane_vec = new ArrayList<>();

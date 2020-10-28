@@ -84,7 +84,6 @@ public class RequestDispatcher {
     }
 
     public BasicCarResponse commandHandler(final ChannelHandlerContext ctx, Packet packet) {
-
         TypeField typeField = TypeField.valueOf(packet.getType());
         if (TypeField.LOGIN == typeField) {
             if(packet.getVin().length()==17&&packet.getType() == 1){
@@ -107,12 +106,14 @@ public class RequestDispatcher {
             return listener.process(packet.getVin(),packet.getData());
         }
         else if(TypeField.TELE_CONTROL == typeField){
-            //TODO:这里需要重写 写的太杂了 getRemote是通过ip和port来获取新的链接的
+            //TODO:这里需要重写 写的太杂了 getRemote是通过ip和port来获取新的链接的 这里本来是通过网页来选择对应的车辆的
+            //这里添加了一层操作 我觉得没有问题呀！
             LOG.warn(packet.getData());
-            if(clientService.getRemote()!=null)
+            if(clientService.getRemote()!=null){
                 clientService.sendCommand(clientService.getRemote(),packet);
-            else
+            } else{
                 LOG.warn("null warning ");
+            }
             String name = typeField.getDesc();
             BasicListener listener = listenerMap.getListener(name);
             return listener.process(packet.getVin(),packet.getData());

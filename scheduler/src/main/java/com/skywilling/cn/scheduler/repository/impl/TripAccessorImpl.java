@@ -1,5 +1,6 @@
 package com.skywilling.cn.scheduler.repository.impl;
 
+import com.skywilling.cn.common.config.redis.RedisDao;
 import com.skywilling.cn.common.enums.Enumerations;
 import com.skywilling.cn.scheduler.model.Trip;
 import com.skywilling.cn.scheduler.repository.TripAccessor;
@@ -20,68 +21,127 @@ import java.util.Map;
 
 @Repository
 public class TripAccessorImpl implements TripAccessor {
+  private static final String PREFIX_TRIP = "TRIP";
 
   @Autowired
-  private MongoTemplate mongoTemplate;
+  RedisDao redisDao;
+
+  public String getTripId(String trip_id){
+    return String.format("%s-%s", PREFIX_TRIP, trip_id);
+  }
 
   @Override
   public void save(Trip trip) {
-    mongoTemplate.save(trip);
+    redisDao.save(getTripId(trip.getId()),trip);
   }
 
   @Override
   public void update(String tripId, Map<String, Object> updates) {
-    Update update = new Update();
-    updates.forEach(update::pull);
-    mongoTemplate.updateFirst(Query.query(Criteria.where("generateTripId").is(tripId)), update, Trip.class);
+//    Update update = new Update();
+//    updates.forEach(update::pull);
+//    mongoTemplate.updateFirst(Query.query(Criteria.where("generateTripId").is(tripId)), update, Trip.class);
   }
 
   @Override
   public Trip find(String tripId) {
-    return mongoTemplate.findById(tripId, Trip.class);
+    return (Trip)redisDao.read(getTripId(tripId));
   }
 
   @Override
   public Trip findLastedBy(String vin) {
-    Query query = new Query();
-    query.addCriteria(Criteria.where("vin").is(vin));
-    query.with(new Sort(Sort.Direction.DESC, "startTime"));
-    List<Trip> rides = mongoTemplate.find(query, Trip.class);
-    return rides.stream().findFirst().orElse(null);
+    return null;
   }
 
   @Override
   public List<Trip> query(int page, int size) {
-    Query query = new Query();
-    query.with(new Sort(Direction.DESC, "startTime")).with(PageRequest.of(page, size));
-    return mongoTemplate.find(query, Trip.class);
+    return null;
   }
 
   @Override
   public List<Trip> queryByJobStatus(Enumerations.JobStatusType jobStatusType, int page, int size) {
-    Query query = new Query();
-    query.addCriteria(Criteria.where("status").is(jobStatusType));
-    query.with(new Sort(Direction.DESC, "startTime")).with(PageRequest.of(page, size));
-    return mongoTemplate.find(query, Trip.class);
+    return null;
   }
 
   @Override
   public List<Trip> queryBy(String vin, int page,int size) {
-    Query query = new Query();
-    query.addCriteria(Criteria.where("vin").is(vin));
-    query.with(new Sort(Direction.DESC, "startTime")).with(PageRequest.of(page, size));
-    return mongoTemplate.find(query, Trip.class);
+    return null;
 
   }
 
   @Override
   public List<Trip> queryBy(String vin, Date start, Date end, int page, int size) {
-    Query query = new Query();
-    query.addCriteria(Criteria.where("vin").is(vin))
-        .addCriteria(Criteria.where("startTime").gte(start))
-        .addCriteria(Criteria.where("startTime").lte(end));
-    query.with(new Sort(Direction.DESC, "startTime")).with(PageRequest.of(page, size));
-    return mongoTemplate.find(query, Trip.class);
+    return null;
   }
-
 }
+
+
+//@Repository
+//public class TripAccessorImpl implements TripAccessor {
+//
+//  @Autowired
+//  private MongoTemplate mongoTemplate;
+//
+//  @Autowired
+//  RedisDao redisDao;
+//
+//  @Override
+//  public void save(Trip trip) {
+//    mongoTemplate.save(trip);
+//    //redisDao.save(trip.getId(),trip);
+//  }
+//
+//  @Override
+//  public void update(String tripId, Map<String, Object> updates) {
+//    Update update = new Update();
+//    updates.forEach(update::pull);
+//    mongoTemplate.updateFirst(Query.query(Criteria.where("generateTripId").is(tripId)), update, Trip.class);
+//  }
+//
+//  @Override
+//  public Trip find(String tripId) {
+//    return mongoTemplate.findById(tripId, Trip.class);
+//  }
+//
+//  @Override
+//  public Trip findLastedBy(String vin) {
+//    Query query = new Query();
+//    query.addCriteria(Criteria.where("vin").is(vin));
+//    query.with(new Sort(Sort.Direction.DESC, "startTime"));
+//    List<Trip> rides = mongoTemplate.find(query, Trip.class);
+//    return rides.stream().findFirst().orElse(null);
+//  }
+//
+//  @Override
+//  public List<Trip> query(int page, int size) {
+//    Query query = new Query();
+//    query.with(new Sort(Direction.DESC, "startTime")).with(PageRequest.of(page, size));
+//    return mongoTemplate.find(query, Trip.class);
+//  }
+//
+//  @Override
+//  public List<Trip> queryByJobStatus(Enumerations.JobStatusType jobStatusType, int page, int size) {
+//    Query query = new Query();
+//    query.addCriteria(Criteria.where("status").is(jobStatusType));
+//    query.with(new Sort(Direction.DESC, "startTime")).with(PageRequest.of(page, size));
+//    return mongoTemplate.find(query, Trip.class);
+//  }
+//
+//  @Override
+//  public List<Trip> queryBy(String vin, int page,int size) {
+//    Query query = new Query();
+//    query.addCriteria(Criteria.where("vin").is(vin));
+//    query.with(new Sort(Direction.DESC, "startTime")).with(PageRequest.of(page, size));
+//    return mongoTemplate.find(query, Trip.class);
+//
+//  }
+//
+//  @Override
+//  public List<Trip> queryBy(String vin, Date start, Date end, int page, int size) {
+//    Query query = new Query();
+//    query.addCriteria(Criteria.where("vin").is(vin))
+//        .addCriteria(Criteria.where("startTime").gte(start))
+//        .addCriteria(Criteria.where("startTime").lte(end));
+//    query.with(new Sort(Direction.DESC, "startTime")).with(PageRequest.of(page, size));
+//    return mongoTemplate.find(query, Trip.class);
+//  }
+//}

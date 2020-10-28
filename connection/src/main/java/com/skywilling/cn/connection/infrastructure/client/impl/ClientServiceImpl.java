@@ -35,9 +35,12 @@ public class ClientServiceImpl implements ClientService, ClientPromise {
   /** 关闭一个车端链接 */
   @Override
   public void close(String vin) {
-    CarClient carClient = carPool.remove(vin);
-    remoteTarget = null;
-    carClient.close();
+    if(isAlive(vin)){
+        CarClient carClient = carPool.get(vin);
+        carClient.close();
+        carPool.remove(vin);
+        remoteTarget = null;
+    }
   }
 
     @Override

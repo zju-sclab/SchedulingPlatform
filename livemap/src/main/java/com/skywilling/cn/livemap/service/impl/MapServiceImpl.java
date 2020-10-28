@@ -1,6 +1,7 @@
 package com.skywilling.cn.livemap.service.impl;
 
 
+import com.skywilling.cn.common.config.MapConfig;
 import com.skywilling.cn.common.config.redis.RedisDao;
 import com.skywilling.cn.common.model.Node;
 import com.skywilling.cn.livemap.core.StaticMapAndShapeFactory;
@@ -16,6 +17,8 @@ import com.skywilling.cn.manager.car.service.CarDynamicService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
@@ -46,10 +49,14 @@ public class MapServiceImpl implements MapService {
     @Autowired
     CarDynamicService carDynamicService;
 
+    @Autowired
+    MapConfig mapConfig;
+
     @PostConstruct
     public void init(){
         //TODO: 初始化地图 根据不同的开发环境进行切换
-        String parkName = "则通楼区域";
+        //String parkName = "则通楼区域";
+        String parkName = mapConfig.getInitMap();
         if(!maps.contains(parkName))
         {
             LOG.info("Static Map init to create livemap named: " + parkName);

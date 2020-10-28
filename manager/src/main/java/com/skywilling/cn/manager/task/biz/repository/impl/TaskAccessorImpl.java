@@ -31,7 +31,8 @@ public class TaskAccessorImpl implements TaskAccessor {
     int day = calendar.get(Calendar.DAY_OF_MONTH);
     int hour = calendar.get(Calendar.HOUR_OF_DAY);
     int minute = calendar.get(Calendar.MINUTE);
-    return String.format("%02d%02d%02d%02d%02d_%s", year, month, day, hour, minute, vin.substring(8));
+    int second = calendar.get(Calendar.SECOND);
+    return String.format("%02d%02d%02d%02d%02d%02d_%s", year, month, day, hour, minute, second, vin.substring(8));
   }
 
   @Override
