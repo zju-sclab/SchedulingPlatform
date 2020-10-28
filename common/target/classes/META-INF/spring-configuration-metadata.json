@@ -1,0 +1,21 @@
+{
+  "groups": [
+    {
+      "name": "jdbc",
+      "type": "com.skywilling.cn.common.config.MysqlConfig",
+      "sourceType": "com.skywilling.cn.common.config.MysqlConfig"
+    },
+    {
+      "name": "map",
+      "type": "com.skywilling.cn.common.config.MapConfig",
+      "sourceType": "com.skywilling.cn.common.config.MapConfig"
+    },
+    {
+      "name": "redis",
+      "type": "com.skywilling.cn.common.config.redis.RedisConfig",
+      "sourceType": "com.skywilling.cn.common.config.redis.RedisConfig"
+    }
+  ],
+  "properties": [],
+  "hints": []
+}
