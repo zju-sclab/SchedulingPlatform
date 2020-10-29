@@ -54,8 +54,6 @@ public class MapServiceImpl implements MapService {
 
     @PostConstruct
     public void init(){
-        //TODO: 初始化地图 根据不同的开发环境进行切换
-        //String parkName = "则通楼区域";
         String parkName = mapConfig.getInitMap();
         if(!maps.contains(parkName))
         {
