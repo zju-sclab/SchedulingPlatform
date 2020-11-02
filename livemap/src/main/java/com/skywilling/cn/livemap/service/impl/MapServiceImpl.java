@@ -23,6 +23,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
@@ -53,8 +54,9 @@ public class MapServiceImpl implements MapService {
     MapConfig mapConfig;
 
     @PostConstruct
-    public void init(){
+    public void init() throws Exception{
         String parkName = mapConfig.getInitMap();
+        System.out.println(parkName);
         if(!maps.contains(parkName))
         {
             LOG.info("Static Map init to create livemap named: " + parkName);

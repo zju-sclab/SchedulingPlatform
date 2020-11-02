@@ -268,7 +268,6 @@ public class ParkController {
     @ApiOperation("直接根据园区id查询")
     @RequestMapping(value = "/park/{parkId}/cars", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public BasicResponse getAllCarsByPark(@PathVariable("parkId") int parkId) {
-
         PageInfo<CarDynamic> pageInfo = carDynamicService.queryByPark(parkId, 1, 10);
         PageView pageView = ViewBuilder.build(pageInfo);
         return BasicResponse.buildResponse(ResultType.SUCCESS, pageView);

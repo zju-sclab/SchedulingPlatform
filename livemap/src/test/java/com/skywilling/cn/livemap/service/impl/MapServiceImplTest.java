@@ -19,7 +19,7 @@ public class MapServiceImplTest {
     StaticMapFactory staticMapFactory;
     @Test
     public void getMap() {
-        //LiveMap map = mapService.getMap("yuquanxiaoqu3");
+        LiveMap map = mapService.getMap("yuquanxiaoqu3");
     }
 
 }

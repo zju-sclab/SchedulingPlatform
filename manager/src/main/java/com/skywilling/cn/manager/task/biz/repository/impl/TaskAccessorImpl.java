@@ -1,5 +1,7 @@
 package com.skywilling.cn.manager.task.biz.repository.impl;
 
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.skywilling.cn.common.config.redis.RedisDao;
 import com.skywilling.cn.manager.task.biz.repository.TaskAccessor;
 import com.skywilling.cn.manager.task.model.AutoTask;
@@ -7,10 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Repository;
 
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Repository
 public class TaskAccessorImpl implements TaskAccessor {
@@ -31,8 +30,8 @@ public class TaskAccessorImpl implements TaskAccessor {
     int day = calendar.get(Calendar.DAY_OF_MONTH);
     int hour = calendar.get(Calendar.HOUR_OF_DAY);
     int minute = calendar.get(Calendar.MINUTE);
-    int second = calendar.get(Calendar.SECOND);
-    return String.format("%02d%02d%02d%02d%02d%02d_%s", year, month, day, hour, minute, second, vin.substring(8));
+    //int second = calendar.get(Calendar.SECOND);
+    return String.format("%02d%02d%02d%02d%02d_%s", year, month, day, hour, minute, vin.substring(8));
   }
 
   @Override
@@ -57,7 +56,7 @@ public class TaskAccessorImpl implements TaskAccessor {
 
   @Override
   public List<AutoTask> getAllTasks() {
-    Set<String> keys = redisDao.keys("TASK1*");
+    Set<String> keys = redisDao.keys("TASK*");
     List<AutoTask> tasks = new ArrayList<>();
     for(String key:keys){
       tasks.add((AutoTask)redisDao.read(key));

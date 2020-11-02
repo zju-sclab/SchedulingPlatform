@@ -24,6 +24,7 @@ E:\SchedulingPlatform\common\src\main\java\com\skywilling\cn\common\utils\String
 E:\SchedulingPlatform\common\src\main\java\com\skywilling\cn\common\exception\CarNotAliveException.java
 E:\SchedulingPlatform\common\src\main\java\com\skywilling\cn\common\model\Node_Json.java
 E:\SchedulingPlatform\common\src\main\java\com\skywilling\cn\common\utils\PhoneFormatCheckUtils.java
+E:\SchedulingPlatform\common\src\main\java\com\skywilling\cn\common\config\MapConfig.java
 E:\SchedulingPlatform\common\src\main\java\com\skywilling\cn\common\model\BasicResponse.java
 E:\SchedulingPlatform\common\src\main\java\com\skywilling\cn\common\model\BasicCarResponse.java
 E:\SchedulingPlatform\common\src\main\java\com\skywilling\cn\common\exception\IllegalRideException.java

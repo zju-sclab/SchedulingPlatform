@@ -1,6 +1,7 @@
 package com.skywilling.cn.common.config;
 
 import com.alibaba.druid.pool.DruidDataSource;
+import lombok.Data;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
@@ -9,9 +10,10 @@ import org.springframework.context.annotation.PropertySource;
 
 import javax.sql.DataSource;
 
-
 @Configuration
 @ConfigurationProperties(prefix = "map")
+@PropertySource(value="classpath:${map.config-location}", encoding="UTF-8")
+//, encoding="UTF-8"
 public class MapConfig {
     @Value("${map.park.name.init}")
     private String initMap;

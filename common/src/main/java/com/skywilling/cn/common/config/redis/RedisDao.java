@@ -1,6 +1,7 @@
 package com.skywilling.cn.common.config.redis;
 
 
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalTimeDeserializer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

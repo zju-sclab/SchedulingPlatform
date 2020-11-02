@@ -1,5 +1,6 @@
 package com.skywilling.cn.manager.car.service.impl;
 
+import com.github.pagehelper.ISelect;
 import com.github.pagehelper.PageHelper;
 
 import com.github.pagehelper.PageInfo;
@@ -100,7 +101,13 @@ public class CarDynamicServiceImpl implements CarDynamicService {
 
   @Override
   public PageInfo<CarDynamic> queryByPark(int parkId, int page, int size) {
-    return PageHelper.startPage(page, size).doSelectPageInfo(() -> carDynamicMapper.queryByPark(parkId));
+    PageHelper.startPage(page, size);
+    List<CarDynamic> carDynamics = carDynamicMapper.queryByPark(parkId);
+    PageInfo<CarDynamic> pageInfo = new PageInfo<CarDynamic>(carDynamics);
+    return pageInfo;
+//    return PageHelper.startPage(page, size).doSelectPageInfo(() -> carDynamicMapper.queryByPark(parkId));
+
+
   }
 
   @Override
