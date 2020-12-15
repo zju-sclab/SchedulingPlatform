@@ -1,6 +1,7 @@
 package com.skywilling.cn.common.config.redis;
 
 
+import com.alibaba.fastjson.JSON;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalTimeDeserializer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,7 +27,7 @@ public class RedisDao {
 
   public void save(String key, Object object) {
     ValueOperations<String, Object> vop = redisTemplate.opsForValue();
-    vop.set(key, object);
+    vop.set(key, JSON.toJSONString(object));
   }
 
   public boolean exists(String key) {

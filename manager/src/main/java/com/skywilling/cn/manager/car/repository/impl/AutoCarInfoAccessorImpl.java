@@ -1,14 +1,17 @@
 package com.skywilling.cn.manager.car.repository.impl;
 
 
+import com.alibaba.fastjson.JSON;
 import com.skywilling.cn.common.config.redis.RedisDao;
 import com.skywilling.cn.manager.car.model.AutonomousCarInfo;
 import com.skywilling.cn.manager.car.repository.AutoCarInfoAccessor;
+import com.skywilling.cn.manager.task.model.AutoTask;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 @Repository
@@ -34,7 +37,13 @@ public class AutoCarInfoAccessorImpl implements AutoCarInfoAccessor {
 
   @Override
   public AutonomousCarInfo get(String vin) {
-    return (AutonomousCarInfo) redisDao.read(generateKey(vin));
+    //获取的是object
+    String str = (String)redisDao.read(generateKey(vin));
+    if(str==null){
+      return null;
+    }
+    AutonomousCarInfo autonomousCarInfo = JSON.parseObject(str, AutonomousCarInfo.class);
+    return autonomousCarInfo;
   }
 
   /**

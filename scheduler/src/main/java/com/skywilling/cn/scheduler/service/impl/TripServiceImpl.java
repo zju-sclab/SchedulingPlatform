@@ -45,7 +45,6 @@ public class TripServiceImpl implements TripService {
     StationService stationService;
     @Autowired
     MapService mapService;
-
     @Autowired
     GlobalTrajPlanner trjPlanService;
 

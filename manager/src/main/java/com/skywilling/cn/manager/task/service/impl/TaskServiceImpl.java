@@ -1,6 +1,7 @@
 package com.skywilling.cn.manager.task.service.impl;
 
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.skywilling.cn.common.exception.CarNotExistsException;
 import com.skywilling.cn.manager.car.model.AutonomousCarInfo;
 import com.skywilling.cn.manager.car.service.AutoCarInfoService;
@@ -45,7 +46,7 @@ public class TaskServiceImpl implements TaskService {
   }
 
   @Override
-  public List<AutoTask> getAllTasks() {
+  public List<AutoTask> getAllTasks() throws JsonProcessingException {
     return taskAccessor.getAllTasks();
   }
 

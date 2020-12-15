@@ -1,5 +1,6 @@
 package com.skywilling.cn.manager.task.service;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.skywilling.cn.common.exception.CarNotExistsException;
 import com.skywilling.cn.manager.task.model.AutoTask;
 
@@ -29,7 +30,7 @@ public interface  TaskService {
   AutoTask getTaskById(String taskId);
 
   List<AutoTask> getTasks(int status, int page, int size);
-  List<AutoTask> getAllTasks();
+  List<AutoTask> getAllTasks() throws JsonProcessingException;
 
   AutoTask getCurrentTask(String vin) throws CarNotExistsException;
 

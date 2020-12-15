@@ -91,9 +91,10 @@ public class MapServiceImpl implements MapService {
        Park park = parkService.queryByName(parkName);
        LiveMap liveMap = null;
         String root_path = System.getProperty("user.dir");
-        if(root_path == "/"){
+        if("/".equals(root_path)){
             root_path = "";
         }
+        System.out.println("---" + root_path + "---");
        if (park != null && park.getShapeFileUrl() != null && park.getMapFileUrl() != null){
            liveMap = staticMapAndShapeFactory.create(parkName,root_path+ park.getMapFileUrl(),root_path + park.getShapeFileUrl());
        }

@@ -2,6 +2,11 @@ package com.skywilling.cn.manager.task.biz.repository.impl;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import com.fasterxml.jackson.module.paramnames.ParameterNamesModule;
 import com.skywilling.cn.common.config.redis.RedisDao;
 import com.skywilling.cn.manager.task.biz.repository.TaskAccessor;
 import com.skywilling.cn.manager.task.model.AutoTask;
@@ -55,11 +60,22 @@ public class TaskAccessorImpl implements TaskAccessor {
   }
 
   @Override
-  public List<AutoTask> getAllTasks() {
+  public List<AutoTask> getAllTasks() throws JsonProcessingException {
     Set<String> keys = redisDao.keys("TASK*");
     List<AutoTask> tasks = new ArrayList<>();
     for(String key:keys){
-      tasks.add((AutoTask)redisDao.read(key));
+      String str = (String)redisDao.read(key);
+      AutoTask autoTask = JSONObject.parseObject(str, AutoTask.class);
+      tasks.add(autoTask);
+//      ObjectMapper objectMapper = new ObjectMapper()
+//              .registerModule(new ParameterNamesModule())
+//              .registerModule(new Jdk8Module())
+//              .registerModule(new JavaTimeModule());
+//      Object obj = redisDao.read(key);
+//      String jsonContent =  objectMapper.writeValueAsString(obj);
+//      AutoTask autoTask = objectMapper.readValue(jsonContent, AutoTask.class);
+      //tasks.add((AutoTask)redisDao.read(key));
+      //tasks.add(autoTask);
     }
     return tasks;
   }
