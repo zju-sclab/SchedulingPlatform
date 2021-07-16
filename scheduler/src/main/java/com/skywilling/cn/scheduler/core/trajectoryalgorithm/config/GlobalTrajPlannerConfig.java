@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class GlobalTrajPlannerConfig {
     //TODO: 这里也需要修改
-    public static String linux_traj_file_path = "/doc/Map/lanes/";
+    public static String linux_traj_file_path = "/";
     public static String windows_traj_file_path = "\\doc\\Map\\lanes\\";
     public static String trajFilePath = "";
     static{

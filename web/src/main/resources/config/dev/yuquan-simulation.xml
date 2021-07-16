@@ -3,9 +3,16 @@
 <region id="ZJU" version="0.3" time="2019/05/15">
     <nodes>
         <!-- do mapping some point to fixed station -->
-        <node id="0" name="曹楼正门"    x="-3.5789"      y="2.2975"  z="0"   type="station" zh=""/>
-        <node id="1" name="计算机学院"   x="67.8935"    y="1.2838"  z="0"   type="station" zh=""/>
-        <node id="2" name="化工楼"   x="-54.0322"    y="13.1071"  z="0"   type="station" zh=""/>
+        <node id="0" name="end"    x="1146.02"      y="173.0"  z="0.02"   type="station" zh=""/>
+        <node id="1" name="point5"    x="1241.7"      y="165.71"  z="0.02"   type="station" zh=""/>
+        <node id="2" name="point4"    x="1270.3"      y="143.71"  z="0.02"   type="station" zh=""/>
+        <node id="3" name="point3"    x="1260.7"      y="115.1"  z="0.02"   type="station" zh=""/>
+        <node id="4" name="point2"    x="1248.7"      y="84.71"  z="0.02"   type="station" zh=""/>
+        <node id="5" name="point1"    x="1221.1"      y="69.2"  z="0.02"   type="station" zh=""/>
+        <node id="6" name="start"   x="1181.7"    y="85.91"  z="0"   type="station" zh=""/>
+<!--        <node id="7" name="曹楼正门"    x="-3.5789"      y="2.2975"  z="0"   type="station" zh=""/>-->
+<!--        <node id="8" name="计算机学院"   x="67.8935"    y="1.2838"  z="0"   type="station" zh=""/>-->
+<!--        <node id="9" name="化工楼"   x="-54.0322"    y="13.1071"  z="0"   type="station" zh=""/>-->
     </nodes>
     <lanes>
         <!-- do mapping some lane csv to livelane  -->

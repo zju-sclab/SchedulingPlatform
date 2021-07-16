@@ -1,8 +1,0 @@
--------------------------------------------------------------------------------
-Test set: com.skywilling.cn.scheduler.core.trajectoryalgorithm.GolbalPlanningTest
--------------------------------------------------------------------------------
-Tests run: 4, Failures: 1, Errors: 0, Skipped: 0, Time elapsed: 0.057 s <<< FAILURE! - in com.skywilling.cn.scheduler.core.trajectoryalgorithm.GolbalPlanningTest
-testRouting(com.skywilling.cn.scheduler.core.trajectoryalgorithm.GolbalPlanningTest)  Time elapsed: 0.009 s  <<< FAILURE!
-java.lang.AssertionError
-	at com.skywilling.cn.scheduler.core.trajectoryalgorithm.GolbalPlanningTest.testRouting(GolbalPlanningTest.java:29)
-

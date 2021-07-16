@@ -11,7 +11,7 @@ import com.skywilling.cn.common.model.*;
 import com.skywilling.cn.connection.common.exception.TaskNotExistException;
 import com.skywilling.cn.connection.infrastructure.client.ClientService;
 import com.skywilling.cn.livemap.model.Park;
-import com.skywilling.cn.livemap.service.MapService;
+//import com.skywilling.cn.livemap.service.MapService;
 import com.skywilling.cn.livemap.service.ParkService;
 import com.skywilling.cn.manager.car.enumeration.DriveType;
 import com.skywilling.cn.manager.car.model.CarDynamic;
@@ -20,7 +20,7 @@ import com.skywilling.cn.manager.car.service.CarDynamicService;
 import com.skywilling.cn.manager.car.service.CarInfoService;
 import com.skywilling.cn.manager.task.model.AutoTask;
 import com.skywilling.cn.manager.task.service.TaskService;
-
+import com.skywilling.cn.scheduler.tasktest.TaskTest;
 
 import com.skywilling.cn.scheduler.core.trajectoryalgorithm.GlobalTrajPlanner;
 import com.skywilling.cn.scheduler.model.Trip;
@@ -52,8 +52,8 @@ import java.util.concurrent.ExecutionException;
 @Api(tags = "自动驾驶管理")
 public class AutoController {
 
-    @Autowired
-    private MapService mapService;
+//    @Autowired
+//    private MapService mapService;
     @Autowired
     private AutoServiceBiz autoServiceBiz;
     @Autowired
@@ -72,8 +72,10 @@ public class AutoController {
     OrderService orderService;
     @Autowired
     ClientService clientService;
+    @Autowired
+    TaskTest taskTest;
 
-
+    private static final Logger logger = LoggerFactory.getLogger(AutoController.class);
 
 
 
@@ -326,11 +328,11 @@ public class AutoController {
         List<Trip> rides = tripService.query(page, size);
         return BasicResponse.buildResponse(ResultType.SUCCESS, rides);
     }
+
     /**
      * 出发到一个站点处
      */
-
-    @ApiOperation("根据站点的信息进行巡迹")
+    @ApiOperation("向车端发送目标站点，由车端自主规划路线")
     @RequestMapping(value = "/car/trj/station", method = RequestMethod.POST)
     @ResponseBody
     public BasicResponse trjStation(String vin, String goal) {
@@ -351,5 +353,19 @@ public class AutoController {
         }
     }
 
+    /**
+     *   自动随机出任务
+     */
+    @ApiOperation("自动随机出任务")
+    @RequestMapping(value = "/car/trj/startRandomTask", method = RequestMethod.POST)
+
+    @ResponseBody
+    public void startTrjAutonomousRandom() {
+        try {
+            taskTest.run();
+        }catch (Exception e){
+            logger.info("/car/trj/startRandomTask Error!");
+        }
+    }
 
 }

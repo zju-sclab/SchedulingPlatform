@@ -6,6 +6,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.annotation.EnableScheduling;
 
@@ -19,7 +21,12 @@ public class WebApplication implements CommandLineRunner {
     public static void main(String[] args) {
         SpringApplication.run(WebApplication.class, args);
     }
-
+//    @Bean
+//    public static PropertySourcesPlaceholderConfigurer placeholderConfigurer() {
+//        PropertySourcesPlaceholderConfigurer c = new PropertySourcesPlaceholderConfigurer();
+//        c.setIgnoreUnresolvablePlaceholders(true);
+//        return c;
+//    }
     @Override
     public void run(String... args) {
         LOG.warn("spring boot start and this is a start.");

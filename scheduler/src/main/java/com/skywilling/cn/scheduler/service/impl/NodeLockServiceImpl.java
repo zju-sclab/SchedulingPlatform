@@ -42,6 +42,7 @@ public class NodeLockServiceImpl implements NodeLockService {
         CarDynamic carDynamic = carDynamicService.query(vin);
         /**priority*/
         String parkName = parkService.query(carDynamic.getParkId()).getName();
+        // 权限从 lane 获取
         double priority = laneService.getLane(parkName, laneId).getPriority();
         return nodeLock.acquire(vin, priority);
     }

@@ -55,6 +55,7 @@ public class TerminalInfoListener extends BasicListener {
         //异步存入redis
         autoCarInfoService.save(car);
         //然后异步取redis数据判断，不然会变成同步操作，判断reids数据再做调度
-        return new BasicCarResponse(0, new Object());
+        return null;
+//        return new BasicCarResponse(0, new Object());
     }
 }

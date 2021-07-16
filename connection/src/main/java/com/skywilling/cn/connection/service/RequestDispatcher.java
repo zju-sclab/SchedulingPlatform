@@ -50,14 +50,28 @@ public class RequestDispatcher {
     }
 
     /**
+     * 读取packet数据，用于测试车端云端通信
+     */
+    public void readPacket(Packet packet){
+        int type = packet.getType();
+        String str = packet.toString();
+        // GPS 过于频繁暂时不输出
+//        System.out.println(type);
+        if(type != TypeField.GPS_INFO.getType()){
+            System.out.println("get message: " + str);
+        }
+    }
+
+    /**
      * 分发，需要分发的请求有请求和回复
      */
     public void dispatch(final ChannelHandlerContext ctx, Packet packet) {
 
         executorService.submit(() -> {
             BasicCarResponse carResponse;
+            readPacket(packet);
             if (ACK.COMMAND.getCode() == packet.getAck()) {
-                LOG.info("carRequest: " + " type :" + packet.getType() + " vin " + packet.getVin());
+//                LOG.info("carRequest: " + " type :" + packet.getType() + " vin " + packet.getVin());
                 //这里进行处理命令模式处理
                 carResponse = commandHandler(ctx, packet); //请求包
 
@@ -108,11 +122,11 @@ public class RequestDispatcher {
         else if(TypeField.TELE_CONTROL == typeField || TypeField.GPS_INFO == typeField){
             //TODO:这里需要重写 写的太杂了 getRemote是通过ip和port来获取新的链接的 这里本来是通过网页来选择对应的车辆的
             //这里添加了一层操作 我觉得没有问题呀！
-             LOG.warn(packet.getData());
+//             LOG.warn(packet.getData());
             if(clientService.getRemote()!=null){
                 clientService.sendCommand(clientService.getRemote(),packet);
             } else{
-                LOG.warn("null warning ");
+//                LOG.warn("null warning ");
             }
             String name = typeField.getDesc();
             BasicListener listener = listenerMap.getListener(name);

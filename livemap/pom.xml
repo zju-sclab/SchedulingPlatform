@@ -9,7 +9,9 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <artifactId>livemap</artifactId>
-
+    <properties>
+        <skipTests>true</skipTests>
+    </properties>
 <dependencies>
     <dependency>
         <groupId>com.skywilling.cn</groupId>

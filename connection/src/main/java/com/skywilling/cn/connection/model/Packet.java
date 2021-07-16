@@ -17,6 +17,16 @@ public class Packet implements Serializable {
   private String data;
   private int requestId;
 
+  @Override
+  public String toString(){
+    String str = "";
+    str += " type: " + Integer.toString(type);
+    str += " ack: " + Integer.toString(ack);
+    str += " requestId: " + Integer.toString(requestId);
+    str += " vin: " + vin;
+    str += " data: " + data;
+    return str;
+  }
 
   public int getType(){
     return type;

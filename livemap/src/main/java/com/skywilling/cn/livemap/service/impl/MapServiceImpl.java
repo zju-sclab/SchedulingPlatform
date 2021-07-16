@@ -112,6 +112,7 @@ public class MapServiceImpl implements MapService {
             LiveMap liveMap = staticMapFactory.create(parkName, park.getMapFileUrl());
             addMap(liveMap);
             shapeService.create(parkName);
+//            System.out.println();
             maps.put(liveMap.getParkName(), liveMap);
             return liveMap;
         }
@@ -119,6 +120,7 @@ public class MapServiceImpl implements MapService {
     }
     @Override
     public void addMap(LiveMap map) {
+//        System.out.println(map);
         maps.put(map.getParkName(), map);
     }
 

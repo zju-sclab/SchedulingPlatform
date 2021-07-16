@@ -56,11 +56,11 @@ public class ScheduleServiceImpl implements ScheduleService {
     @Override
     public void checkAllClient() {
         List<LiveMap> maps = mapService.getAllMaps();
-        LOG.info("schedule maps size is [{}]" , maps.size());
+//        LOG.info("schedule maps size is [{}]" , maps.size());
         for(LiveMap livemap : maps) {
-            LOG.info("schedule map name: "+livemap.getParkName());
+//            LOG.info("schedule map name: "+livemap.getParkName());
             ConcurrentHashMap<String,AutoCarRequest> car_req_lock = livemap.getCarReqLockMap();
-            LOG.info("current schedule request number is [{}]: ", car_req_lock.keySet().size());
+//            LOG.info("current schedule request number is [{}]: ", car_req_lock.keySet().size());
             for (String vinreq : car_req_lock.keySet()) {
                 AutoCarRequest carRequest = car_req_lock.get(vinreq);
                 String vin = carRequest.getVin();

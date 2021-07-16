@@ -1,6 +1,6 @@
 package com.skywilling.cn.livemap.core;
 
-import org.omg.PortableInterceptor.SYSTEM_EXCEPTION;
+//import org.omg.PortableInterceptor.SYSTEM_EXCEPTION;
 import org.springframework.util.ResourceUtils;
 
 import java.io.File;

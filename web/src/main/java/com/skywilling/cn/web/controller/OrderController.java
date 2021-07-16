@@ -97,10 +97,10 @@ public class OrderController {
         int year = now.get(ChronoField.YEAR);
         int month = now.get(ChronoField.MONTH_OF_YEAR);
         int day = now.get(ChronoField.DAY_OF_MONTH);
-        int hour = now.get(ChronoField.HOUR_OF_DAY);
-        int min = now.get(ChronoField.MINUTE_OF_HOUR);
-        int sec = now.get(ChronoField.SECOND_OF_MINUTE);
-        String time = Integer.toString(year) + '-' + month + '-' + day + '-' + hour + '-' + min + '-' + sec;
+//        int hour = now.get(ChronoField.HOUR_OF_DAY);
+//        int min = now.get(ChronoField.MINUTE_OF_HOUR);
+//        int sec = now.get(ChronoField.SECOND_OF_MINUTE);
+        String time = Integer.toString(year) + '-' + month + '-' + day;// + '-' + hour + '-' + min + '-' + sec;
         double z = 0.0, pitch = 0.0, roll = 0.0, yaw = 0.0;
         StationOrder stationOrder = new StationOrder(vin, stationName, time, x, y, z, pitch, roll, yaw);
         if(orderManager.putOrder(vin, stationOrder)){

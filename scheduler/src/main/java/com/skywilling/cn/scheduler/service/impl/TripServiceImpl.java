@@ -119,7 +119,11 @@ public class TripServiceImpl implements TripService {
             throw new CarNotAliveException(vin);
         }
         /**起点由心跳信息提供*/
+//        Pose fakePose = new Pose();
+//        fakePose.setPosition(1181.7,85.91,1.0);
+//        fakePose.setOrientation(0.0,0.0,0.0,0.0);
         StaticStation outset = new StaticStation(car.getPose());
+//        StaticStation outset = new StaticStation(fakePose);
         //用于测试 出发点确定
 //        Node outset_node = mapService.getNode("caolou",parkName);
 //        StaticStation outset = createStaticPointByNode(outset_node);
@@ -132,6 +136,7 @@ public class TripServiceImpl implements TripService {
         Route route = new Route();
         Node from_node = new Node();
         from_node.setName("source");
+//        car.setPose(fakePose);
         from_node.setX(car.getPose().getPosition().getX());
         from_node.setY(car.getPose().getPosition().getY());
         route.setVin(vin);
@@ -194,8 +199,10 @@ public class TripServiceImpl implements TripService {
         Node des_node = mapService.getNode(goal, parkName);
         Node from_node = new Node();
         from_node.setName("source");
-        from_node.setX(car.getPose().getPosition().getX());
-        from_node.setY(car.getPose().getPosition().getY());
+//        from_node.setX(car.getPose().getPosition().getX());
+//        from_node.setY(car.getPose().getPosition().getY());
+        from_node.setX(0.0);
+        from_node.setY(0.0);
         Route route = new Route();
         route.setVin(vin);
         route.setParkName(parkName);

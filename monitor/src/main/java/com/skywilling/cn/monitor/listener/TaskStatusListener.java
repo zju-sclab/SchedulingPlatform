@@ -23,7 +23,7 @@ public class TaskStatusListener extends BasicListener {
     @Override
     @PostConstruct
     public void init() {
-        listenerMap.addListener(TypeField.PREPARE_FIRE.getDesc(), this);
+        listenerMap.addListener(TypeField.TASK_REAL_TIME.getDesc(), this);
     }
 
     @Override

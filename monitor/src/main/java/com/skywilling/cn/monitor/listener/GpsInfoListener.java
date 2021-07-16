@@ -30,7 +30,7 @@ public class GpsInfoListener extends BasicListener {
     @Override
     public BasicCarResponse process(String vin, String body) {
         // process当中处理gps信息
-        LOG.info("xxxxxxxxxxxxx into gps listener");
+//        LOG.info("xxxxxxxxxxxxx into gps listener");
         GeoLocation geoLocation = JSONObject.parseObject(body, GeoLocation.class);
 
         Position pos = new Position();
@@ -38,8 +38,9 @@ public class GpsInfoListener extends BasicListener {
 
         pos.setY(geoLocation.getLatitude());
         pos.setZ(geoLocation.getAltitude());
-        LOG.info(pos.toString());
+//        LOG.info(pos.toString());
         carDynamicService.updateLocation(vin, pos);
-        return new BasicCarResponse(0, new Object());
+        return null;
+//        return new BasicCarResponse(0, new Object());
     }
 }
